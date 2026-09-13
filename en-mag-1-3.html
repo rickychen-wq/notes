@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>W1 U1–U3 英文複習</title>
+<style>
+  :root{
+    --bg:#f2f2f7;
+    --card:#ffffff;
+    --label:#000000;
+    --label2:#3c3c4399;
+    --label3:#3c3c434d;
+    --sep:#3c3c4326;
+    --fill:#78788014;
+    --blue:#0a84ff;
+    --green:#34c759;
+    --red:#ff3b30;
+    --gold:#c8912b;
+    --u1:#3b4d8f;
+    --u2:#2f7a4d;
+    --u3:#b0472f;
+    --u4:#7a5a9e;
+    --u5:#0a84ff;
+    --warn:#c2410c;
+    --accent:var(--u1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000000;
+      --card:#1c1c1e;
+      --label:#ffffff;
+      --label2:#ebebf599;
+      --label3:#ebebf54d;
+      --sep:#54545899;
+      --fill:#7878805c;
+      --blue:#0a84ff;
+      --green:#30d158;
+      --red:#ff453a;
+      --gold:#e8b73d;
+      --u1:#8ea3e8;
+      --u2:#5cc98a;
+      --u3:#ff8a6b;
+      --u4:#c4a2e8;
+      --warn:#ff9f6b;
+    }
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);
+    color:var(--label);
+    font-size:17px;
+    line-height:1.5;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom));
+  }
+
+  /* ── Header ─────────────────────────── */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);
+    padding:calc(env(safe-area-inset-top) + 10px) 16px 8px;
+  }
+  .titlebar{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  h1{font-size:26px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  .cnbtn{
+    border:none;background:var(--fill);color:var(--blue);
+    font-size:13px;font-weight:600;padding:7px 12px;border-radius:100px;
+    font-family:inherit;flex-shrink:0;cursor:pointer;
+  }
+  .cnbtn.off{background:var(--blue);color:#fff}
+  nav{
+    display:flex;gap:2px;margin-top:12px;padding:2px;
+    background:var(--fill);border-radius:9px;
+  }
+  nav button{
+    flex:1;border:none;background:transparent;font-family:inherit;
+    font-size:13px;font-weight:600;color:var(--label);
+    padding:7px 0;border-radius:7px;cursor:pointer;
+  }
+  nav button[aria-selected="true"]{
+    background:var(--card);
+    box-shadow:0 3px 8px rgba(0,0,0,.12);
+  }
+
+  /* ── Layout ─────────────────────────── */
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .unit-1{--accent:var(--u1)} .unit-2{--accent:var(--u2)}
+  .unit-3{--accent:var(--u3)} .unit-4{--accent:var(--u4)}
+  .unit-5{--accent:var(--u5)}
+
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px;line-height:1.25}
+  .hero .zh{font-size:15px;color:var(--label2)}
+
+  h3{
+    font-size:13px;font-weight:600;color:var(--label2);
+    margin:26px 0 7px;padding-left:16px;
+  }
+  .card{
+    background:var(--card);border-radius:12px;overflow:hidden;
+  }
+  .row{padding:12px 16px;border-top:.5px solid var(--sep)}
+  .row:first-child{border-top:none}
+
+  /* ── Vocab ──────────────────────────── */
+  .w{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px}
+  .w b{font-size:19px;font-weight:600;letter-spacing:-.2px}
+  .kk{font-size:13px;color:var(--label3);font-family:"SF Pro Text",sans-serif}
+  .pos{font-size:12px;font-weight:600;color:var(--accent);font-style:italic}
+  .def{font-size:16px;color:var(--label2);margin-top:2px}
+  .ex{font-size:14px;color:var(--label2);margin-top:6px;line-height:1.45}
+  .ex i{font-style:normal;color:var(--label3);display:block}
+  .star{color:#ff9500;font-size:13px}
+  .tip{
+    font-size:14px;line-height:1.45;margin-top:8px;padding:8px 11px;
+    background:var(--fill);border-radius:8px;
+  }
+  .tip b{color:var(--warn)}
+  body.hide-cn .def,body.hide-cn .ex i,body.hide-cn .zh-hide{visibility:hidden}
+
+  /* ── Text blocks ────────────────────── */
+  .para{padding:13px 16px;border-top:.5px solid var(--sep)}
+  .para:first-child{border-top:none}
+  .para h4{margin:0 0 5px;font-size:15px;font-weight:600}
+  .para h4 span{color:var(--label3);font-weight:500;font-size:13px;margin-left:6px}
+  .para p{margin:0;font-size:15px;color:var(--label2);line-height:1.55}
+  .para ul{margin:6px 0 0;padding-left:18px;font-size:15px;color:var(--label2);line-height:1.55}
+  .para li{margin:3px 0}
+  .en{font-size:15px;color:var(--label);line-height:1.5}
+
+  /* ── Grammar / pattern ──────────────── */
+  .pat{
+    font-size:16px;font-weight:600;padding:10px 12px;
+    background:var(--fill);border-radius:8px;margin:2px 0 8px;
+    line-height:1.45;
+  }
+  .eg{font-size:15px;margin-top:8px;line-height:1.5}
+  .eg i{font-style:normal;color:var(--label2);display:block;font-size:14px}
+
+  /* ── Answer reveal ──────────────────── */
+  details{padding:12px 16px;border-top:.5px solid var(--sep)}
+  details:first-child{border-top:none}
+  summary{
+    font-size:15px;cursor:pointer;list-style:none;
+    display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"看答案";color:var(--blue);font-size:14px;font-weight:500;flex-shrink:0}
+  details[open] summary::after{content:"收起"}
+  .ans{
+    margin-top:10px;font-size:15px;line-height:1.55;
+    padding:10px 12px;background:var(--fill);border-radius:8px;
+  }
+  .ans b{color:var(--accent)}
+  .blank{color:var(--accent);font-weight:600;text-decoration:underline}
+
+  /* ── Table ──────────────────────────── */
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  td{padding:9px 16px;border-top:.5px solid var(--sep);vertical-align:top}
+  tr:first-child td{border-top:none}
+  td:first-child{font-weight:600;white-space:nowrap;padding-right:8px}
+  td:last-child{color:var(--label2)}
+
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── Quiz ───────────────────────────── */
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{
+    font-family:inherit;font-size:14px;font-weight:600;
+    padding:8px 14px;border-radius:100px;background:var(--fill);
+    color:var(--label);cursor:pointer;
+    border:1.5px solid transparent;
+  }
+  .chip.on{
+    border-color:var(--gold);
+    color:var(--gold);
+    background:color-mix(in srgb,var(--gold) 10%,transparent);
+  }
+  .bigbtn{
+    display:block;width:100%;border:none;font-family:inherit;
+    font-size:17px;font-weight:600;padding:15px;border-radius:12px;
+    background:var(--blue);color:#fff;margin-top:16px;cursor:pointer;
+  }
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+
+  .qprompt{padding:26px 18px;text-align:center}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px}
+  .qprompt .qtext{font-size:27px;font-weight:600;letter-spacing:-.4px;line-height:1.3;word-break:break-word}
+  .qprompt .qhint{font-size:14px;color:var(--label3);margin-top:8px}
+
+  .choices{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:8px}
+  .choice{
+    text-align:left;font-family:inherit;font-size:17px;
+    padding:15px 16px;border-radius:12px;background:var(--card);
+    color:var(--label);cursor:pointer;line-height:1.35;
+    border:1.5px solid transparent;
+  }
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  .choice[disabled]{cursor:default}
+
+  .typebox{margin-top:10px;display:flex;gap:8px}
+  .typebox input{
+    flex:1;font-family:inherit;font-size:19px;padding:14px 16px;
+    border-radius:12px;border:1.5px solid var(--sep);
+    background:var(--card);color:var(--label);min-width:0;
+  }
+  .typebox input:focus{outline:none;border-color:var(--blue)}
+  .typebox button{
+    border:none;font-family:inherit;font-size:16px;font-weight:600;
+    padding:0 18px;border-radius:12px;background:var(--blue);color:#fff;cursor:pointer;
+  }
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.ok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.no{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.ok{color:var(--green)}
+  .verdict .vt.no{color:var(--red)}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:15px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:600}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  .wrongrow em{font-style:normal;color:var(--red)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;
+    --card:#ffffff;
+    --label:#000000;
+    --label2:#3c3c4399;
+    --label3:#3c3c434d;
+    --sep:#3c3c4326;
+    --fill:#78788014;
+    --blue:#0a84ff;
+    --green:#34c759;
+    --red:#ff3b30;
+    --gold:#c8912b;
+    --u1:#3b4d8f;
+    --u2:#2f7a4d;
+    --u3:#b0472f;
+    --u4:#7a5a9e;
+    --u5:#0a84ff;
+    --warn:#c2410c;
+    --accent:var(--u1);
+  }
+  html[data-theme="dark"]{
+      --bg:#000000;
+      --card:#1c1c1e;
+      --label:#ffffff;
+      --label2:#ebebf599;
+      --label3:#ebebf54d;
+      --sep:#54545899;
+      --fill:#7878805c;
+      --blue:#0a84ff;
+      --green:#30d158;
+      --red:#ff453a;
+      --gold:#e8b73d;
+      --u1:#8ea3e8;
+      --u2:#5cc98a;
+      --u3:#ff8a6b;
+      --u4:#c4a2e8;
+      --warn:#ff9f6b;
+    }
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-english.html">◀ 回目錄</a><span>英文 · 雜誌 U1–U3</span></div>
+
+
+<header>
+  <div class="titlebar">
+    <div>
+      <h1>W1 · U1–U3</h1>
+      <div class="sub">小考 ＋ 段考範圍複習</div>
+    </div>
+    <button class="cnbtn" id="cnbtn">隱藏中文</button>
+  </div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">U1</button>
+    <button role="tab" aria-selected="false" data-t="2">U2</button>
+    <button role="tab" aria-selected="false" data-t="3">U3</button>
+    <button role="tab" aria-selected="false" data-t="4">總複習</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ══════════════ UNIT 1 ══════════════ -->
+<section class="unit-1" data-p="1">
+  <div class="hero">
+    <div class="kicker">UNIT 1 ★★☆　看新聞學英語</div>
+    <h2>Questions Remain After Pentagon Releases UFO Files</h2>
+    <div class="zh zh-hide">五角大廈公布幽浮檔案，部分疑點仍待釐清</div>
+  </div>
+
+  <h3>課文脈絡（照段落背，克漏字才抓得到）</h3>
+  <div class="card">
+    <div class="para">
+      <h4>第 1 段 導言 <span>L1–6</span></h4>
+      <p>五角大廈公布了 161 份關於 UAP（不明異常現象，即俗稱的 UFO）的檔案。這次公開屬於美國政府「把軍方目擊報告分享給一般大眾」的計畫之一。</p>
+      <ul>
+        <li>倒金字塔的 lead：who = The Pentagon／what = 公布 161 份檔案／why &amp; how = 政府對大眾公開軍方報告</li>
+        <li>本段沒交代 when 與 where，因為這是「持續性行動」而非單一事件</li>
+      </ul>
+    </div>
+    <div class="para">
+      <h4>第 2 段 檔案內容與專家看法 <span>L7–19</span></h4>
+      <ul>
+        <li>檔案包含：飛行員報告、解密筆記、雷達與其他感測器的資料</li>
+        <li>案例一：海軍飛行員在美國東岸外海發現快速移動物體，突然改變方向並從雷達上消失</li>
+        <li>案例二：軍方人員拍到訓練區上空以異常模式移動的發光體</li>
+        <li>專家說法：自然的天氣現象、氣球與無人機等日常物體 <b>accounts for</b> 大多數目擊事件；少數案例因資料有限仍無法解釋</li>
+      </ul>
+    </div>
+    <div class="para">
+      <h4>第 3 段 各界反應 <span>L20–28</span></h4>
+      <ul>
+        <li>公開檔案 <b>has been met with</b> 正反不一的反應</li>
+        <li>支持方：政府的公開透明有助減少謠言</li>
+        <li>反對方：檔案仍留下太多重要問題沒被回答</li>
+        <li>五角大廈：會繼續蒐集研究 UAP 報告，以強化飛安、更了解這些神秘目擊</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>單字 Vocabulary</h3>
+  <div class="card">
+    <div class="row">
+      <div class="w"><b>unidentified</b><span class="kk">[ˌʌnaɪˋdɛntəˌfaɪd]</span><span class="pos">adj.</span></div>
+      <div class="def">未知的、不明的</div>
+      <div class="ex">An unidentified man left the package outside the office.<i>一名身分不明的男子把包裹留在辦公室外。</i></div>
+      <div class="tip">un- + identify(v. 辨識) + -ed。<b>UFO = unidentified flying object</b>；同義補充 <b>unexplained</b>（無法解釋的，第 19 行）。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>phenomenon</b><span class="kk">[fəˋnɑməˌnɑn]</span><span class="pos">n.</span><span class="star">★高危險</span></div>
+      <div class="def">現象（尤指不尋常或引人注意的事物）</div>
+      <div class="ex">The teacher showed a video about a strange phenomenon in the ocean.<i>老師播了一段關於海中奇特現象的影片。</i></div>
+      <div class="tip"><b>複數形不規則：phenomenon → phenomena</b>。UAP 全名 unidentified anomalous <b>phenomena</b>，用的就是複數形，動詞要跟著變複數。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>radar</b><span class="kk">[ˋredɑr]</span><span class="pos">n.</span></div>
+      <div class="def">雷達</div>
+      <div class="ex">disappear from radar 從雷達上消失</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>sensor</b><span class="kk">[ˋsɛnsɚ]</span><span class="pos">n.</span></div>
+      <div class="def">感測器、感應裝置</div>
+      <div class="tip">sense(感覺) + <b>-or</b>（執行者字尾）。同類：conductor、projector。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>personnel</b><span class="kk">[ˌpɝsnˋɛl]</span><span class="pos">n.</span><span class="star">★高危險</span></div>
+      <div class="def">（公司、軍隊的）全體人員、員工</div>
+      <div class="ex">All hospital personnel must wear ID cards.<i>所有醫院人員都必須配戴識別證。</i></div>
+      <div class="tip"><b>集合名詞，恆為複數</b>，後面接複數動詞（personnel <b>are</b>…），不可加 -s。重音在<b>字尾</b>，別跟 <b>personal</b>（adj. 個人的）搞混。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>strengthen</b><span class="kk">[ˋstrɛŋθən]</span><span class="pos">v.</span></div>
+      <div class="def">加強、增強</div>
+      <div class="ex">Reading every day can strengthen your vocabulary.<i>每天閱讀能增強你的字彙量。</i></div>
+      <div class="tip">strength(n. 力量) + <b>-en</b> → 動詞。同型：widen、deepen、shorten、sharpen。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>mysterious</b><span class="kk">[mɪsˋtɪrɪəs]</span><span class="pos">adj.</span></div>
+      <div class="def">神秘的、難以理解的</div>
+      <div class="tip">mystery(n.) → mysterious(adj.)，注意 <b>y 要改成 i</b>。</div>
+    </div>
+  </div>
+
+  <h3>參考字彙</h3>
+  <div class="card">
+    <div class="row">
+      <div class="w"><b>declassify</b><span class="kk">[diˋklæsəˌfaɪ]</span><span class="pos">v.</span></div>
+      <div class="def">解密（官方文件等）</div>
+      <div class="tip">de-(除去) + classify(分類／列為機密)。課文用 <b>declassified</b>（過去分詞當形容詞：被解密的）。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>drone</b><span class="kk">[dron]</span><span class="pos">n.</span></div>
+      <div class="def">無人機</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>sighting</b><span class="kk">[ˋsaɪtɪŋ]</span><span class="pos">n.</span></div>
+      <div class="def">目擊、發現（尤指罕見或不尋常的人事物）</div>
+      <div class="tip">sight(看見) + -ing。文中 UAP <b>sightings</b> 用複數。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>anomalous</b><span class="kk">[əˋnɑmələs]</span><span class="pos">adj.</span></div>
+      <div class="def">異常的</div>
+    </div>
+  </div>
+
+  <h3>片語 Language Spotlight</h3>
+  <div class="card">
+    <div class="row">
+      <div class="pat">account <span class="blank">for</span> + N.</div>
+      <div class="def">導致；是……的原因；佔（比例）</div>
+      <div class="tip">主詞通常是<b>事物</b>，不是人。介系詞 <b>for</b> 是最常挖的空。</div>
+      <div class="eg">Poor communication likely accounted for the delay in completing the project.<i>溝通不良可能是這項專案延期完成的主因。</i></div>
+    </div>
+    <div class="row">
+      <div class="pat">meet <span class="blank">with</span> + N.　／　be met <span class="blank">with</span> + N.</div>
+      <div class="def">遭遇（反對、困難、問題）；也可用於中性或正面：meet with success / approval</div>
+      <div class="tip">課文用被動：The release <b>has been met with</b> mixed reactions.（這句超容易挖 with 或 met）</div>
+      <div class="eg">When it opened, the restaurant was met with bad reviews from customers.<i>這家餐廳開幕時即遭到顧客負評。</i></div>
+    </div>
+    <div class="row">
+      <div class="pat">leave + O + 受詞補語</div>
+      <div class="def">使……處於某種狀態（沒被處理）</div>
+      <div class="tip">課文：leave too many questions <b>unanswered</b>。受詞補語可以是 <b>adj. / V-ing / p.p.</b>；同類動詞：find、keep、leave。</div>
+    </div>
+    <div class="row">
+      <div class="pat"><span class="blank">off</span> the US East Coast</div>
+      <div class="def">在美國東岸外海</div>
+      <div class="tip">off ＝「靠近、離……不遠」，這裡不是「關掉」。</div>
+    </div>
+  </div>
+
+  <h3>Tips for Reading News</h3>
+  <div class="card">
+    <div class="para">
+      <h4>倒金字塔 inverted pyramid</h4>
+      <p>新聞把最重要的資訊放開頭，導言（lead）盡量交代 5W1H：who、what、when、where、why、how，之後再依重要性補細節。</p>
+    </div>
+    <div class="para">
+      <h4>轉折詞（你筆記上寫的那組，考轉折字超常用）</h4>
+      <ul>
+        <li>反差：<b>however</b></li>
+        <li>相似：<b>similarly</b></li>
+        <li>增加論點：<b>moreover</b></li>
+        <li>因果：<b>therefore</b></li>
+        <li>舉例：<b>for example</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>題目解答</h3>
+  <div class="card">
+    <details>
+      <summary>Reading Comprehension 1：What is the overall tone of the article?</summary>
+      <div class="ans"><b>(D) Neutral and informative</b>　全文只陳述事實、正反意見都列出，沒有情緒性或批判性字眼，所以是「中立且提供資訊的」。</div>
+    </details>
+    <details>
+      <summary>動手寫寫看 1：故障的紅綠燈導致了那起事故。<br>The broken traffic lights ______ the accident.</summary>
+      <div class="ans">The broken traffic lights <b>accounted for</b> the accident.<br><span class="def">主詞是複數 lights，過去式 accounted 不用變。</span></div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════════ UNIT 2 ══════════════ -->
+<section class="unit-2" data-p="2" hidden>
+  <div class="hero">
+    <div class="kicker">UNIT 2 ★★★　植物趣聞</div>
+    <h2>The Secret Lives of Plants</h2>
+    <div class="zh zh-hide">植物的祕密生活</div>
+  </div>
+
+  <h3>課文脈絡（六個例子，段落標題一定要記）</h3>
+  <div class="card">
+    <div class="para">
+      <h4>引言 <span>L1–9</span></h4>
+      <p>植物看似單純又可預測，實際生活遠比外表複雜。從隱藏的溝通系統到聰明的生存策略，植物界充滿挑戰傳統觀念的驚人細節。以下六個例子說明植物有多麼富有創意。</p>
+    </div>
+    <div class="para">
+      <h4>Plants That Generate Heat <span>L10–16</span></h4>
+      <p>有些植物透過 thermogenesis（產熱作用）產生熱。聖蓮與臭菘利用這股熱來散發氣味、吸引授粉者；在較寒冷地區甚至能融化周圍的雪，取得季節上的早發優勢。</p>
+    </div>
+    <div class="para">
+      <h4>Plants That Warn Each Other <span>L17–25</span></h4>
+      <p>遭昆蟲攻擊時，有些植物釋放<b>空氣傳播的（airborne）</b>化學訊號，附近植物偵測到後便強化自身防禦。在菸草、皇帝豆等物種上觀察到；這套系統讓整群植物比各自單獨反應更快。</p>
+    </div>
+    <div class="para">
+      <h4>The Forest's Underground Network <span>L26–33</span></h4>
+      <p>森林地底下，樹根由真菌網路連結，讓樹木交換養分與資訊。生態學家 <b>Suzanne Simard</b> 發現花旗松與紙樺利用這些連結支援年幼、被遮蔽的鄰居 → 顯示<b>合作</b>而不只是競爭，在森林生存中起了作用。</p>
+    </div>
+    <div class="para">
+      <h4>Why Cacti "Breathe" at Night <span>L35–43</span></h4>
+      <p>在嚴酷的沙漠環境，保水至關重要。仙人掌不同於多數植物，是在<b>夜間而非白天</b>打開氣孔（stomata）。在氣溫較涼時吸收二氧化碳，大幅減少白天酷熱原本會造成的水分散失，是適應極端高溫的簡單卻有效方式。</p>
+    </div>
+    <div class="para">
+      <h4>Why Trees Can Only Grow So Tall <span>L44–52</span></h4>
+      <p>樹木無法無止盡向上生長。高度受限於把水從根運送到葉的能力，這個過程由<b>蒸發</b>與<b>內部壓力</b>驅動。樹越高，水越難到達最高的枝條，所以連海岸紅杉也很少超過 130 公尺。最強大的樹也得遵守物理定律。</p>
+    </div>
+    <div class="para">
+      <h4>Why Sunflowers Stop Following the Sun <span>L53–59</span></h4>
+      <p>幼年向日葵有一種叫 heliotropism（向日性）的習性會追著太陽跑。但一旦成熟，普通向日葵就固定朝東。這讓它每天早上快速升溫，在一天較早的時候吸引更多授粉者。有時候，靜止不動才是更聰明的策略。</p>
+    </div>
+  </div>
+
+  <h3>單字 Vocabulary</h3>
+  <div class="card">
+    <div class="row">
+      <div class="w"><b>communication</b><span class="kk">[kəˌmjunəˋkeʃən]</span><span class="pos">n.</span></div>
+      <div class="def">溝通、交流；通訊</div>
+      <div class="tip">communicate(v.) → communication(n.)。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>conventional</b><span class="kk">[kənˋvɛnʃənḷ]</span><span class="pos">adj.</span></div>
+      <div class="def">傳統的；習以為常的、慣例的</div>
+      <div class="ex">It is conventional to shake hands when meeting someone for the first time.<i>初次見面握手是慣例。</i></div>
+      <div class="tip">convention(n. 慣例／大會) → conventional。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>fascinating</b><span class="kk">[ˋfæsṇˌetɪŋ]</span><span class="pos">adj.</span><span class="star">★易錯</span></div>
+      <div class="def">極有趣的、精彩的；迷人的</div>
+      <div class="tip"><b>-ing 修飾「事物」</b>（令人著迷的）；<b>fascinated -ed 修飾「人」</b>（感到著迷的）。同型：interesting / interested、boring / bored。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>generate</b><span class="kk">[ˋdʒɛnəˌret]</span><span class="pos">v.</span></div>
+      <div class="def">產生（能量、想法等）；生成、引起</div>
+      <div class="tip">generate(v.) → generation(n. 世代／產生) → generator(n. 發電機)。<b>U3 的 generation 就是同一家族</b>。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>scent</b><span class="kk">[sɛnt]</span><span class="pos">n.</span></div>
+      <div class="def">氣味、香味；（動物的）臭跡</div>
+      <div class="tip">sc- 的 c <b>不發音</b>，音同 sent。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>prompt</b><span class="kk">[prɑmpt]</span><span class="pos">v.</span></div>
+      <div class="def">促使、引發；提示</div>
+      <div class="ex">The teacher's question prompted Elliott to think more carefully.<i>老師的問題促使艾略特更仔細思考。</i></div>
+      <div class="tip">句型 <b>prompt sb. to V</b>（促使某人做某事）。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>nutrient</b><span class="kk">[ˋnutrɪənt]</span><span class="pos">n.</span></div>
+      <div class="def">營養物質、養分</div>
+      <div class="tip">家族：nutrition(n. 營養)、nutritious(adj. 有營養的)。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>harsh</b><span class="kk">[hɑrʃ]</span><span class="pos">adj.</span></div>
+      <div class="def">嚴酷的、惡劣的；嚴厲的</div>
+      <div class="ex">harsh desert environments 嚴酷的沙漠環境</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>essential</b><span class="kk">[ɪˋsɛnʃəl]</span><span class="pos">adj.</span></div>
+      <div class="def">極其重要的、必不可少的</div>
+      <div class="tip"><b>It is essential that S. (should) + 原形V</b> — 表「重要／必要」的形容詞後，that 子句用<b>假設語氣</b>，should 常省略。同類：important、necessary、urgent。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>absorb</b><span class="kk">[əbˋsɔrb]</span><span class="pos">v.</span></div>
+      <div class="def">吸收；理解、掌握（知識）</div>
+      <div class="tip">名詞 absorption。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>otherwise</b><span class="kk">[ˋʌðɚˌwaɪz]</span><span class="pos">adv.</span><span class="star">★高危險</span></div>
+      <div class="def">在其他情況下；否則；以另外的方式</div>
+      <div class="ex">The medicine treated an infection that would have become serious otherwise.<i>這個藥治好了原本可能會變嚴重的感染。</i></div>
+      <div class="tip">課文用法：水分散失是「白天酷熱 <b>otherwise</b>（若非如此）會造成的」→ 帶有<b>與事實相反</b>的假設語氣，常配 would / would have p.p.。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>exceed</b><span class="kk">[ɪkˋsid]</span><span class="pos">v.</span></div>
+      <div class="def">超過、超出（數量、程度）</div>
+      <div class="ex">Do not exceed the speed limit while driving.<i>開車不要超速。</i></div>
+      <div class="tip">-ceed 家族：ex<b>ceed</b>、suc<b>ceed</b>、pro<b>ceed</b>（只有這三個是 -ceed，其他都 -cede）。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>physics</b><span class="kk">[ˋfɪzɪks]</span><span class="pos">n.</span><span class="star">★易錯</span></div>
+      <div class="def">物理學</div>
+      <div class="tip">學科名<b>字尾有 s 但當單數</b>：Physics <b>is</b> my favorite subject. 同類：mathematics、economics、politics。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>behavior</b><span class="kk">[bɪˋhevjɚ]</span><span class="pos">n.</span></div>
+      <div class="def">習性；行為、舉止</div>
+      <div class="tip">behave(v.) → behavior(n.)。泛指行為時<b>不可數</b>；指具體個別行為可用 behaviors（課文即用複數指各種習性）。</div>
+    </div>
+  </div>
+
+  <h3>參考字彙 ＋ 補充說明</h3>
+  <div class="card">
+    <div class="row"><div class="w"><b>inventive</b><span class="pos">adj.</span></div><div class="def">富有創意的</div></div>
+    <div class="row"><div class="w"><b>seasonal</b><span class="pos">adj.</span></div><div class="def">季節性的</div></div>
+    <div class="row"><div class="w"><b>airborne</b><span class="pos">adj.</span></div><div class="def">在空氣中的；空氣傳播的</div></div>
+    <div class="row"><div class="w"><b>ecologist</b><span class="pos">n.</span></div><div class="def">生態學家（字首 eco- ＝生態的、與環境有關的）</div></div>
+    <div class="row"><div class="w"><b>conserve</b><span class="pos">v.</span></div><div class="def">保存、節省；保留、保護</div></div>
+    <div class="row"><div class="w"><b>scorch</b><span class="pos">v.</span></div><div class="def">燒焦、烤焦　<span class="zh-hide">（文中 scorching 現在分詞作形容詞：炙熱的、酷熱的）</span></div></div>
+    <div class="row"><div class="w"><b>upward</b><span class="pos">adv.</span></div><div class="def">向上地</div></div>
+    <div class="row"><div class="w"><b>evaporation</b><span class="pos">n.</span></div><div class="def">蒸發</div></div>
+    <div class="row">
+      <div class="w"><b>其他補充說明</b></div>
+      <div class="ex">
+        <b>predictable</b> 可預測的（-able 接動詞後 → 可以……的）<br>
+        <b>thermogenesis</b> 產熱作用（thermo- 熱 ＋ -genesis 產生）<br>
+        <b>pollinator</b> 授粉者（pollinate ＋ -or）<br>
+        <b>fungal</b> 真菌的　<b>shaded</b> 處於陰影中的<br>
+        <b>stomata</b> 氣孔　<span class="star">★ stoma 的複數</span>　<b>pore</b> 小孔、毛孔<br>
+        <b>carbon dioxide</b> 二氧化碳　<b>daytime</b> 白天<br>
+        <b>settle into</b> 逐漸進入、固定於某種狀態<br>
+        <b>stillness</b> 靜止、不動狀態<br>
+        <b>cactus → cacti</b> 仙人掌　<span class="star">★複數不規則</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>片語 Language Spotlight</h3>
+  <div class="card">
+    <div class="row">
+      <div class="pat">play a part / role <span class="blank">in</span> + N. / V-ing</div>
+      <div class="def">對……有影響；在……中起作用</div>
+      <div class="tip"><b>in 後面一定接 N. 或 V-ing</b>，不能接原形動詞。可加形容詞：play <b>an important</b> part in…</div>
+      <div class="eg">Luck may have played a part in their success, but hard work was a bigger factor.<i>運氣或許對他們的成功有一定影響，但努力才是更重要的因素。</i></div>
+    </div>
+    <div class="row">
+      <div class="pat">rather than</div>
+      <div class="def">而不是……；（寧可……）也不……</div>
+      <div class="tip">
+        ① 作<b>連接詞</b>時要連接<b>對等結構</b>（詞性相同，如課文連接兩個介系詞片語 at night rather than during the day）。<br>
+        ② 連接不定詞時，後面的 <b>to 常省略</b>，只留原形動詞。<br>
+        ③ 也可作<b>介系詞</b>，後接 N./V-ing，意思近 instead of。
+      </div>
+      <div class="eg">Kevin would prefer to solve problems on his own rather than ask for help.<i>凱文寧可自己解決問題，而不是尋求協助。</i></div>
+      <div class="eg">Rather than going home, she went to the store.<i>她沒有回家，而是去了商店。</i></div>
+    </div>
+    <div class="row">
+      <div class="pat">adapt / adjust <span class="blank">to</span> + N. / V-ing</div>
+      <div class="def">適應（新環境或情況）</div>
+      <div class="tip">
+        兩種寫法都對：<b>adapt to N./V-ing</b>、<b>adapt oneself to N./V-ing</b>。<br>
+        <b>to 是介系詞不是不定詞</b>，後面接 V-ing。這是最常挖的空！<br>
+        別跟 <b>adopt</b>（採用、領養）、<b>adept</b>（熟練的）搞混。
+      </div>
+      <div class="eg">Zoe could not adapt to working on the weekend and had to quit her new job.<i>柔依無法適應週末上班，因此不得不辭掉新工作。</i></div>
+    </div>
+  </div>
+
+  <h3>句型 Sentence Patterns</h3>
+  <div class="card">
+    <div class="row">
+      <div class="pat">The + 比較級 + S. + V., the + 比較級 + S. + V.<br>越……就越……</div>
+      <div class="tip">
+        ① 比較級可以是<b>形容詞或副詞</b>的比較級。<br>
+        ② 可用 <b>more / fewer / less + N.</b> 表數量變化：可數用 more / fewer，不可數用 more / less。<br>
+        ③ 動詞為 <b>be 動詞時可省略</b>；主詞為泛指時也可省略。
+      </div>
+      <div class="eg">The busier the city becomes, the noisier it gets.<i>城市變得越繁忙，就越吵雜。</i></div>
+      <div class="eg">The more challenges you face, the more lessons you learn.<i>你面對的挑戰越多，學到的經驗就越多。</i></div>
+      <div class="eg">The sooner the better. ＝ The sooner it is, the better it will be.<i>越快越好。</i></div>
+      <div class="tip">課文第 48 行：<b>The taller</b> a tree grows, <b>the harder</b> it becomes for water to reach its highest branches.（樹長得越高，水就越難到達最高的枝條）— 這句幾乎必考。</div>
+    </div>
+  </div>
+
+  <h3>題目解答</h3>
+  <div class="card">
+    <details>
+      <summary>Integrated 1：How do some plants warn each other of danger?</summary>
+      <div class="ans"><b>(B) By releasing chemical signals</b>　課文說遭昆蟲攻擊時釋放空氣傳播的化學訊號，鄰近植物偵測後強化防禦。</div>
+    </details>
+    <details>
+      <summary>Integrated 2：(A)–(F) 哪些敘述正確？</summary>
+      <div class="ans">
+        答案 <b>(C) 和 (F)</b><br><br>
+        (A) ✗ 聖蓮與臭菘產熱是為了<b>散發氣味吸引授粉者</b>，不是強化自身防禦（那是「警告彼此」那段的事）。<br>
+        (B) ✗ 化學訊號是 <b>airborne 空氣傳播</b>，不是 through their roots。<br>
+        (C) ✓ Simard 發現樹木透過地下真菌網路分享養分、支援年幼鄰居。<br>
+        (D) ✗ 仙人掌是<b>夜間</b>打開氣孔，而且是為了吸收二氧化碳、減少水分散失，不是吸收陽光。<br>
+        (E) ✗ 課文說海岸紅杉<b>很少超過</b>（rarely exceeds）130 公尺，不是常常超過。<br>
+        (F) ✓ 向日葵成熟後固定朝東。
+      </div>
+    </details>
+    <details>
+      <summary>動手寫寫看 1：規律運動對維持身心健康有重要作用。<br>Regular exercise ______ maintaining a person's physical and mental health.</summary>
+      <div class="ans">Regular exercise <b>plays an important part / role in</b> maintaining a person's physical and mental health.</div>
+    </details>
+    <details>
+      <summary>動手寫寫看 2：年幼的孩子通常很快就能適應變動的環境。<br>Young children are usually able to ______ quite quickly.</summary>
+      <div class="ans">Young children are usually able to <b>adapt / adjust to changing environments</b> quite quickly.<br><span class="def">able to 後接原形 adapt；adapt to 的 to 後接名詞。</span></div>
+    </details>
+    <details>
+      <summary>動手寫寫看 3：我們越往樹林深處走，天氣就越冷。</summary>
+      <div class="ans"><b>The deeper we walk into the woods, the colder the weather becomes / gets.</b><br><span class="def">前後兩個 the + 比較級，缺一不可。</span></div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════════ UNIT 3 ══════════════ -->
+<section class="unit-3" data-p="3" hidden>
+  <div class="hero">
+    <div class="kicker">UNIT 3 ★★★　食物與文化</div>
+    <h2>Why Italians Take Food So Seriously</h2>
+    <div class="zh zh-hide">為什麼義大利人對食物這麼講究？</div>
+  </div>
+
+  <h3>課文脈絡</h3>
+  <div class="card">
+    <div class="para">
+      <h4>第 1 段 主旨 <span>L1–7</span></h4>
+      <p>在義大利，食物不只關乎味道，更是文化、家族傳統與地方榮譽的事。因此當其他國家的人改動經典義大利料理時，義大利人有時反應強烈。在台灣或美國看起來完全沒問題的食譜，在義大利可能顯得大錯特錯。</p>
+    </div>
+    <div class="para">
+      <h4>第 2 段 義大利麵爭議 <span>L8–17</span></h4>
+      <ul>
+        <li>Pasta 引發最大分歧（<b>stir up</b> the biggest disagreements）</li>
+        <li>全世界吃 spaghetti Bolognese，但在<b>波隆那</b>當地，肉醬通常配<b>寬扁麵 tagliatelle</b>，不是 spaghetti</li>
+        <li>羅馬傳統 carbonara 只有四樣：<b>guanciale 豬頰醃肉、egg yolk 蛋黃、pecorino cheese 佩科里諾羊奶起司、black pepper 黑胡椒</b></li>
+        <li>所以對義大利人來說，加鮮奶油不算 variation（變體），而是 mistake（錯誤）</li>
+      </ul>
+    </div>
+    <div class="para">
+      <h4>第 3 段 披薩與咖啡 <span>L18–24</span></h4>
+      <ul>
+        <li>夏威夷披薩（上面放鳳梨）讓許多義大利人吃驚，因為他們偏好經典組合</li>
+        <li>咖啡也有 <b>unwritten rules 不成文規定</b>：在義大利晚餐後點卡布奇諾，常被視為觀光客的明顯標誌</li>
+      </ul>
+    </div>
+    <div class="para">
+      <h4>第 4 段 結論 <span>L25–31</span></h4>
+      <p>說到底（Ultimately），這些反應不只是個人口味的問題。對許多義大利人而言，傳統食譜承載著世世代代的故事與工藝，而多數人會同意，那值得被認真看待。</p>
+    </div>
+  </div>
+
+  <h3>單字 Vocabulary</h3>
+  <div class="card">
+    <div class="row">
+      <div class="w"><b>recipe</b><span class="kk">[ˋrɛsəpɪ]</span><span class="pos">n.</span><span class="star">★發音易錯</span></div>
+      <div class="def">食譜；烹飪法</div>
+      <div class="tip">唸 <b>[ˋrɛsəpɪ]</b> 三音節，字尾 -e 要發音，不是 "recipe"→"reci-p"。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>pasta</b><span class="kk">[ˋpɑstə]</span><span class="pos">n.</span></div>
+      <div class="def">義大利麵食（統稱）</div>
+      <div class="tip"><b>不可數名詞</b>，指整類麵食。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>variation</b><span class="kk">[ˌvɛrɪˋeʃən]</span><span class="pos">n.</span></div>
+      <div class="def">變體；變化形式</div>
+      <div class="tip">vary(v. 變化) → various(adj. 各式各樣的) → variety(n. 多樣性) → variation。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>combination</b><span class="kk">[ˌkɑmbəˋneʃən]</span><span class="pos">n.</span></div>
+      <div class="def">組合；結合（文中指「配料組合」）</div>
+      <div class="tip">combine(v.) → combination(n.)。<b>a combination of A, B, and C</b>。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>ultimately</b><span class="kk">[ˋʌltəmətlɪ]</span><span class="pos">adv.</span></div>
+      <div class="def">最後、最終；根本上、說到底</div>
+      <div class="tip">ultimate(adj. 最終的) → ultimately。放句首當<b>轉折／總結副詞</b>，後面加逗號。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>generation</b><span class="kk">[ˌdʒɛnəˋreʃən]</span><span class="pos">n.</span></div>
+      <div class="def">世代、一代人</div>
+      <div class="tip">課文 the stories and craftsmanship of <b>generations</b> 用複數＝世世代代。跟 U2 的 generate 同字根。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>deserve</b><span class="kk">[dɪˋzɝv]</span><span class="pos">v.</span></div>
+      <div class="def">值得、應得</div>
+      <div class="ex">The coach thought they deserved praise for their effort.<i>教練認為他們的努力值得讚賞。</i></div>
+      <div class="tip">句型 <b>deserve to be p.p.</b>（值得被……）＝ 課文 deserves to be taken seriously。也可 deserve + N. / deserve to V。</div>
+    </div>
+    <div class="row">
+      <div class="w"><b>craftsmanship</b><span class="kk">[ˋkræftsmənˌʃɪp]</span><span class="pos">n.</span></div>
+      <div class="def">手藝；工藝技術</div>
+      <div class="tip">craft(工藝) + man + <b>-ship</b>（表狀態／技能的名詞字尾）。同型：friendship、leadership。</div>
+    </div>
+  </div>
+
+  <h3>片語 Language Spotlight</h3>
+  <div class="card">
+    <div class="row">
+      <div class="pat">take sb. / sth. <span class="blank">seriously</span></div>
+      <div class="def">認真看待某人或某事</div>
+      <div class="tip">受詞放中間，<b>seriously 放最後</b>。被動：<b>be taken seriously</b>（課文標題與結尾都用這個）。</div>
+      <div class="eg">The company takes customer feedback seriously.<i>這家公司非常重視顧客的回饋。</i></div>
+    </div>
+    <div class="row">
+      <div class="pat">stir <span class="blank">up</span>　＝　spark</div>
+      <div class="def">引起、挑起（爭議、情緒）</div>
+      <div class="tip">stir 原意是「攪拌」，stir up 引申為「煽動、引發（情緒或事件）」，語意通常帶<b>負面或強烈情緒</b>。課文第 12 行的 <b>spark</b> 是同義字。</div>
+      <div class="eg">The politician's statements stirred up a lot of anger online.<i>那位政治人物的言論在網路上引發了大量民怨。</i></div>
+    </div>
+    <div class="row">
+      <div class="pat">unwritten rules</div>
+      <div class="def">不成文規定</div>
+      <div class="tip">un- + written(write 的 p.p.)。這題就是 Reading Comprehension 的考點。</div>
+    </div>
+  </div>
+
+  <h3>題目解答</h3>
+  <div class="card">
+    <details>
+      <summary>Reading Comprehension 1：closest in meaning to "unwritten rules"</summary>
+      <div class="ans"><b>(B) Customs people follow despite not being formally stated</b>　「不成文」＝ 沒有正式寫下來、但大家都遵守的習慣。(A) 政府法律、(C) 食譜書、(D) 菜單上的正式規定都跟「不成文」矛盾。</div>
+    </details>
+    <details>
+      <summary>動手寫寫看 1：附近樹林出現目擊熊的傳言引起鎮上居民的恐慌。<br>Rumors about a bear spotted in the nearby woods ______ among the town's residents.</summary>
+      <div class="ans">Rumors about a bear spotted in the nearby woods <b>stirred up panic</b> among the town's residents.<br><span class="def">主詞 Rumors 是複數，過去式 stirred。panic ＝ 恐慌。</span></div>
+    </details>
+    <details>
+      <summary>動手寫寫看 2：現在許多人認真看待環境問題，並試著減少日常廢棄物。<br>Many people now ______ and try to reduce daily waste.</summary>
+      <div class="ans">Many people now <b>take environmental issues / problems seriously</b> and try to reduce daily waste.<br><span class="def">主詞複數 → take 不加 s；跟後面的 try 對等。</span></div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════════ 總複習 ══════════════ -->
+<section class="unit-4" data-p="4" hidden>
+  <div class="hero">
+    <div class="kicker">W1 · U1–U3</div>
+    <h2>總複習</h2>
+    <div class="zh zh-hide">考前 15 分鐘掃這頁就好</div>
+  </div>
+
+  <h3>介系詞搭配（克漏字最愛挖這裡）</h3>
+  <div class="card">
+    <table>
+      <tr><td>account <b>for</b></td><td>導致、是……的原因</td></tr>
+      <tr><td>meet <b>with</b> / be met <b>with</b></td><td>遭遇、（反應）被以……回應</td></tr>
+      <tr><td>play a part/role <b>in</b> N./V-ing</td><td>對……有影響</td></tr>
+      <tr><td>adapt / adjust <b>to</b> N./V-ing</td><td>適應</td></tr>
+      <tr><td>stir <b>up</b></td><td>引起、挑起</td></tr>
+      <tr><td>take sth. <b>seriously</b></td><td>認真看待</td></tr>
+      <tr><td>settle <b>into</b></td><td>逐漸進入、固定於</td></tr>
+      <tr><td>rather <b>than</b></td><td>而不是</td></tr>
+      <tr><td><b>off</b> the coast</td><td>在外海</td></tr>
+      <tr><td>a combination <b>of</b></td><td>……的組合</td></tr>
+      <tr><td>disappear <b>from</b> radar</td><td>從雷達上消失</td></tr>
+      <tr><td>stir up panic <b>among</b> …</td><td>在……之間引起恐慌</td></tr>
+    </table>
+  </div>
+
+  <h3>不規則複數 ＋ 名詞數的陷阱</h3>
+  <div class="card">
+    <table>
+      <tr><td>phenomenon</td><td>→ phenomena　現象</td></tr>
+      <tr><td>stoma</td><td>→ stomata（也可 stomas）　氣孔</td></tr>
+      <tr><td>cactus</td><td>→ cacti　仙人掌</td></tr>
+      <tr><td>personnel</td><td>集合名詞，恆為複數，動詞用複數</td></tr>
+      <tr><td>physics</td><td>字尾有 s，但當<b>單數</b>（學科名）</td></tr>
+      <tr><td>pasta</td><td>不可數</td></tr>
+      <tr><td>延伸</td><td>criterion→criteria、medium→media、datum→data</td></tr>
+    </table>
+  </div>
+
+  <h3>詞性變化（挖空常給你 n. 要你填 v. / adj.）</h3>
+  <div class="card">
+    <table>
+      <tr><td>identify</td><td>v. → identified → <b>unidentified</b> adj.</td></tr>
+      <tr><td>mystery</td><td>n. → <b>mysterious</b> adj.</td></tr>
+      <tr><td>strength</td><td>n. → <b>strengthen</b> v.</td></tr>
+      <tr><td>sense</td><td>v. → <b>sensor</b> n.</td></tr>
+      <tr><td>generate</td><td>v. → <b>generation</b> n. → generator n.</td></tr>
+      <tr><td>communicate</td><td>v. → <b>communication</b> n.</td></tr>
+      <tr><td>convention</td><td>n. → <b>conventional</b> adj.</td></tr>
+      <tr><td>fascinate</td><td>v. → <b>fascinating</b>（物）／fascinated（人）</td></tr>
+      <tr><td>nutrient</td><td>n. → nutrition n. → nutritious adj.</td></tr>
+      <tr><td>absorb</td><td>v. → absorption n.</td></tr>
+      <tr><td>behave</td><td>v. → <b>behavior</b> n.</td></tr>
+      <tr><td>vary</td><td>v. → various adj. → <b>variation</b> n.</td></tr>
+      <tr><td>combine</td><td>v. → <b>combination</b> n.</td></tr>
+      <tr><td>ultimate</td><td>adj. → <b>ultimately</b> adv.</td></tr>
+      <tr><td>evaporate</td><td>v. → <b>evaporation</b> n.</td></tr>
+      <tr><td>pollinate</td><td>v. → <b>pollinator</b> n.</td></tr>
+      <tr><td>ecology</td><td>n. → <b>ecologist</b> n. 生態學家</td></tr>
+      <tr><td>craft</td><td>n. → <b>craftsmanship</b> n.</td></tr>
+    </table>
+  </div>
+
+  <h3>易混淆字</h3>
+  <div class="card">
+    <table>
+      <tr><td>personnel</td><td>全體人員（n.）　⟷　<b>personal</b> 個人的（adj.）</td></tr>
+      <tr><td>adapt</td><td>適應　⟷　<b>adopt</b> 採用／領養　⟷　<b>adept</b> 熟練的</td></tr>
+      <tr><td>exceed</td><td>超過　⟷　succeed 成功　⟷　proceed 繼續進行</td></tr>
+      <tr><td>conserve</td><td>保存節省　⟷　preserve 保存維護　⟷　reserve 預訂保留</td></tr>
+      <tr><td>scent</td><td>氣味　⟷　sent（send 過去式）　同音</td></tr>
+      <tr><td>-ing / -ed</td><td>fascinating 令人著迷的（物）／fascinated 感到著迷的（人）</td></tr>
+    </table>
+  </div>
+
+  <h3>三課文法總表</h3>
+  <div class="card">
+    <div class="row">
+      <div class="pat">The + 比較級 …, the + 比較級 …</div>
+      <div class="def">越……就越……（U2 主句型，必考）</div>
+    </div>
+    <div class="row">
+      <div class="pat">rather than + 對等結構</div>
+      <div class="def">連接詞：前後詞性要一樣；作介系詞時 ≒ instead of</div>
+    </div>
+    <div class="row">
+      <div class="pat">leave / find / keep + O + adj. / V-ing / p.p.</div>
+      <div class="def">使受詞處於某狀態（U1：leave questions unanswered）</div>
+    </div>
+    <div class="row">
+      <div class="pat">It is essential / important that S. (should) + 原形V</div>
+      <div class="def">假設語氣，should 常省略</div>
+    </div>
+    <div class="row">
+      <div class="pat">分詞當形容詞</div>
+      <div class="def">declassified notes（被解密的）、scorching heat（炙熱的）、shaded neighbors（被遮蔭的）、a bear spotted in the woods（被目擊的）</div>
+    </div>
+    <div class="row">
+      <div class="pat">被動語態高頻句</div>
+      <div class="def">be met with / be taken seriously / deserves to be taken seriously / is considered a mistake</div>
+    </div>
+  </div>
+
+  <h3>自我測驗</h3>
+  <div class="card">
+    <details>
+      <summary>1. Everyday objects such as balloons and drones ______ most UAP sightings.</summary>
+      <div class="ans"><b>account for</b></div>
+    </details>
+    <details>
+      <summary>2. UAP 的完整拼法與單複數？</summary>
+      <div class="ans">unidentified anomalous <b>phenomena</b>（phenomenon 的複數）</div>
+    </details>
+    <details>
+      <summary>3. Cacti open their stomata at night ______ during the day.</summary>
+      <div class="ans"><b>rather than</b>　連接兩個對等的介系詞片語</div>
+    </details>
+    <details>
+      <summary>4. ______ a tree grows, ______ it becomes for water to reach its highest branches.</summary>
+      <div class="ans"><b>The taller</b> … <b>the harder</b> …</div>
+    </details>
+    <details>
+      <summary>5. Cooperation, not just competition, plays a part ______ forest survival.</summary>
+      <div class="ans"><b>in</b></div>
+    </details>
+    <details>
+      <summary>6. 羅馬傳統 carbonara 的四種材料？</summary>
+      <div class="ans">guanciale、egg yolk、pecorino cheese、black pepper　→ 加 cream 被視為 <b>a mistake</b>，不是 variation</div>
+    </details>
+    <details>
+      <summary>7. Traditional recipes ______ (deserve) to ______ (take) seriously.</summary>
+      <div class="ans">recipes <b>deserve</b> to <b>be taken</b> seriously</div>
+    </details>
+    <details>
+      <summary>8. It took Gil months to adapt ______ ______ (live) in another country.</summary>
+      <div class="ans">adapt <b>to living</b>　to 是介系詞，後接 V-ing</div>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════════ 測驗 ══════════════ -->
+<section class="unit-5" data-p="5" hidden>
+  <div class="hero">
+    <div class="kicker">Quiz</div>
+    <h2>單字測驗</h2>
+    <div class="zh zh-hide">選好設定就開始，結束會列出所有答錯的</div>
+  </div>
+
+  <div id="qsetup">
+    <h3>範圍</h3>
+    <div class="card">
+      <div class="optrow" id="setUnits">
+        <button class="chip on" data-u="1">U1</button>
+        <button class="chip on" data-u="2">U2</button>
+        <button class="chip on" data-u="3">U3</button>
+      </div>
+      <div class="optrow" id="setKind">
+        <div class="lb">內容</div>
+        <button class="chip on" data-k="word">單字</button>
+        <button class="chip on" data-k="phrase">片語</button>
+      </div>
+    </div>
+
+    <h3>作答方式</h3>
+    <div class="card">
+      <div class="optrow" id="setMode">
+        <button class="chip on" data-m="mc">選擇題</button>
+        <button class="chip" data-m="type">手打</button>
+      </div>
+      <div class="optrow" id="setDir">
+        <div class="lb">出題方向</div>
+        <button class="chip on" data-d="zh2en">中 → 英</button>
+        <button class="chip" data-d="en2zh">英 → 中</button>
+        <button class="chip" data-d="mix">隨機</button>
+      </div>
+      <div class="optrow" id="setLen">
+        <div class="lb">題數</div>
+        <button class="chip" data-n="10">10</button>
+        <button class="chip on" data-n="20">20</button>
+        <button class="chip" data-n="0">全部</button>
+      </div>
+      <div class="row" style="font-size:14px;color:var(--label2)">
+        手打模式固定考中 → 英。比對時<b>不分大小寫、忽略多餘空格與標點</b>，片語裡的 sb / sth / one's 可寫可不寫，冠詞 a / the 有沒有都行，拼錯一個字母也算對（但會提醒你正確拼法）。
+      </div>
+    </div>
+
+    <button class="bigbtn" id="startBtn">開始測驗</button>
+  </div>
+
+  <div id="qplay" hidden>
+    <div class="qbar">
+      <span id="qcount">1 / 20</span>
+      <span class="track"><i id="qprog" style="width:0%"></i></span>
+      <span id="qscore">0 對</span>
+    </div>
+    <div class="card">
+      <div class="qprompt">
+        <div class="qtype" id="qtype">中文 → 英文</div>
+        <div class="qtext" id="qtext">—</div>
+        <div class="qhint" id="qhint"></div>
+      </div>
+    </div>
+    <div class="choices" id="qchoices"></div>
+    <div class="typebox" id="qtypebox" hidden>
+      <input id="qinput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" placeholder="輸入英文">
+      <button id="qsubmit">送出</button>
+    </div>
+    <div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+    <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+
+  <div id="qdone" hidden>
+    <div class="card">
+      <div class="score">
+        <div class="big" id="rScore">0%</div>
+        <div class="lbl" id="rLine">—</div>
+      </div>
+    </div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3>
+    <div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button>
+    <button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+</section>
+
+<footer>整理自 W1 UNIT 1–3 · 配合課本使用</footer>
+</main>
+
+<script>
+/* ───────── 分頁 & 隱藏中文 ───────── */
+const tabs = document.querySelectorAll('nav button');
+const panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(t => t.addEventListener('click', () => {
+  tabs.forEach(x => x.setAttribute('aria-selected', x === t));
+  panels.forEach(p => p.hidden = p.dataset.p !== t.dataset.t);
+  window.scrollTo({top: 0});
+}));
+const cnbtn = document.getElementById('cnbtn');
+cnbtn.addEventListener('click', () => {
+  const on = document.body.classList.toggle('hide-cn');
+  cnbtn.textContent = on ? '顯示中文' : '隱藏中文';
+  cnbtn.classList.toggle('off', on);
+});
+
+/* ───────── 題庫 ───────── */
+const BANK = [
+  {u:1,k:'word',en:'unidentified',zh:'不明的、未知的'},
+  {u:1,k:'word',en:'phenomenon',zh:'現象',alt:['phenomena']},
+  {u:1,k:'word',en:'radar',zh:'雷達'},
+  {u:1,k:'word',en:'sensor',zh:'感測器、感應裝置'},
+  {u:1,k:'word',en:'personnel',zh:'（公司、軍隊的）全體人員'},
+  {u:1,k:'word',en:'strengthen',zh:'加強、增強'},
+  {u:1,k:'word',en:'mysterious',zh:'神秘的、難以理解的'},
+  {u:1,k:'word',en:'declassify',zh:'解密（官方文件）',alt:['declassified']},
+  {u:1,k:'word',en:'drone',zh:'無人機'},
+  {u:1,k:'word',en:'sighting',zh:'目擊、發現'},
+  {u:1,k:'word',en:'anomalous',zh:'異常的'},
+  {u:1,k:'word',en:'unexplained',zh:'無法解釋的、原因不詳的'},
+  {u:1,k:'phrase',en:'account for',zh:'導致；是……的原因'},
+  {u:1,k:'phrase',en:'meet with',zh:'遭遇（反對、困難）',alt:['be met with']},
+  {u:1,k:'phrase',en:'leave sth unanswered',zh:'讓……懸而未決、沒被回答'},
+  {u:1,k:'phrase',en:'off the coast',zh:'在……外海'},
+
+  {u:2,k:'word',en:'communication',zh:'溝通、交流；通訊'},
+  {u:2,k:'word',en:'conventional',zh:'傳統的、慣例的'},
+  {u:2,k:'word',en:'fascinating',zh:'極有趣的、迷人的（修飾事物）'},
+  {u:2,k:'word',en:'generate',zh:'產生（能量、想法等）'},
+  {u:2,k:'word',en:'scent',zh:'氣味、香味'},
+  {u:2,k:'word',en:'prompt',zh:'促使、引發；提示'},
+  {u:2,k:'word',en:'nutrient',zh:'營養物質、養分'},
+  {u:2,k:'word',en:'harsh',zh:'嚴酷的、惡劣的'},
+  {u:2,k:'word',en:'essential',zh:'極其重要的、必不可少的'},
+  {u:2,k:'word',en:'absorb',zh:'吸收；理解、掌握'},
+  {u:2,k:'word',en:'otherwise',zh:'否則；在其他情況下'},
+  {u:2,k:'word',en:'exceed',zh:'超過、超出'},
+  {u:2,k:'word',en:'physics',zh:'物理學'},
+  {u:2,k:'word',en:'behavior',zh:'習性；行為、舉止'},
+  {u:2,k:'word',en:'inventive',zh:'富有創意的'},
+  {u:2,k:'word',en:'seasonal',zh:'季節性的'},
+  {u:2,k:'word',en:'airborne',zh:'在空氣中的、空氣傳播的'},
+  {u:2,k:'word',en:'ecologist',zh:'生態學家'},
+  {u:2,k:'word',en:'conserve',zh:'保存、節省；保護'},
+  {u:2,k:'word',en:'scorch',zh:'燒焦、烤焦',alt:['scorching']},
+  {u:2,k:'word',en:'upward',zh:'向上地'},
+  {u:2,k:'word',en:'evaporation',zh:'蒸發'},
+  {u:2,k:'word',en:'predictable',zh:'可預測的'},
+  {u:2,k:'word',en:'pollinator',zh:'授粉者、傳粉媒介'},
+  {u:2,k:'word',en:'stomata',zh:'氣孔（stoma 的複數）',alt:['stoma','stomas']},
+  {u:2,k:'word',en:'cacti',zh:'仙人掌（複數）',alt:['cactus']},
+  {u:2,k:'word',en:'stillness',zh:'靜止、不動狀態'},
+  {u:2,k:'phrase',en:'play a part in',zh:'對……有影響、起作用',alt:['play a role in','play a part','play a role','play an important part in','play an important role in']},
+  {u:2,k:'phrase',en:'rather than',zh:'而不是……'},
+  {u:2,k:'phrase',en:'adapt to',zh:'適應（新環境）',alt:['adjust to','adapt oneself to','adjust oneself to']},
+  {u:2,k:'phrase',en:'settle into',zh:'逐漸進入、固定於某種狀態'},
+
+  {u:3,k:'word',en:'recipe',zh:'食譜；烹飪法'},
+  {u:3,k:'word',en:'pasta',zh:'義大利麵食（統稱）'},
+  {u:3,k:'word',en:'variation',zh:'變體；變化形式'},
+  {u:3,k:'word',en:'combination',zh:'組合；結合'},
+  {u:3,k:'word',en:'ultimately',zh:'最終；說到底'},
+  {u:3,k:'word',en:'generation',zh:'世代、一代人'},
+  {u:3,k:'word',en:'deserve',zh:'值得、應得'},
+  {u:3,k:'word',en:'craftsmanship',zh:'手藝；工藝技術'},
+  {u:3,k:'phrase',en:'take sth seriously',zh:'認真看待某事',alt:['take seriously','take sb seriously','be taken seriously','take something seriously']},
+  {u:3,k:'phrase',en:'stir up',zh:'引起、挑起（爭議、情緒）',alt:['spark']},
+  {u:3,k:'phrase',en:'unwritten rules',zh:'不成文規定',alt:['unwritten rule']}
+];
+
+/* ───────── 寬鬆比對 ───────── */
+function norm(s){
+  return (s||'')
+    .toLowerCase()
+    .replace(/[\u2019\u2018`\u00b4]/g,"'")
+    .replace(/[.,;:!?"()\[\]]/g,' ')
+    .replace(/[-\u2013\u2014_\/]/g,' ')
+    .replace(/'s\b/g,' ')
+    .replace(/\b(sb|sth|somebody|someone|something|one|ones|oneself|yourself|myself|it|them|this|that|n|v|adj|adv|ving)\b/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function stripArt(s){
+  return s.replace(/\b(a|an|the)\b/g,' ').replace(/\s+/g,' ').trim();
+}
+function lev(a,b){
+  const m=a.length,n=b.length;
+  if(!m) return n; if(!n) return m;
+  let prev=Array.from({length:n+1},(_,i)=>i), cur=new Array(n+1);
+  for(let i=1;i<=m;i++){
+    cur[0]=i;
+    for(let j=1;j<=n;j++){
+      cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    }
+    const t=prev; prev=cur; cur=t;
+  }
+  return prev[n];
+}
+function judge(input, item){
+  const got = norm(input);
+  if(!got) return 'no';
+  const accepted = [item.en].concat(item.alt||[]).map(norm);
+  if(accepted.indexOf(got) > -1) return 'exact';
+  if(accepted.map(stripArt).indexOf(stripArt(got)) > -1) return 'exact';
+  // 打出來的是別的真實單字（personal vs personnel、adopt vs adapt）就是錯，不放水
+  for(const other of BANK){
+    if(other === item) continue;
+    if([other.en].concat(other.alt||[]).map(norm).indexOf(got) > -1) return 'no';
+  }
+  const CONFUSE = ['personal','adopt','adept','succeed','proceed','preserve','reserve','various','variety','fascinated','sent','identify','mystery','strength'];
+  const gotWords = got.split(' ');
+  for(const c of CONFUSE){
+    if(gotWords.indexOf(c) > -1 && accepted.every(a => a.split(' ').indexOf(c) === -1)) return 'no';
+  }
+  for(const a of accepted){
+    const tol = a.length >= 9 ? 2 : (a.length >= 5 ? 1 : 0);
+    if(lev(got,a) <= tol) return 'close';
+  }
+  return 'no';
+}
+
+/* ───────── 測驗 ───────── */
+const S = {units:[1,2,3], kinds:['word','phrase'], mode:'mc', dir:'zh2en', n:20};
+let queue=[], idx=0, right=0, wrongList=[], answered=false, autoTimer=null;
+const $ = id => document.getElementById(id);
+
+function chipGroup(id, apply){
+  $(id).addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if(!b) return;
+    apply(b, $(id));
+  });
+}
+function multi(b, box, arr, attr, cast){
+  b.classList.toggle('on');
+  const on = box.querySelectorAll('.chip.on');
+  if(!on.length){ b.classList.add('on'); return; }
+  arr.length = 0;
+  box.querySelectorAll('.chip.on').forEach(c => arr.push(cast(c.dataset[attr])));
+}
+function single(b, box, set){
+  box.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === b));
+  set(b);
+}
+chipGroup('setUnits', (b,box)=>multi(b,box,S.units,'u',Number));
+chipGroup('setKind',  (b,box)=>multi(b,box,S.kinds,'k',String));
+chipGroup('setMode',  (b,box)=>single(b,box,x=>{S.mode=x.dataset.m; syncDir();}));
+chipGroup('setDir',   (b,box)=>single(b,box,x=>S.dir=x.dataset.d));
+chipGroup('setLen',   (b,box)=>single(b,box,x=>S.n=Number(x.dataset.n)));
+
+function syncDir(){
+  const box = $('setDir');
+  const lock = S.mode === 'type';
+  box.style.opacity = lock ? .35 : 1;
+  box.style.pointerEvents = lock ? 'none' : 'auto';
+  if(lock) box.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c.dataset.d === 'zh2en'));
+}
+syncDir();
+
+const shuffle = a => a.map(v => [Math.random(), v]).sort((x,y) => x[0]-y[0]).map(v => v[1]);
+
+function start(pool){
+  clearTimeout(autoTimer); autoTimer = null;
+  let items = pool || BANK.filter(x => S.units.indexOf(x.u) > -1 && S.kinds.indexOf(x.k) > -1);
+  if(!items.length){ alert('這個範圍沒有題目，換一下設定'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  const q = queue[idx];
+  const dir = S.mode === 'type' ? 'zh2en'
+            : S.dir === 'mix' ? (Math.random() < .5 ? 'zh2en' : 'en2zh')
+            : S.dir;
+  q._dir = dir;
+
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtype').textContent = dir === 'zh2en' ? '中文 → 英文' : '英文 → 中文';
+  $('qtext').textContent = dir === 'zh2en' ? q.zh : q.en;
+  $('qhint').textContent = 'U' + q.u + '　' + (q.k === 'phrase' ? '片語' : '單字');
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+
+  const cw = $('qchoices'), tb = $('qtypebox');
+  cw.innerHTML = '';
+  if(S.mode === 'type'){
+    cw.hidden = true; tb.hidden = false;
+    $('qinput').value = ''; $('qinput').disabled = false; $('qsubmit').disabled = false;
+    $('qinput').placeholder = q.k === 'phrase' ? '輸入英文片語' : '輸入英文';
+  }else{
+    tb.hidden = true; cw.hidden = false;
+    let pool = BANK.filter(x => x !== q && x.k === q.k && S.units.indexOf(x.u) > -1);
+    if(pool.length < 3) pool = BANK.filter(x => x !== q);
+    shuffle([q].concat(shuffle(pool).slice(0,3))).forEach(o => {
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.textContent = dir === 'zh2en' ? o.en : o.zh;
+      b.addEventListener('click', () => pick(b, o === q, q));
+      cw.appendChild(b);
+    });
+  }
+}
+
+function pick(btn, ok, q){
+  if(answered) return;
+  answered = true;
+  const correctText = q._dir === 'zh2en' ? q.en : q.zh;
+  Array.prototype.forEach.call($('qchoices').children, c => {
+    c.disabled = true;
+    if(c.textContent === correctText) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:btn.textContent}); }
+  verdict(ok, q, ok ? '' : btn.textContent, false);
+}
+
+function submitType(){
+  if(answered) return;
+  const q = queue[idx];
+  const val = $('qinput').value;
+  if(!val.trim()) return;
+  const r = judge(val, q);
+  answered = true;
+  $('qinput').disabled = true; $('qsubmit').disabled = true;
+  if(r !== 'no') right++;
+  else wrongList.push({q:q, mine:val.trim()});
+  verdict(r !== 'no', q, val.trim(), r === 'close');
+}
+
+function verdict(ok, q, mine, close){
+  const alt = (q.alt || []).length ? '也可以：' + q.alt.join(' / ') : '';
+  const box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'ok' : 'no');
+  box.innerHTML =
+    '<span class="vt ' + (ok ? 'ok' : 'no') + '">' + (ok ? (close ? '算你對，但拼字差一點' : '答對') : '答錯') + '</span>' +
+    '<b>' + q.en + '</b>　' + q.zh +
+    (close ? '<small>正確拼法：' + q.en + '（考試以正確拼字為準）</small>' : '') +
+    (!ok && mine ? '<small>你寫的：' + mine + '</small>' : '') +
+    (alt ? '<small>' + alt + '</small>' : '');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+
+  if(ok && !close){
+    $('nextBtn').hidden = true;
+    clearTimeout(autoTimer);
+    autoTimer = setTimeout(() => { autoTimer = null; next(); }, 700);
+  }else{
+    $('nextBtn').hidden = false;
+  }
+}
+
+function next(){
+  clearTimeout(autoTimer); autoTimer = null;
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  clearTimeout(autoTimer); autoTimer = null;
+  answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  const total = Math.max(right + wrongList.length, 1);
+  const pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對' : pct >= 80 ? '　把錯的補一補' : '　錯的先背熟再考一次');
+  const wrap = $('rWrong');
+  wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(w => {
+      const d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.en + '</b>　' + w.q.zh +
+        '<span>你寫的／選的：<em>' + w.mine + '</em></span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('qsubmit').addEventListener('click', submitType);
+$('qinput').addEventListener('keydown', e => {
+  if(e.key === 'Enter'){ e.preventDefault(); answered ? next() : submitType(); }
+});
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', () => start());
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', () => start(wrongList.map(w => w.q)));
+$('againAll').addEventListener('click', () => {
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:en-mag-1-3', m[1]);
+         localStorage.setItem('nx:time:en-mag-1-3', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>

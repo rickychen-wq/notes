@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>雜誌 U4–U6 複習</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --u4:#6b4a8a;--u5:#3f7a4a;--u6:#8a4a5f;--u7:#4a5f8a;--u8:#0a84ff;--accent:var(--u4);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --u4:#c4a2e8;--u5:#7fd18a;--u6:#e89ab0;--u7:#9aabe8;}
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.55;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px}
+  .titlebar{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  .cnbtn{border:none;background:var(--fill);color:var(--blue);font-size:13px;font-weight:600;
+    padding:7px 12px;border-radius:100px;font-family:inherit;flex-shrink:0;cursor:pointer}
+  .cnbtn.off{background:var(--blue);color:#fff}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .s-1{--accent:var(--u4)}.s-2{--accent:var(--u5)}.s-3{--accent:var(--u6)}
+  .s-4{--accent:var(--u7)}.s-5{--accent:var(--u8)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:23px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px;line-height:1.25}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .para{padding:13px 16px;border-top:.5px solid var(--sep)}
+  .para:first-child{border-top:none}
+  .para h4{margin:0 0 5px;font-size:15px;font-weight:700}
+  .para h4 span{color:var(--label3);font-weight:500;font-size:13px;margin-left:6px}
+  .para p{margin:0;font-size:15px;color:var(--label2);line-height:1.6}
+  .para ul{margin:5px 0 0;padding-left:19px;font-size:15px;color:var(--label2);line-height:1.6}
+  .para li{margin:3px 0}
+
+  .row{padding:12px 16px;border-top:.5px solid var(--sep)}
+  .row:first-child{border-top:none}
+  .wline{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px}
+  .num{font-size:12px;font-weight:700;color:#fff;background:var(--accent);
+    border-radius:5px;padding:1px 6px;flex-shrink:0}
+  .wline b{font-size:19px;font-weight:600;letter-spacing:-.2px}
+  .kk{font-size:13px;color:var(--label3)}
+  .pos{font-size:12px;font-weight:600;font-style:italic;color:var(--label2)}
+  .mean{font-size:16px;color:var(--label2);margin-top:2px}
+  .nt{font-size:14px;line-height:1.55;margin-top:7px;padding:8px 11px;background:var(--fill);border-radius:8px}
+  .nt b{color:var(--gold)}
+  body.hide-cn .mean{visibility:hidden}
+
+  .ph{padding:13px 16px;border-top:.5px solid var(--sep)}
+  .ph:first-child{border-top:none}
+  .ph .pt{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .ph .pt b{font-size:18px;font-weight:700}
+  .ph .pz{font-size:16px;color:var(--label2);margin-top:1px}
+  body.hide-cn .ph .pz{visibility:hidden}
+  .eg{font-size:14.5px;margin-top:7px;line-height:1.55;color:var(--label2)}
+  .eg i{font-style:normal;display:block;color:var(--label3)}
+
+  .pat{font-size:16px;font-weight:700;padding:10px 12px;background:var(--fill);
+    border-radius:8px;margin:2px 0 8px;line-height:1.5}
+  .key{background:color-mix(in srgb,var(--gold) 20%,transparent);border-radius:4px;padding:0 3px;font-weight:600}
+
+  details{padding:12px 16px;border-top:.5px solid var(--sep)}
+  details:first-child{border-top:none}
+  summary{font-size:15px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"看答案";color:var(--blue);font-size:14px;flex-shrink:0}
+  details[open] summary::after{content:"收起"}
+  .ans{margin-top:9px;font-size:15px;line-height:1.6;padding:10px 12px;background:var(--fill);border-radius:8px}
+  .ans b{color:var(--accent)}
+  .ox{color:var(--red);font-weight:700}
+  .ok2{color:var(--green);font-weight:700}
+
+  .wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{padding:8px 10px;border-top:.5px solid var(--sep);vertical-align:top;text-align:left}
+  th{font-weight:600;color:var(--label2);font-size:13px;background:var(--fill)}
+  td b{font-weight:600}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .hint{padding:12px 16px;font-size:14px;color:var(--label2);line-height:1.55;border-top:.5px solid var(--sep)}
+  .hint b{color:var(--gold)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:26px 18px;text-align:center}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px}
+  .qprompt .qtext{font-size:25px;font-weight:700;line-height:1.35;word-break:break-word}
+  .qprompt .qhint{font-size:14px;color:var(--label3);margin-top:8px}
+  .choices{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:8px}
+  .choice{text-align:left;font-family:inherit;font-size:18px;padding:15px 16px;border-radius:12px;
+    background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  .typebox{margin-top:10px;width:100%;display:flex;gap:8px}
+  .typebox input{flex:1;font-family:inherit;font-size:19px;padding:14px 16px;border-radius:12px;
+    border:1.5px solid var(--sep);background:var(--card);color:var(--label);min-width:0}
+  .typebox input:focus{outline:none;border-color:var(--blue)}
+  .typebox button{border:none;font-family:inherit;font-size:16px;font-weight:600;padding:0 18px;
+    border-radius:12px;background:var(--blue);color:#fff;cursor:pointer}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.vok{color:var(--green)}
+  .verdict .vt.vno{color:var(--red)}
+  .verdict .big{display:block;font-size:22px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .verdict small.gold{color:var(--gold)}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:16px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:700;margin-right:6px}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  .wrongrow em{font-style:normal;color:var(--red)}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --u4:#6b4a8a;--u5:#3f7a4a;--u6:#8a4a5f;--u7:#4a5f8a;--u8:#0a84ff;--accent:var(--u4);
+  }
+  html[data-theme="dark"]{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --u4:#c4a2e8;--u5:#7fd18a;--u6:#e89ab0;--u7:#9aabe8;}
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-english.html">◀ 回目錄</a><span>英文 · 雜誌 U4–U6</span></div>
+
+
+<header>
+  <div class="titlebar">
+    <div><h1>雜誌 U4–U6</h1><div class="sub">夢與科學 · 羽球 · 紐約市</div></div>
+    <button class="cnbtn" id="cnbtn">隱藏中文</button>
+  </div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">U4</button>
+    <button role="tab" aria-selected="false" data-t="2">U5</button>
+    <button role="tab" aria-selected="false" data-t="3">U6</button>
+    <button role="tab" aria-selected="false" data-t="4">句型</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ═══════ U4 ═══════ -->
+<section class="s-1" data-p="1">
+  <div class="hero"><div class="kicker">UNIT 4 ★★★　科學冷知識</div>
+    <h2>When Dreams Led to Scientific Breakthroughs</h2>
+    <div class="zh">當夢境引領科學突破</div></div>
+
+  <h3>課文脈絡</h3>
+  <div class="card">
+    <div class="para">
+      <h4>第 1 段 主旨 <span>L1–13</span></h4>
+      <p>實驗室是科學的工坊，但有些最重要的突破不是發生在實驗室，而是在夢境那個安靜、無法預測的世界裡。數百年來科學家回報過：解答透過睡眠中形成的<b>影像與模式</b>浮現，而不是靠仔細計算。現代神經科學指出，大腦在我們沒有意識思考時仍持續處理資訊、建立連結。</p>
+    </div>
+    <div class="para">
+      <h4>第 2 段 門得列夫 <span>L14–23</span></h4>
+      <p>1869 年 3 月 1 日，他努力想用有邏輯、系統的方式排列化學元素後睡著，據說夢見「一張表，所有元素都各就其位」。醒來立刻寫下 —— 那就是我們現在的<b>週期表</b>。</p>
+    </div>
+    <div class="para">
+      <h4>第 3 段 凱庫勒 <span>L24–32</span></h4>
+      <p>他長期嘗試確定<b>苯</b>的結構卻不成功。某晚夢見一條蛇咬住自己的尾巴形成一個環，這個鮮明的畫面讓他提出<b>環狀分子結構</b>，是有機化學的里程碑式突破。</p>
+    </div>
+    <div class="para">
+      <h4>第 4 段 拉馬努金 <span>L33–44</span></h4>
+      <p>受夢啟發的洞見不限於 19 世紀化學家。印度數學家拉馬努金常說數學公式會在夢中出現，他相信這些洞見來自印度女神 Namagiri。他的發現<b>仍需經過嚴謹證明</b>，但許多他夢到的方程式後來被證實對現代數學非常重要。</p>
+    </div>
+    <div class="para">
+      <h4>第 5 段 波耳 <span>L45–54</span></h4>
+      <p>物理學家波耳據說夢見電子繞著原子核運行，就像行星繞太陽。這個生動的畫面啟發了他的<b>原子模型</b>，讓抽象概念變得容易視覺化與理解。他後來拿到諾貝爾物理獎，<b>在很大程度上</b>就是因為這些開創性貢獻。</p>
+    </div>
+    <div class="para">
+      <h4>第 6 段 結論 <span>L55–63</span></h4>
+      <p>今日科學家認為夢可能透過<b>強化記憶</b>與<b>建立意外的連結</b>來加速發現。心智放鬆時更能自由探索可能性，不受邏輯或懷疑限制。換句話說，創造力不總是來自更努力，有時讓心智漫遊、甚至在睡夢中，反而能讓意想不到的解答浮現。</p>
+    </div>
+  </div>
+
+  <h3>單字</h3>
+  <div class="card" id="w4"></div>
+
+  <h3>片語</h3>
+  <div class="card" id="p4"></div>
+
+  <h3>Integrated Questions 解答</h3>
+  <div class="card">
+    <details><summary>1. 作者在第一段同時提到實驗室與夢境，主要目的是？</summary>
+      <div class="ans"><b>(B) To explain that discoveries can occur through both</b><br>
+      第一段先說實驗室是科學的工坊，接著用 However 轉折說有些突破來自夢境 —— 是<b>兩者都能帶來發現</b>，不是要比較優劣或否定實驗。<br>
+      (A) 說實驗室科學過時、(C) 說兩者是競爭方法、(D) 說夢比實驗可靠，都太極端。</div></details>
+    <details><summary>2. (A)–(F) 哪些敘述正確？</summary>
+      <div class="ans">答案 <b>(A) 和 (D)</b><br><br>
+      (A) <span class="ok2">✓</span> 蛇的夢啟發凱庫勒提出苯的結構。<br>
+      (B) <span class="ox">✗</span> 現代研究者認為夢是<b>創造力的來源</b>，不是睡眠的副作用。<br>
+      (C) <span class="ox">✗</span> 波耳的原子模型是<b>夢中影像</b>啟發的，不是主要基於實驗觀察。<br>
+      (D) <span class="ok2">✓</span> 拉馬努金聲稱洞見來自印度女神 Namagiri。<br>
+      (E) <span class="ox">✗</span> 凱庫勒的蛇夢<b>比較早</b>（課文說 just a few years before），而且只差幾年不是幾十年。<br>
+      (F) <span class="ox">✗</span> 拿諾貝爾獎的是<b>波耳</b>；而且諾貝爾獎沒有數學獎。</div></details>
+    <details><summary>動手寫寫看 1：隨著更多證據出現，謎團的細節開始逐漸明朗。</summary>
+      <div class="ans">As more evidence was uncovered, the details of the mystery began to <b>fall into place</b>.</div></details>
+    <details><summary>動手寫寫看 2：這家公司銷售下滑在很大程度上是由價格上漲所致。</summary>
+      <div class="ans">The decline in the company's sales was <b>in large part</b> due to rising prices.</div></details>
+    <details><summary>動手寫寫看 3：據說這批寶藏被藏在山中某處。</summary>
+      <div class="ans">The treasure <b>is said to have been hidden</b> somewhere in the mountains.<br>
+      <span class="mean">「藏」發生在「據說」之前，所以要用完成式；又是被動，所以是 to have been p.p.</span></div></details>
+  </div>
+</section>
+
+<!-- ═══════ U5 ═══════ -->
+<section class="s-2" data-p="2" hidden>
+  <div class="hero"><div class="kicker">UNIT 5　生活對話</div>
+    <h2>Let's Practice Badminton</h2>
+    <div class="zh">來打羽球吧 ＋ 圖解羽球場與設備</div></div>
+
+  <h3>對話重點</h3>
+  <div class="card">
+    <div class="para">
+      <h4>Part A　握拍與揮拍的調整</h4>
+      <p>Ruth 手腕和手臂開始痠痛，請 Sean 看她的動作。兩個問題：</p>
+      <ul>
+        <li><b>握太緊</b> → 會 strain 手腕、讓動作變得不靈活。正確做法是<b>握拍放鬆</b>，只在<b>擊球那一瞬間</b>才握緊。</li>
+        <li><b>太依賴手臂發力</b> → 大部分的力量應該來自<b>身體旋轉 (body rotation)</b> 與<b>重心轉移 (weight transfer)</b>，手臂只是自然跟著走。</li>
+      </ul>
+      <p style="margin-top:5px">調整後 Ruth 覺得揮拍更順、手腕不再僵硬。</p>
+    </div>
+    <div class="para">
+      <h4>Part B　步法與擊球時機</h4>
+      <p>Ruth 一直漏接球，以為是腳步太慢。Sean 指出兩個問題：</p>
+      <ul>
+        <li><b>擊球後站在原地不動 (stay rooted in place)</b>，沒有回到球場中央 → 下一球就站位不佳 (out of position)。<br>
+          改善：膝蓋<b>微彎</b>、重心平衡待命，用<b>小而快的步伐</b>持續調整位置。</li>
+        <li><b>揮拍太早</b> → 應該仔細追蹤羽球，等球<b>稍微在身體前方</b>時再擊球。</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>單字</h3>
+  <div class="card" id="w5"></div>
+
+  <h3>補充說明（課本標 ◆ 的）</h3>
+  <div class="card">
+    <div class="para"><p>
+      <b>swing</b> 在此作名詞，表「揮拍的動作」；作動詞時是「揮動、擺動」<br>
+      <b>weight transfer</b> 重心轉移 —— 擊球時把身體重量由一腳移到另一腳，增加力道與穩定性<br>
+      <b>footwork</b> 步法、腳步移動；<b>timing</b> 擊球時機的掌握<br>
+      <b>rally</b> 來回對打的回合<br>
+      <b>stay rooted in place</b> 站在原地不動（rooted 原指「生根的」，形容人像樹一樣固定在原地）<br>
+      <b>out of position</b> 站位不佳、位置不對
+    </p></div>
+  </div>
+
+  <h3>基礎羽球規則</h3>
+  <div class="card">
+    <div class="para"><ul>
+      <li>比賽採<b>三戰兩勝</b>制。若雙方各贏一局，則進行第三局決勝局。</li>
+      <li>當分數為<b>偶數</b>（含 0）時，從<b>右</b>發球區發球；分數為<b>奇數</b>時，從<b>左</b>發球區發球。</li>
+      <li>發球時，擊球點必須<b>低於發球者的腰部</b>。</li>
+      <li>球拍或身體<b>觸網</b>即屬犯規。</li>
+    </ul></div>
+  </div>
+
+  <h3>圖解術語</h3>
+  <div class="card">
+    <div class="para">
+      <h4>場地與人員</h4>
+      <div class="wrap"><table>
+        <tr><td><b>badminton court</b></td><td>羽球場</td><td><b>net</b></td><td>球網</td></tr>
+        <tr><td><b>post</b></td><td>網柱</td><td><b>scoreboard</b></td><td>記分板</td></tr>
+        <tr><td><b>umpire</b></td><td>主審</td><td><b>service judge</b></td><td>發球審</td></tr>
+        <tr><td><b>line judge</b></td><td>線審</td><td><b>baseline</b></td><td>底線</td></tr>
+        <tr><td><b>center line</b></td><td>中線</td><td><b>short service line</b></td><td>前發球線</td></tr>
+        <tr><td><b>long service line</b></td><td>後發球線</td><td><b>singles sideline</b></td><td>單打邊線</td></tr>
+        <tr><td><b>doubles sideline</b></td><td>雙打邊線</td><td><b>left/right service court</b></td><td>左／右發球區</td></tr>
+      </table></div>
+    </div>
+    <div class="para">
+      <h4>裝備</h4>
+      <div class="wrap"><table>
+        <tr><td><b>racket</b></td><td>球拍</td><td><b>frame</b></td><td>拍框</td></tr>
+        <tr><td><b>strings</b></td><td>拍線</td><td><b>sweet spot</b></td><td>甜蜜點、最佳擊球點</td></tr>
+        <tr><td><b>handle</b></td><td>握柄</td><td><b>shaft</b></td><td>中管</td></tr>
+        <tr><td><b>head</b></td><td>拍頭</td><td><b>shuttlecock</b></td><td>羽毛球（＝shuttle）</td></tr>
+        <tr><td><b>skirt</b></td><td>球裙</td><td><b>base</b></td><td>球頭</td></tr>
+        <tr><td><b>wristband</b></td><td>護腕</td><td><b>headband</b></td><td>頭帶</td></tr>
+      </table></div>
+    </div>
+    <div class="para">
+      <h4>擊球與技巧</h4>
+      <div class="wrap"><table>
+        <tr><td><b>serve</b></td><td>發球</td><td><b>smash</b></td><td>殺球</td></tr>
+        <tr><td><b>drop shot</b></td><td>吊球</td><td><b>lift</b></td><td>挑球</td></tr>
+        <tr><td><b>drive</b></td><td>平球</td><td><b>forehand</b></td><td>正手拍</td></tr>
+        <tr><td><b>backhand</b></td><td>反手拍</td><td></td><td></td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ U6 ═══════ -->
+<section class="s-3" data-p="3" hidden>
+  <div class="hero"><div class="kicker">UNIT 6　混合題型</div>
+    <h2>The City That Never Sleeps: Discovering New York City</h2>
+    <div class="zh">不夜城：探索紐約市</div></div>
+
+  <h3>六個景點（配對題一定考）</h3>
+  <div class="card">
+    <div class="para">
+      <h4>A. Broadway 百老匯</h4>
+      <p>世界級劇場的全球中心，每年吸引數百萬遊客。從音樂劇到戲劇，觀眾可欣賞各種現場演出，頂尖表演者把<b>扣人心弦的故事</b>在舞台上活現。</p>
+    </div>
+    <div class="para">
+      <h4>B. Fifth Avenue 第五大道</h4>
+      <p>貫穿曼哈頓中心，世界最著名的購物街之一。<b>兩旁林立</b>奢華品牌旗艦店，是欣賞高端時尚與都市活力者的天堂。重大節日時<b>精心裝飾</b>的櫥窗會吸引大批人潮。</p>
+    </div>
+    <div class="para">
+      <h4>C. The High Line 高線公園</h4>
+      <p>建在<b>舊高架鐵路</b>上的特殊都市公園，遊客可沿綠色步道行走、俯瞰哈德遜河。高於城市喧囂之上，提供難得的<b>寧靜環境</b>與<b>富想像力的設計</b>。</p>
+    </div>
+    <div class="para">
+      <h4>D. SoHo 蘇活區</h4>
+      <p>充滿活力的<b>藝術氛圍</b>，吸引想要不同於典型觀光體驗的人。<b>藝廊、獨立精品店、時尚咖啡館</b>林立街道，許多建築仍保有 19 世紀的<b>鑄鐵建築</b>。創意能量與歷史特色結合，給了這個街區強烈的識別。</p>
+    </div>
+    <div class="para">
+      <h4>E. The 9/11 Memorial &amp; Museum 九一一國家紀念博物館</h4>
+      <p>一個<b>靜默追思</b>的地方，紀念 2001 年 9 月 11 日恐攻的罹難者。透過有力的展示與精心設計的空間，邀請訪客<b>見證歷史</b>並<b>致上敬意</b>。</p>
+    </div>
+    <div class="para">
+      <h4>F. Yankee Stadium 洋基球場</h4>
+      <p>棒球迷不該錯過，是職業運動中最知名球隊之一的<b>主場</b>。在這裡看球等於踏入美國運動文化的核心，被球場<b>充滿活力的球迷</b>與熱烈氣氛包圍。</p>
+    </div>
+  </div>
+
+  <h3>單字</h3>
+  <div class="card" id="w6"></div>
+
+  <h3>片語</h3>
+  <div class="card" id="p6"></div>
+
+  <h3>Mixed-Format Questions 解答</h3>
+  <div class="card">
+    <details><summary>1. 填空（需做字形變化，每格限一個單字）</summary>
+      <div class="ans">
+        ❶ <b>energy</b>　the excitement created by the <b>energy</b> of the fans<br>
+        <span class="mean">課文原句是 the stadium's <b>energetic</b> fans（形容詞），空格前有 the、後有 of，要改成<b>名詞</b>。</span><br><br>
+        ❷ <b>drawn</b>　the crowds <b>drawn</b> to Fifth Avenue<br>
+        <span class="mean">課文原句是 shop windows <b>draw crowds</b>（主動）。這裡 crowds 是被吸引來的，要用<b>過去分詞</b>當後位修飾。</span>
+      </div></details>
+    <details><summary>2. 陳家三個人各該去哪個景點？</summary>
+      <div class="ans">
+        ❶ Amy 想逛精品店、看藝廊 → <b>D（SoHo）</b><br>
+        <span class="mean">關鍵字 boutiques、art galleries 直接對應 SoHo 那段。</span><br><br>
+        ❷ Kevin 喜歡寧靜環境與創意設計，想輕鬆散步、從不同視角觀察城市 → <b>C（The High Line）</b><br>
+        <span class="mean">對應 peaceful surroundings、imaginative design，而且它「高於城市之上」＝不同視角。</span><br><br>
+        ❸ Daniel 重視和平，想造訪能引發對團結和諧之反思的地方 → <b>E（9/11 Memorial &amp; Museum）</b><br>
+        <span class="mean">對應 quiet reflection。</span>
+      </div></details>
+    <details><summary>3. 哪個片語用來描述訪客親身經歷、見證悲劇事件的歷史？</summary>
+      <div class="ans"><b>bear witness to</b>（history）<br>
+      <span class="mean">課文：it invites visitors to <b>bear witness to</b> history and pay their respects.</span></div></details>
+    <details><summary>動手寫寫看 1：這部電影生動呈現了一位年輕音樂家在競爭激烈的產業中努力尋找立足之地的歷程。</summary>
+      <div class="ans">The film <b>brings to life the story</b> of a young musician trying to find her place in a competitive industry.<br>
+      <span class="mean">受詞 the story of... 太長，所以移到 bring to life 之後。</span></div></details>
+    <details><summary>動手寫寫看 2：Cora 的日記見證了她一生中所經歷的挑戰。</summary>
+      <div class="ans">Cora's journal <b>bears witness to the challenges</b> she experienced throughout her life.<br>
+      <span class="mean">主詞 journal 是單數，動詞要加 s。</span></div></details>
+  </div>
+</section>
+
+<!-- ═══════ 句型 ═══════ -->
+<section class="s-4" data-p="4" hidden>
+  <div class="hero"><div class="kicker">Sentence Patterns</div><h2>兩個句型</h2><div class="zh">U4 被動推測 ／ U6 分詞構句</div></div>
+
+  <h3>U4　據說、被認為……</h3>
+  <div class="card">
+    <div class="ph">
+      <div class="pat">be said / believed / thought <b>to have + p.p.</b></div>
+      <p class="pz">主詞通常是某人或某事，但動作的來源<b>並非特定人</b>，而是泛指社會上普遍流傳的說法，因此多用<b>被動語態</b>，把重點放在「被說、被認為」的對象上。</p>
+      <div class="nt"><b>時間點決定要不要用完成式：</b><br>
+        · 動作與 say／believe／think <b>同時或之後</b>發生 → 用 <b>to V</b><br>
+        · 動作發生在 say／believe／think <b>之前</b> → 用 <b>to have + p.p.</b></div>
+      <div class="eg">課文第 45 行：the physicist Niels Bohr <b>is said to have dreamed</b> of electrons orbiting the nucleus like planets around the sun.<i>據說物理學家波耳夢見電子繞著原子核運行，像行星繞太陽。（做夢在「據說」之前 → 完成式）</i></div>
+      <div class="eg">The company <b>is said to have developed</b> an amazing new battery technology.<i>據說該公司已開發出一項驚人的新電池技術。</i></div>
+      <div class="eg">The ancient temple <b>is said to contain</b> secret doors and hidden passages.<i>據說這座古廟內有暗門與密道。（現在的狀態 → 用 to V）</i></div>
+    </div>
+  </div>
+
+  <h3>U6　分詞構句</h3>
+  <div class="card">
+    <div class="ph">
+      <div class="pat">V-ing / p.p. … , S. + V. …</div>
+      <div class="eg">課文第 1 行：<b>Located</b> on the East Coast of the United States, New York City is one of the liveliest cities in the world.<i>紐約市位於美國東岸，是世界上最有活力的城市之一。</i></div>
+      <p class="pz" style="margin-top:8px">原句可還原為 New York City <b>is located</b> on..., <b>and</b> it is one of...。對等連接詞 and 連接兩個<b>主詞相同</b>的子句時，可簡化成分詞構句：</p>
+      <div class="nt">
+        ❶ 省略連接詞與重複的主詞，把動詞改成分詞形式<br>
+        ❷ 若為<b>主動</b>語態 → 用現在分詞 <b>V-ing</b><br>
+        ❸ 若為<b>被動</b>語態 → 用過去分詞 <b>p.p.</b>
+      </div>
+      <div class="eg"><b>Stretching</b> over 20,000 kilometers, the Great Wall of China is one of the greatest structures ever built.<i>萬里長城綿延超過兩萬公里，是人類歷史上最偉大的建築之一。（長城「延伸」是主動 → V-ing）</i></div>
+      <div class="eg"><b>Originally written</b> in Latin, the novel was later translated into dozens of languages.<i>這部小說最初以拉丁文寫成，後來譯成數十種語言。（小說「被寫」是被動 → p.p.）</i></div>
+      <div class="nt"><b>判斷訣竅：</b>看主詞跟那個動詞的關係。主詞自己做的動作用 V-ing，主詞被怎麼樣用 p.p.。這是考卷最愛挖的地方。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 測驗 ═══════ -->
+<section class="s-5" data-p="5" hidden>
+  <div class="hero"><div class="kicker">Quiz</div><h2>字彙測驗</h2><div class="zh">中文 → 英文，有標詞性</div></div>
+
+  <div id="qsetup">
+    <h3>範圍</h3>
+    <div class="card">
+      <div class="optrow" id="setKind">
+        <button class="chip on" data-k="u4">U4 單字</button>
+        <button class="chip on" data-k="u5">U5 單字</button>
+        <button class="chip on" data-k="bad">羽球術語</button>
+        <button class="chip on" data-k="u6">U6 單字</button>
+        <button class="chip on" data-k="phrase">片語</button>
+      </div>
+    </div>
+    <h3>作答方式</h3>
+    <div class="card">
+      <div class="optrow" id="setMode">
+        <button class="chip on" data-m="mc">選擇題</button>
+        <button class="chip" data-m="type">手打</button>
+      </div>
+      <div class="optrow" id="setLen">
+        <div class="lb">題數</div>
+        <button class="chip" data-n="20">20</button>
+        <button class="chip on" data-n="30">30</button>
+        <button class="chip" data-n="0">全部</button>
+      </div>
+      <div class="hint">手打比對<b>不分大小寫、忽略多餘空格與標點</b>，片語裡的 sb / sth 可寫可不寫，拼錯一個字母會算對但提醒你正確拼法。每題作答後都要自己按「下一題」。</div>
+    </div>
+    <button class="bigbtn" id="startBtn">開始測驗</button>
+  </div>
+
+  <div id="qplay" hidden>
+    <div class="qbar">
+      <span id="qcount">1 / 30</span>
+      <span class="track"><i id="qprog" style="width:0%"></i></span>
+      <span id="qscore">0 對</span>
+    </div>
+    <div class="card">
+      <div class="qprompt">
+        <div class="qtype">中文 → 英文</div>
+        <div class="qtext" id="qtext">—</div>
+        <div class="qhint" id="qhint"></div>
+      </div>
+    </div>
+    <div class="choices" id="qchoices"></div>
+    <div class="typebox" id="qtypebox" hidden>
+      <input id="qinput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" placeholder="輸入英文">
+      <button id="qsubmit">送出</button>
+    </div>
+    <div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+    <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+
+  <div id="qdone" hidden>
+    <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3>
+    <div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button>
+    <button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+</section>
+
+<footer>雜誌 UNIT 4–6</footer>
+</main>
+
+<script>
+/* [分類, 編號, 英文, KK, 詞性, 中文, 註解, 干擾字] */
+var WORDS = [
+['u4',1,'breakthrough',"[\u02c8brek\u02ccθru]",'n.','突破；重大進展','動詞片語 break through 是「突破」，合起來當名詞時中間不空格。','breakout breakdown breakup'],
+['u4',2,'laboratory',"[\u02c8læbrə\u02cctɔrɪ]",'n.','實驗室','簡稱 lab。重音在<b>第一音節</b>。','lavatory dormitory factory'],
+['u4',3,'workshop',"[\u02c8wɝk\u02ccʃɑp]",'n.','工坊；作坊；實作課程','課文用比喻：實驗室是科學的 workshop。也可指「工作坊」這種課程。','workforce worksheet warehouse'],
+['u4',4,'calculation',"[\u02cckælkjə\u02c8leʃən]",'n.','計算、運算；計算結果','動詞 calculate、計算機 calculator。','circulation calibration cultivation'],
+['u4',5,'envision',"[ɪn\u02c8vɪʒən]",'v.','想像、在心中描繪；預見','字源：<b>en-（使成為）＋ vision（視野）</b> → 在心中形成清晰畫面。','envy envelop revision'],
+['u4',6,'striking',"[\u02c8straɪkɪŋ]",'adj.','引人注目的；非常明顯的','來自 strike（打擊）→ 讓人「一眼被打到」的顯眼。','stroking shrinking strict'],
+['u4',7,'insight',"[\u02c8ɪn\u02ccsaɪt]",'n.','洞見；深刻見解；洞察力','in ＋ sight：看進事物<b>內部</b>。別跟 inside 或 eyesight 搞混。','inside eyesight foresight'],
+['u4',8,'formula',"[\u02c8fɔrmjələ]",'n.','公式；配方；分子式','複數可用 formulas 或 formulae。','format formation forum'],
+['u4',9,'equation',"[ɪ\u02c8kweʒən]",'n.','方程式；等式','來自 equal（相等）。注意唸 [ɪ\u02c8kweʒən]，中間是 ʒ 音。','equator equality evaluation'],
+['u4',10,'orbit',"[\u02c8ɔrbɪt]",'v. / n.','繞軌道運行；軌道','★<b>可及物也可不及物</b>：orbit the sun ＝ orbit around the sun。','circuit orchid outfit'],
+['u4',11,'abstract',"[\u02c8æb\u02ccstrækt]",'adj. / n.','抽象的；理論性的／摘要','↔ concrete 具體的。當名詞時是論文前面的「摘要」。','attract subtract absent'],
+['u4',12,'contribution',"[\u02cckɑntrə\u02c8bjuʃən]",'n.','貢獻；奉獻','搭配 make a contribution <b>to</b> sth。動詞 contribute。','distribution constitution contradiction'],
+['u4',13,'forge',"[fɔrdʒ]",'v.','建立；開闢；打造','原意是「鍛造金屬」，引申為費力打造出連結或關係：forge links／friendships。','forget forgive force'],
+['u4',14,'neuroscience',"[\u02ccnʊro\u02c8saɪəns]",'n.','神經科學','字源 <b>neuro-（神經）＋ science</b>。','neurology nutrition nostalgia'],
+['u4',15,'remarkably',"[rɪ\u02c8mɑrkəblɪ]",'adv.','令人驚嘆地；不可思議地','形容詞 remarkable。課文用它開頭表示「令人驚訝的是」。','markedly reportedly remotely'],
+['u4',16,'endeavor',"[ɪn\u02c8dɛvɚ]",'v. / n.','努力；竭力嘗試','比 try 正式很多。搭配 endeavor to V。','endure endanger endorse'],
+['u4',17,'finding',"[\u02c8faɪndɪŋ]",'n.','研究發現；調查結果','學術文章常用複數 findings。','founding funding fitting'],
+['u4',18,'atom',"[\u02c8ætəm]",'n.','原子','由原子核 <b>nucleus</b> 與電子 <b>electron</b> 組成。形容詞 atomic。','item autumn album'],
+['u4',19,'visualize',"[\u02c8vɪʒʊəl\u02ccaɪz]",'v.','想像；在腦海中形成畫面；視覺化','字源 <b>visual（視覺的）＋ -ize（使……化）</b>。','visible realize verbalize'],
+['u4',20,'groundbreaking',"[\u02c8graʊnd\u02ccbrekɪŋ]",'adj.','開創性的；突破性的','字面是「破土」，引申為開創前所未有的局面。','outstanding breathtaking groundless'],
+
+['u5',1,'grip',"[grɪp]",'n. / v.','握法、握球方式；握住、緊握','課文重點：握拍要<b>放鬆</b>，只在擊球瞬間才 tighten。','grasp grim grid'],
+['u5',2,'adjustment',"[ə\u02c8dʒʌstmənt]",'n.','調整、調節；適應','動詞 adjust（及物、不及物都可以）。','adjective amendment attachment'],
+['u5',3,'strain',"[stren]",'v. / n.','拉傷；使承受壓力／負擔、壓力','★別跟 <b>sprain</b>（扭傷）搞混。strain 偏「拉扯過度」，sprain 偏「關節扭到」。','sprain strand stroll'],
+['u5',4,'flexible',"[\u02c8flɛksəbl]",'adj.','靈活的；柔韌的；有彈性的','也可形容時間、規定有彈性。名詞 flexibility。','fragile feasible flammable'],
+['u5',5,'loosen',"[\u02c8lusn]",'v.','（使）鬆開；放鬆','★<b>loosen（動詞）／loose（形容詞，鬆的）／lose（遺失）</b> 三個字常被混用。','loose lessen lose'],
+['u5',6,'slightly',"[\u02c8slaɪtlɪ]",'adv.','稍微地、略微地','課文兩處用到：knees slightly bent、slightly in front of your body。','sightly lightly tightly'],
+['u5',7,'demonstrate',"[\u02c8dɛmən\u02ccstret]",'v.','示範；證明；顯示','名詞 demonstration（示範／示威遊行）。','demolish dominate deteriorate'],
+['u5',8,'rotation',"[ro\u02c8teʃən]",'n.','轉動；旋轉','課文 body rotation 指擊球時的身體旋轉。動詞 rotate。','notation relation ration'],
+['u5',9,'whew',"[hju]",'interj.','呼；哇','用於表示鬆了一口氣、疲倦或驚訝。','wheeze whoa whim'],
+['u5',10,'darn',"[dɑrn]",'interj.','討厭；可惡','表達懊惱或不滿的委婉說法。','dart|dare|dawn'],
+
+['bad',1,'shuttlecock',"[\u02c8ʃʌtl\u02cckɑk]",'n.','羽毛球','也可簡稱 shuttle。上面白色的是 skirt 球裙，下面是 base 球頭。','shuttlebus shuttlecraft shuffleboard'],
+['bad',2,'racket',"[\u02c8rækɪt]",'n.','球拍','拍框 frame、拍線 strings、拍頭 head、中管 shaft、握柄 handle。','rocket bracket racquetball'],
+['bad',3,'sweet spot',"",'n.','甜蜜點；最佳擊球點','拍面正中央彈性最好的區域。','sweet zone|soft spot|blind spot'],
+['bad',4,'umpire',"[\u02c8ʌmpaɪr]",'n.','主審','另有發球審 service judge、線審 line judge。','empire umpteen vampire'],
+['bad',5,'baseline',"[\u02c8bes\u02cclaɪn]",'n.','底線','球場最後方的界線。','sideline borderline deadline'],
+['bad',6,'center line',"",'n.','中線','把發球區分成左右兩半的線。','middle line|half line|median line'],
+['bad',7,'short service line',"",'n.','前發球線','發球時球必須<b>越過</b>這條線。','front line|service line|net line'],
+['bad',8,'long service line',"",'n.','後發球線','雙打發球時球不能超過的後方界線。','back line|rear line|end line'],
+['bad',9,'singles sideline',"",'n.','單打邊線','單打時的左右界線，比雙打邊線窄。','single sideline|solo sideline|inner line'],
+['bad',10,'doubles sideline',"",'n.','雙打邊線','雙打時的左右界線，是球場最外側那條。','double sideline|outer line|wide line'],
+['bad',11,'serve',"[sɝv]",'v. / n.','發球','規則：擊球點必須低於發球者的腰部。','service server surge'],
+['bad',12,'smash',"[smæʃ]",'v. / n.','殺球','由上往下用力扣殺。','slam crash swish'],
+['bad',13,'drop shot',"",'n.','吊球','輕輕把球放到對方網前。','short shot|soft shot|net shot'],
+['bad',14,'lift',"[lɪft]",'v. / n.','挑球','把球高高挑到對方後場。','raise loft toss'],
+['bad',15,'drive',"[draɪv]",'v. / n.','平球','與地面平行、速度快的抽球。','dive drift thrust'],
+['bad',16,'forehand',"[\u02c8for\u02cchænd]",'n.','正手拍','手心朝向擊球方向。','foreman|forearm|forecast'],
+['bad',17,'backhand',"[\u02c8bæk\u02cchænd]",'n.','反手拍','手背朝向擊球方向。','backstroke|backspin|backcourt'],
+['bad',18,'net',"[nɛt]",'n.','球網','規則：球拍或身體<b>觸網</b>即犯規。','mesh web screen'],
+['bad',19,'scoreboard',"[\u02c8skor\u02ccbord]",'n.','記分板','','scorecard billboard dashboard'],
+['bad',20,'wristband',"[\u02c8rɪsts\u02ccbænd]",'n.','護腕','另有 headband 頭帶。','armband handband waistband'],
+
+['u6',1,'beloved',"[bɪ\u02c8lʌvɪd]",'adj.','心愛的、深愛的；深受喜愛的','唸三音節 [bɪˈlʌvɪd]，-ed 要發音。','believed belonged bereaved'],
+['u6',2,'highlight',"[\u02c8haɪ\u02cclaɪt]",'v. / n.','使突出、突顯；強調／最精彩的部分','運動賽事的精華片段就叫 highlights。','headlight highland spotlight'],
+['u6',3,'performer',"[pɚ\u02c8fɔrmɚ]",'n.','表演者、演出者','perform（v.）→ performer（人）／performance（表演）。','performance informer perfumer'],
+['u6',4,'compelling',"[kəm\u02c8pɛlɪŋ]",'adj.','引人入勝的、扣人心弦的；令人信服的','形容故事時是「精彩到停不下來」，形容論點時是「有說服力」。','compulsory competing comparing'],
+['u6',5,'luxury',"[\u02c8lʌkʃərɪ]",'adj. / n.','奢華的、高檔的／奢侈品、奢華','★<b>奢侈品可數、奢華不可數</b>。形容詞另有 luxurious。','leisure laundry liquor'],
+['u6',6,'elaborately',"[ɪ\u02c8læbərətlɪ]",'adv.','精心地；精緻複雜地','強調細節做得很講究。形容詞 elaborate。','elegantly eloquently exclusively'],
+['u6',7,'surroundings',"[sə\u02c8raʊndɪŋz]",'n.','周遭環境','★<b>恆用複數</b>，一定要加 s。','surface suburbs settings'],
+['u6',8,'imaginative',"[ɪ\u02c8mædʒə\u02ccnetɪv]",'adj.','富有想像力的；有創意的','★<b>imaginative（有想像力的）／imaginary（虛構的）／imaginable（可想像的）</b> 三胞胎，超常考。','imaginary imaginable immature'],
+['u6',9,'artistic',"[ɑr\u02c8tɪstɪk]",'adj.','具有藝術氣息的；藝術的；有藝術天賦的','別跟 <b>artificial</b>（人造的）搞混。','artificial autistic authentic'],
+['u6',10,'atmosphere',"[\u02c8ætməs\u02ccfɪr]",'n.','氣氛；大氣（層）','兩個意思差很多，看上下文判斷。','hemisphere altitude aptitude'],
+['u6',11,'gallery',"[\u02c8gælərɪ]",'n.','畫廊、藝廊；美術館、展覽館','','grocery granary gallon'],
+['u6',12,'architecture',"[\u02c8ɑrkə\u02cctɛktʃɚ]",'n.','建築風格；建築設計；建築學','建築師是 <b>architect</b>（不加 -ure）。','architect agriculture aquaculture'],
+['u6',13,'professional',"[prə\u02c8fɛʃənl]",'adj.','職業的；專業的','↔ amateur 業餘的。名詞 profession 職業。','profession professor proficient'],
+['u6',14,'vibrancy',"[\u02c8vaɪbrənsɪ]",'n.','蓬勃朝氣；活力','形容詞 <b>vibrant</b>：充滿活力的；（顏色）鮮豔的。','vibration vacancy brevity'],
+['u6',15,'bustle',"[\u02c8bʌsl]",'n.','忙碌喧囂的活動（尤指城市生活）','課文 the city\u2019s bustle 指城市的喧囂。','bundle hustle bristle'],
+['u6',16,'boutique',"[bu\u02c8tik]",'n.','精品店','法文借字，唸 [bu\u02c8tik]，常指風格獨特的小店。','banquet bouquet botanic'],
+['u6',17,'stylish',"[\u02c8staɪlɪʃ]",'adj.','時尚的、有型的；風格優雅的','','stylist selfish starlit'],
+['u6',18,'high-end',"[\u02c8haɪ\u02c8ɛnd]",'adj.','高檔的、尖端的','強調價格與品質俱高，用於<b>產品或服務</b>。補充 <b>upscale</b> 用於場所或消費層次。','high-rise high-tech highland'],
+['u6',19,'world-class',"[\u02c8wɝld\u02c8klæs]",'adj.','世界一流的；頂尖的','','world-wide first-class classmate'],
+['u6',20,'onstage',"[\u02c8ɑn\u02c8stedʒ]",'adv. / adj.','在舞台上；舞臺上的','↔ backstage 後台。','backstage offstage onset'],
+['u6',21,'pathway',"[\u02c8pæθ\u02ccwe]",'n.','小路、小徑、步道','課文 green pathway 指高線公園的綠色步道。','highway hallway pathology']
+];
+
+var PHRASES = [
+['u4','fall into place','各就其位；（事情）逐漸明朗、水到渠成','字面是「逐漸落入正確位置」，引申為原本混亂或不確定的事物變得清晰、有條理。'],
+['u4','go on to V.','接著（做另一件事）；進而（完成另一項動作）','★對比 <b>go on V-ing</b>：那是「持續做同一件事」。go on to V 是換到<b>下一個不同</b>的動作。'],
+['u4','in large part','在很大程度上；多半','in part 是「部分地」，中間加 large／great／good 就變成「在很大程度上」。'],
+['u4','in other words','換句話說','副詞片語，用來重新表述或進一步說明前述內容。'],
+['u6','bring sth to life','使……變得生動有趣；使……栩栩如生','受詞若<b>較長</b>，可移到 bring to life 之後（課文就是這樣寫）。'],
+['u6','be lined with sth','兩旁排滿了……；……林立','也可用主動語態表示，例如課文的 cafés <b>line</b> its streets。'],
+['u6','bear witness to sth','見證、證明……','指「親眼目睹、見證某事」，常用於描述歷史事件或重大變遷，語氣較正式。'],
+['u6','pay one\u2019s respects','致上敬意','★respects <b>恆用複數</b>。前面常加 last／final 表「最後的告別」，之後可接 to sb。']
+];
+
+var LABEL = {u4:'U4', u5:'U5', bad:'羽球術語', u6:'U6', phrase:'片語'};
+
+var BANK = [];
+WORDS.forEach(function(w){
+  BANK.push({k:w[0], n:w[1], en:w[2], kk:w[3], pos:w[4], zh:w[5], note:w[6], d:w[7] ? w[7].split(w[7].indexOf('|')>-1?'|':' ') : null});
+});
+PHRASES.forEach(function(p,i){
+  BANK.push({k:'phrase', n:i+1, en:p[1], kk:'', pos:'片語', zh:p[2], note:p[3], d:null, from:p[0]});
+});
+
+/* 清單 */
+function wordRow(x){
+  return '<div class="row"><div class="wline"><span class="num">' + x.n + '</span>' +
+    '<b>' + x.en + '</b>' + (x.kk ? '<span class="kk">' + x.kk + '</span>' : '') +
+    '<span class="pos">' + x.pos + '</span></div>' +
+    '<div class="mean">' + x.zh + '</div>' +
+    (x.note ? '<div class="nt">' + x.note + '</div>' : '') + '</div>';
+}
+function phRow(x){
+  return '<div class="ph"><div class="pt"><span class="num">' + x.n + '</span><b>' + x.en + '</b></div>' +
+    '<div class="pz">' + x.zh + '</div>' +
+    (x.note ? '<div class="nt">' + x.note + '</div>' : '') + '</div>';
+}
+document.getElementById('w4').innerHTML = BANK.filter(function(x){ return x.k === 'u4'; }).map(wordRow).join('');
+document.getElementById('w5').innerHTML = BANK.filter(function(x){ return x.k === 'u5'; }).map(wordRow).join('');
+document.getElementById('w6').innerHTML = BANK.filter(function(x){ return x.k === 'u6'; }).map(wordRow).join('');
+document.getElementById('p4').innerHTML = BANK.filter(function(x){ return x.k === 'phrase' && x.from === 'u4'; }).map(phRow).join('');
+document.getElementById('p6').innerHTML = BANK.filter(function(x){ return x.k === 'phrase' && x.from === 'u6'; }).map(phRow).join('');
+
+/* 分頁 & 隱藏中文 */
+var tabs = document.querySelectorAll('nav button');
+var panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+var cnbtn = document.getElementById('cnbtn');
+cnbtn.addEventListener('click', function(){
+  var on = document.body.classList.toggle('hide-cn');
+  cnbtn.textContent = on ? '顯示中文' : '隱藏中文';
+  cnbtn.classList.toggle('off', on);
+});
+
+/* 寬鬆比對 */
+function norm(s){
+  return (s||'').toLowerCase()
+    .replace(/[\u2019\u2018`\u00b4]/g,"'")
+    .replace(/[.,;:!?"()\[\]]/g,' ')
+    .replace(/[-\u2013\u2014_\/]/g,' ')
+    .replace(/\u2026/g,' ')
+    .replace(/'s\b/g,' ')
+    .replace(/\b(sb|sth|somebody|someone|something|one|ones|oneself|vr|a|an|the)\b/g,' ')
+    .replace(/\s+/g,' ').trim();
+}
+function lev(a,b){
+  var m=a.length,n=b.length;
+  if(!m) return n; if(!n) return m;
+  var prev=[],cur=[],i,j;
+  for(j=0;j<=n;j++) prev[j]=j;
+  for(i=1;i<=m;i++){
+    cur[0]=i;
+    for(j=1;j<=n;j++) cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    var t=prev; prev=cur; cur=t;
+  }
+  return prev[n];
+}
+function judge(input, item){
+  var got = norm(input);
+  if(!got) return 'no';
+  var target = norm(item.en);
+  if(got === target) return 'exact';
+  for(var i=0;i<BANK.length;i++){
+    if(BANK[i] !== item && norm(BANK[i].en) === got) return 'no';
+  }
+  if(item.d){
+    for(var j=0;j<item.d.length;j++){ if(norm(item.d[j]) === got) return 'no'; }
+  }
+  var tol = target.length >= 9 ? 2 : (target.length >= 5 ? 1 : 0);
+  if(lev(got, target) <= tol) return 'close';
+  return 'no';
+}
+
+/* 測驗 */
+var S = {kinds:['u4','u5','bad','u6','phrase'], mode:'mc', n:30};
+var queue=[], idx=0, right=0, wrongList=[], answered=false;
+function $(id){ return document.getElementById(id); }
+
+$('setKind').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  b.classList.toggle('on');
+  var box = $('setKind');
+  if(!box.querySelectorAll('.chip.on').length){ b.classList.add('on'); return; }
+  S.kinds = [].map.call(box.querySelectorAll('.chip.on'), function(c){ return c.dataset.k; });
+});
+$('setMode').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  $('setMode').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.mode = b.dataset.m;
+});
+$('setLen').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+
+function shuffle(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+}
+
+function start(pool){
+  var items = pool || BANK.filter(function(x){ return S.kinds.indexOf(x.k) > -1; });
+  if(!items.length){ alert('這個範圍沒有題目'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  var q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtext').textContent = q.zh;
+  $('qhint').textContent = LABEL[q.k] + '　·　' + q.pos;
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+
+  var cw = $('qchoices'), tb = $('qtypebox');
+  cw.innerHTML = '';
+  if(S.mode === 'type'){
+    cw.hidden = true; tb.hidden = false;
+    $('qinput').value = ''; $('qinput').disabled = false; $('qsubmit').disabled = false;
+    $('qinput').placeholder = q.k === 'phrase' ? '輸入英文片語' : '輸入英文';
+    setTimeout(function(){ $('qinput').focus(); }, 50);
+  }else{
+    tb.hidden = true; cw.hidden = false;
+    var ds;
+    if(q.d){ ds = q.d.slice(0,3); }
+    else {
+      ds = shuffle(BANK.filter(function(x){ return x.k === q.k && x !== q; })).slice(0,3)
+             .map(function(x){ return x.en; });
+    }
+    shuffle([q.en].concat(ds)).forEach(function(op){
+      var b = document.createElement('button');
+      b.className = 'choice';
+      b.textContent = op;
+      b.addEventListener('click', function(){ pick(b, op === q.en, q, op); });
+      cw.appendChild(b);
+    });
+  }
+}
+
+function pick(btn, ok, q, chosen){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.en) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:chosen}); }
+  verdict(ok, q, ok ? '' : chosen, false);
+}
+
+function submitType(){
+  if(answered) return;
+  var q = queue[idx];
+  var val = $('qinput').value;
+  if(!val.trim()) return;
+  var r = judge(val, q);
+  answered = true;
+  $('qinput').disabled = true; $('qsubmit').disabled = true;
+  if(r !== 'no') right++;
+  else wrongList.push({q:q, mine:val.trim()});
+  verdict(r !== 'no', q, val.trim(), r === 'close');
+}
+
+function verdict(ok, q, mine, close){
+  var box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'vok' : 'vno');
+  box.innerHTML =
+    '<span class="vt ' + (ok ? 'vok' : 'vno') + '">' + (ok ? (close ? '算你對，但拼字差一點' : '答對') : '答錯') + '</span>' +
+    '<span class="big">' + q.en + '</span>' +
+    '<small>' + q.pos + '　' + q.zh + (q.kk ? '　' + q.kk : '') + '</small>' +
+    (close ? '<small class="gold">正確拼法：' + q.en + '</small>' : '') +
+    (!ok && mine ? '<small>你寫的／選的：' + mine + '</small>' : '') +
+    (q.note ? '<small>' + q.note.replace(/<[^>]+>/g,'') + '</small>' : '');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  $('nextBtn').hidden = false;
+}
+
+function next(){
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  var total = Math.max(right + wrongList.length, 1);
+  var pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對' : pct >= 80 ? '　把錯的補一補' : '　錯的先背熟再考一次');
+  var wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      var d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.en + '</b>' + w.q.pos + '　' + w.q.zh +
+        '<span>你寫的／選的：<em>' + w.mine + '</em></span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('qsubmit').addEventListener('click', submitType);
+$('qinput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); answered ? next() : submitType(); }
+});
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:en-mag-4-6', m[1]);
+         localStorage.setItem('nx:time:en-mag-4-6', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>

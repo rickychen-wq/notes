@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>生物 細胞與能量 ATP ＋ 光合作用</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --b1:#2f6f5f;--b2:#4a5f9e;--b3:#8a5a3f;--b4:#3f7a4a;--b5:#0a84ff;--accent:var(--b1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --b1:#5fc8b0;--b2:#9aabe8;--b3:#e0a97c;--b4:#7fd18a;}
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.6;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .u-1{--accent:var(--b1)}.u-2{--accent:var(--b2)}.u-3{--accent:var(--b3)}
+  .u-4{--accent:var(--b4)}.u-5{--accent:var(--b5)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .blk{padding:14px 16px;border-top:.5px solid var(--sep)}
+  .blk:first-child{border-top:none}
+  .blk h4{margin:0 0 7px;font-size:16px;font-weight:700;color:var(--accent)}
+  .blk p{margin:0 0 5px;font-size:15px}
+  .blk ul{margin:5px 0 0;padding-left:20px;font-size:15px}
+  .blk li{margin:4px 0}
+  .blk .sm{font-size:14px;color:var(--label2)}
+  .key{background:color-mix(in srgb,var(--gold) 20%,transparent);border-radius:4px;padding:0 4px;font-weight:600}
+  .eq{font-family:ui-monospace,Menlo,monospace;font-size:15px;background:var(--fill);
+    padding:9px 12px;border-radius:8px;margin:7px 0;line-height:1.8;overflow-x:auto}
+  .flow{font-size:15px;background:var(--fill);border-radius:8px;padding:10px 12px;margin:7px 0;line-height:1.9}
+  .warn{border-left:3px solid var(--red);padding:9px 12px;margin:8px 0;font-size:14.5px;
+    background:color-mix(in srgb,var(--red) 8%,transparent);border-radius:0 8px 8px 0}
+  .warn b{color:var(--red)}
+  .wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{padding:9px 10px;border-top:.5px solid var(--sep);vertical-align:top;text-align:left}
+  th{font-weight:600;color:var(--label2);font-size:13px;background:var(--fill)}
+  tr:first-child td{border-top:none}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .hint{padding:12px 16px;font-size:14px;color:var(--label2);line-height:1.55;border-top:.5px solid var(--sep)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:24px 18px}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px;text-align:center}
+  .qprompt .qtext{font-size:20px;font-weight:700;line-height:1.5}
+  .choices{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:8px}
+  .choice{text-align:left;font-family:inherit;font-size:16px;padding:14px 16px;border-radius:12px;
+    background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent;line-height:1.45}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.vok{color:var(--green)}
+  .verdict .vt.vno{color:var(--red)}
+  .verdict .big{display:block;font-size:19px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:15px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:700}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --b1:#2f6f5f;--b2:#4a5f9e;--b3:#8a5a3f;--b4:#3f7a4a;--b5:#0a84ff;--accent:var(--b1);
+  }
+  html[data-theme="dark"]{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --b1:#5fc8b0;--b2:#9aabe8;--b3:#e0a97c;--b4:#7fd18a;}
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-bio.html">◀ 回目錄</a><span>生物 · ATP 與光合作用</span></div>
+
+
+<header>
+  <div><h1>生物 · 細胞與能量</h1><div class="sub">ATP 簡介 ＋ 光合作用（光反應）</div></div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">ATP</button>
+    <button role="tab" aria-selected="false" data-t="2">合成</button>
+    <button role="tab" aria-selected="false" data-t="3">輔酶</button>
+    <button role="tab" aria-selected="false" data-t="4">光反應</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ════ ATP ════ -->
+<section class="u-1" data-p="1">
+  <div class="hero"><div class="kicker">小單元一</div><h2>ATP 的介紹與結構</h2><div class="zh">細胞的能量貨幣</div></div>
+
+  <h3>一、ATP 是什麼</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>ATP ＝ 三磷酸腺苷（腺嘌呤核苷三磷酸）</h4>
+      <ul>
+        <li>是一種 <span class="key">核苷酸</span></li>
+        <li>組成三部分：<b>核糖</b>＋<b>腺嘌呤</b>＋<b>三個磷酸根</b></li>
+      </ul>
+      <div class="warn">是<b>核糖</b>不是去氧核糖。所以 ATP 可以當 <b>RNA</b> 的原料，不是 DNA。</div>
+    </div>
+    <div class="blk">
+      <h4>命名系統（看名字就知道結構）</h4>
+      <div class="wrap"><table>
+        <tr><th>字</th><th>代表</th><th>種類</th></tr>
+        <tr><td><b>核</b></td><td>五碳糖</td><td>核糖／去氧核糖（去氧會標 d-）</td></tr>
+        <tr><td><b>苷</b></td><td>含氮鹼基</td><td>A、G、C、T、U</td></tr>
+        <tr><td><b>酸</b></td><td>磷酸根</td><td>1～3 個 → MP／DP／TP</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:7px">所以 <b>A</b>-<b>T</b>P ＝ 腺嘌呤（A）＋ 三個（Tri）磷酸。同理 AMP 是一個、ADP 是兩個。</p>
+    </div>
+    <div class="blk">
+      <h4>ATP 的兩個功能</h4>
+      <ul>
+        <li>聚合形成 <span class="key">RNA（核糖核酸）</span> 的原料之一</li>
+        <li>細胞活動時能量的<b>直接</b>供應者 ＝ <span class="key">能量貨幣</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>二、高能磷酸鍵</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th>分子</th><th>磷酸根數</th><th>高能磷酸鍵數</th></tr>
+        <tr><td><b>ATP</b> 三磷酸腺苷</td><td>3</td><td><b>2 個</b></td></tr>
+        <tr><td><b>ADP</b> 二磷酸腺苷</td><td>2</td><td><b>1 個</b></td></tr>
+        <tr><td><b>AMP</b> 單磷酸腺苷</td><td>1</td><td><b>0 個</b>（不具高能磷酸鍵）</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:7px">高能磷酸鍵是<b>磷酸根與磷酸根之間</b>的鍵；AMP 只有一個磷酸根接在核糖上，所以沒有。</p>
+    </div>
+    <div class="blk">
+      <h4>「高能磷酸鍵釋放能量」的真相</h4>
+      <p class="sm">這個名稱是早期科學家取的，因為觀察到鍵結水解時整體會釋出能量。但正確理解是：</p>
+      <div class="warn"><b>打斷鍵結本身是耗能的</b>。之所以整體釋能，是因為斷裂後與水化合形成的產物<b>比原來更穩定</b>（跟電荷排斥、共振有關），前後能量差才是釋出的能量。</div>
+    </div>
+    <div class="blk">
+      <h4>ATP ⇌ ADP 的循環</h4>
+      <div class="flow">
+        ADP ＋ Pi　<b>——磷酸化（脫水）——▶</b>　ATP　　需要<b>提供能量</b><br>
+        ATP　<b>——水解——▶</b>　ADP ＋ Pi　　<b>能量釋出</b>
+      </div>
+      <p class="sm">一個分子接受磷酸根的反應就叫 <span class="key">磷酸化</span>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 合成 ════ -->
+<section class="u-2" data-p="2" hidden>
+  <div class="hero"><div class="kicker">ATP 如何合成</div><h2>兩種磷酸化方式</h2><div class="zh">名稱不用背，過程要懂</div></div>
+
+  <h3>總覽</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th>方式</th><th>大致過程</th><th>例子</th></tr>
+        <tr>
+          <td><b>化學滲透<br>磷酸化</b></td>
+          <td>膜上電子傳遞鏈傳遞高能電子 → 釋出能量建立膜兩側 H⁺ 濃度差 → H⁺ 衝過通道蛋白 → 激活 ATP 合成酶 → 合成 ATP</td>
+          <td><b>光合磷酸化</b>（光合作用光反應）<br><b>氧化磷酸化</b>（有氧呼吸）</td>
+        </tr>
+        <tr>
+          <td><b>受質階層<br>磷酸化</b></td>
+          <td>酵素催化下，具高能磷酸基的化合物當「受質」，把高能磷酸基<b>直接</b>轉給 ADP 而合成 ATP</td>
+          <td><b>糖解作用</b></td>
+        </tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px">最大差別：受質階層磷酸化<b>不經過電子傳遞鏈</b>，是分子對分子直接轉交磷酸基。</p>
+    </div>
+  </div>
+
+  <h3>一、化學滲透磷酸化</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>電子傳遞鏈長在哪</h4>
+      <p class="sm">由膜上一系列<b>電子載體</b>構成，三個位置要記：</p>
+      <ul>
+        <li>細菌 → <span class="key">細胞膜</span></li>
+        <li>粒線體 → <span class="key">內膜</span></li>
+        <li>葉綠體 → <span class="key">類囊體膜</span></li>
+      </ul>
+    </div>
+    <div class="blk">
+      <h4>電子為什麼會一直往下傳</h4>
+      <ul>
+        <li>各電子載體對電子的<b>親和力依序增加</b>，所以電子會依序被往下移交<br>
+          <span class="sm">親和力：載體 A ＜ B ＜ C</span></li>
+        <li>電子每傳一次就<b>釋出一部分能量</b><br>
+          <span class="sm">電子能量：A ＞ B ＞ C</span></li>
+        <li>釋出能量後的電子離開傳遞鏈，最後被<b>別的分子</b>接收</li>
+      </ul>
+      <div class="warn">常考的觀念題：電子傳遞鏈中傳遞的電子，最後<b>不會</b>成為 ATP 分子的一部分。它只是負責「一路放能」，能量拿去打 H⁺ 過膜而已。</div>
+    </div>
+    <div class="blk">
+      <h4>H⁺ 怎麼變成 ATP</h4>
+      <div class="flow">
+        ① 電子傳遞釋出的能量，把 H⁺ <b>跨膜打到膜的另一側</b><br>
+        ② 膜兩側形成 H⁺ <b>濃度梯度</b><br>
+        ③ H⁺ 想順著濃度往回擴散，但<b>帶電無法穿過脂雙層</b><br>
+        ④ 只能走膜上的 H⁺ 通道蛋白 —— 而 <span class="key">ATP 合成酶本身就是 H⁺ 通道蛋白</span><br>
+        ⑤ H⁺ 衝過去時激活酵素 → ADP ＋ Pi 合成 ATP
+      </div>
+      <p class="sm">有些電子載體同時具有<b>氫離子幫浦</b>的作用，就是負責第①步的。</p>
+    </div>
+  </div>
+
+  <h3>二、受質階層磷酸化</h3>
+  <div class="card">
+    <div class="blk">
+      <p>酵素的受質藉由酵素催化，把自己所含的<b>磷酸基與能量一起轉移給 ADP</b> 而生成 ATP。</p>
+      <div class="eq">例：糖解作用中，丙酮酸激酶催化<br>
+      PEP（受質 A）＋ ADP（受質 B）→ 丙酮酸 ＋ ATP</div>
+      <p class="sm">磷酸根 (Pi) 透過酵素催化，由受質 A 轉移至受質 B。全程<b>沒有電子傳遞鏈參與</b>。</p>
+    </div>
+  </div>
+
+  <h3>葉綠體 vs 粒線體的電子傳遞鏈</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th></th><th>葉綠體</th><th>粒線體</th></tr>
+        <tr><td><b>位置</b></td><td>類囊體膜</td><td>內膜</td></tr>
+        <tr><td><b>高能電子<br>來源</b></td><td>葉綠素吸光後釋出<br>（電子由水光解補充）</td><td>NADH、FADH₂<br>（來自糖解與檸檬酸循環）</td></tr>
+        <tr><td><b>電子最後<br>去處</b></td><td>非循環：交給 NADP⁺ 形成 NADPH<br>循環：回到 PSI</td><td>交給 O₂，與 H⁺ 結合成 H₂O</td></tr>
+        <tr><td><b>產生 ATP<br>的位置</b></td><td>基質</td><td>基質</td></tr>
+        <tr><td><b>H⁺ 被打<br>去哪裡</b></td><td>基質 → 類囊體內腔</td><td>基質 → 膜間腔</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px">兩邊都是 H⁺ 先被打到一個小空間裡積聚，再<b>順濃度衝回基質</b>時合成 ATP，所以 ATP 都在<b>基質</b>生成。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 輔酶 ════ -->
+<section class="u-3" data-p="3" hidden>
+  <div class="hero"><div class="kicker">其他能量流通分子</div><h2>三種輔酶</h2><div class="zh">NADPH ／ NADH ／ FADH₂</div></div>
+
+  <div class="card">
+    <div class="blk">
+      <h4>它們在做什麼</h4>
+      <p>是 <span class="key">H⁺ 與高能電子的攜帶者</span>，也就是參與<b>氧化還原反應</b>的輔酶。</p>
+      <div class="eq">小複習　<b>氧化 ＝ 失電子</b>　　<b>還原 ＝ 得電子</b></div>
+    </div>
+    <div class="blk">
+      <h4>三種輔酶對照</h4>
+      <div class="wrap"><table>
+        <tr><th>氧化態</th><th>還原態</th><th>參與的作用</th></tr>
+        <tr><td>NADP⁺</td><td><b>NADPH</b></td><td>光合作用</td></tr>
+        <tr><td>NAD⁺</td><td><b>NADH</b></td><td>呼吸作用</td></tr>
+        <tr><td>FAD</td><td><b>FADH₂</b></td><td>呼吸作用</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px">結構共同點：<b>都屬於核苷酸類</b>、成分中<b>含特定的維生素 B</b>。</p>
+      <div class="warn">分辨法：名字裡有 <b>P</b> 的（NADP）走<b>光合作用</b>，沒有 P 的（NAD、FAD）走<b>呼吸作用</b>。</div>
+    </div>
+    <div class="blk">
+      <h4>三個互換反應式（要會默寫）</h4>
+      <div class="eq">
+        NADP⁺ ＋ 2e⁻ ＋ H⁺ ⇌ NADPH<br>
+        NAD⁺ ＋ 2e⁻ ＋ H⁺ ⇌ NADH<br>
+        FAD ＋ 2e⁻ ＋ 2H⁺ ⇌ FADH₂
+      </div>
+      <div class="warn">兩個容易寫錯的地方：<br>
+        ① <b>FAD 不帶電</b>，不要寫成 FAD⁺<br>
+        ② FADH₂ 收<b>兩個</b> H⁺，另外兩個只收一個 H⁺</div>
+    </div>
+    <div class="blk">
+      <h4>為什麼 NADPH 是高能物質</h4>
+      <ul>
+        <li>NADP⁺ 和<b>高能電子與 H⁺ 結合</b>後形成還原態的 NADPH</li>
+        <li>NADPH <b>帶有高能電子</b>，所以是高能物質</li>
+        <li>但它跟高能電子的<b>親和力並不好</b>，很容易在反應中把電子丟給別人</li>
+      </ul>
+      <div class="warn"><b>講義那格填「氧化性」是錯的。</b>把電子<b>丟給別人</b>的是<b>還原劑</b>，所以 NADPH 具有很強的 <b>還原力（還原性）</b>。它讓別人被還原，自己被氧化。<br>
+      對照定義：氧化＝失電子。NADPH 失去電子 → 它自己被氧化 → 它是還原劑。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 光反應 ════ -->
+<section class="u-4" data-p="4" hidden>
+  <div class="hero"><div class="kicker">光合作用</div><h2>光反應</h2><div class="zh">光體系 ／ 兩種電子流 ／ 光水解</div></div>
+
+  <h3>一、先搞懂光合作用在幹嘛</h3>
+  <div class="card">
+    <div class="blk">
+      <ul>
+        <li>目的：<b>製造有機養分</b>，直接產物是<b>醣類</b>；碳元素來自 <span class="key">CO₂</span></li>
+        <li>由 CO₂ 合成醣類的反應叫 <b>同化作用</b>，兩個特點：
+          <ul>
+            <li>是<b>合成</b>反應 → 需要<b>能量</b> → 由 <b>ATP</b> 提供</li>
+            <li>是<b>還原</b>反應 → 需要<b>電子</b> → 由 <b>NADPH</b> 提供</li>
+          </ul>
+        </li>
+      </ul>
+      <div class="wrap" style="margin-top:8px"><table>
+        <tr><td><b>光反應</b></td><td>吸收光能，轉變成細胞可利用的化學能（存在 ATP、NADPH 中）</td></tr>
+        <tr><td><b>碳反應</b></td><td>利用前一階段的 ATP 與 NADPH，把 CO₂ 合成醣類</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <h3>二、光體系（PS）</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>捕捉光能的流程</h4>
+      <div class="flow">
+        天線色素吸收光能 → 能量在色素分子間轉移 → 最後全部集中到<b>反應中心</b><br>
+        → 反應中心的葉綠素電子被激發成<b>高能激動態</b> → 釋出<b>高能電子</b> → 進入電子傳遞鏈（或被電子載體接走）
+      </div>
+      <p class="sm"><b>天線色素只負責收集能量、不放電子</b>；真正放出電子的是反應中心。</p>
+    </div>
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th></th><th>光體系 I（PSI）</th><th>光體系 II（PSII）</th></tr>
+        <tr><td><b>天線色素</b></td><td>葉綠素 a、葉綠素 b、<b>胡蘿蔔素</b></td><td>葉綠素 a、b、<b>葉黃素</b></td></tr>
+        <tr><td><b>反應中心</b></td><td><b>P700</b><br>（700 nm 有最大吸光度）</td><td><b>P680</b><br>（680 nm 有最大吸光度）</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px">兩者的反應中心<b>都是葉綠素 a</b>，只是吸光度不同。P 後面的數字就是最大吸收波長。</p>
+    </div>
+  </div>
+
+  <h3>三、兩種電子流（最常考）</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>循環式電子流（PSI 單獨作用）</h4>
+      <div class="flow">
+        PSI 各色素吸收能量 → 能量轉移至 <b>P700</b> → P700 釋出電子<br>
+        → 電子經過<b>電子傳遞鏈</b>（過程中合成 <b>ATP</b>）<br>
+        → 電子最後<b>又回到 PSI</b>
+      </div>
+      <p><b>目的：只產生 ATP</b>（不產生 NADPH，也不放氧氣）</p>
+    </div>
+    <div class="blk">
+      <h4>非循環式電子流（PSI 與 PSII 協同）</h4>
+      <div class="flow">
+        PSII 各色素吸收光能 → 轉移至 <b>P680</b> → P680 釋出電子<br>
+        → 經過<b>電子傳遞鏈</b>（過程中合成 <b>ATP</b>）→ 電子轉移至 <b>PSI</b><br>
+        → PSI 色素吸收能量 → 轉移至 <b>P700</b> → P700 釋出電子<br>
+        → 經過少數電子載體後傳給 <b>NADP⁺</b><br>
+        → NADP⁺（氧化態）吸收電子和 H⁺ 後合成 <b>NADPH</b>（還原態）
+      </div>
+      <p>最後的<b>電子接受者是 NADP⁺</b>，接受後形成 NADPH。</p>
+      <p><b>目的：生成 ATP 和 NADPH</b></p>
+      <div class="warn">電子<b>一去不回</b>，所以 PSII 缺的電子必須另外補 → 這就是下面的光水解。</div>
+    </div>
+  </div>
+
+  <h3>四、光水解作用</h3>
+  <div class="card">
+    <div class="blk">
+      <p>在非循環式電子流中，PSII 丟出的電子不會回來，所以植物在光反應一開始就用<b>光能分解水</b>當電子來源。</p>
+      <div class="eq">發生於 <b>PSII</b>　　H₂O → 2H⁺ ＋ 2e⁻ ＋ ½O₂</div>
+      <p class="sm">三個產物的去處：</p>
+      <ul>
+        <li><b>O₂</b> → 離開葉綠體，被釋放到外界（對植物來說是<b>廢物</b>）</li>
+        <li><b>e⁻</b> → 被 <b>PSII 的葉綠素 a（P680）</b> 吸收，補充它受光激活後失去的電子</li>
+        <li><b>H⁺</b> → 留在<b>類囊體內腔</b>，順便增加濃度梯度</li>
+      </ul>
+      <div class="warn">氧氣是<b>水</b>分解來的，不是 CO₂ 來的。這是課本一定會考的觀念。</div>
+    </div>
+  </div>
+
+  <h3>五、光反應總整理</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="flow">
+        <b>類囊體內腔</b>（H⁺ 高濃度）<br>
+        ↑ 光水解產生 H⁺　　↑ 電子傳遞鏈把 H⁺ 從基質打進來<br>
+        ── 類囊體膜：PSII → 電子傳遞鏈 → PSI → NADP⁺ ──<br>
+        ↓ H⁺ 順濃度經 ATP 合成酶衝回<br>
+        <b>基質</b>（合成 ATP、NADPH 也在這裡）
+      </div>
+      <div class="wrap" style="margin-top:8px"><table>
+        <tr><th>項目</th><th>循環式</th><th>非循環式</th></tr>
+        <tr><td>光體系</td><td>只有 PSI</td><td>PSII ＋ PSI</td></tr>
+        <tr><td>電子去向</td><td>回到 PSI</td><td>給 NADP⁺</td></tr>
+        <tr><td>產物</td><td>只有 ATP</td><td>ATP ＋ NADPH</td></tr>
+        <tr><td>需要光水解</td><td>不需要</td><td><b>需要</b></td></tr>
+        <tr><td>放出 O₂</td><td>不會</td><td><b>會</b></td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 測驗 ════ -->
+<section class="u-5" data-p="5" hidden>
+  <div class="hero"><div class="kicker">Quiz</div><h2>觀念測驗</h2><div class="zh">每題作答後都會附解析</div></div>
+
+  <div id="qsetup">
+    <h3>範圍</h3>
+    <div class="card">
+      <div class="optrow" id="setKind">
+        <button class="chip on" data-k="atp">ATP</button>
+        <button class="chip on" data-k="syn">合成</button>
+        <button class="chip on" data-k="co">輔酶</button>
+        <button class="chip on" data-k="light">光反應</button>
+      </div>
+    </div>
+    <h3>題數</h3>
+    <div class="card">
+      <div class="optrow" id="setLen">
+        <button class="chip" data-n="15">15</button>
+        <button class="chip on" data-n="25">25</button>
+        <button class="chip" data-n="0">全部</button>
+      </div>
+      <div class="hint">四選一，答對答錯都會停下來給解析，看完自己按「下一題」。</div>
+    </div>
+    <button class="bigbtn" id="startBtn">開始測驗</button>
+  </div>
+
+  <div id="qplay" hidden>
+    <div class="qbar">
+      <span id="qcount">1 / 25</span>
+      <span class="track"><i id="qprog" style="width:0%"></i></span>
+      <span id="qscore">0 對</span>
+    </div>
+    <div class="card">
+      <div class="qprompt">
+        <div class="qtype" id="qtype">—</div>
+        <div class="qtext" id="qtext">—</div>
+      </div>
+    </div>
+    <div class="choices" id="qchoices"></div>
+    <div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+    <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+
+  <div id="qdone" hidden>
+    <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3>
+    <div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button>
+    <button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+</section>
+
+<footer>細胞與能量 · ATP 簡介 ＋ 光合作用光反應</footer>
+</main>
+
+<script>
+/* [分類, 題目, 正解, [三個干擾], 解析] */
+var RAW = [
+['atp','ATP 屬於下列哪一類分子？','核苷酸',['蛋白質','脂質','多醣'],'ATP 由核糖＋腺嘌呤＋磷酸根組成，符合核苷酸的定義。'],
+['atp','ATP 分子中含有哪一種五碳糖？','核糖',['去氧核糖','葡萄糖','果糖'],'是核糖不是去氧核糖，所以 ATP 能當 RNA 的原料。'],
+['atp','ATP 分子上有幾個高能磷酸鍵？','2 個',['1 個','3 個','0 個'],'三個磷酸根之間有兩個鍵，所以是 2 個。'],
+['atp','AMP 有幾個高能磷酸鍵？','0 個',['1 個','2 個','3 個'],'AMP 只有一個磷酸根接在核糖上，磷酸根之間沒有鍵，所以不具高能磷酸鍵。'],
+['atp','ATP 是聚合形成何者的原料之一？','RNA',['DNA','蛋白質','澱粉'],'因為含的是核糖，所以是核糖核酸 RNA 的原料。'],
+['atp','ADP 接受磷酸根形成 ATP 的反應稱為？','磷酸化（脫水）',['水解','氧化','發酵'],'一個分子接受磷酸的反應就叫磷酸化，同時是脫水反應，需要外界提供能量。'],
+['atp','關於「高能磷酸鍵釋放能量」，正確的理解是？','斷裂後產物較穩定，前後能量差才釋出',['打斷鍵結本身會放出能量','能量儲存在鍵結裡面','磷酸根帶正電互相吸引'],'化學上打斷鍵結一定耗能。釋能是因為水解後的產物比原來穩定（跟電荷、共振有關）。'],
+['atp','ATP 水解成 ADP 時，能量的變化是？','釋出能量',['吸收能量','不變','先吸後放'],'水解放能，磷酸化（脫水）才需要提供能量。'],
+
+['syn','粒線體的電子傳遞鏈位於？','內膜',['外膜','基質','膜間腔'],'粒線體是內膜、葉綠體是類囊體膜、細菌是細胞膜。'],
+['syn','葉綠體的電子傳遞鏈位於？','類囊體膜',['基質','內膜','外膜'],'電子傳遞鏈長在類囊體膜上，ATP 則在基質合成。'],
+['syn','細菌的電子傳遞鏈位於？','細胞膜',['細胞壁','核糖體','細胞質'],'細菌沒有粒線體，電子傳遞鏈直接長在細胞膜上。'],
+['syn','電子會在傳遞鏈上一路往下傳的原因是？','各載體對電子的親和力依序增加',['親和力依序減少','完全隨機移動','由 ATP 推動'],'親和力 A＜B＜C，電子自然被越來越強的載體搶走。'],
+['syn','電子沿電子傳遞鏈傳遞時，本身能量如何變化？','逐漸釋出而降低',['逐漸增加','完全不變','先增後減'],'電子能量 A＞B＞C，每傳一次就放掉一部分能量，這些能量用來打 H⁺ 過膜。'],
+['syn','有氧呼吸利用化學滲透產生 ATP，這種方式稱為？','氧化磷酸化',['光合磷酸化','受質階層磷酸化','糖解作用'],'光合作用光反應叫光合磷酸化，有氧呼吸叫氧化磷酸化，兩者機制相同。'],
+['syn','光合作用光反應產生 ATP 的方式稱為？','光合磷酸化',['氧化磷酸化','受質階層磷酸化','發酵'],'同樣屬於化學滲透磷酸化，只是發生在葉綠體。'],
+['syn','糖解作用產生 ATP 的方式是？','受質階層磷酸化',['化學滲透磷酸化','光合磷酸化','氧化磷酸化'],'糖解在細胞質進行，沒有膜也沒有電子傳遞鏈，靠受質直接把磷酸基交給 ADP。'],
+['syn','受質階層磷酸化是否經過電子傳遞鏈？','不經過',['一定要經過','經過一半','看細胞種類'],'這是它跟化學滲透最大的差別，它是分子對分子直接轉交磷酸基。'],
+['syn','ATP 合成酶除了合成 ATP，本身還是什麼？','H⁺ 通道蛋白',['電子載體','光合色素','分解酵素'],'H⁺ 帶電過不了脂雙層，只能走通道，而 ATP 合成酶本身就是那個通道。'],
+['syn','H⁺ 無法直接穿過脂雙層的原因是？','帶電荷',['體積太大','質量太重','沒有濃度差'],'脂雙層內部疏水，帶電粒子過不去，只能靠通道蛋白。'],
+['syn','電子傳遞鏈上傳遞的電子，最後會成為 ATP 分子的一部分嗎？','不會',['會','一半會','看情況'],'電子只負責沿途放能，能量被拿去建立 H⁺ 梯度。ATP 的磷酸來自 ADP 和 Pi。'],
+['syn','化學滲透磷酸化中，H⁺ 是在什麼時候推動 ATP 合成？','順濃度梯度衝回時',['被打到高濃度側時','濃度平衡時','完全沒有濃度差時'],'先耗能把 H⁺ 打到一側積聚，H⁺ 再順著梯度衝回來時才激活 ATP 合成酶。'],
+
+['co','氧化的定義是？','失去電子',['得到電子','得到氫','失去能量'],'氧化＝失電子，還原＝得電子。這組定義整個單元都在用。'],
+['co','光合作用使用的輔酶是哪一組？','NADP⁺ ／ NADPH',['NAD⁺ ／ NADH','FAD ／ FADH₂','ADP ／ ATP'],'名字裡有 P 的走光合作用，沒有 P 的（NAD、FAD）走呼吸作用。'],
+['co','呼吸作用使用的輔酶是哪兩組？','NAD⁺ 與 FAD',['NADP⁺ 與 FAD','NADP⁺ 與 NAD⁺','只有 NADP⁺'],'呼吸作用用 NAD⁺／NADH 與 FAD／FADH₂ 兩種。'],
+['co','NADPH、NADH、FADH₂ 這類分子主要攜帶什麼？','H⁺ 與高能電子',['磷酸根','氧氣','二氧化碳'],'它們是氧化還原反應的輔酶，負責搬運電子和氫離子。'],
+['co','三種輔酶在結構上的共同點是？','都屬核苷酸類且含維生素 B',['都是蛋白質','都是脂質','都含有鐵'],'這是課本明確列出的兩個共同點。'],
+['co','NADP⁺ ＋ 2e⁻ ＋ H⁺ 會形成什麼？','NADPH',['NADH','FADH₂','ATP'],'氧化態 NADP⁺ 接了電子和 H⁺ 就變成還原態 NADPH。'],
+['co','FAD 形成 FADH₂ 時接受幾個 H⁺？','2 個',['1 個','3 個','0 個'],'FAD ＋ 2e⁻ ＋ 2H⁺ → FADH₂，跟另外兩個只收 1 個 H⁺ 不同。'],
+['co','關於 FAD 的寫法，正確的是？','FAD 不帶電荷',['要寫成 FAD⁺','要寫成 FAD⁻','要寫成 FAD²⁺'],'NAD⁺ 和 NADP⁺ 帶正電，但 FAD 不帶電，寫成 FAD⁺ 是錯的。'],
+['co','NADPH 常在反應中把電子丟給別人，代表它具有？','很強的還原力',['很強的氧化力','很強的酸性','很強的鹼性'],'給出電子的是還原劑。它讓對方被還原、自己被氧化，所以是還原力強。'],
+['co','為什麼說 NADPH 是高能物質？','因為它帶有高能電子',['因為它含有磷酸根','因為它是蛋白質','因為它能直接分解水'],'高能電子存在 NADPH 上，之後在碳反應中被用來還原 CO₂。'],
+
+['light','光合作用的直接產物是？','醣類',['蛋白質','脂質','核酸'],'光合作用製造有機養分，直接產物是醣類。'],
+['light','光合作用所需的碳元素來自？','CO₂',['H₂O','O₂','葡萄糖'],'碳來自二氧化碳，氧氣則來自水。'],
+['light','由 CO₂ 合成醣類是還原反應，所需的電子由誰提供？','NADPH',['ATP','O₂','葉綠素'],'ATP 提供能量、NADPH 提供還原用的電子，兩者分工要分清楚。'],
+['light','光反應把光能轉成化學能，儲存在哪兩種分子中？','ATP 與 NADPH',['ATP 與 NADH','NADPH 與 FADH₂','葡萄糖與 O₂'],'這兩個分子接著被碳反應拿去用。'],
+['light','PSI 的反應中心是？','P700',['P680','P650','P800'],'P 後面的數字代表最大吸收波長，PSI 是 700 nm。'],
+['light','PSII 的反應中心是？','P680',['P700','P600','P750'],'PSII 的反應中心在 680 nm 有最大吸光度。'],
+['light','兩個光體系的反應中心色素都是？','葉綠素 a',['葉綠素 b','胡蘿蔔素','葉黃素'],'都是葉綠素 a，只是吸光度不同才分成 P700 和 P680。'],
+['light','天線色素的功能是？','吸收光能並把能量轉移到反應中心',['直接釋出高能電子','合成 ATP','分解水'],'天線色素只收集能量，真正放電子的是反應中心。'],
+['light','循環式電子流發生在哪個光體系？','只有 PSI',['只有 PSII','PSI 與 PSII','粒線體內膜'],'循環式就是 PSI 單獨作用的情形。'],
+['light','循環式電子流的產物是？','只有 ATP',['ATP 與 NADPH','只有 NADPH','ATP 與 O₂'],'電子繞一圈回到 PSI，沒有交給 NADP⁺，所以不產生 NADPH，也不放氧。'],
+['light','非循環式電子流中，電子最後的接受者是？','NADP⁺',['O₂','P700','H₂O'],'電子最後傳給 NADP⁺，形成 NADPH。'],
+['light','非循環式電子流的產物是？','ATP 與 NADPH',['只有 ATP','只有 NADPH','葡萄糖'],'經過電子傳遞鏈時生成 ATP，最後交給 NADP⁺ 生成 NADPH。'],
+['light','非循環式電子流中，電子的流動順序是？','PSII → 電子傳遞鏈 → PSI → NADP⁺',['PSI → PSII → NADP⁺','PSII → NADP⁺ → PSI','PSI → 電子傳遞鏈 → PSII'],'編號雖然是 I、II，但流程是從 PSII 開始，這點超容易搞反。'],
+['light','光水解作用發生在哪個光體系？','PSII',['PSI','兩者都有','葉綠體基質'],'因為非循環時 PSII 的電子一去不回，需要靠分解水補電子。'],
+['light','光水解的反應式產物是？','2H⁺ ＋ 2e⁻ ＋ ½O₂',['2H⁺ ＋ O₂','H₂ ＋ O₂','2e⁻ ＋ H₂'],'H₂O → 2H⁺ ＋ 2e⁻ ＋ ½O₂，三個產物各有去處。'],
+['light','光水解產生的 H⁺ 留在哪裡？','類囊體內腔',['葉綠體基質','細胞質','膜間腔'],'留在內腔，順便加大 H⁺ 濃度梯度，有助 ATP 合成。'],
+['light','光水解產生的電子有什麼用途？','補充 P680 失去的電子',['直接合成 NADPH','形成 O₂','推動 ATP 合成酶'],'補給 PSII 的葉綠素 a，讓它可以繼續放電子。'],
+['light','光合作用放出的 O₂ 來自？','水',['二氧化碳','葡萄糖','ATP'],'氧氣是水光解的產物，不是 CO₂ 分解來的。'],
+['light','光反應中 H⁺ 被打到哪裡積聚？','類囊體內腔',['葉綠體基質','膜間腔','細胞質'],'電子傳遞鏈把 H⁺ 從基質打進類囊體內腔，形成濃度梯度。'],
+['light','葉綠體中 ATP 是在哪裡合成的？','基質',['類囊體內腔','內膜','外膜'],'H⁺ 從內腔衝回基質時，在基質側合成 ATP。'],
+['light','循環式與非循環式電子流的最大差別是？','非循環式才會產生 NADPH 並放出 O₂',['循環式才會產生 ATP','兩者產物完全相同','循環式需要光水解'],'循環式只有 ATP；非循環式有 ATP 和 NADPH，且因為要補電子才會有光水解放氧。']
+];
+
+var LABEL = {atp:'ATP', syn:'ATP 合成', co:'輔酶', light:'光反應'};
+var BANK = RAW.map(function(r,i){
+  return {i:i, k:r[0], q:r[1], a:r[2], d:r[3], why:r[4]};
+});
+
+var tabs = document.querySelectorAll('nav button');
+var panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+
+var S = {kinds:['atp','syn','co','light'], n:25};
+var queue=[], idx=0, right=0, wrongList=[], answered=false;
+function $(id){ return document.getElementById(id); }
+
+$('setKind').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  b.classList.toggle('on');
+  var box = $('setKind');
+  if(!box.querySelectorAll('.chip.on').length){ b.classList.add('on'); return; }
+  S.kinds = [].map.call(box.querySelectorAll('.chip.on'), function(c){ return c.dataset.k; });
+});
+$('setLen').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+
+function shuffle(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+}
+
+function start(pool){
+  var items = pool || BANK.filter(function(x){ return S.kinds.indexOf(x.k) > -1; });
+  if(!items.length){ alert('這個範圍沒有題目'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  var q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtype').textContent = LABEL[q.k];
+  $('qtext').textContent = q.q;
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+  var cw = $('qchoices');
+  cw.innerHTML = '';
+  shuffle([q.a].concat(q.d)).forEach(function(op){
+    var b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = op;
+    b.addEventListener('click', function(){ pick(b, op === q.a, q, op); });
+    cw.appendChild(b);
+  });
+}
+
+function pick(btn, ok, q, chosen){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.a) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:chosen}); }
+  var box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'vok' : 'vno');
+  box.innerHTML = '<span class="vt ' + (ok ? 'vok' : 'vno') + '">' + (ok ? '答對' : '答錯') + '</span>' +
+    '<span class="big">' + q.a + '</span>' +
+    '<small>' + q.why + '</small>' +
+    (ok ? '' : '<small>你選的：' + chosen + '</small>');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  $('nextBtn').hidden = false;
+}
+
+function next(){
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  var total = Math.max(right + wrongList.length, 1);
+  var pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對' : pct >= 80 ? '　把錯的補一補' : '　錯的回去看一次筆記');
+  var wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      var d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.q + '</b><span>正解：' + w.q.a + '　·　' + w.q.why + '（你選了 ' + w.mine + '）</span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:bio-photo', m[1]);
+         localStorage.setItem('nx:time:bio-photo', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>英文字彙 9-1 Human Body &amp; Health</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --t1:#2f5f8a;--t2:#3f7a6b;--t3:#8a5a3f;--t4:#7a5a9e;--t5:#0a84ff;--accent:var(--t1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --t1:#8fb3e8;--t2:#6fc9b0;--t3:#e0a97c;--t4:#c4a2e8;
+    }
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.55;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px}
+  .titlebar{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  .cnbtn{border:none;background:var(--fill);color:var(--blue);font-size:13px;font-weight:600;
+    padding:7px 12px;border-radius:100px;font-family:inherit;flex-shrink:0;cursor:pointer}
+  .cnbtn.off{background:var(--blue);color:#fff}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .t-1{--accent:var(--t1)}.t-2{--accent:var(--t1)}.t-3{--accent:var(--t2)}
+  .t-4{--accent:var(--t3)}.t-5{--accent:var(--t5)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .row{padding:12px 16px;border-top:.5px solid var(--sep)}
+  .row:first-child{border-top:none}
+  .wline{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px}
+  .num{font-size:12px;font-weight:700;color:#fff;background:var(--accent);
+    border-radius:5px;padding:1px 6px;flex-shrink:0}
+  .wline b{font-size:19px;font-weight:600;letter-spacing:-.2px}
+  .kk{font-size:13px;color:var(--label3)}
+  .lv{font-size:11px;font-weight:700;color:var(--accent);border:1px solid var(--accent);
+    border-radius:4px;padding:0 4px}
+  .pos{font-size:12px;font-weight:600;font-style:italic;color:var(--label2)}
+  .mean{font-size:16px;color:var(--label2);margin-top:2px}
+  .nt{font-size:14px;line-height:1.5;margin-top:7px;padding:8px 11px;background:var(--fill);border-radius:8px}
+  .nt b{color:var(--gold)}
+  .star{color:#ff9500;font-size:13px}
+  body.hide-cn .mean{visibility:hidden}
+
+  .ph{padding:11px 16px;border-top:.5px solid var(--sep)}
+  .ph:first-child{border-top:none}
+  .ph b{font-size:16px;font-weight:600}
+  .ph span{display:block;font-size:15px;color:var(--label2);margin-top:1px}
+  body.hide-cn .ph span{visibility:hidden}
+
+  .cmp{padding:13px 16px;border-top:.5px solid var(--sep)}
+  .cmp:first-child{border-top:none}
+  .cmp h4{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--accent)}
+  .cmp p{margin:0 0 4px;font-size:15px;line-height:1.6}
+  .cmp p b{font-weight:700}
+  .cmp .hl{background:color-mix(in srgb,var(--gold) 18%,transparent);border-radius:4px;padding:0 3px}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .hint{padding:12px 16px;font-size:14px;color:var(--label2);line-height:1.55;border-top:.5px solid var(--sep)}
+  .hint b{color:var(--gold)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:26px 18px;text-align:center}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px}
+  .qprompt .qtext{font-size:26px;font-weight:700;line-height:1.35;word-break:break-word}
+  .qprompt .qhint{font-size:14px;color:var(--label3);margin-top:8px}
+  .choices{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:8px}
+  .choice{text-align:left;font-family:inherit;font-size:18px;padding:15px 16px;border-radius:12px;
+    background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  .typebox{margin-top:10px;width:100%;display:flex;gap:8px}
+  .typebox input{flex:1;font-family:inherit;font-size:19px;padding:14px 16px;border-radius:12px;
+    border:1.5px solid var(--sep);background:var(--card);color:var(--label);min-width:0}
+  .typebox input:focus{outline:none;border-color:var(--blue)}
+  .typebox button{border:none;font-family:inherit;font-size:16px;font-weight:600;padding:0 18px;
+    border-radius:12px;background:var(--blue);color:#fff;cursor:pointer}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.vok{color:var(--green)}
+  .verdict .vt.vno{color:var(--red)}
+  .verdict .big{display:block;font-size:22px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .verdict small.gold{color:var(--gold)}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:16px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:700;margin-right:6px}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  .wrongrow em{font-style:normal;color:var(--red)}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --t1:#2f5f8a;--t2:#3f7a6b;--t3:#8a5a3f;--t4:#7a5a9e;--t5:#0a84ff;--accent:var(--t1);
+  }
+  html[data-theme="dark"]{
+      --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --t1:#8fb3e8;--t2:#6fc9b0;--t3:#e0a97c;--t4:#c4a2e8;
+    }
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-english.html">◀ 回目錄</a><span>英文 · 4500單 9-1</span></div>
+
+
+<header>
+  <div class="titlebar">
+    <div><h1>字彙 9-1</h1><div class="sub">Human Body &amp; Health · 44 字</div></div>
+    <button class="cnbtn" id="cnbtn">隱藏中文</button>
+  </div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">1–22</button>
+    <button role="tab" aria-selected="false" data-t="2">23–44</button>
+    <button role="tab" aria-selected="false" data-t="3">片語</button>
+    <button role="tab" aria-selected="false" data-t="4">易混淆</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+  <section class="t-1" data-p="1">
+    <div class="hero"><div class="kicker">Vocabulary</div><h2>單字 1–22</h2><div class="zh">ache → fist</div></div>
+    <div class="card" id="listA"></div>
+  </section>
+
+  <section class="t-2" data-p="2" hidden>
+    <div class="hero"><div class="kicker">Vocabulary</div><h2>單字 23–44</h2><div class="zh">flesh → nightmare</div></div>
+    <div class="card" id="listB"></div>
+  </section>
+
+  <section class="t-3" data-p="3" hidden>
+    <div class="hero"><div class="kicker">Idioms</div><h2>片語與搭配</h2><div class="zh">課本標 H 的慣用語，克漏字最愛考</div></div>
+    <div class="card" id="listP"></div>
+  </section>
+
+  <section class="t-4" data-p="4" hidden>
+    <div class="hero"><div class="kicker">Cheat sheet</div><h2>易混淆整理</h2><div class="zh">這章最會扣分的地方</div></div>
+
+    <h3>拼字只差一點（課本字識⁺）</h3>
+    <div class="card">
+      <div class="cmp">
+        <h4>bleed / breed / blood / brood</h4>
+        <p><b>bleed</b> v. 流血　<span class="hl">三態 bleed-bled-bled</span></p>
+        <p><b>breed</b> n. 品種／v. 繁殖　（breed-bred-bred）</p>
+        <p><b>blood</b> n. 血；血統　← 名詞是這個，不是 bleed</p>
+        <p><b>brood</b> v. 沉思；深思</p>
+      </div>
+      <div class="cmp">
+        <h4>breath / breathe　<span class="star">★最常錯</span></h4>
+        <p><b>breath</b> [brɛθ] <b>n.</b> 呼吸　—— 沒有 e，唸 θ</p>
+        <p><b>breathe</b> [brið] <b>v.</b> 呼吸　—— 多一個 e，唸 ð</p>
+        <p><span class="hl">看到空格前面是 take / hold / out of 就填名詞 breath；前面是 can't / began to 就填動詞 breathe。</span></p>
+      </div>
+      <div class="cmp">
+        <h4>heal / heel　<span class="star">★同音 [hil]</span></h4>
+        <p><b>heal</b> v. 治癒（= cure）　↔ hurt, injure</p>
+        <p><b>heel</b> n. 腳跟；鞋跟</p>
+        <p>兩者同源好分辨：heal 與 health 是同一個字族（治癒／健康）；heel 專指腳跟、鞋跟。</p>
+      </div>
+      <div class="cmp">
+        <h4>injure / injury / injured</h4>
+        <p><b>injure</b> v. 使受傷　→ Five students were <b>injured</b>.</p>
+        <p><b>injury</b> n. 傷害　→ a head <b>injury</b></p>
+        <p>被動用 injured，前面加冠詞或形容詞的位置用 injury。</p>
+      </div>
+      <div class="cmp">
+        <h4>flesh / flush / flash / fresh</h4>
+        <p><b>flesh</b> n. 肉（身上的）　<b>flush</b> v. 臉紅／沖馬桶　<b>flash</b> 閃光　<b>fresh</b> 新鮮的</p>
+      </div>
+    </div>
+
+    <h3>「看」的四個字（課本字識⁺）</h3>
+    <div class="card">
+      <div class="cmp">
+        <p><b>glance</b>　<span class="hl">迅速但刻意地看</span>　—— 我決定要瞄一下手錶</p>
+        <p><b>glimpse</b>　<span class="hl">短暫、不經意瞥見</span>　—— 開車經過剛好看到</p>
+        <p><b>peep</b>　匆匆地偷看（常帶偷窺感）</p>
+        <p><b>peek</b>　匆匆地偷看（偏調皮、好奇）</p>
+        <p><b>gaze</b>　長時間凝視（羨慕、崇拜或發呆）</p>
+        <p style="margin-top:6px">差別在<b>刻意 vs 偶然</b>、<b>短 vs 長</b>。考試最常考 glance ↔ glimpse。</p>
+      </div>
+    </div>
+
+    <h3>字根 circ = 圓、環（課本字識⁺）</h3>
+    <div class="card">
+      <div class="cmp">
+        <p><b>circulate</b> v. (使)循環　<b>circulation</b> n. 循環／流通／發行量</p>
+        <p><b>circle</b> n. 圓圈 v. 繞行　<b>circular</b> adj. 圓形的 n. 傳單</p>
+        <p><b>circus</b> n. 馬戲團（圓形場地）　<b>circuit</b> n. 環行；一圈</p>
+        <p><b>circumstance</b> n. 情況（環繞著你的事）</p>
+      </div>
+    </div>
+
+    <h3>不發音字母 &amp; 發音陷阱</h3>
+    <div class="card">
+      <div class="cmp">
+        <p><b>limb</b> [lɪm]　b 不發音（跟 lamb、climb 一樣）</p>
+        <p><b>muscle</b> ['mʌsl]　c 不發音，跟 mussel（淡菜）同音</p>
+        <p><b>cough</b> [kɔf]　gh 唸 f</p>
+        <p><b>naked</b> ['nekɪd]　兩音節，-ed 要唸出來（不是 [nekt]）</p>
+        <p><b>gene</b> [dʒin]　跟 jean 同音</p>
+        <p><b>digest</b>　<span class="hl">動詞 [daɪ'dʒɛst] 重音在後、名詞 ['daɪdʒɛst] 重音在前</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="t-5" data-p="5" hidden>
+    <div class="hero"><div class="kicker">Quiz</div><h2>字彙測驗</h2><div class="zh">中文 → 英文，選項都是會搞混的字</div></div>
+
+    <div id="qsetup">
+      <h3>範圍</h3>
+      <div class="card">
+        <div class="optrow" id="setKind">
+          <button class="chip on" data-k="word">單字</button>
+          <button class="chip on" data-k="phrase">片語</button>
+        </div>
+      </div>
+      <h3>作答方式</h3>
+      <div class="card">
+        <div class="optrow" id="setMode">
+          <button class="chip on" data-m="mc">選擇題</button>
+          <button class="chip" data-m="type">手打</button>
+        </div>
+        <div class="optrow" id="setLen">
+          <div class="lb">題數</div>
+          <button class="chip" data-n="15">15</button>
+          <button class="chip on" data-n="30">30</button>
+          <button class="chip" data-n="0">全部</button>
+        </div>
+        <div class="hint">手打比對<b>不分大小寫、忽略多餘空格與標點</b>，片語裡的 sb / sth / one's 可寫可不寫，拼錯一個字母會算對但提醒你正確拼法。每題作答後都要自己按「下一題」。</div>
+      </div>
+      <button class="bigbtn" id="startBtn">開始測驗</button>
+    </div>
+
+    <div id="qplay" hidden>
+      <div class="qbar">
+        <span id="qcount">1 / 30</span>
+        <span class="track"><i id="qprog" style="width:0%"></i></span>
+        <span id="qscore">0 對</span>
+      </div>
+      <div class="card">
+        <div class="qprompt">
+          <div class="qtype">中文 → 英文</div>
+          <div class="qtext" id="qtext">—</div>
+          <div class="qhint" id="qhint"></div>
+        </div>
+      </div>
+      <div class="choices" id="qchoices"></div>
+      <div class="typebox" id="qtypebox" hidden>
+        <input id="qinput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" placeholder="輸入英文">
+        <button id="qsubmit">送出</button>
+      </div>
+      <div id="qverdict"></div>
+      <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+      <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+    </div>
+
+    <div id="qdone" hidden>
+      <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+      <h3 id="rWrongTitle" hidden>答錯的題目</h3>
+      <div class="card" id="rWrong" hidden></div>
+      <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button>
+      <button class="bigbtn sec" id="againAll">回設定重測</button>
+    </div>
+  </section>
+
+<footer>英文字彙字識⁺ Levels 3&amp;4 · Chapter 9-1</footer>
+</main>
+
+<script>
+/* [編號, 英文, KK, 等級, 詞性, 中文, 註解, 干擾字] */
+const WORDS = [
+[1,'ache','[ek]','L3','vi. / n.','痛（= hurt / pain）','名詞可數，指持續的鈍痛：headache 頭痛、stomachache 胃痛、toothache 牙痛。突然的刺痛用 sharp pain。','pain sore itch'],
+[2,'aspirin',"['æspərɪn]",'L4','n. C U','阿斯匹靈','可數不可數都行：take a couple of aspirins（幾顆）。','antibiotic vitamin painkiller'],
+[3,'bandage',"['bændɪdʒ]",'L4','n. C / vt.','繃帶；用繃帶包紮','動詞常用 <b>bandage up</b>（把傷口包起來）。','bandit package luggage'],
+[4,'belly',"['bɛlɪ]",'L3','n. C','腹部；肚子','三個同義字：belly（一般）／stomach（正式，也指胃）／tummy（童語，跟小孩講話用）。','waist throat chest'],
+[5,'bleed','[blid]','L3','vi.','流血','★三態 <b>bleed-bled-bled</b>，不規則。名詞是 blood，不是 bleed。','breed brood blood'],
+[6,'blink','[blɪŋk]','L4','vi. / n. C','（迅速）眨眼','名詞常用單數形：in the blink of an eye。','blank brink wink'],
+[7,'breast','[brɛst]','L3','n. C','乳房；胸部','breast-feed 餵母乳。跟 chest（胸腔）不同：breast 偏外部、chest 偏骨架內部。','chest beast breath'],
+[8,'breath','[brɛθ]','L3','n. C U','氣息；呼吸','★<b>名詞</b>，沒有 e，唸 [brɛθ]。搭配超多：out of / catch / hold / take away / waste one\u2019s breath。','breathe breadth bath'],
+[9,'breathe','[brið]','L3','vt. vi.','呼吸','★<b>動詞</b>，多一個 e，唸 [brið]。have trouble breathing 呼吸困難。','breath bathe breeze'],
+[10,'cheek','[tʃik]','L3','n. C','臉頰','turn the other cheek 忍氣吞聲（出自聖經：被打左臉就把右臉也給他）。','chin cheer chick'],
+[11,'chest','[tʃɛst]','L3','n. C','胸（腔）','另一個意思是「箱子」（treasure chest 寶箱），所以 get sth. off your chest 像把心事從箱子裡拿出來。','breast waist stomach'],
+[12,'chin','[tʃɪn]','L3','n. C','下巴','Chin up! 是鼓勵人「振作」，因為沮喪時頭會低下去。','cheek shin jaw'],
+[13,'choke','[tʃok]','L4','vt. vi.','（使）窒息；（使）噎住','choke on sth. 被某物噎到。<b>choke back</b> 強忍住（眼淚、情緒）。','chock cough joke'],
+[14,'circulate',"['sɝkjə,let]",'L4','vt. vi.','（使）循環；流通','字根 circ = 圓、環。血液循環、貨幣流通都用它。','circle calculate cultivate'],
+[15,'circulation',"[,sɝkjə'leʃən]",'L4','n.','循環；流傳；發行量','三個意思都考過：blood circulation 血液循環（U）／stop the circulation of rumors 阻止謠言流傳（U）／a circulation of one million 發行量一百萬（C，常用單數）。','circumstance calculation celebration'],
+[16,'cough','[kɔf]','L3','n. C / vi.','咳嗽','★發音 [kɔf]，gh 唸 f。<b>cough sth. up</b> 咳出某物（cough up blood 咳血）。','caught tough choke'],
+[17,'digest',"[daɪ'dʒɛst]",'L4','vt. vi. / n.','消化；融會貫通；摘要','★<b>重音會移動</b>：動詞 [daɪ\u02c8dʒɛst] 重音在後；名詞 [\u02c8daɪdʒɛst]（摘要、文摘）重音在前。第二個意思「消化知識」＝融會貫通。','disgust dissect digit'],
+[18,'disability',"[,dɪsə'bɪlətɪ]",'L4','n. C U','殘疾；殘障','家族：able → ability → disability；形容詞 disabled。people with disabilities 是比 the disabled 更禮貌的講法。','inability disorder durability'],
+[19,'dose','[dos]','L3','n. C / vt.','一劑；使服藥','one dose of medicine 一劑藥。別跟 does 搞混，dose 唸 [dos]。','doze dosage douse'],
+[20,'elbow',"['ɛlbo]",'L3','n. C','手肘','','eyebrow shoulder ankle'],
+[21,'facial',"['feʃəl]",'L4','adj.','臉部的','face → facial，注意拼字沒有 e。facial hair 鬍鬚。','facile racial factual'],
+[22,'fist','[fɪst]','L3','n. C','拳頭','跟 first 只差一個 r，抄題目時很容易看錯。','first wrist fish'],
+[23,'flesh','[flɛʃ]','L3','n. U','肉；果肉','指「身上的肉」或水果的果肉；<b>食用的肉是 meat</b>。跟 fresh、flash、flush 都只差一點。','fresh flash flush'],
+[24,'flush','[flʌʃ]','L4','vt. vi. / n. C','臉紅（= blush）；沖馬桶','兩個意思差很多但都跟「一股湧上來」有關：血湧上臉 vs 水湧過馬桶。名詞「紅暈」常用單數。','flesh flash blush'],
+[25,'frown','[fraʊn]','L4','vi. / n. C','皺眉（表示不滿）','<b>frown upon sb./sth.</b> 不贊成、看不慣，常用被動 be frowned upon。','crown clown drown'],
+[26,'gaze','[gez]','L4','vi. / n. U','凝視；注視','特指羨慕、崇拜或發呆時的<b>長時間</b>看，跟 glance（快速一瞥）相反。','graze gauze glaze'],
+[27,'gender',"['dʒɛndə]",'L4','n. C U','性別','gender 偏社會文化上的性別角色，sex 偏生理性別。','gentle genre tender'],
+[28,'gene','[dʒin]','L4','n. C','基因','★唸 [dʒin]，跟 jean 同音。形容詞 genetic、名詞 genetics 遺傳學。','germ genius jean'],
+[29,'glance','[glæns]','L3','vi. / n. C','瞥視；一瞥','<b>迅速但刻意地看</b>（我決定瞄一下）。<b>at first glance</b> 乍看之下。','glimpse glare gland'],
+[30,'glimpse','[glɪmps]','L4','vt. / n. C','瞥見；一瞥','<b>短暫、不經意地瞥見</b>（剛好看到）。跟 glance 的差別在「有沒有刻意」。','glance glimmer glisten'],
+[31,'heal','[hil]','L3','vt. vi.','治癒；使康復（= cure）','★跟 heel 同音 [hil]。反義 hurt、injure。Time heals all sorrows. 時間治癒一切悲傷。','heel health hail'],
+[32,'heel','[hil]','L3','n. C','腳跟；鞋跟','★跟 heal 同音。<b>at/on sb.\u2019s heels</b> 緊跟著某人（像跟在腳跟後面）。','heal hell ankle'],
+[33,'hunger',"['hʌŋgə]",'L3','n.','飢餓感（U）；渴望（C）','第二個意思很好用：a strong hunger to succeed 強烈渴望成功。形容詞 hungry。','anger hanger thirst'],
+[34,'infection',"[ɪn'fɛkʃən]",'L4','n. C U','傳染；感染','家族：infect v. 傳染 → infection n. → infectious adj. 有傳染性的。別跟 injection（注射）搞混。','injection inspection affection'],
+[35,'injure',"['ɪndʒə]",'L4','vt.','損害；（使）受傷','★<b>動詞</b>。= harm, hurt；反義 cure, heal。人受傷用被動：be injured。','injury insure endure'],
+[36,'injury',"['ɪndʒərɪ]",'L3','n. C U','損害；受傷','★<b>名詞</b>。= damage, wound。a head injury 頭部外傷。','injure inquiry industry'],
+[37,'jaw','[dʒɔ]','L3','n. C','顎；下巴','jaw 是整個下顎骨（可以被打斷），chin 只是下巴尖端那塊。','jar paw claw'],
+[38,'kidney',"['kɪdnɪ]",'L3','n. C','腎','','kidnap liver donkey'],
+[39,'limb','[lɪm]','L3','n. C','肢；臂；腿；翼','★<b>b 不發音</b> [lɪm]，跟 lamb、climb 一樣。four limbs 四肢。','limp lamb limit'],
+[40,'lung','[lʌŋ]','L3','n. C','肺','lung cancer 肺癌。','lunge liver longing'],
+[41,'mental',"['mɛntl]",'L3','adj.','心理的；精神的','★反義 <b>physical</b>（生理的），這組對比超常考。mental health 心理健康。','metal dental moral'],
+[42,'muscle',"['mʌsl]",'L3','n. C U','肌肉','★<b>c 不發音</b> [\u02c8mʌsl]，跟 mussel（淡菜）同音。形容詞 muscular。','mussel missile muscular'],
+[43,'naked',"['nekɪd]",'L3','adj.','裸體的（= bare, nude）','★唸兩音節 [\u02c8nekɪd]，-ed 要唸出來。the naked eye 肉眼。','baked bare nude'],
+[44,'nightmare',"['naɪt,mɛr]",'L4','n. C','惡夢；如惡夢般的事','第二個意思很常用：The report was a nightmare. 那份報告簡直是場惡夢。','daydream nightfall nightgown']
+];
+
+const PHRASES = [
+['in the blink of an eye','眨眼間','blink'],
+['make a clean breast of','全盤托出；完全招認','breast'],
+['out of breath','上氣不接下氣','breath'],
+["catch one's breath",'喘口氣','breath'],
+["hold one's breath",'屏息以待','breath'],
+["take one's breath away",'（因驚訝、喜悅）說不出話來','breath'],
+["waste one's breath",'白費口舌','breath'],
+['breathe new life into sth.','為某事物注入新的生機','breathe'],
+['turn the other cheek','忍氣吞聲；不反抗','cheek'],
+['get sth. off your chest','傾吐心中的煩惱；一吐為快','chest'],
+['keep your chin up','振作起來','chin'],
+['choke sth. back','強忍住某事物','choke'],
+['cough sth. up','咳出某物','cough'],
+['frown upon sb./sth.','不贊成⋯⋯','frown'],
+['at first glance','乍看之下','glance'],
+["at/on sb.'s heels",'緊跟著某人','heel'],
+['artificial limb','人工義肢','limb'],
+['risk life and limb','冒極大的危險','limb'],
+['out on a limb','處於孤立無援','limb'],
+['tear/rip sb./sth. limb from limb','猛烈攻擊⋯⋯；殘暴殺死⋯⋯','limb']
+];
+
+const BANK = [];
+WORDS.forEach(function(w){
+  BANK.push({k:'word', n:w[0], en:w[1], kk:w[2], lv:w[3], pos:w[4], zh:w[5], note:w[6], d:w[7].split(' ')});
+});
+PHRASES.forEach(function(p,i){
+  BANK.push({k:'phrase', n:i+1, en:p[0], zh:p[1], from:p[2], note:'', d:null});
+});
+
+/* 清單 */
+function wordRow(x){
+  return '<div class="row"><div class="wline"><span class="num">' + x.n + '</span>' +
+    '<b>' + x.en + '</b><span class="kk">' + x.kk + '</span>' +
+    '<span class="lv">' + x.lv + '</span><span class="pos">' + x.pos + '</span></div>' +
+    '<div class="mean">' + x.zh + '</div>' +
+    (x.note ? '<div class="nt">' + x.note + '</div>' : '') + '</div>';
+}
+document.getElementById('listA').innerHTML =
+  BANK.filter(function(x){ return x.k === 'word' && x.n <= 22; }).map(wordRow).join('');
+document.getElementById('listB').innerHTML =
+  BANK.filter(function(x){ return x.k === 'word' && x.n >= 23; }).map(wordRow).join('');
+document.getElementById('listP').innerHTML =
+  BANK.filter(function(x){ return x.k === 'phrase'; }).map(function(x){
+    return '<div class="ph"><b>' + x.en + '</b><span>' + x.zh + '　<span class="kk">（' + x.from + '）</span></span></div>';
+  }).join('');
+
+/* 分頁 & 隱藏中文 */
+const tabs = document.querySelectorAll('nav button');
+const panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+const cnbtn = document.getElementById('cnbtn');
+cnbtn.addEventListener('click', function(){
+  const on = document.body.classList.toggle('hide-cn');
+  cnbtn.textContent = on ? '顯示中文' : '隱藏中文';
+  cnbtn.classList.toggle('off', on);
+});
+
+/* 寬鬆比對 */
+function norm(s){
+  return (s||'').toLowerCase()
+    .replace(/[\u2019\u2018`\u00b4]/g,"'")
+    .replace(/[.,;:!?"()\[\]]/g,' ')
+    .replace(/[-\u2013\u2014_\/]/g,' ')
+    .replace(/'s\b/g,' ')
+    .replace(/\b(sb|sth|somebody|someone|something|one|ones|oneself|yourself|your|my|his|her|their|it|them|this|that)\b/g,' ')
+    .replace(/\s+/g,' ').trim();
+}
+function stripArt(s){ return s.replace(/\b(a|an|the)\b/g,' ').replace(/\s+/g,' ').trim(); }
+function lev(a,b){
+  const m=a.length,n=b.length;
+  if(!m) return n; if(!n) return m;
+  let prev=Array.from({length:n+1},function(_,i){return i;}), cur=new Array(n+1);
+  for(let i=1;i<=m;i++){
+    cur[0]=i;
+    for(let j=1;j<=n;j++) cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    const t=prev; prev=cur; cur=t;
+  }
+  return prev[n];
+}
+function judge(input, item){
+  const got = norm(input);
+  if(!got) return 'no';
+  const target = norm(item.en);
+  if(got === target || stripArt(got) === stripArt(target)) return 'exact';
+  for(const other of BANK){
+    if(other === item) continue;
+    if(norm(other.en) === got) return 'no';
+  }
+  if(item.d){
+    for(const x of item.d){ if(norm(x) === got) return 'no'; }
+  }
+  const tol = target.length >= 9 ? 2 : (target.length >= 5 ? 1 : 0);
+  if(lev(got, target) <= tol) return 'close';
+  return 'no';
+}
+
+/* 測驗 */
+const S = {kinds:['word','phrase'], mode:'mc', n:30};
+let queue=[], idx=0, right=0, wrongList=[], answered=false;
+const $ = function(id){ return document.getElementById(id); };
+
+$('setKind').addEventListener('click', function(e){
+  const b = e.target.closest('.chip'); if(!b) return;
+  b.classList.toggle('on');
+  const box = $('setKind');
+  if(!box.querySelectorAll('.chip.on').length){ b.classList.add('on'); return; }
+  S.kinds = [].map.call(box.querySelectorAll('.chip.on'), function(c){ return c.dataset.k; });
+});
+$('setMode').addEventListener('click', function(e){
+  const b = e.target.closest('.chip'); if(!b) return;
+  $('setMode').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.mode = b.dataset.m;
+});
+$('setLen').addEventListener('click', function(e){
+  const b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+
+const shuffle = function(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+};
+
+function start(pool){
+  let items = pool || BANK.filter(function(x){ return S.kinds.indexOf(x.k) > -1; });
+  if(!items.length){ alert('這個範圍沒有題目'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  const q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtext').textContent = q.zh;
+  $('qhint').textContent = q.k === 'phrase'
+    ? '片語'
+    : q.pos + '　·　單字 第 ' + q.n + ' 個';
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+
+  const cw = $('qchoices'), tb = $('qtypebox');
+  cw.innerHTML = '';
+  if(S.mode === 'type'){
+    cw.hidden = true; tb.hidden = false;
+    $('qinput').value = ''; $('qinput').disabled = false; $('qsubmit').disabled = false;
+    $('qinput').placeholder = q.k === 'phrase' ? '輸入英文片語' : '輸入英文';
+    setTimeout(function(){ $('qinput').focus(); }, 50);
+  }else{
+    tb.hidden = true; cw.hidden = false;
+    let ds;
+    if(q.d){ ds = q.d.slice(0,3); }
+    else {
+      ds = shuffle(BANK.filter(function(x){ return x.k === q.k && x !== q; })).slice(0,3)
+             .map(function(x){ return x.en; });
+    }
+    shuffle([q.en].concat(ds)).forEach(function(op){
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.textContent = op;
+      b.addEventListener('click', function(){ pick(b, op === q.en, q, op); });
+      cw.appendChild(b);
+    });
+  }
+}
+
+function pick(btn, ok, q, chosen){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.en) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:chosen}); }
+  verdict(ok, q, ok ? '' : chosen, false);
+}
+
+function submitType(){
+  if(answered) return;
+  const q = queue[idx];
+  const val = $('qinput').value;
+  if(!val.trim()) return;
+  const r = judge(val, q);
+  answered = true;
+  $('qinput').disabled = true; $('qsubmit').disabled = true;
+  if(r !== 'no') right++;
+  else wrongList.push({q:q, mine:val.trim()});
+  verdict(r !== 'no', q, val.trim(), r === 'close');
+}
+
+function verdict(ok, q, mine, close){
+  const box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'vok' : 'vno');
+  box.innerHTML =
+    '<span class="vt ' + (ok ? 'vok' : 'vno') + '">' + (ok ? (close ? '算你對，但拼字差一點' : '答對') : '答錯') + '</span>' +
+    '<span class="big">' + q.en + '</span>' +
+    '<small>' + (q.pos ? q.pos + '　' : '') + q.zh + (q.kk ? '　' + q.kk : '') + '</small>' +
+    (close ? '<small class="gold">正確拼法：' + q.en + '</small>' : '') +
+    (!ok && mine ? '<small>你寫的／選的：' + mine + '</small>' : '') +
+    (q.note ? '<small>' + q.note.replace(/<[^>]+>/g,'') + '</small>' : '');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  $('nextBtn').hidden = false;
+}
+
+function next(){
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  const total = Math.max(right + wrongList.length, 1);
+  const pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對' : pct >= 80 ? '　把錯的補一補' : '　錯的先背熟再考一次');
+  const wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      const d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.en + '</b>' + (w.q.pos ? w.q.pos + '　' : '') + w.q.zh +
+        '<span>你寫的／選的：<em>' + w.mine + '</em></span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('qsubmit').addEventListener('click', submitType);
+$('qinput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); answered ? next() : submitType(); }
+});
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:en-4500-9-1', m[1]);
+         localStorage.setItem('nx:time:en-4500-9-1', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>

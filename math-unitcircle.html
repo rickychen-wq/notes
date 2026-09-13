@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>用單位圓看 cos x = x/6π</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--red:#ff3b30;--green:#34c759;--gold:#c8912b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--red:#ff453a;--green:#30d158;--gold:#e8b73d;}
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.55;
+    padding:calc(env(safe-area-inset-top) + 16px) 16px calc(32px + env(safe-area-inset-bottom))}
+  main{max-width:640px;margin:0 auto}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0 0 2px}
+  .sub{font-size:14px;color:var(--label2);margin-bottom:18px}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:22px 0 7px;padding-left:4px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+  .pad{padding:14px 16px}
+  .pad+.pad{border-top:.5px solid var(--sep)}
+  svg{display:block;width:100%;height:auto}
+  .readout{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px 14px}
+  .box{background:var(--fill);border-radius:9px;padding:9px 11px}
+  .box .k{font-size:12px;color:var(--label2)}
+  .box .v{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+  .v.blue{color:var(--blue)} .v.red{color:var(--red)}
+  .status{padding:12px 16px;font-size:16px;font-weight:600;text-align:center}
+  .status.hit{color:var(--green)}
+  .status.miss{color:var(--label2);font-weight:500}
+  input[type=range]{width:100%;margin:8px 0 0;accent-color:var(--blue)}
+  .rowbtn{display:flex;gap:6px;flex-wrap:wrap;padding:12px 16px}
+  .rb{border:none;font-family:inherit;font-size:13px;font-weight:600;padding:7px 11px;
+    border-radius:100px;background:var(--fill);color:var(--label);cursor:pointer}
+  .rb.on{background:var(--gold);color:#fff}
+  p{margin:0 0 8px;font-size:15px;line-height:1.65}
+  .eq{font-family:ui-monospace,Menlo,monospace;background:var(--fill);border-radius:8px;
+    padding:9px 11px;margin:8px 0;font-size:15px;line-height:1.7;overflow-x:auto}
+  .hl{background:color-mix(in srgb,var(--gold) 20%,transparent);border-radius:4px;padding:0 3px;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  td{padding:8px 16px;border-top:.5px solid var(--sep)}
+  tr:first-child td{border-top:none}
+  td:first-child{font-weight:600;white-space:nowrap}
+  td:last-child{color:var(--label2)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--red:#ff3b30;--green:#34c759;--gold:#c8912b;
+  }
+  html[data-theme="dark"]{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--red:#ff453a;--green:#30d158;--gold:#e8b73d;}
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-math.html">◀ 回目錄</a><span>數學 · 單位圓圖解</span></div>
+
+<main>
+  <h1>用單位圓看 cos x = x/6π</h1>
+  <div class="sub">拖動下面的滑桿，看那條垂直線怎麼移動</div>
+
+  <div class="card">
+    <svg viewBox="0 0 320 300" id="fig">
+      <!-- 座標軸 -->
+      <line x1="20" y1="150" x2="300" y2="150" stroke="currentColor" stroke-opacity=".25" stroke-width="1"/>
+      <line x1="160" y1="20" x2="160" y2="280" stroke="currentColor" stroke-opacity=".25" stroke-width="1"/>
+      <!-- 單位圓 -->
+      <circle cx="160" cy="150" r="110" fill="none" stroke="currentColor" stroke-opacity=".45" stroke-width="1.5"/>
+      <text x="272" y="145" font-size="11" fill="currentColor" fill-opacity=".45">1</text>
+      <text x="42" y="145" font-size="11" fill="currentColor" fill-opacity=".45">-1</text>
+      <!-- 垂直線 c -->
+      <line id="cline" x1="160" y1="20" x2="160" y2="280" stroke="#ff3b30" stroke-width="2" stroke-dasharray="5 4"/>
+      <!-- 半徑與點 -->
+      <line id="radius" x1="160" y1="150" x2="270" y2="150" stroke="#0a84ff" stroke-width="2"/>
+      <circle id="pt" cx="270" cy="150" r="6" fill="#0a84ff"/>
+      <!-- cos 投影 -->
+      <line id="proj" x1="270" y1="150" x2="270" y2="150" stroke="#0a84ff" stroke-width="1.5" stroke-dasharray="3 3" stroke-opacity=".6"/>
+      <text id="lbl" x="0" y="0" font-size="12" font-weight="700" fill="#ff3b30"></text>
+    </svg>
+
+    <div class="readout">
+      <div class="box"><div class="k">cos x（點的 x 座標）</div><div class="v blue" id="vcos">1.000</div></div>
+      <div class="box"><div class="k">x / 6π（紅線位置）</div><div class="v red" id="vline">0.000</div></div>
+    </div>
+    <div class="status miss" id="status">—</div>
+
+    <div class="pad">
+      <div style="font-size:14px;color:var(--label2)">x = <span id="vx" style="font-weight:700;color:var(--label)">0</span></div>
+      <input type="range" id="slider" min="-6" max="6" step="0.005" value="0">
+    </div>
+    <div class="rowbtn" id="jumps"></div>
+  </div>
+
+  <h3>紅線的位置怎麼算</h3>
+  <div class="card"><div class="pad">
+    <p>紅線就是等號右邊那個值，<span class="hl">直接把 x 代進去除以 6π</span> 就好，沒有別的技巧。</p>
+    <div class="eq">x = 0　　→ 0 ÷ 6π = 0<br>
+x = 2π　→ 2π ÷ 6π = 1/3 ≈ 0.33<br>
+x = 4π　→ 4π ÷ 6π = 2/3 ≈ 0.67<br>
+x = 6π　→ 6π ÷ 6π = 1</div>
+    <p>所以每往右繞<b>一圈</b>（x 增加 2π），紅線就往右挪 <b>1/3 格</b>。繞三圈剛好挪到最右邊 x = 1，貼到圓的邊緣。</p>
+    <p>往左同理：x = −6π 時紅線在 −1，貼在圓的最左邊。</p>
+  </div></div>
+
+  <h3>為什麼一圈通常有 2 個解</h3>
+  <div class="card"><div class="pad">
+    <p>在單位圓上，<b>cos x 就是那個點的 x 座標</b>。要解 cos x = c，等於問「圓上哪些點的 x 座標等於 c」。</p>
+    <p>一條垂直線穿過圓，<span class="hl">會交在上半圓一點、下半圓一點</span>，所以每繞一圈得到 2 個角度 —— 這就是「一個週期 2 個解」的來源。</p>
+    <p>但是當 c = 1 或 c = −1 時，垂直線變成<b>相切</b>，只碰到 1 點。這就是端點特殊的地方。</p>
+  </div></div>
+
+  <h3>那 13 個解是怎麼來的</h3>
+  <div class="card">
+    <div class="pad">
+      <p>老實說，上面那些小數（0.475π、1.585π…）是我用電腦掃出來的：把 −6π 到 6π 切成很多小段，看 cos x − x/6π 在哪裡<b>由正變負或由負變正</b>，變號的地方就夾著一個解，再二分逼近。</p>
+      <p><b>考試不需要算出這些數字</b>，只要數「有幾個」。數的方法是看兩條曲線的上下關係換了幾次：</p>
+    </div>
+    <table>
+      <tr><td>右側 x &gt; 0</td><td>7 個（含端點 x = 6π 那個切點）</td></tr>
+      <tr><td>左側 x &lt; 0</td><td>6 個</td></tr>
+      <tr><td>x = 0</td><td>不是解（cos 0 = 1，但線在 0）</td></tr>
+      <tr><td><b>合計</b></td><td><b>13 個</b></td></tr>
+    </table>
+    <div class="pad">
+      <p>左右不一樣多，是因為直線是<b>斜的</b>：右邊終點 cos = 1、線也 = 1，剛好碰上；左邊終點 cos = 1 但線 = −1，差了整整 2 格，碰不到。</p>
+    </div>
+  </div>
+</main>
+
+<script>
+var P = Math.PI;
+var CX = 160, CY = 150, R = 110;
+var ROOTS = [-5.169,-4.795,-3.314,-2.645,-1.424,-0.528,0.475,1.585,2.371,3.712,4.249,5.966,6.000];
+
+var slider = document.getElementById('slider');
+
+function fmtPi(v){
+  if(Math.abs(v) < 0.005) return '0';
+  return v.toFixed(3).replace(/0+$/,'').replace(/\.$/,'') + 'π';
+}
+
+function draw(){
+  var xp = parseFloat(slider.value);      // 以 π 為單位
+  var x = xp * P;                          // 實際弧度
+  var c = x / (6 * P);                     // 紅線位置
+  var cs = Math.cos(x);                    // 點的 x 座標
+
+  document.getElementById('vx').textContent = fmtPi(xp);
+  document.getElementById('vcos').textContent = cs.toFixed(3);
+  document.getElementById('vline').textContent = c.toFixed(3);
+
+  var px = CX + R * cs, py = CY - R * Math.sin(x);
+  document.getElementById('pt').setAttribute('cx', px);
+  document.getElementById('pt').setAttribute('cy', py);
+  document.getElementById('radius').setAttribute('x2', px);
+  document.getElementById('radius').setAttribute('y2', py);
+  document.getElementById('proj').setAttribute('x1', px);
+  document.getElementById('proj').setAttribute('y1', py);
+  document.getElementById('proj').setAttribute('x2', px);
+  document.getElementById('proj').setAttribute('y2', CY);
+
+  var lx = CX + R * c;
+  var cl = document.getElementById('cline');
+  cl.setAttribute('x1', lx); cl.setAttribute('x2', lx);
+  var lbl = document.getElementById('lbl');
+  lbl.setAttribute('x', lx + 5); lbl.setAttribute('y', 32);
+  lbl.textContent = 'x/6π = ' + c.toFixed(2);
+
+  var st = document.getElementById('status');
+  var diff = Math.abs(cs - c);
+  if(diff < 0.012){
+    st.className = 'status hit';
+    st.textContent = '藍點正好落在紅線上 → 這裡是一個解';
+  }else{
+    st.className = 'status miss';
+    st.textContent = '差 ' + diff.toFixed(3) + '，還不是解';
+  }
+  var btns = document.querySelectorAll('.rb');
+  for(var i = 0; i < btns.length; i++){
+    btns[i].classList.toggle('on', Math.abs(parseFloat(btns[i].dataset.v) - xp) < 0.004);
+  }
+}
+
+var wrap = document.getElementById('jumps');
+ROOTS.forEach(function(r, i){
+  var b = document.createElement('button');
+  b.className = 'rb';
+  b.dataset.v = r;
+  b.textContent = '解' + (i + 1);
+  b.addEventListener('click', function(){ slider.value = r; draw(); });
+  wrap.appendChild(b);
+});
+
+slider.addEventListener('input', draw);
+draw();
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:math-unitcircle', m[1]);
+         localStorage.setItem('nx:time:math-unitcircle', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>化學 第1章 物質鑑定與化學反應</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --s1:#2f6f6b;--s2:#4a5f9e;--s3:#a2523f;--s4:#7a5a9e;--s5:#0a84ff;--accent:var(--s1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --s1:#5fc8c0;--s2:#9aabe8;--s3:#e8917c;--s4:#c4a2e8;
+    }
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.55;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .s-1{--accent:var(--s1)}.s-2{--accent:var(--s2)}.s-3{--accent:var(--s3)}
+  .s-4{--accent:var(--s4)}.s-5{--accent:var(--s5)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .blk{padding:13px 16px;border-top:.5px solid var(--sep)}
+  .blk:first-child{border-top:none}
+  .blk h4{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--accent)}
+  .blk p{margin:0 0 4px;font-size:15px;line-height:1.6}
+  .blk ul{margin:4px 0 0;padding-left:19px;font-size:15px;line-height:1.6}
+  .blk li{margin:3px 0}
+  .blk .sm{font-size:14px;color:var(--label2)}
+  .zh2{color:var(--label2);font-size:.88em}
+  .eq{font-family:ui-monospace,Menlo,monospace;font-size:15px;background:var(--fill);
+    padding:8px 11px;border-radius:8px;margin:6px 0;line-height:1.7;overflow-x:auto}
+  .key{background:color-mix(in srgb,var(--gold) 18%,transparent);border-radius:4px;padding:0 3px;font-weight:600}
+  .tag{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--accent);
+    border-radius:5px;padding:1px 6px;margin-right:6px;vertical-align:2px}
+  .tag.hot{background:var(--red)}
+
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{padding:8px 10px;border-top:.5px solid var(--sep);vertical-align:top;text-align:left}
+  th{font-weight:600;color:var(--label2);font-size:13px;background:var(--fill)}
+  tr:first-child td{border-top:none}
+  td b{font-weight:600}
+  .wrap{overflow-x:auto}
+
+  details{padding:12px 16px;border-top:.5px solid var(--sep)}
+  details:first-child{border-top:none}
+  summary{font-size:15px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"看答案";color:var(--blue);font-size:14px;flex-shrink:0}
+  details[open] summary::after{content:"收起"}
+  .ans{margin-top:9px;font-size:15px;line-height:1.6;padding:10px 12px;background:var(--fill);border-radius:8px}
+  .ans b{color:var(--accent)}
+  .ox{color:var(--red);font-weight:700}
+  .ok2{color:var(--green);font-weight:700}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:26px 18px;text-align:center}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px}
+  .qprompt .qtext{font-size:30px;font-weight:700;line-height:1.3}
+  .qprompt .qzh{font-size:16px;color:var(--label2);margin-top:6px}
+  .choices{margin-top:10px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .choice{font-family:inherit;font-size:18px;font-weight:600;padding:16px 6px;border-radius:12px;
+    background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.vok{color:var(--green)}
+  .verdict .vt.vno{color:var(--red)}
+  .verdict .big{display:block;font-size:22px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:16px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:700;margin-right:6px}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --s1:#2f6f6b;--s2:#4a5f9e;--s3:#a2523f;--s4:#7a5a9e;--s5:#0a84ff;--accent:var(--s1);
+  }
+  html[data-theme="dark"]{
+      --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --s1:#5fc8c0;--s2:#9aabe8;--s3:#e8917c;--s4:#c4a2e8;
+    }
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-chem.html">◀ 回目錄</a><span>化學 · 第 1 章</span></div>
+
+
+<header>
+  <div><h1>化學 · 第 1 章</h1><div class="sub">物質鑑定與化學反應 · 段考範圍</div></div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">1-1</button>
+    <button role="tab" aria-selected="false" data-t="2">1-2</button>
+    <button role="tab" aria-selected="false" data-t="3">1-3</button>
+    <button role="tab" aria-selected="false" data-t="4">沉澱表</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ═══════════ 1-1 ═══════════ -->
+<section class="s-1" data-p="1">
+  <div class="hero"><div class="kicker">1-1</div><h2>物質的特性與鑑定</h2><div class="zh">物理性質鑑定 ＋ 化學性質鑑定</div></div>
+
+  <h3>重點一　物理性質的鑑定方法</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>熔點（凝固點）</h4>
+      <p class="sm">適用於常溫常壓下為<b>固體</b>的物質。</p>
+      <ul>
+        <li>分辨純物質與混合物：熔點<b>固定</b>＝純物質；<b>不固定</b>（一段範圍）＝混合物</li>
+        <li>分辨純物質種類：熔點<b>低</b>＝分子物質；熔點<b>高</b>＝離子化合物或共價網狀晶體</li>
+        <li>判斷同分異構物是否存在</li>
+      </ul>
+      <p class="sm" style="margin-top:6px">例：可可鹼 357°C／茶鹼 273°C，兩者分子式同為 C<sub>7</sub>H<sub>8</sub>N<sub>4</sub>O<sub>2</sub>，是<b>同分異構物</b>。</p>
+    </div>
+    <div class="blk">
+      <h4>沸點（凝結點）</h4>
+      <p class="sm">適用於常溫常壓下為<b>液體</b>的物質，用途與熔點相同。</p>
+      <p class="sm">例：正丁醇 117.7°C／乙醚 34.6°C，分子式都是 C<sub>4</sub>H<sub>10</sub>O。</p>
+      <p class="sm"><span class="key">為什麼差這麼多</span>正丁醇有 −OH 可形成<b>氫鍵</b>，乙醚沒有，所以沸點高很多。這是最愛考的延伸問法。</p>
+    </div>
+    <div class="blk">
+      <h4>溶解度</h4>
+      <p class="sm">相同溫度下，外觀相似的物質可能因<b>結構不同</b>而有不同溶解度。</p>
+      <ul>
+        <li>有機物：茶鹼可溶於水、可可鹼難溶；乙醇可溶、乙烷難溶</li>
+        <li>無機物：氯化鈉 NaCl 可溶、氯化銀 AgCl 難溶</li>
+      </ul>
+    </div>
+    <div class="blk">
+      <h4>薄層層析法 TLC</h4>
+      <p class="sm">利用不同物質對<b>固定相</b>附著力的差異，使物質在固定相上展開而分離。</p>
+      <div class="eq">R<sub>f</sub> ＝ 物質的移動距離 (Y) ÷ 展開液的移動距離 (X)</div>
+      <ul>
+        <li>固定相與展開液<b>不變</b>時，同一物質的 R<sub>f</sub> 值相同 → 可與標準品對照做鑑定</li>
+        <li>R<sub>f</sub> 一定介於 0～1 之間</li>
+        <li>應用：鑑定市售止痛藥成分（乙醯胺酚、布洛芬、阿司匹靈、咖啡因）</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>觀念澄正（1-1）</h3>
+  <div class="card">
+    <details><summary>1. 純物質的加熱與冷卻曲線如圖所示（有水平段）</summary>
+      <div class="ans"><span class="ok2">○ 正確</span>　純物質在熔化或沸騰時<b>溫度不變</b>，所以會出現水平段；混合物則沒有明顯水平段，溫度會持續變化。</div></details>
+    <details><summary>2. 層析法的樣品起始線應在展開液的液面上方</summary>
+      <div class="ans"><span class="ok2">○ 正確</span>　起始線若泡進展開液裡，樣品會直接<b>溶入液體</b>而不是被帶著展開，實驗就失敗了。</div></details>
+    <details><summary>3. 層析法分離出的色素（或物質）必為純物質</summary>
+      <div class="ans"><span class="ox">✗ 錯誤</span>　R<sub>f</sub> 值相近的物質會跑在一起，同一個色點<b>仍可能是混合物</b>，要換展開液再測才能確認。</div></details>
+    <details><summary>4. 層析法使用的展開液一定是水溶液</summary>
+      <div class="ans"><span class="ox">✗ 錯誤</span>　展開液依樣品<b>極性</b>選擇，常用乙醇、丙酮、正己烷等有機溶劑或混合溶劑。</div></details>
+  </div>
+
+  <h3>重點二　化學性質的鑑定：酸鹼性</h3>
+  <div class="card">
+    <div class="blk">
+      <p class="sm">已知指示劑變色範圍 a～b（a&lt;b）：pH &lt; a 顯<b>酸型色</b>，pH &gt; b 顯<b>鹼型色</b>，介於 a～b 之間為兩者的<b>混合色</b>。</p>
+      <div class="wrap"><table>
+        <tr><th>指示劑</th><th>酸型色</th><th>鹼型色</th><th>變色範圍</th></tr>
+        <tr><td>石蕊</td><td>紅</td><td>藍</td><td>4.5～8.3（中間<b>紫</b>）</td></tr>
+        <tr><td>溴瑞香草酚藍<br><span class="zh2">BTB</span></td><td>黃</td><td>藍</td><td>6.0～7.6（中間<b>綠</b>）</td></tr>
+        <tr><td>酚酞</td><td>無色</td><td>紅</td><td>8.2～10.0</td></tr>
+      </table></div>
+    </div>
+    <div class="blk">
+      <h4><span class="tag hot">大考常考</span>用化學反應鑑定</h4>
+      <p class="sm"><b>①測有沒有碳酸根／碳酸氫根</b>：加酸性試劑（鹽酸、硫酸），看有沒有冒二氧化碳。</p>
+      <div class="eq">CO<sub>3</sub><sup>2−</sup> ＋ 2H<sup>+</sup> → CO<sub>2</sub>↑ ＋ H<sub>2</sub>O<br>
+      HCO<sub>3</sub><sup>−</sup> ＋ H<sup>+</sup> → CO<sub>2</sub>↑ ＋ H<sub>2</sub>O</div>
+      <p class="sm"><b>②測有沒有銨根</b>：加強鹼試劑（NaOH 氫氧化鈉、Ca(OH)<sub>2</sub> 氫氧化鈣），看有沒有產生<b>刺激臭味的氨氣</b>。</p>
+      <div class="eq">NH<sub>4</sub><sup>+</sup> ＋ OH<sup>−</sup> → NH<sub>3</sub>↑ ＋ H<sub>2</sub>O</div>
+    </div>
+  </div>
+
+  <h3>重點二　離子沉澱反應</h3>
+  <div class="card">
+    <div class="blk">
+      <p class="sm">兩種電解質溶液混合，若陰、陽離子結合成<b>溶解度低</b>的化合物，就會析出形成<b>沉澱</b>。</p>
+      <p class="sm" style="margin-top:8px">以無色 AgNO<sub>3</sub><span class="zh2">（硝酸銀）</span>＋ 無色 NaCl<span class="zh2">（氯化鈉）</span>→ 白色 AgCl<span class="zh2">（氯化銀）</span>沉澱為例，三種寫法：</p>
+      <div class="eq"><b>❶ 全反應式</b>（全部寫成化合物）<br>
+      AgNO<sub>3</sub>(aq) ＋ NaCl(aq) → AgCl(s) ＋ NaNO<sub>3</sub>(aq)</div>
+      <div class="eq"><b>❷ 離子反應式</b>（強電解質拆成離子；弱電解質與沉澱寫化合物）<br>
+      Ag<sup>+</sup> ＋ NO<sub>3</sub><sup>−</sup> ＋ Na<sup>+</sup> ＋ Cl<sup>−</sup> → AgCl(s) ＋ Na<sup>+</sup> ＋ NO<sub>3</sub><sup>−</sup></div>
+      <div class="eq"><b>❸ 淨離子反應式</b>（消去旁觀離子）<br>
+      Ag<sup>+</sup>(aq) ＋ Cl<sup>−</sup>(aq) → AgCl(s)</div>
+      <p class="sm"><span class="key">旁觀離子</span>反應前後沒變的離子（這裡是 Na<sup>+</sup> 與 NO<sub>3</sub><sup>−</sup>），要消掉。</p>
+    </div>
+    <div class="blk">
+      <h4>混合液的分離</h4>
+      <p class="sm"><b>原則：一次只產生一種沉澱</b>，所以加入的試劑必須「只跟其中一個離子形成沉澱，跟其他離子都可溶」。這就是為什麼試劑常挑 NO<sub>3</sub><sup>−</sup>（硝酸根）或 Na<sup>+</sup>（鈉）當搭配離子 —— 它們<b>永遠可溶</b>，不會亂沉澱。</p>
+      <p class="sm" style="margin-top:8px"><b>陽離子分離</b>　Pb<sup>2+</sup>（鉛）、Ba<sup>2+</sup>（鋇）、Cu<sup>2+</sup>（銅）</p>
+      <div class="eq">加 NaCl → PbCl<sub>2</sub>↓<span class="zh2">（氯化鉛，白）</span><br>
+      再加 Na<sub>2</sub>SO<sub>4</sub> → BaSO<sub>4</sub>↓<span class="zh2">（硫酸鋇，白）</span><br>
+      再加 Na<sub>2</sub>S → CuS↓<span class="zh2">（硫化銅，黑）</span></div>
+      <p class="sm"><b>陰離子分離</b>　Cl<sup>−</sup>（氯）、SO<sub>4</sub><sup>2−</sup>（硫酸根）、OH<sup>−</sup>（氫氧根）</p>
+      <div class="eq">加 Ba(NO<sub>3</sub>)<sub>2</sub> → BaSO<sub>4</sub>↓<span class="zh2">（白）</span><br>
+      再加 Mg(NO<sub>3</sub>)<sub>2</sub> → Mg(OH)<sub>2</sub>↓<span class="zh2">（氫氧化鎂，白）</span><br>
+      再加 AgNO<sub>3</sub> → AgCl↓<span class="zh2">（白）</span></div>
+      <p class="sm"><span class="key">順序不能亂</span>若先加 AgNO<sub>3</sub>，AgCl 跟 Ag<sub>2</sub>SO<sub>4</sub> 會一起沉，就分不開了。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 1-2 ═══════════ -->
+<section class="s-2" data-p="2" hidden>
+  <div class="hero"><div class="kicker">1-2</div><h2>反應式的平衡與化學計量</h2><div class="zh">平衡 ／ 計量 ／ 限量試劑 ／ 反應分類</div></div>
+
+  <h3>重點一　化學反應式與係數平衡</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>反應式代表的意義</h4>
+      <ul>
+        <li>反應物與生成物的<b>種類</b></li>
+        <li>反應條件（催化劑、溫度、壓力、加熱、電解等）標在<b>箭號上下方</b></li>
+        <li>狀態標在化學式<b>右側</b>：(g) 氣態、(l) 液態、(s) 固態、(aq) 水溶液</li>
+        <li>生成氣體加「↑」，生成沉澱加「↓」</li>
+      </ul>
+    </div>
+    <div class="blk">
+      <h4>平衡的兩大原理</h4>
+      <p class="sm"><b>①原子不滅</b>：反應前後原子種類與數目不變。<br><b>②電荷不滅</b>：反應前後總電荷量不變。</p>
+    </div>
+    <div class="blk">
+      <h4>觀察法</h4>
+      <p class="sm">把最複雜（原子數或種類最多）的物質係數訂為 1，或從兩邊各只出現一次的原子著手，其餘依原子不滅、電荷不滅決定。</p>
+      <div class="eq">H<sub>2</sub>O<sub>2</sub> ＋ 2I<sup>−</sup> ＋ 2H<sup>+</sup> → 2H<sub>2</sub>O ＋ I<sub>2</sub></div>
+      <p class="sm">順序：訂 H<sub>2</sub>O<sub>2</sub>＝1 → 平 O → 平 H → 平電荷 → 平 I。</p>
+    </div>
+    <div class="blk">
+      <h4>代數法</h4>
+      <p class="sm">複雜物質訂 1，其餘設未知數，依原子不滅與電荷不滅列式再解；<b>未知數愈少愈好</b>，能用觀察法先定的就先定。</p>
+      <div class="eq">1MnO<sub>4</sub><sup>−</sup> ＋ aC<sub>2</sub>O<sub>4</sub><sup>2−</sup> ＋ 2bH<sup>+</sup> → 1Mn<sup>2+</sup> ＋ 2aCO<sub>2</sub> ＋ bH<sub>2</sub>O<br>
+      O：4＋4a ＝ 4a＋b　　電荷：−1−2a＋2b ＝ +2<br>
+      ⇒ a ＝ 5/2、b ＝ 4　　係數 ×2 →<br>
+      <b>2MnO<sub>4</sub><sup>−</sup> ＋ 5C<sub>2</sub>O<sub>4</sub><sup>2−</sup> ＋ 16H<sup>+</sup> → 2Mn<sup>2+</sup> ＋ 10CO<sub>2</sub> ＋ 8H<sub>2</sub>O</b></div>
+    </div>
+  </div>
+
+  <h3>觀念澄正（平衡）</h3>
+  <div class="card">
+    <details><summary>1. 反應式平衡係數後，兩邊的分子數個數相等</summary>
+      <div class="ans"><span class="ox">✗ 錯誤</span>　平衡保證的是<b>原子</b>數目相等，分子（粒子）總數常常不等。例：2H<sub>2</sub>＋O<sub>2</sub>→2H<sub>2</sub>O，左邊 3 個分子、右邊 2 個。</div></details>
+    <details><summary>2. 化學反應式可用來預測生成物的種類</summary>
+      <div class="ans"><span class="ox">✗ 錯誤</span>　反應式是把<b>實驗觀察到的結果</b>記錄下來，不是拿來預測會生成什麼。</div></details>
+  </div>
+
+  <h3>延伸補充　氧化數與氧化數法平衡</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>氧化數判定通則</h4>
+      <ul>
+        <li>元素態的氧化數為 0（Na、O<sub>2</sub> 中的兩個 O 都是 0）</li>
+        <li>單原子離子＝所帶電荷（Mg<sup>2+</sup> 為 +2、Cl<sup>−</sup> 為 −1）</li>
+        <li>化合物中所有原子氧化數<b>總和為 0</b></li>
+        <li>多原子離子中總和＝<b>離子電荷</b>（SO<sub>4</sub><sup>2−</sup> 中 S 與 4 個 O 總和為 −2）</li>
+      </ul>
+      <p class="sm" style="margin-top:8px"><span class="key">判斷順序</span>IA＝+1、IIA＝+2、Al＝+3、F＝−1 ⇒ H＝+1（最常見）⇒ O＝−2（最常見）⇒ 鹵素＝−1（最常見）⇒ 其他元素最後推。</p>
+      <div class="wrap"><table>
+        <tr><th>元素</th><th>氧化數</th><th>情況</th><th>例</th></tr>
+        <tr><td>H</td><td>+1</td><td>非金屬氫化物（最常見）</td><td>H<sub>2</sub>O</td></tr>
+        <tr><td>H</td><td>−1</td><td>金屬氫化物（與 IA、IIA 化合）</td><td>CaH<sub>2</sub></td></tr>
+        <tr><td>O</td><td>−2</td><td>最常見</td><td>H<sub>2</sub>O</td></tr>
+        <tr><td>O</td><td>−1</td><td>過氧化物</td><td>H<sub>2</sub>O<sub>2</sub> 過氧化氫</td></tr>
+        <tr><td>O</td><td>−½</td><td>超氧化物</td><td>KO<sub>2</sub> 超氧化鉀</td></tr>
+        <tr><td>O</td><td>+2</td><td>只出現在與 F 的化合物</td><td>OF<sub>2</sub></td></tr>
+        <tr><td>鹵素</td><td>−1</td><td>最常見</td><td>HCl 中 Cl</td></tr>
+        <tr><td>鹵素</td><td>可變</td><td>與上列元素結合時要配合變化</td><td>HClO<sub>4</sub> 中 Cl 為 +7</td></tr>
+      </table></div>
+    </div>
+    <div class="blk">
+      <h4>氧化數法平衡（5 步驟）</h4>
+      <p class="sm">以 MnO<sub>4</sub><sup>−</sup>（過錳酸根）在酸性溶液中與 C<sub>2</sub>O<sub>4</sub><sup>2−</sup>（草酸根）反應為例：</p>
+      <ul>
+        <li><b>Step1</b> 寫出反應物與產物　MnO<sub>4</sub><sup>−</sup>＋C<sub>2</sub>O<sub>4</sub><sup>2−</sup>→Mn<sup>2+</sup>＋CO<sub>2</sub></li>
+        <li><b>Step2</b> 列出氧化數有變動的元素，平衡該元素原子數，算氧化數改變量（Mn：+7→+2 減 5；C：+3→+4 每個增 1，兩個共 +2）</li>
+        <li><b>Step3</b> 用最小公倍數使<b>得失電子數相等</b> → Mn 乘 2、草酸根乘 5</li>
+        <li><b>Step4</b> 平衡電荷：<b>酸性用 H<sup>+</sup>、鹼性用 OH<sup>−</sup></b></li>
+        <li><b>Step5</b> 用 H<sub>2</sub>O 平衡 H、O 原子數</li>
+      </ul>
+      <div class="eq">2MnO<sub>4</sub><sup>−</sup>(aq) ＋ 5C<sub>2</sub>O<sub>4</sub><sup>2−</sup>(aq) ＋ 16H<sup>+</sup>(aq)<br>→ 2Mn<sup>2+</sup>(aq) ＋ 10CO<sub>2</sub>(g) ＋ 8H<sub>2</sub>O(l)</div>
+    </div>
+  </div>
+
+  <h3>重點二　化學計量</h3>
+  <div class="card">
+    <div class="blk">
+      <p class="sm">利用<b>已平衡</b>的反應式，討論反應物與生成物之間莫耳數、質量或體積的關係。</p>
+      <div class="eq">莫耳數 ＝ 質量(g) ÷ 分(原)子量<br>
+      ＝ 粒子數 ÷ (6.02×10<sup>23</sup>)<br>
+      ＝ 氣體體積(L) ÷ 22.4　<span class="zh2">（0°C、1 atm）</span><br>
+      ＝ 氣體體積(L) ÷ 24.5　<span class="zh2">（25°C、1 atm）</span><br>
+      ＝ 體積莫耳濃度(M) × 體積(L)</div>
+      <p class="sm"><span class="key">解題流程</span>已知量 → 換成<b>莫耳數</b> → 用<b>平衡係數</b>換成待求物的莫耳數 → 再換成質量／體積／粒子數。中間一定要經過莫耳數，不能直接用質量比。</p>
+    </div>
+  </div>
+
+  <h3>觀念澄正（計量）</h3>
+  <div class="card">
+    <details><summary>1. 化學反應式的係數比就是反應物與生成物的莫耳數比</summary>
+      <div class="ans"><span class="ox">✗ 錯誤</span>　係數比是<b>反應掉與生成的</b>莫耳數比，不是容器裡<b>實際存在</b>的莫耳數比（一開始加多少是自己決定的）。</div></details>
+    <details><summary>2. 氣體的莫耳體積與溫度、壓力有關</summary>
+      <div class="ans"><span class="ok2">○ 正確</span>　所以 0°C、1 atm 是 22.4 L/mol，25°C、1 atm 變成 24.5 L/mol。看到體積換算一定要先確認溫壓。</div></details>
+  </div>
+
+  <h3>重點三　限量試劑與產率</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>限量試劑</h4>
+      <p class="sm">反應過程中<b>完全耗盡</b>的反應物，決定生成物的<b>理論產量</b>。</p>
+      <div class="eq">判斷法：比較各反應物的　<b>莫耳數 ÷ 係數</b>，<b>最小者</b>即為限量試劑</div>
+      <p class="sm"><b>例</b>　48 g N<sub>2</sub>H<sub>4</sub>（聯胺，分子量 32）與 92 g N<sub>2</sub>O<sub>4</sub>（分子量 92）完全反應：</p>
+      <div class="eq">2N<sub>2</sub>H<sub>4</sub>(g) ＋ N<sub>2</sub>O<sub>4</sub>(g) → 3N<sub>2</sub>(g) ＋ 4H<sub>2</sub>O(g)<br>
+      N<sub>2</sub>H<sub>4</sub>：1.5 mol ÷ 2 ＝ 0.75　←較小，<b>限量</b><br>
+      N<sub>2</sub>O<sub>4</sub>：1 mol ÷ 1 ＝ 1<br>
+      初　1.5　　1　　0　　0<br>
+      中　−1.5　−0.75　+2.25　+3<br>
+      末　0　　0.25　2.25　3<br>
+      N<sub>2</sub>：2.25 mol × 28 ＝ <b>63 g</b></div>
+      <p class="sm"><span class="key">三行表</span>初、中、末三行是最不會算錯的寫法，「中」那行的數字比一定等於係數比。</p>
+    </div>
+    <div class="blk">
+      <h4>產率</h4>
+      <div class="eq">產率（產量百分率）＝ 實際產量 ÷ 理論產量 × 100%</div>
+      <p class="sm">承上例，理論 63 g，實際只得 42 g → 產率 ＝ 42/63 × 100% ≒ <b>67%</b>。</p>
+    </div>
+    <details><summary>觀念澄正：限量試劑一定是反應物中莫耳數最少者</summary>
+      <div class="ans"><span class="ox">✗ 錯誤</span>　要比的是<b>莫耳數÷係數</b>。莫耳數多但係數更大的，照樣可能先用完。</div></details>
+  </div>
+
+  <h3>重點四　化學反應的分類</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th>類型</th><th>通式</th><th>實例</th></tr>
+        <tr><td><b>化合</b></td><td>X ＋ Y → XY</td><td>2H<sub>2</sub>＋O<sub>2</sub>→2H<sub>2</sub>O<br>NH<sub>3</sub>＋HCl→NH<sub>4</sub>Cl</td></tr>
+        <tr><td><b>分解</b></td><td>XY → X ＋ Y</td><td>2H<sub>2</sub>O<sub>2</sub>→2H<sub>2</sub>O＋O<sub>2</sub><br>CaCO<sub>3</sub>→CaO＋CO<sub>2</sub></td></tr>
+        <tr><td><b>置換</b></td><td>A ＋ XY → X ＋ AY</td><td>Zn＋2AgNO<sub>3</sub>→Zn(NO<sub>3</sub>)<sub>2</sub>＋2Ag<br>Cl<sub>2</sub>＋2NaI→2NaCl＋I<sub>2</sub></td></tr>
+        <tr><td><b>複分解</b></td><td>AB ＋ XY → AY ＋ XB</td><td>AgNO<sub>3</sub>＋NaCl→AgCl＋NaNO<sub>3</sub><br>HCl＋NaOH→NaCl＋H<sub>2</sub>O</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px"><span class="key">快速判斷</span>看<b>元素態</b>：反應物有元素態且產物也有元素態 → 置換；只有反應物有 → 化合；只有產物有 → 分解；兩邊都沒有元素態、只是離子交換 → 複分解。</p>
+    </div>
+    <details><summary>範例 5：判斷下列反應類型（甲化合 乙分解 丙置換）</summary>
+      <div class="ans">
+        (1) Cl<sub>2</sub>＋2KBr→2KCl＋Br<sub>2</sub>　<b>丙 置換</b><br>
+        (2) CaO＋SO<sub>2</sub>→CaSO<sub>3</sub>　<b>甲 化合</b><br>
+        (3) 2H<sub>2</sub>O<sub>2</sub>→2H<sub>2</sub>O＋O<sub>2</sub>　<b>乙 分解</b><br>
+        (4) Zn＋CuSO<sub>4</sub>→ZnSO<sub>4</sub>＋Cu　<b>丙 置換</b>
+      </div></details>
+    <details><summary>類題 5：索耳未法製蘇打，步驟 (1)(2)(4) 涉及哪些反應類型？</summary>
+      <div class="ans">答案 <b>(A) 化合反應、(B) 分解反應</b><br>
+        (1) CaCO<sub>3</sub> → CaO＋CO<sub>2</sub>　分解<br>
+        (2) NH<sub>3</sub>＋CO<sub>2</sub>＋H<sub>2</sub>O → NH<sub>4</sub>HCO<sub>3</sub>　化合<br>
+        (4) 2NaHCO<sub>3</sub> → Na<sub>2</sub>CO<sub>3</sub>＋CO<sub>2</sub>＋H<sub>2</sub>O　分解
+      </div></details>
+  </div>
+</section>
+
+<!-- ═══════════ 1-3 ═══════════ -->
+<section class="s-3" data-p="3" hidden>
+  <div class="hero"><div class="kicker">1-3</div><h2>反應熱的種類與性質</h2><div class="zh">熱含量 ／ 熱化學方程式 ／ 燃燒熱與生成熱 ／ 赫斯定律</div></div>
+
+  <h3>重點一　反應熱與熱化學方程式</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>熱含量 H（焓）</h4>
+      <p class="sm">定溫定壓下，存在於物質<b>本身</b>的能量。</p>
+      <ul>
+        <li><b>無法直接測得</b>，只能測「變化量」ΔH —— 這是最愛考的觀念</li>
+        <li>受溫度、壓力、狀態及莫耳數（量）影響</li>
+        <li>同一物質：<b>氣態 &gt; 液態 &gt; 固態</b>（位能差異）</li>
+      </ul>
+    </div>
+    <div class="blk">
+      <h4>反應熱 ΔH</h4>
+      <div class="eq">ΔH ＝ 生成物熱含量總和 − 反應物熱含量總和</div>
+      <div class="wrap"><table>
+        <tr><th></th><th>吸熱反應</th><th>放熱反應</th></tr>
+        <tr><td>ΔH</td><td><b>ΔH &gt; 0</b></td><td><b>ΔH &lt; 0</b></td></tr>
+        <tr><td>能量</td><td>生成物 &gt; 反應物</td><td>反應物 &gt; 生成物</td></tr>
+        <tr><td>周圍環境</td><td>溫度<b>下降</b></td><td>溫度<b>上升</b></td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px"><b>標準反應熱 ΔH°</b>：25°C、1 atm 下測得。未特別指明時，一般的 ΔH 即視為 ΔH°。（1982 年 IUPAC 把標準壓力改為 1 bar ≈ 0.987 atm，課本仍用 1 atm。）</p>
+    </div>
+    <div class="blk">
+      <h4>影響 ΔH 的因素</h4>
+      <p class="sm"><b>①物質狀態</b></p>
+      <div class="eq">H<sub>2</sub>(g)＋½O<sub>2</sub>(g)→H<sub>2</sub>O(<b>g</b>)　ΔH＝−241.8 kJ<br>
+      H<sub>2</sub>(g)＋½O<sub>2</sub>(g)→H<sub>2</sub>O(<b>l</b>)　ΔH＝−285.8 kJ</div>
+      <p class="sm">生成液態放出的熱較多，差的 44 kJ 就是水氣<b>凝結</b>放出的熱。</p>
+      <p class="sm" style="margin-top:8px"><b>②反應物的莫耳數</b>：係數變 n 倍，ΔH 也變 n 倍。</p>
+      <p class="sm"><b>③單位</b>：千焦耳 kJ、千卡 kcal，<b>1 kcal ≈ 4.18 kJ</b>。</p>
+    </div>
+    <div class="blk">
+      <h4>熱化學方程式</h4>
+      <p class="sm">加註<b>物質狀態</b>與<b>反應熱</b>的化學反應式。兩種寫法：</p>
+      <div class="eq"><b>吸熱</b>　N<sub>2</sub>(g)＋O<sub>2</sub>(g)→2NO(g)　ΔH＝+180.6 kJ<br>
+      ＝ N<sub>2</sub>(g)＋O<sub>2</sub>(g)＋180.6 kJ → 2NO(g)　<span class="zh2">（熱寫在左邊）</span></div>
+      <div class="eq"><b>放熱</b>　CH<sub>4</sub>(g)＋2O<sub>2</sub>(g)→CO<sub>2</sub>(g)＋2H<sub>2</sub>O(l)　ΔH＝−890.2 kJ<br>
+      ＝ CH<sub>4</sub>(g)＋2O<sub>2</sub>(g)→CO<sub>2</sub>(g)＋2H<sub>2</sub>O(l)＋890.2 kJ　<span class="zh2">（熱寫在右邊）</span></div>
+      <p class="sm"><span class="key">為什麼</span>把熱當成一種「反應物／產物」看：吸熱是反應需要吸收能量，熱寫在<b>左邊</b>；放熱是反應放出能量，熱寫在<b>右邊</b>。</p>
+    </div>
+    <div class="blk">
+      <h4>反應熱與係數的關係</h4>
+      <ul>
+        <li>係數變 <b>n 倍</b> → ΔH 也變 n 倍</li>
+        <li>反應<b>逆向</b>進行 → ΔH <b>等值異號</b></li>
+      </ul>
+      <div class="eq">H<sub>2</sub>(g)＋½O<sub>2</sub>(g)→H<sub>2</sub>O(g)　ΔH＝−241.8 kJ<br>
+      H<sub>2</sub>O(g)→H<sub>2</sub>(g)＋½O<sub>2</sub>(g)　ΔH＝+241.8 kJ</div>
+    </div>
+    <details><summary>觀念澄正：物質所具有的熱含量可由實驗測得</summary>
+      <div class="ans"><span class="ox">✗ 錯誤</span>　熱含量的<b>絕對值無法測得</b>，實驗只能測出反應前後的<b>變化量 ΔH</b>。</div></details>
+  </div>
+
+  <h3>重點二　燃燒熱與生成熱</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th></th><th>莫耳燃燒熱</th><th>莫耳生成熱</th></tr>
+        <tr><td>意義</td><td>1 mol 物質<b>完全燃燒</b>時的反應熱</td><td>1 mol 物質由其<b>最穩定的成分元素</b>生成時的反應熱</td></tr>
+        <tr><td>吸放熱</td><td><b>必為放熱</b>（ΔH&lt;0）</td><td>可能吸熱也可能放熱</td></tr>
+        <tr><td>零值</td><td>不可燃物質（O<sub>2</sub>、H<sub>2</sub>O、CO<sub>2</sub>）燃燒熱為 0</td><td>25°C、1 atm 下以最穩定狀態存在的<b>元素</b>，生成熱為 0</td></tr>
+        <tr><td>係數為 1 的是</td><td>被燒的<b>反應物</b></td><td>生成的<b>產物</b></td></tr>
+        <tr><td>寫法</td><td>1CH<sub>4</sub>(g)＋2O<sub>2</sub>(g)→CO<sub>2</sub>(g)＋2H<sub>2</sub>O(l)<br>ΔH＝−890.2 kJ</td><td>C(s)＋2H<sub>2</sub>(g)→1CH<sub>4</sub>(g)<br>ΔH＝−75 kJ</td></tr>
+      </table></div>
+    </div>
+    <div class="blk">
+      <h4>生成熱＝0 的元素（要背）</h4>
+      <ul>
+        <li>氫 H<sub>2</sub>(g)、溴 Br<sub>2</sub>(<b>l</b>)、碘 I<sub>2</sub>(<b>s</b>)、汞 Hg(<b>l</b>)　← 注意狀態</li>
+        <li>有同素異形體時取<b>含量最多或最穩定</b>者：氧 O<sub>2</sub>(g)、碳 <b>石墨</b> C(s)、磷 <b>白磷</b> P<sub>4</sub>(s)、硫 <b>斜方硫</b> S<sub>8</sub>(s)</li>
+      </ul>
+    </div>
+    <details><summary>觀念澄正 1：C(s)＋½O<sub>2</sub>(g)→CO(g) ΔH＝−110 kJ，可稱為 C 的莫耳燃燒熱</summary>
+      <div class="ans"><span class="ox">✗ 錯誤</span>　這是<b>不完全燃燒</b>。要 C(s)＋O<sub>2</sub>(g)→CO<sub>2</sub>(g) 才是碳的莫耳燃燒熱。</div></details>
+    <details><summary>觀念澄正 2：H<sub>2</sub>O(l) 的莫耳生成熱與 H<sub>2</sub>(g) 的莫耳燃燒熱為同值異號</summary>
+      <div class="ans"><span class="ox">✗ 錯誤</span>　兩者其實是<b>同一個反應</b> H<sub>2</sub>(g)＋½O<sub>2</sub>(g)→H<sub>2</sub>O(l)，所以是<b>同值同號</b>（都是 −285.8 kJ）。</div></details>
+  </div>
+
+  <h3>重點三　赫斯定律（反應熱的加成性）</h3>
+  <div class="card">
+    <div class="blk">
+      <p class="sm">若一個反應式可由其他<b>數個反應式組合而成</b>，其反應熱亦等於這些反應熱的<b>代數和</b>。</p>
+      <p class="sm"><b>特性：反應熱與途徑無關</b>，只跟反應物的初始狀態與生成物的最終狀態有關。</p>
+      <div class="eq">路徑一：N<sub>2</sub>＋2O<sub>2</sub>→2NO<sub>2</sub>　ΔH＝+68 kJ<br>
+      路徑二：① N<sub>2</sub>＋O<sub>2</sub>→2NO　ΔH<sub>1</sub>＝+180 kJ<br>
+      　　　　② 2NO＋O<sub>2</sub>→2NO<sub>2</sub>　ΔH<sub>2</sub>＝−112 kJ<br>
+      ①＋②：ΔH<sub>1</sub>＋ΔH<sub>2</sub> ＝ +68 kJ　✓ 相同</div>
+    </div>
+    <div class="blk">
+      <h4>最常見用途：求不易測量的反應熱</h4>
+      <p class="sm">碳<b>不完全</b>燃燒的反應熱無法直接測（一定會混到 CO<sub>2</sub>），用赫斯定律拆：</p>
+      <div class="eq">① C(s)＋O<sub>2</sub>→CO<sub>2</sub>　ΔH<sub>1</sub>＝−393.5 kJ<br>
+      ② CO＋½O<sub>2</sub>→CO<sub>2</sub>　ΔH<sub>2</sub>＝−283.0 kJ<br>
+      ②<b>倒過來</b>：CO<sub>2</sub>→CO＋½O<sub>2</sub>　ΔH<sub>2</sub>′＝+283.0 kJ<br>
+      ①＋②′：C(s)＋½O<sub>2</sub>→CO<br>
+      ΔH ＝ −393.5＋283.0 ＝ <b>−110.5 kJ</b></div>
+      <p class="sm"><span class="key">操作規則</span>反應式相加減 → ΔH 跟著加減；<b>反應式倒過來 ΔH 要變號、乘 n 倍 ΔH 也乘 n</b>。</p>
+    </div>
+    <div class="blk">
+      <h4>延伸公式（超好用）</h4>
+      <div class="eq">ΔH ＝ Σ生成物的生成熱 − Σ反應物的生成熱<br>
+      <b>記法：ΔH ＝ 生生 − 反生</b></div>
+      <p class="sm">計算時記得：<b>元素態的生成熱為 0</b>（如 O<sub>2</sub>），可以直接不計。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 沉澱表 ═══════════ -->
+<section class="s-4" data-p="4" hidden>
+  <div class="hero"><div class="kicker">最重要的一頁</div><h2>溶解度規則（沉澱表）</h2><div class="zh">每個離子都附中文名，看不懂符號也能背</div></div>
+
+  <h3>先搞懂：溶解度的分級</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="eq">難溶　&lt; 10<sup>−4</sup> M &lt;　微溶　&lt; 10<sup>−1</sup> M &lt;　可溶</div>
+      <p class="sm">「難溶」不是完全不溶，只是濃度低到會析出沉澱。<b>微溶</b>的那幾個最常被拿來出陷阱題。</p>
+    </div>
+  </div>
+
+  <h3>① 全部可溶（碰到誰都溶）</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th>離子</th><th>中文</th><th>規則</th></tr>
+        <tr><td>NO<sub>3</sub><sup>−</sup></td><td>硝酸根</td><td rowspan="4"><b>遇所有離子皆可溶</b></td></tr>
+        <tr><td>CH<sub>3</sub>COO<sup>−</sup></td><td>醋酸根（乙酸根）</td></tr>
+        <tr><td>IA<sup>+</sup></td><td>鹼金屬<br><span class="zh2">Li 鋰、Na 鈉、K 鉀、Rb 銣、Cs 銫</span></td></tr>
+        <tr><td>NH<sub>4</sub><sup>+</sup></td><td>銨根</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px"><span class="key">唯一例外</span>CH<sub>3</sub>COOAg（醋酸銀）<b>微溶</b>。</p>
+      <p class="sm"><span class="key">為什麼重要</span>做分離題時，試劑一定挑 NO<sub>3</sub><sup>−</sup> 或 Na<sup>+</sup> 當配角，就是因為它們絕不亂沉澱。</p>
+    </div>
+  </div>
+
+  <h3>② 大部分可溶（只記難溶的例外）</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>Cl<sup>−</sup> 氯、Br<sup>−</sup> 溴、I<sup>−</sup> 碘（鹵離子）</h4>
+      <p class="sm">遇下列離子<b>難溶</b>：</p>
+      <div class="wrap"><table>
+        <tr><td>Hg<sub>2</sub><sup>2+</sup></td><td>亞汞（汞(I)）</td></tr>
+        <tr><td>Cu<sup>+</sup></td><td>亞銅（銅(I)）</td></tr>
+        <tr><td>Pb<sup>2+</sup></td><td>鉛</td></tr>
+        <tr><td>Ag<sup>+</sup></td><td>銀</td></tr>
+        <tr><td>Tl<sup>+</sup></td><td>亞鉈</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px"><span class="key">注意價數</span>名單裡的汞、銅、鉈全是<b>低價態</b>：Hg<sub>2</sub><sup>2+</sup>（亞汞）、Cu<sup>+</sup>（亞銅）、Tl<sup>+</sup>（亞鉈）。高價的 Hg<sup>2+</sup>（汞）、Cu<sup>2+</sup>（銅）、Tl<sup>3+</sup>（鉈）<b>不在名單上，是可溶的</b>。所以 CuCl 難溶、CuCl<sub>2</sub> 可溶。</p>
+      <p class="sm"><span class="key">陷阱</span>是 Cu<sup><b>+</b></sup>（亞銅）難溶，不是 Cu<sup>2+</sup>（銅）。CuCl<sub>2</sub> 是<b>可溶</b>的。</p>
+    </div>
+    <div class="blk">
+      <h4>SO<sub>4</sub><sup>2−</sup> 硫酸根</h4>
+      <p class="sm">遇下列離子<b>難溶</b>：</p>
+      <div class="wrap"><table>
+        <tr><td>Pb<sup>2+</sup></td><td>鉛</td><td>難溶</td></tr>
+        <tr><td>Ca<sup>2+</sup></td><td>鈣</td><td><b>微溶</b></td></tr>
+        <tr><td>Ag<sup>+</sup></td><td>銀</td><td><b>微溶</b></td></tr>
+        <tr><td>Sr<sup>2+</sup></td><td>鍶</td><td>難溶</td></tr>
+        <tr><td>Ba<sup>2+</sup></td><td>鋇</td><td>難溶</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px"><span class="key">注意</span>Sr<sup>2+</sup>、Ba<sup>2+</sup> 是 IIA 族中較重的兩個，Ca<sup>2+</sup> 同族但只到微溶，Mg<sup>2+</sup>（鎂）則完全可溶 —— 同一族由上往下溶解度遞減。</p>
+    </div>
+    <div class="blk">
+      <h4>CrO<sub>4</sub><sup>2−</sup> 鉻酸根</h4>
+      <p class="sm">遇 Pb<sup>2+</sup>（鉛）、Ag<sup>+</sup>（銀）、Sr<sup>2+</sup>（鍶）、Ba<sup>2+</sup>（鋇）<b>難溶</b>。</p>
+      <p class="sm"><span class="key">跟硫酸根比</span>幾乎一樣，差別是<b>鉻酸根沒有鈣</b>（CaCrO<sub>4</sub> 可溶）。</p>
+    </div>
+  </div>
+
+  <h3>③ 大部分難溶（只記可溶的例外）</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>S<sup>2−</sup> 硫離子</h4>
+      <p class="sm">遇 <b>IA<sup>+</sup></b>（鹼金屬）、<b>NH<sub>4</sub><sup>+</sup></b>（銨根）、<b>IIA<sup>2+</sup></b>（鹼土金屬：Mg 鎂、Ca 鈣、Sr 鍶、Ba 鋇）<b>可溶</b>，其餘難溶。</p>
+    </div>
+    <div class="blk">
+      <h4>OH<sup>−</sup> 氫氧根</h4>
+      <p class="sm">遇 <b>IA<sup>+</sup></b>、<b>NH<sub>4</sub><sup>+</sup></b>、<b>Ca<sup>2+</sup>（鈣，微溶）</b>、<b>Sr<sup>2+</sup>（鍶）</b>、<b>Ba<sup>2+</sup>（鋇）</b> 可溶，其餘難溶。</p>
+      <p class="sm"><span class="key">跟 S<sup>2−</sup> 的差別</span>氫氧根<b>沒有鎂</b>！Mg(OH)<sub>2</sub> 是<b>難溶</b>白色沉澱（胃藥「氫氧化鎂」就是懸濁液）。</p>
+    </div>
+    <div class="blk">
+      <h4>CO<sub>3</sub><sup>2−</sup> 碳酸根、SO<sub>3</sub><sup>2−</sup> 亞硫酸根、PO<sub>4</sub><sup>3−</sup> 磷酸根</h4>
+      <p class="sm">只有遇 <b>IA<sup>+</sup></b> 與 <b>NH<sub>4</sub><sup>+</sup></b> 才可溶，其餘全部難溶。這三個最單純。</p>
+    </div>
+  </div>
+
+  <h3>④ 微溶名單（四個，背起來）</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><td>CH<sub>3</sub>COOAg</td><td>醋酸銀</td></tr>
+        <tr><td>CaSO<sub>4</sub></td><td>硫酸鈣</td></tr>
+        <tr><td>Ag<sub>2</sub>SO<sub>4</sub></td><td>硫酸銀</td></tr>
+        <tr><td>Ca(OH)<sub>2</sub></td><td>氫氧化鈣（石灰水）</td></tr>
+      </table></div>
+      <p class="sm" style="margin-top:8px">四個全部都含 <b>Ca<sup>2+</sup>（鈣）</b> 或 <b>Ag<sup>+</sup>（銀）</b>，其他陽離子不會出現在微溶名單裡。</p>
+    </div>
+  </div>
+
+  <h3>⑤ 補充：常見沉澱的顏色</h3>
+  <div class="card">
+    <div class="blk">
+      <p class="sm">課本這頁沒列，但段考常搭配「觀察到白色／黃色沉澱」來出題。</p>
+      <div class="wrap"><table>
+        <tr><th>沉澱</th><th>中文</th><th>顏色</th></tr>
+        <tr><td>AgCl</td><td>氯化銀</td><td>白</td></tr>
+        <tr><td>AgBr</td><td>溴化銀</td><td>淡黃</td></tr>
+        <tr><td>AgI</td><td>碘化銀</td><td>黃</td></tr>
+        <tr><td>Ag<sub>2</sub>CrO<sub>4</sub></td><td>鉻酸銀</td><td><b>磚紅</b></td></tr>
+        <tr><td>PbCrO<sub>4</sub></td><td>鉻酸鉛</td><td>黃</td></tr>
+        <tr><td>BaCrO<sub>4</sub></td><td>鉻酸鋇</td><td>黃</td></tr>
+        <tr><td>BaSO<sub>4</sub>／PbSO<sub>4</sub></td><td>硫酸鋇／硫酸鉛</td><td>白</td></tr>
+        <tr><td>PbCl<sub>2</sub></td><td>氯化鉛</td><td>白（<b>熱水可溶</b>）</td></tr>
+        <tr><td>PbI<sub>2</sub></td><td>碘化鉛</td><td>亮黃</td></tr>
+        <tr><td>CuS／PbS／Ag<sub>2</sub>S／FeS</td><td>硫化銅／鉛／銀／鐵</td><td>黑</td></tr>
+        <tr><td>ZnS</td><td>硫化鋅</td><td>白</td></tr>
+        <tr><td>CdS</td><td>硫化鎘</td><td>黃</td></tr>
+        <tr><td>MnS</td><td>硫化錳</td><td>粉紅</td></tr>
+        <tr><td>Fe(OH)<sub>3</sub></td><td>氫氧化鐵</td><td>紅棕</td></tr>
+        <tr><td>Fe(OH)<sub>2</sub></td><td>氫氧化亞鐵</td><td>淡綠</td></tr>
+        <tr><td>Cu(OH)<sub>2</sub></td><td>氫氧化銅</td><td>藍</td></tr>
+        <tr><td>Mg(OH)<sub>2</sub>／Al(OH)<sub>3</sub></td><td>氫氧化鎂／鋁</td><td>白</td></tr>
+        <tr><td>CaCO<sub>3</sub></td><td>碳酸鈣</td><td>白</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <h3>⑥ 離子中文名對照（不熟符號看這裡）</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>常見陽離子</h4>
+      <p class="sm">H<sup>+</sup> 氫　Li<sup>+</sup> 鋰　Na<sup>+</sup> 鈉　K<sup>+</sup> 鉀　NH<sub>4</sub><sup>+</sup> 銨　Mg<sup>2+</sup> 鎂　Ca<sup>2+</sup> 鈣　Sr<sup>2+</sup> 鍶　Ba<sup>2+</sup> 鋇　Al<sup>3+</sup> 鋁　Zn<sup>2+</sup> 鋅　Fe<sup>2+</sup> 亞鐵　Fe<sup>3+</sup> 鐵　Cu<sup>+</sup> 亞銅　Cu<sup>2+</sup> 銅　Ag<sup>+</sup> 銀　Pb<sup>2+</sup> 鉛　Hg<sub>2</sub><sup>2+</sup> 亞汞　Hg<sup>2+</sup> 汞　Mn<sup>2+</sup> 錳　Cd<sup>2+</sup> 鎘　Tl<sup>+</sup> 亞鉈　Tl<sup>3+</sup> 鉈</p>
+    </div>
+    <div class="blk">
+      <h4>常見陰離子</h4>
+      <p class="sm">F<sup>−</sup> 氟　Cl<sup>−</sup> 氯　Br<sup>−</sup> 溴　I<sup>−</sup> 碘　OH<sup>−</sup> 氫氧根　S<sup>2−</sup> 硫　NO<sub>3</sub><sup>−</sup> 硝酸根　NO<sub>2</sub><sup>−</sup> 亞硝酸根　SO<sub>4</sub><sup>2−</sup> 硫酸根　SO<sub>3</sub><sup>2−</sup> 亞硫酸根　CO<sub>3</sub><sup>2−</sup> 碳酸根　HCO<sub>3</sub><sup>−</sup> 碳酸氫根　PO<sub>4</sub><sup>3−</sup> 磷酸根　CrO<sub>4</sub><sup>2−</sup> 鉻酸根　Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> 重鉻酸根　MnO<sub>4</sub><sup>−</sup> 過錳酸根　C<sub>2</sub>O<sub>4</sub><sup>2−</sup> 草酸根　CH<sub>3</sub>COO<sup>−</sup> 醋酸根</p>
+    </div>
+    <div class="blk">
+      <h4>族名</h4>
+      <p class="sm"><b>IA 鹼金屬</b>：Li 鋰、Na 鈉、K 鉀、Rb 銣、Cs 銫<br>
+      <b>IIA 鹼土金屬</b>：Be 鈹、Mg 鎂、Ca 鈣、Sr 鍶、Ba 鋇<br>
+      <b>鹵素</b>：F 氟、Cl 氯、Br 溴、I 碘<br>
+      <span class="zh2">「亞」＝ 價數較低的那個（亞鐵 Fe<sup>2+</sup> 比鐵 Fe<sup>3+</sup> 少一價）</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 測驗 ═══════════ -->
+<section class="s-5" data-p="5" hidden>
+  <div class="hero"><div class="kicker">Quiz</div><h2>溶解度判斷測驗</h2><div class="zh">看化合物判斷可溶或難溶，每題都會說明套哪條規則</div></div>
+
+  <div id="qsetup">
+    <h3>設定</h3>
+    <div class="card">
+      <div class="optrow" id="setLen">
+        <div class="lb">題數</div>
+        <button class="chip" data-n="15">15</button>
+        <button class="chip on" data-n="30">30</button>
+        <button class="chip" data-n="0">全部</button>
+      </div>
+      <div class="blk"><p class="sm">兩個選項：<b>可溶／難溶</b>。每題作答後都會顯示判斷依據，看完自己按「下一題」。</p></div>
+    </div>
+    <button class="bigbtn" id="startBtn">開始測驗</button>
+  </div>
+
+  <div id="qplay" hidden>
+    <div class="qbar">
+      <span id="qcount">1 / 30</span>
+      <span class="track"><i id="qprog" style="width:0%"></i></span>
+      <span id="qscore">0 對</span>
+    </div>
+    <div class="card">
+      <div class="qprompt">
+        <div class="qtype">這個化合物在水中</div>
+        <div class="qtext" id="qtext">—</div>
+        <div class="qzh" id="qzh"></div>
+      </div>
+    </div>
+    <div class="choices" id="qchoices"></div>
+    <div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+    <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+
+  <div id="qdone" hidden>
+    <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3>
+    <div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button>
+    <button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+</section>
+
+<footer>化學 第 1 章 · 物質鑑定與化學反應</footer>
+</main>
+
+<script>
+/* [化學式, 中文, 答案, 理由] */
+const RAW = [
+['NaCl','氯化鈉','可溶','Na⁺ 是 IA 族（鹼金屬），遇任何陰離子都可溶'],
+['KNO₃','硝酸鉀','可溶','NO₃⁻（硝酸根）全部可溶'],
+['NH₄Cl','氯化銨','可溶','NH₄⁺（銨根）全部可溶'],
+['CH₃COONa','醋酸鈉','可溶','醋酸根與 IA⁺ 都是全溶組'],
+['AgNO₃','硝酸銀','可溶','NO₃⁻ 全部可溶，所以硝酸銀是可溶的（常被誤認為沉澱）'],
+['Pb(NO₃)₂','硝酸鉛','可溶','NO₃⁻ 全部可溶'],
+['Na₂CO₃','碳酸鈉','可溶','CO₃²⁻ 只有遇 IA⁺、NH₄⁺ 可溶，Na⁺ 正是 IA'],
+['(NH₄)₂S','硫化銨','可溶','S²⁻ 遇 NH₄⁺ 可溶'],
+['K₂S','硫化鉀','可溶','S²⁻ 遇 IA⁺ 可溶'],
+['BaS','硫化鋇','可溶','S²⁻ 遇 IIA²⁺（鹼土金屬）可溶，鋇是 IIA'],
+['NaOH','氫氧化鈉','可溶','OH⁻ 遇 IA⁺ 可溶'],
+['Ba(OH)₂','氫氧化鋇','可溶','OH⁻ 遇 Ba²⁺（鋇）可溶'],
+['Sr(OH)₂','氫氧化鍶','可溶','OH⁻ 遇 Sr²⁺（鍶）可溶'],
+['CuSO₄','硫酸銅','可溶','SO₄²⁻ 只有遇鉛、鈣、銀、鍶、鋇才不溶，Cu²⁺ 不在名單'],
+['MgSO₄','硫酸鎂','可溶','SO₄²⁻ 的難溶名單沒有鎂'],
+['ZnCl₂','氯化鋅','可溶','Cl⁻ 只有遇銀、鉛、亞汞、亞銅、亞鉈難溶'],
+['CuCl₂','氯化銅','可溶','難溶的是 Cu⁺（亞銅），Cu²⁺（銅）可溶 — 常見陷阱'],
+['FeCl₃','氯化鐵','可溶','Cl⁻ 的難溶名單沒有鐵'],
+['CaCl₂','氯化鈣','可溶','Cl⁻ 的難溶名單沒有鈣'],
+['KI','碘化鉀','可溶','I⁻ 遇 IA⁺ 可溶'],
+['NaBr','溴化鈉','可溶','Br⁻ 遇 IA⁺ 可溶'],
+['Na₃PO₄','磷酸鈉','可溶','PO₄³⁻ 遇 IA⁺、NH₄⁺ 可溶'],
+['K₂CrO₄','鉻酸鉀','可溶','CrO₄²⁻ 只有遇鉛、銀、鍶、鋇難溶'],
+['CaCrO₄','鉻酸鈣','可溶','鉻酸根的難溶名單「沒有鈣」，這點跟硫酸根不同'],
+['Na₂SO₃','亞硫酸鈉','可溶','SO₃²⁻ 遇 IA⁺ 可溶'],
+['Al(NO₃)₃','硝酸鋁','可溶','NO₃⁻ 全部可溶'],
+
+['AgCl','氯化銀','難溶','Cl⁻ 遇 Ag⁺（銀）難溶，白色沉澱'],
+['AgBr','溴化銀','難溶','Br⁻ 遇 Ag⁺ 難溶，淡黃色'],
+['AgI','碘化銀','難溶','I⁻ 遇 Ag⁺ 難溶，黃色'],
+['PbCl₂','氯化鉛','難溶','Cl⁻ 遇 Pb²⁺（鉛）難溶，白色、熱水可溶'],
+['PbI₂','碘化鉛','難溶','I⁻ 遇 Pb²⁺ 難溶，亮黃色'],
+['Hg₂Cl₂','氯化亞汞','難溶','Cl⁻ 遇 Hg₂²⁺（亞汞）難溶'],
+['CuCl','氯化亞銅','難溶','Cl⁻ 遇 Cu⁺（亞銅）難溶，注意不是 Cu²⁺'],
+['BaSO₄','硫酸鋇','難溶','SO₄²⁻ 遇 Ba²⁺（鋇）難溶，白色'],
+['PbSO₄','硫酸鉛','難溶','SO₄²⁻ 遇 Pb²⁺（鉛）難溶，白色'],
+['SrSO₄','硫酸鍶','難溶','SO₄²⁻ 遇 Sr²⁺（鍶）難溶'],
+['PbCrO₄','鉻酸鉛','難溶','CrO₄²⁻ 遇 Pb²⁺ 難溶，黃色'],
+['Ag₂CrO₄','鉻酸銀','難溶','CrO₄²⁻ 遇 Ag⁺ 難溶，磚紅色'],
+['BaCrO₄','鉻酸鋇','難溶','CrO₄²⁻ 遇 Ba²⁺ 難溶，黃色'],
+['CuS','硫化銅','難溶','S²⁻ 只有遇 IA⁺、NH₄⁺、IIA²⁺ 可溶，銅不在其中，黑色'],
+['PbS','硫化鉛','難溶','S²⁻ 遇鉛難溶，黑色'],
+['ZnS','硫化鋅','難溶','S²⁻ 遇鋅難溶，白色'],
+['FeS','硫化亞鐵','難溶','S²⁻ 遇鐵難溶，黑色'],
+['Ag₂S','硫化銀','難溶','S²⁻ 遇銀難溶，黑色'],
+['Mg(OH)₂','氫氧化鎂','難溶','OH⁻ 的可溶名單只有 IA⁺、NH₄⁺、鈣（微溶）、鍶、鋇 —— 沒有鎂'],
+['Al(OH)₃','氫氧化鋁','難溶','OH⁻ 遇鋁難溶，白色（過量強鹼會再溶解，兩性）'],
+['Fe(OH)₃','氫氧化鐵','難溶','OH⁻ 遇鐵難溶，紅棕色'],
+['Cu(OH)₂','氫氧化銅','難溶','OH⁻ 遇銅難溶，藍色'],
+['Zn(OH)₂','氫氧化鋅','難溶','OH⁻ 遇鋅難溶，白色'],
+['CaCO₃','碳酸鈣','難溶','CO₃²⁻ 只有遇 IA⁺、NH₄⁺ 可溶，鈣不在其中'],
+['BaCO₃','碳酸鋇','難溶','CO₃²⁻ 遇鋇難溶'],
+['MgCO₃','碳酸鎂','難溶','CO₃²⁻ 遇鎂難溶'],
+['Ag₂CO₃','碳酸銀','難溶','CO₃²⁻ 遇銀難溶'],
+['Ca₃(PO₄)₂','磷酸鈣','難溶','PO₄³⁻ 只有遇 IA⁺、NH₄⁺ 可溶'],
+['AlPO₄','磷酸鋁','難溶','PO₄³⁻ 遇鋁難溶'],
+['CaSO₃','亞硫酸鈣','難溶','SO₃²⁻ 只有遇 IA⁺、NH₄⁺ 可溶'],
+
+['CaSO₄','硫酸鈣','難溶','SO₄²⁻ 遇 Ca²⁺（鈣）不溶（課本標「微溶」，考沉澱時當作會沉澱處理）'],
+['Ag₂SO₄','硫酸銀','難溶','SO₄²⁻ 遇 Ag⁺（銀）不溶（課本標「微溶」）'],
+['Ca(OH)₂','氫氧化鈣','難溶','就是石灰水，只能溶一點點（課本標「微溶」）'],
+['CH₃COOAg','醋酸銀','難溶','醋酸根唯一的例外（課本標「微溶」）']
+];
+const BANK = RAW.map(function(r,i){ return {i:i, f:r[0], zh:r[1], a:r[2], why:r[3]}; });
+const OPTS = ['可溶','難溶'];
+
+const tabs = document.querySelectorAll('nav button');
+const panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+
+const S = {n:30};
+let queue=[], idx=0, right=0, wrongList=[], answered=false, autoTimer=null;
+const $ = function(id){ return document.getElementById(id); };
+
+$('setLen').addEventListener('click', function(e){
+  const b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+const shuffle = function(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+};
+
+function start(pool){
+  clearTimeout(autoTimer); autoTimer = null;
+  let items = shuffle(pool || BANK.slice());
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  const q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtext').textContent = q.f;
+  $('qzh').textContent = q.zh;
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+  const cw = $('qchoices');
+  cw.innerHTML = '';
+  OPTS.forEach(function(o){
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = o;
+    b.addEventListener('click', function(){ pick(b, o === q.a, q, o); });
+    cw.appendChild(b);
+  });
+}
+
+function pick(btn, ok, q, chosen){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.a) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:chosen}); }
+  const box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'vok' : 'vno');
+  box.innerHTML = '<span class="vt ' + (ok ? 'vok' : 'vno') + '">' + (ok ? '答對' : '答錯') + '</span>' +
+    '<span class="big">' + q.f + '　' + q.a + '</span>' +
+    '<small>' + q.zh + '　·　' + q.why + '</small>' +
+    (ok ? '' : '<small>你選的：' + chosen + '</small>');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  $('nextBtn').hidden = false;
+}
+
+function next(){
+  clearTimeout(autoTimer); autoTimer = null;
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  clearTimeout(autoTimer); autoTimer = null; answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  const total = Math.max(right + wrongList.length, 1);
+  const pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　沉澱表背熟了' : pct >= 80 ? '　把錯的規則再看一次' : '　回沉澱表那頁重看一遍');
+  const wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      const d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.f + '</b>' + w.q.zh + ' → ' + w.q.a +
+        '<span>' + w.q.why + '（你選了 ' + w.mine + '）</span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:chem-1', m[1]);
+         localStorage.setItem('nx:time:chem-1', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>

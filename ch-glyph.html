@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>國文字形 第一～三回</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --r1:#8a4a3c;--r2:#3f5f8a;--r3:#4a6b45;--r4:#7a5a9e;--accent:var(--r1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --r1:#e0917c;--r2:#8fb3e8;--r3:#8cc98a;--r4:#c4a2e8;
+    }
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.5;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom));
+  }
+  header{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px;
+  }
+  .titlebar{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  h1{font-size:24px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  .cnbtn{border:none;background:var(--fill);color:var(--blue);font-size:13px;font-weight:600;
+    padding:7px 12px;border-radius:100px;font-family:inherit;flex-shrink:0;cursor:pointer}
+  .cnbtn.off{background:var(--blue);color:#fff}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .rd-1{--accent:var(--r1)}.rd-2{--accent:var(--r2)}.rd-3{--accent:var(--r3)}.rd-4{--accent:var(--r4)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .item{display:flex;gap:10px;align-items:baseline;padding:11px 14px;border-top:.5px solid var(--sep)}
+  .item:first-child{border-top:none}
+  .idx{font-size:13px;color:var(--label3);width:26px;flex-shrink:0;text-align:right}
+  .body{flex:1;min-width:0}
+  .q{font-size:17px;line-height:1.45}
+  .q em{font-style:normal;color:var(--accent);font-size:14px}
+  .a{margin-top:2px}
+  .a b{font-size:20px;font-weight:600;margin-right:6px}
+  .a .wd{font-size:16px;color:var(--label2)}
+  .a .ex{display:block;font-size:14px;color:var(--label2);margin-top:1px;line-height:1.45}
+  .a .nt{display:block;font-size:13px;color:var(--gold);margin-top:1px}
+  body.hide-a .a{visibility:hidden}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .note{padding:12px 16px;font-size:14px;color:var(--label2);line-height:1.55;border-top:.5px solid var(--sep)}
+  .note:first-child{border-top:none}
+  .note b{color:var(--gold)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:26px 18px;text-align:center}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px}
+  .qprompt .qtext{font-size:26px;font-weight:600;line-height:1.4;word-break:break-word}
+  .qprompt .qtext em{font-style:normal;color:var(--gold);font-size:19px}
+  .qprompt .qhint{font-size:14px;color:var(--label3);margin-top:8px}
+  .choices{margin-top:10px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .choice{font-family:inherit;font-size:28px;padding:18px 10px;border-radius:12px;background:var(--card);
+    color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  .typebox{margin-top:10px;display:flex;gap:8px}
+  .typebox input{flex:1;font-family:inherit;font-size:22px;padding:14px 16px;border-radius:12px;
+    border:1.5px solid var(--sep);background:var(--card);color:var(--label);min-width:0;text-align:center}
+  .typebox input:focus{outline:none;border-color:var(--blue)}
+  .typebox button{border:none;font-family:inherit;font-size:16px;font-weight:600;padding:0 18px;
+    border-radius:12px;background:var(--blue);color:#fff;cursor:pointer}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.ok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.no{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.ok{color:var(--green)}
+  .verdict .vt.no{color:var(--red)}
+  .verdict .big{display:block;font-size:24px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .verdict small.gold{color:var(--gold)}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:16px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-size:20px;margin-right:6px}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  .wrongrow em{font-style:normal;color:var(--red)}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --r1:#8a4a3c;--r2:#3f5f8a;--r3:#4a6b45;--r4:#7a5a9e;--accent:var(--r1);
+  }
+  html[data-theme="dark"]{
+      --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --r1:#e0917c;--r2:#8fb3e8;--r3:#8cc98a;--r4:#c4a2e8;
+    }
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-chinese.html">◀ 回目錄</a><span>國文 · 字音字形 壢字</span></div>
+
+
+<header>
+  <div class="titlebar">
+    <div><h1>國文字形</h1><div class="sub">第一～三回 · 段考範圍</div></div>
+    <button class="cnbtn" id="abtn">隱藏答案</button>
+  </div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">第一回</button>
+    <button role="tab" aria-selected="false" data-t="2">第二回</button>
+    <button role="tab" aria-selected="false" data-t="3">第三回</button>
+    <button role="tab" aria-selected="false" data-t="4">易錯</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+  <section class="rd-1" data-p="1">
+    <div class="hero"><div class="kicker">Round 1</div><h2>字形第一回</h2><div class="zh">100 題</div></div>
+    <div class="card" id="list1"></div>
+  </section>
+  <section class="rd-2" data-p="2" hidden>
+    <div class="hero"><div class="kicker">Round 2</div><h2>字形第二回</h2><div class="zh">98 題</div></div>
+    <div class="card" id="list2"></div>
+  </section>
+  <section class="rd-3" data-p="3" hidden>
+    <div class="hero"><div class="kicker">Round 3</div><h2>字形第三回</h2><div class="zh">92 題</div></div>
+    <div class="card" id="list3"></div>
+  </section>
+
+  <section class="rd-4" data-p="4" hidden>
+    <div class="hero"><div class="kicker">Cheat sheet</div><h2>易錯字整理</h2><div class="zh">考前掃這頁</div></div>
+    <h3>同音不同字，最容易寫錯</h3>
+    <div class="card">
+      <div class="note"><b>ㄨˋ</b>　好高<b>騖</b>遠（馬部，追求）／趨之若<b>鶩</b>（鳥部，鴨子）</div>
+      <div class="note"><b>ㄅㄨˋ</b>　按<b>部</b>就班（不是「步」）／<b>故</b>步自封（不是「固」）</div>
+      <div class="note"><b>ㄌㄧˋ</b>　再接再<b>厲</b>（不是「勵」）／風聲鶴<b>唳</b></div>
+      <div class="note"><b>ㄈㄨˋ</b>　名<b>副</b>其實（不是「符」）</div>
+      <div class="note"><b>ㄕˋ</b>　共謀國<b>是</b>／尋人啟<b>事</b>／不甘<b>示</b>弱　三個都不一樣</div>
+      <div class="note"><b>ㄆㄨˋ／ㄊㄧㄢˇ</b>　一<b>暴</b>十寒（暴讀ㄆㄨˋ）／<b>暴殄</b>天物</div>
+      <div class="note"><b>ㄑㄩㄝˋ</b>　有待商<b>榷</b>（木部，不是「權」）</div>
+      <div class="note"><b>ㄒㄧˋ</b>　兄弟<b>鬩</b>牆（鬥部，不是「閱」）</div>
+      <div class="note"><b>ㄌㄨㄣˊ</b>　美<b>輪</b>美奐（不是「倫」）</div>
+      <div class="note"><b>ㄐㄧ</b>　反脣相<b>稽</b>（不是「譏」）</div>
+      <div class="note"><b>ㄙㄨ</b>　經濟復<b>甦</b>（不是「蘇」）</div>
+      <div class="note"><b>ㄧˋ</b>　<b>屹</b>立不搖（山部）／大學<b>肄</b>業（沒畢業）</div>
+      <div class="note"><b>ㄑㄩ</b>　委<b>曲</b>求全（不是「屈」）／長<b>驅</b>直入</div>
+      <div class="note"><b>ㄧㄥˋ</b>　反<b>映</b>意見（不是「應」）</div>
+      <div class="note"><b>ㄈㄣˋ</b>　身<b>分</b>（不是「份」）</div>
+      <div class="note"><b>ㄐㄧˊ</b>　聲名狼<b>藉</b>（艸部，不是「籍」）</div>
+      <div class="note"><b>ㄉㄨˋ</b>　<b>度</b>假村（不是「渡」，渡是過河）</div>
+      <div class="note"><b>ㄎㄨㄣˇ</b>　<b>壼</b>範永存（中間一橫，不是「壺」；也作「閫範」）</div>
+    </div>
+    <h3>形近字，差一點就錯</h3>
+    <div class="card">
+      <div class="note"><b>贗</b>品（貝部，假貨）　⟷　<b>膺</b>（胸膛）　⟷　<b>鷹</b></div>
+      <div class="note">倒<b>楣</b>（木部）　⟷　眉毛的<b>眉</b></div>
+      <div class="note">面<b>皰</b>　⟷　<b>咆</b>哮　⟷　<b>庖</b>丁</div>
+      <div class="note">鬼<b>祟</b>（出＋示）　⟷　<b>崇</b>拜（山＋宗）　← 超常考</div>
+      <div class="note">相形見<b>絀</b>（糸部）　⟷　罷<b>黜</b>（黑部）</div>
+      <div class="note">功虧一<b>簣</b>（竹部，土筐）　⟷　<b>潰</b>敗　⟷　<b>饋</b>贈</div>
+      <div class="note">汗流<b>浹</b>背（水部）　⟷　<b>狹</b>窄　⟷　<b>挾</b>持</div>
+      <div class="note">戶口<b>謄</b>本（言部，抄寫）　⟷　<b>騰</b>飛　⟷　沸<b>騰</b></div>
+      <div class="note">提綱<b>挈</b>領（手部）　⟷　<b>契</b>約</div>
+      <div class="note">中流<b>砥</b>柱（石部）　⟷　追根究<b>柢</b>（木部，樹根）　← 兩個都考</div>
+      <div class="note">舌<b>粲</b>蓮花（米部）　⟷　<b>燦</b>爛（火部）</div>
+      <div class="note">懲前<b>毖</b>後　⟷　分<b>泌</b>　⟷　神<b>祕</b></div>
+      <div class="note">甲<b>冑</b>（頭盔，冂＋由）　⟷　貴<b>胄</b>（後代，肉部）</div>
+    </div>
+    <h3>破音／罕用字讀音</h3>
+    <div class="card">
+      <div class="note">獨占<b>鰲</b>頭 ㄠˊ　／　叱<b>吒</b>風雲 ㄓㄚˋ　／　<b>咫</b>尺天涯 ㄓˇ</div>
+      <div class="note">曾子殺<b>彘</b> ㄓˋ（豬）　／　法家<b>拂</b>士 ㄅㄧˋ（通「弼」，輔佐）</div>
+      <div class="note">斗<b>筲</b>之人 ㄕㄠ（器量小）　／　碩學<b>耆</b>宿 ㄑㄧˊ（老前輩）</div>
+      <div class="note">童<b>騃</b>無知 ㄞˊ　／　<b>趑趄</b>不前 ㄗ ㄐㄩ　／　頭童齒<b>豁</b> ㄏㄨㄛˋ</div>
+      <div class="note">沉<b>痾</b>舊恙 ㄜ（久病）　／　<b>綆</b>短汲深 ㄍㄥˇ（汲水繩太短）</div>
+      <div class="note">妍<b>蚩</b> ㄔ（美醜）　／　遭兵<b>燹</b> ㄒㄧㄢˇ（戰火）　／　雷<b>殛</b> ㄐㄧˊ</div>
+      <div class="note">天崩地<b>坼</b> ㄔㄜˋ　／　<b>歃</b>血為盟 ㄕㄚˋ　／　扣槃<b>捫</b>燭 ㄇㄣˊ</div>
+      <div class="note"><b>舴艋</b> ㄗㄜˊ ㄇㄥˇ（小船）　／　<b>蠲</b>免 ㄐㄩㄢ（免除）　／　民<b>瘼</b> ㄇㄛˋ（疾苦）</div>
+    </div>
+  </section>
+
+  <section class="rd-4" data-p="5" hidden>
+    <div class="hero"><div class="kicker">Quiz</div><h2>字形測驗</h2><div class="zh">選項都是同音或形近字，答錯會停下來給解釋</div></div>
+    <div id="qsetup">
+      <h3>範圍</h3>
+      <div class="card">
+        <div class="optrow" id="setRounds">
+          <button class="chip on" data-u="1">第一回</button>
+          <button class="chip on" data-u="2">第二回</button>
+          <button class="chip on" data-u="3">第三回</button>
+          <button class="chip" data-u="all">全部</button>
+        </div>
+      </div>
+      <h3>作答方式</h3>
+      <div class="card">
+        <div class="optrow" id="setMode">
+          <button class="chip on" data-m="mc">選擇題</button>
+          <button class="chip" data-m="type">手打</button>
+        </div>
+        <div class="optrow" id="setLen">
+          <div class="lb">題數</div>
+          <button class="chip" data-n="15">15</button>
+          <button class="chip on" data-n="30">30</button>
+          <button class="chip" data-n="50">50</button>
+          <button class="chip" data-n="0">全部</button>
+        </div>
+        <div class="note">手打只要打<b>一個字</b>。門栓／門閂、了解／瞭解這種兩種都對的，兩個都收。答對直接跳下一題，答錯會停下來給你正確答案跟解釋。</div>
+      </div>
+      <button class="bigbtn" id="startBtn">開始測驗</button>
+    </div>
+
+    <div id="qplay" hidden>
+      <div class="qbar">
+        <span id="qcount">1 / 30</span>
+        <span class="track"><i id="qprog" style="width:0%"></i></span>
+        <span id="qscore">0 對</span>
+      </div>
+      <div class="card">
+        <div class="qprompt">
+          <div class="qtype">看注音，填國字</div>
+          <div class="qtext" id="qtext">—</div>
+          <div class="qhint" id="qhint"></div>
+        </div>
+      </div>
+      <div class="choices" id="qchoices"></div>
+      <div class="typebox" id="qtypebox" hidden>
+        <input id="qinput" type="text" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="填一個字">
+        <button id="qsubmit">送出</button>
+      </div>
+      <div id="qverdict"></div>
+      <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+      <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+    </div>
+
+    <div id="qdone" hidden>
+      <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+      <h3 id="rWrongTitle" hidden>答錯的題目</h3>
+      <div class="card" id="rWrong" hidden></div>
+      <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button>
+      <button class="bigbtn sec" id="againAll">回設定重測</button>
+    </div>
+  </section>
+
+<footer>字形第一～三回 · 共 290 題</footer>
+</main>
+
+<script>
+/* 每列：[題目（注音用括號）, 答案, 三個同音或形近干擾字, 解釋, 補充(可省略)] */
+const R1 = [
+['郵（ㄔㄨㄛ）','戳','戮鑿杵','蓋章留下的印記'],
+['殺（ㄌㄨˋ）','戮','陸錄祿','大規模殺害'],
+['汙（ㄖㄢˇ）','染','冉苒燃','弄髒、沾上不潔的東西'],
+['裝（ㄏㄨㄤˊ）','潢','璜煌隍','房屋內部的裝飾'],
+['蠶（ㄐㄧㄢˇ）','繭','剪儉柬','蠶吐絲結成的殼'],
+['（ㄊㄨㄣˊ）部','臀','殿豚臂','屁股'],
+['鹿（ㄖㄨㄥˊ）','茸','絨戎茹','鹿的幼角，貴重中藥'],
+['（ㄉㄠˋ）匪','盜','稻導蹈','強盜土匪'],
+['（ㄇㄧㄠˇ）視','藐','渺邈秒','輕視、看不起'],
+['魁（ㄨˊ）','梧','吾晤悟','身材高大壯碩'],
+['玄（ㄗㄤˋ）','奘','葬臟藏','唐代高僧，即唐三藏'],
+['彈（ㄏㄜˊ）','劾','核該駭','檢舉官員違法失職'],
+['（ㄨˇ）逆','忤','仵杵武','違背長輩、不孝'],
+['（ㄍㄨㄢˋ）洗','盥','灌貫罐','洗手洗臉'],
+['（ㄌㄧㄠˊ）倒','潦','撩繚僚','失意落魄'],
+['（ㄓㄣ）酌','斟','甄砧針','仔細考慮衡量'],
+['和（ㄞˇ）可親','藹','靄矮曖','態度溫和親切'],
+['叱（ㄓㄚˋ）風雲','吒','詫咋乍','形容聲勢威力極大'],
+['遷（ㄒㄧˇ）','徙','徒從涉','遷移、搬家'],
+['寒（ㄒㄩㄢ）','暄','喧宣煊','見面問候冷暖的客套話'],
+['斑（ㄌㄢˊ）','斕','瀾闌欄','色彩絢麗交錯'],
+['（ㄒㄩˋ）酒','酗','恤敘酌','無節制地喝酒鬧事'],
+['門（ㄕㄨㄢ）','栓','拴痊詮','門後抵住門的橫木','也作「門閂」'],
+['（ㄊㄢˊ）花','曇','談潭壇','夜開即謝的花，比喻短暫'],
+['（ㄌㄧˊ）難','罹','罷罩籬','遭遇災難而死'],
+['神（ㄎㄢ）','龕','堪勘嵌','供奉神佛的小閣'],
+['（ㄇㄥˇ）懂無知','懵','朦矇蒙','糊塗、不明事理'],
+['（ㄌㄚ）遢','邋','蠟臘拉','骯髒不整潔'],
+['（ㄇㄟˋ）力','魅','魑魍媚','吸引人的力量'],
+['貪（ㄌㄢˊ）','婪','嵐蘭瀾','貪心不知足'],
+['內（ㄏㄨㄥˋ）','訌','哄鬨紅','自己人內部起爭端'],
+['鬼（ㄙㄨㄟˋ）','祟','崇歲遂','行動偷偷摸摸'],
+['面（ㄆㄠˋ）','皰','泡咆庖','青春痘'],
+['（ㄨㄛˋ）旋','斡','幹翰握','居中調解、扭轉局面'],
+['租（ㄌㄧㄣˋ）','賃','任臨淋','出租或承租'],
+['休（ㄑㄧˋ）','憩','契器棄','休息'],
+['蟬（ㄌㄧㄢˊ）','聯','連蓮憐','連續保有名次或頭銜'],
+['（ㄓㄣˇ）密','縝','慎鎮枕','細緻周密'],
+['（ㄧㄢˋ）品','贗','膺鷹雁','偽造的假貨'],
+['倒（ㄇㄟˊ）','楣','眉媚湄','運氣不好'],
+['（ㄕㄨ）困','紓','抒舒殊','解除困難'],
+['（ㄕㄞ）選','篩','釃曬骰','過濾挑選'],
+['吞（ㄕˋ）','噬','嗜誓逝','吞下去、併吞'],
+['鍾（ㄎㄨㄟˊ）','馗','逵魁葵','傳說中捉鬼的神'],
+['針（ㄐㄧㄡˇ）','灸','炙久玖','中醫針刺與艾灸療法'],
+['牙（ㄧㄣˊ）','齦','銀垠齟','包住牙根的肉'],
+['（ㄗㄚ）道','匝','咂扎砸','連接主線道路的引道'],
+['抽（ㄔㄨˋ）','搐','蓄畜觸','肌肉不由自主抽動'],
+['裙（ㄅㄞˇ）','襬','擺罷簸','裙子的下緣'],
+['（ㄉㄢ）誤','耽','眈擔聃','因拖延而誤事'],
+['長（ㄑㄩ）直入','驅','軀趨區','一路挺進毫無阻礙'],
+['一丘之（ㄏㄜˊ）','貉','貊駱貂','同樣是壞東西（罵人）'],
+['大名（ㄉㄧㄥˇ）（ㄉㄧㄥˇ）','鼎','頂酊訂','名氣非常大'],
+['追根究（ㄉㄧˇ）','柢','底砥抵','徹底追查根源','木部，樹根'],
+['兄弟（ㄒㄧˋ）牆','鬩','閱閡鬧','兄弟自家人內鬥'],
+['名（ㄈㄨˋ）其實','副','符幅富','名聲與實際相符'],
+['共謀國（ㄕˋ）','是','事勢視','共同商議國家大政'],
+['有待商（ㄑㄩㄝˋ）','榷','權確闕','還需要討論，不一定對'],
+['（ㄐㄧㄥ）（ㄐㄧㄥ）業業','兢','競京驚','小心謹慎又勤奮'],
+['迫不（ㄐㄧˊ）待','及','急即極','急得一刻都等不了'],
+['（ㄐㄧㄢ）忍不拔','堅','艱間監','意志堅定不動搖'],
+['（ㄐㄧㄢ）鰈情深','鶼','兼縑鰜','夫妻感情深厚'],
+['可見一（ㄅㄢ）','斑','班般頒','從局部就能推知全貌'],
+['名列前（ㄇㄠˊ）','茅','矛茆貌','成績排在前面'],
+['（ㄊㄧㄥˇ）而走險','鋌','挺艇廷','走投無路而冒險犯法'],
+['（ㄋㄨㄥˊ）纖合度','穠','濃膿農','胖瘦恰到好處'],
+['（ㄔㄨˋ）目驚心','怵','觸黜絀','看了令人害怕'],
+['獨占（ㄠˊ）頭','鰲','熬螯翱','考取第一名'],
+['（ㄨㄣˇ）頸之交','刎','吻紊穩','能同生共死的好友'],
+['（ㄍㄨˋ）步自封','故','固顧僱','守著老樣子不求進步'],
+['美（ㄌㄨㄣˊ）美奐','輪','倫淪綸','房屋高大又華麗'],
+['停（ㄓˋ）不前','滯','制緻窒','停在原地沒有進展'],
+['（ㄘㄜˋ）隱之心','惻','側測策','見人受苦而同情'],
+['夢（ㄒㄩㄥˊ）之兆','熊','雄兇胸','生男孩的預兆'],
+['（ㄑㄧㄥˋ）竹難書','罄','磬慶謦','罪狀多到寫不完'],
+['經濟復（ㄙㄨ）','甦','蘇酥穌','景氣回升'],
+['（ㄔˇ）奪公權','褫','恥齒侈','依法剝奪公民權利'],
+['（ㄧˋ）立不搖','屹','迄訖乞','穩固地立著不動搖'],
+['剛（ㄅㄧˋ）自用','愎','復腹複','固執己見聽不進勸'],
+['反脣相（ㄐㄧ）','稽','譏機嵇','被責備後反過來質問'],
+['好高（ㄨˋ）遠','騖','鶩務霧','追求不切實際的目標','馬部'],
+['分道揚（ㄅㄧㄠ）','鑣','標鏢飆','各走各的路、拆夥'],
+['窮兵（ㄉㄨˊ）武','黷','瀆牘犢','濫用武力發動戰爭'],
+['同仇敵（ㄎㄞˋ）','愾','慨概溉','一致對付共同敵人'],
+['（ㄓㄢˇ）露頭角','嶄','展斬盞','才華開始顯露出來'],
+['再接再（ㄌㄧˋ）','厲','勵礪歷','一次比一次更努力'],
+['按（ㄅㄨˋ）就班','部','步布佈','照著順序步驟做'],
+['莫（ㄇㄧㄥˊ）其妙','名','明鳴銘','說不出道理、莫名其妙'],
+['風聲鶴（ㄌㄧˋ）','唳','戾淚厲','一點動靜就驚慌'],
+['（ㄓˇ）尺天涯','咫','只旨址','距離很近卻像很遠'],
+['戶口（ㄊㄥˊ）本','謄','騰滕藤','照原件抄錄的正式副本'],
+['中途（ㄔㄨㄛˋ）學','輟','綴啜掇','半路停止不讀了'],
+['相形見（ㄔㄨˋ）','絀','拙黜咄','比較之下顯得不如人'],
+['別出（ㄒㄧㄣ）裁','心','新辛薪','構想與眾不同'],
+['功虧一（ㄎㄨㄟˋ）','簣','潰饋櫃','差最後一步而功敗垂成'],
+['汗流（ㄐㄧㄚˊ）背','浹','挾狹夾','汗多到濕透整個背'],
+['如火如（ㄊㄨˊ）','荼','塗途茶','氣勢旺盛熱烈'],
+['（ㄎㄥ）鏘有聲','鏗','硜坑吭','聲音響亮有力'],
+['暴（ㄊㄧㄢˇ）天物','殄','珍軫診','任意糟蹋東西'],
+['一（ㄆㄨˋ）十寒','暴','曝瀑爆','做事沒恆心','暴讀ㄆㄨˋ，曬的意思']
+];
+const R2 = [
+['（ㄑㄧㄢˊ）誠','虔','前潛乾','恭敬而有誠意'],
+['地板打（ㄌㄚˋ）','蠟','臘獵邋','塗蠟保養'],
+['生活（ㄇㄧˊ）爛','糜','靡麋眉','生活腐化墮落'],
+['親（ㄋㄧˋ）','暱','匿溺膩','非常親密'],
+['（ㄏㄢˋ）衛','捍','悍焊桿','奮力保衛'],
+['打（ㄧㄤˊ）','烊','樣佯洋','商店關門休息'],
+['（ㄒㄧㄠ）張','囂','蕭消宵','放肆狂妄'],
+['找（ㄔㄚˊ）','碴','查渣茬','故意挑毛病'],
+['（ㄊㄢˇ）護','袒','坦毯壇','偏心地維護'],
+['（ㄕㄜˋ）免','赦','設攝射','免除刑罰'],
+['（ㄐㄩㄝˊ）擇','抉','決訣絕','選擇'],
+['打（ㄏㄢ）','鼾','酣憨頇','睡覺打呼'],
+['（ㄓㄠˋ）事','肇','兆召照','引起事故'],
+['油（ㄋㄧˋ）','膩','暱溺匿','油多而令人生厭'],
+['（ㄔㄨㄞˇ）測','揣','端瑞踹','猜測、推想'],
+['（ㄇㄠˋ）然答應','貿','冒茂帽','輕率不加考慮'],
+['挑（ㄒㄧㄣˋ）','釁','信新蕈','故意惹事引起衝突'],
+['一代（ㄒㄧㄠ）雄','梟','銷宵驍','凶狠有野心的強者'],
+['（ㄅㄢ）獎','頒','班斑搬','公開發給獎項'],
+['黃（ㄉㄢˇ）病','疸','膽旦但','皮膚眼白發黃的病'],
+['取（ㄉㄧˋ）','締','諦帝蒂','依法禁止取消'],
+['（ㄊㄠ）擾','叨','掏滔濤','打擾（客套話）'],
+['糟（ㄊㄚˋ）','蹋','塌榻搨','浪費、損壞','也作「糟踏」'],
+['賭（ㄅㄛˊ）','博','搏膊駁','賭錢'],
+['（ㄅㄧㄝˋ）扭','彆','別憋鱉','不順、不自在'],
+['不落（ㄎㄜ）臼','窠','科棵蝌','不落俗套、有創新'],
+['（ㄎㄢ）誤','勘','堪戡龕','校正錯誤'],
+['（ㄒㄩㄝˊ）頭','噱','學謔穴','吸引人注意的花招'],
+['哈雷（ㄏㄨㄟˋ）星','彗','慧惠穗','拖著長尾巴的星體'],
+['時（ㄇㄠˊ）','髦','毛旄矛','流行、時尚'],
+['（ㄇㄟˊ）菌','黴','霉梅媒','引起發霉的真菌'],
+['陰（ㄇㄞˊ）','霾','埋買賣','空氣汙濁；心情低沉'],
+['大學（ㄧˋ）業','肄','肆隸律','讀過但沒有畢業'],
+['隔（ㄏㄜˊ）','閡','閣核閤','彼此有距離、不相通'],
+['（ㄙㄨㄛˇ）碎','瑣','鎖索嗩','零碎不重要'],
+['（ㄔㄜˋ）退','撤','徹澈轍','退兵、往後退'],
+['（ㄓㄨㄛˊ）壯','茁','拙卓灼','成長得強壯'],
+['（ㄌㄧㄠˇ）解','了','撩繚僚','明白、清楚','也作「瞭解」'],
+['身（ㄈㄣˋ）','分','份忿奮','個人的地位資格','不寫「份」'],
+['（ㄐㄧˋ）倆','伎','技妓忌','不正當的手段'],
+['甲（ㄓㄡˋ）','冑','胄宙咒','盔甲，冑是頭盔'],
+['（ㄍㄨˇ）惑','蠱','鼓股盅','用手段迷惑人心'],
+['日（ㄍㄨㄟˇ）','晷','軌鬼詭','古代看日影計時的儀器'],
+['期期（ㄞˋ）（ㄞˋ）','艾','愛礙隘','說話結巴講不清楚'],
+['煩（ㄋㄠˇ）','惱','腦瑙撓','苦惱'],
+['（ㄐㄩㄝˊ）別','訣','抉決絕','永別'],
+['害（ㄙㄠˋ）','臊','燥躁噪','害羞'],
+['（ㄔㄨㄛˋ）號','綽','卓戳輟','外號'],
+['（ㄘㄨˋ）死','猝','卒粹淬','突然死亡'],
+['天地神（ㄑㄧˊ）','祇','祈祁岐','神明，地神稱祇'],
+['（ㄑㄧㄣˋ）人心脾','沁','泌沏浸','香氣舒服地直透心底'],
+['（ㄕˋ）犢情深','舐','嗜噬視','父母疼愛子女'],
+['天崩地（ㄔㄜˋ）','坼','拆折柝','天塌地裂，變動極大'],
+['（ㄗ）牙咧嘴','齜','呲玆髭','張嘴露牙，痛苦或凶狠'],
+['眾口（ㄕㄨㄛˋ）金','鑠','爍礫朔','輿論力量能顛倒是非'],
+['膾（ㄓˋ）人口','炙','灸至誌','作品受大家喜愛傳誦'],
+['離鄉背（ㄐㄧㄥˇ）','井','景警憬','離開故鄉'],
+['眾目（ㄎㄨㄟˊ）（ㄎㄨㄟˊ）','睽','葵魁揆','大家都睜眼看著'],
+['移（ㄗㄨㄣ）就教','樽','尊遵蹲','主動前去向人請教'],
+['破（ㄈㄨˇ）沉舟','釜','斧腐撫','下定決心不留退路'],
+['趨之若（ㄨˋ）','鶩','騖務霧','像鴨群一樣搶著去（貶）','鳥部'],
+['戊（ㄒㄩ）變法','戌','戍戎戊','清末的維新運動'],
+['（ㄒㄩˇ）（ㄒㄩˇ）如生','栩','詡許煦','形容得非常逼真'],
+['飛揚跋（ㄏㄨˋ）','扈','護戶滬','囂張霸道'],
+['妄自（ㄈㄟˇ）薄','菲','匪誹斐','過度看輕自己'],
+['性命（ㄧㄡ）關','攸','悠幽優','關係到生死'],
+['蓬（ㄅㄧˋ）生輝','蓽','篳畢弼','貴客來訪使寒舍增光'],
+['（ㄐㄧㄝˊ）風沐雨','櫛','節結詰','在外奔波非常辛苦'],
+['一（ㄘㄨˋ）可幾','蹴','促猝簇','一步就能達成（多用否定）'],
+['（ㄕㄚˋ）血為盟','歃','插霎煞','古人結盟時飲血立誓'],
+['最後通（ㄉㄧㄝˊ）','牒','諜蝶碟','最後的正式警告文書'],
+['（ㄔㄨㄣ）萱並茂','椿','春蠢唇','父母都健在，椿指父'],
+['人才（ㄅㄟˋ）出','輩','備憊悖','一代代不斷出現人才'],
+['銀貨兩（ㄑㄧˋ）','訖','迄乞汔','錢貨兩清'],
+['所費不（ㄗ）','貲','資姿諮','花費非常龐大'],
+['眼花（ㄌㄧㄠˊ）亂','撩','繚僚瞭','看得眼睛昏亂'],
+['（ㄕˋ）目以待','拭','試軾弒','擦亮眼睛等著看'],
+['地（ㄆㄧˇ）流氓','痞','否痺劈','地方上的惡棍'],
+['未雨綢（ㄇㄡˊ）','繆','謬穆繚','事先做好準備'],
+['疲（ㄅㄟˋ）不堪','憊','備輩悖','非常疲倦'],
+['提綱（ㄑㄧㄝˋ）領','挈','契楔鍥','抓住重點綱要'],
+['反（ㄧㄥˋ）意見','映','應影硬','把意見傳達出去'],
+['中流（ㄉㄧˇ）柱','砥','抵柢邸','能擔當大任的中堅人物','石部'],
+['委（ㄑㄩ）求全','曲','屈驅軀','勉強遷就以求圓滿'],
+['尋人啟（ㄕˋ）','事','示是視','公告的文字'],
+['為虎作（ㄔㄤ）','倀','猖昌娼','幫著壞人做壞事'],
+['共體時（ㄐㄧㄢ）','艱','堅監間','一起承擔艱困的時局'],
+['應接不（ㄒㄧㄚˊ）','暇','瑕遐霞','事情太多來不及應付'],
+['（ㄉㄞ）在家裡','待','呆逮怠','停留'],
+['文采（ㄈㄟˇ）然','斐','菲蜚翡','文章寫得很出色'],
+['沉（ㄇㄧㄢˇ）酒色','湎','緬勉腼','沉迷其中不能自拔'],
+['待價而（ㄍㄨ）','沽','估姑辜','等好價錢才賣，比喻等機會'],
+['（ㄕㄚ）車失靈','煞','殺沙紗','讓車子停下來','也作「剎車」'],
+['聲名狼（ㄐㄧˊ）','藉','籍即輯','名聲極壞','艸部'],
+['懵懂昏（ㄎㄨㄟˋ）','聵','潰饋匱','糊塗不明事理'],
+['扣槃（ㄇㄣˊ）燭','捫','悶們門','靠片面認識就亂下判斷'],
+['逢人說（ㄒㄧㄤˋ）','項','向像巷','到處替人說好話'],
+['得隴（ㄨㄤˋ）蜀','望','忘旺妄','得寸進尺、貪心不足']
+];
+const R3 = [
+['（ㄋㄧㄥˊ）乾','擰','檸獰寧','用手扭出水分'],
+['（ㄕㄣˇ）納','哂','曬矧審','請對方笑納的客套話'],
+['（ㄐㄧㄚˋ）禍','嫁','稼架駕','把災禍推給別人'],
+['（ㄅㄧㄝˊ）腳','蹩','憋鱉彆','技術差、品質差'],
+['皮膚白（ㄒㄧ）','皙','晰析淅','皮膚白淨'],
+['明（ㄈㄢˊ）','礬','樊繁攀','淨水用的礦物結晶'],
+['（ㄇㄥˊ）隸','氓','萌盟甍','平民百姓'],
+['（ㄇㄢˋ）罵','謾','漫慢蔓','亂罵、辱罵'],
+['（ㄡ）歌','謳','嘔漚歐','歌頌讚美'],
+['（ㄏㄨㄤˇ）子','幌','晃恍謊','招牌；比喻掩飾的藉口'],
+['（ㄒㄩㄢˇ）赫','烜','喧暄煊','聲勢盛大'],
+['（ㄓㄜ）人','螫','蜇蟄哲','蜂蟲用毒刺刺人'],
+['疆（ㄔㄤˊ）','場','常嘗償','戰場'],
+['（ㄉㄡ）售','兜','抖陡蔸','四處推銷'],
+['腳（ㄏㄨㄞˊ）','踝','懷槐淮','腳的關節突起處'],
+['錯（ㄜˋ）','愕','鄂顎萼','驚訝發愣'],
+['地（ㄐㄧㄠˋ）','窖','窯較酵','地下的儲藏室'],
+['（ㄆㄧㄠˋ）竊','剽','飄漂票','抄襲別人的作品'],
+['門（ㄎㄢˇ）','檻','坎砍闞','門下橫木；比喻條件限制'],
+['（ㄆㄧ）漏','紕','批毗砒','疏忽造成的錯誤'],
+['（ㄧˇ）旎','旖','倚椅綺','柔美多姿'],
+['拉（ㄑㄧㄢˋ）','縴','纖牽欠','拉繩子拖船'],
+['（ㄙㄠ）臭','臊','騷搔繅','腥臭味'],
+['（ㄎㄚˇ）血','咯','喀卡略','從呼吸道咳出血'],
+['（ㄐㄩㄝ）嘴','噘','撅決厥','嘴唇翹起表示不高興'],
+['妍（ㄔ）','蚩','嗤癡笞','美與醜'],
+['（ㄑㄩㄝˊ）腿','瘸','癱瘓癲','腿腳殘疾走路不便'],
+['塗（ㄧㄚ）','鴉','丫呀鴨','亂寫亂畫'],
+['遭兵（ㄒㄧㄢˇ）','燹','顯險蘚','戰火造成的破壞'],
+['雷（ㄐㄧˊ）','殛','極亟棘','被雷打死'],
+['昏（ㄐㄩㄝˊ）','厥','蹶獗噘','昏倒失去知覺'],
+['（ㄅㄧㄢˇ）額','匾','扁遍偏','掛在門上的橫牌'],
+['荒（ㄇㄧㄡˋ）','謬','繆穆廖','荒唐不合理'],
+['芝（ㄇㄚˊ）','麻','嘛痲媽','胡麻的種子'],
+['轉（ㄏㄨㄢˊ）','圜','環寰還','挽回、還有商量餘地'],
+['（ㄗㄜˊ）艋','舴','窄咋作','小船'],
+['（ㄒㄧㄚˊ）疵','瑕','暇遐霞','小缺點'],
+['民（ㄇㄛˋ）','瘼','漠寞膜','人民的疾苦'],
+['（ㄐㄩㄢ）免','蠲','涓捐娟','免除賦稅或罪責'],
+['（ㄈㄢˋ）音','梵','泛範犯','佛教的誦經聲'],
+['暴（ㄗㄠˋ）','躁','燥噪操','脾氣急、容易發怒'],
+['（ㄔㄢ）扶','攙','摻讒饞','用手扶著人走'],
+['枯（ㄍㄠˇ）','槁','稿搞縞','乾枯憔悴'],
+['敲竹（ㄍㄤˋ）','槓','杠貢扛','趁機索取高價'],
+['高（ㄌㄧㄤˊ）','粱','樑梁良','一種穀物，高粱酒原料'],
+['肩（ㄐㄧㄚˇ）骨','胛','甲鉀岬','背部上方的骨頭'],
+['（ㄎㄜˋ）瓜子','嗑','磕瞌溘','用牙齒咬開硬殼'],
+['兵馬（ㄩㄥˇ）','俑','湧踊蛹','陪葬用的人形陶偶'],
+['（ㄉㄨˋ）假村','度','渡鍍杜','休閒住宿的園區','不是「渡」'],
+['投（ㄉㄧˋ）','遞','弟第締','送交、投送'],
+['（ㄏㄨㄢˋ）海浮沉','宦','患幻喚','官場上的起起落落'],
+['功（ㄒㄩㄣ）彪炳','勳','薰醺曛','功勞非常顯著'],
+['無（ㄩㄢˊ）無故','緣','沿鉛援','沒有任何原因'],
+['文（ㄊㄠ）武略','韜','滔濤掏','文武兩方面的謀略'],
+['雞毛（ㄉㄢˇ）子','撢','撣膽疸','掃灰塵的用具'],
+['入不（ㄈㄨ）出','敷','膚孵夫','收入不夠支出'],
+['心驚膽（ㄓㄢˋ）','戰','顫棧綻','非常害怕'],
+['（ㄎㄜˋ）苦耐勞','刻','克客課','能吃苦、耐得住勞累'],
+['夜（ㄇㄨˋ）低垂','幕','暮慕募','天色暗下來'],
+['沉（ㄜ）舊恙','痾','阿呵屙','拖很久難好的病'],
+['（ㄌㄧㄠˋ）倒','撂','掠瞭撩','把人摔倒、放倒'],
+['不容置（ㄏㄨㄟˋ）','喙','彗惠穢','不容許別人插嘴'],
+['（ㄧˊ）養天年','頤','姨怡貽','安享晚年'],
+['自出機（ㄓㄨˋ）','杼','抒紓佇','作品有自己的獨創構思'],
+['（ㄕㄥˋ）氣凌人','盛','剩勝乘','態度傲慢欺壓別人'],
+['對（ㄅㄨˋ）公堂','簿','薄部步','上法庭打官司'],
+['積（ㄩˇ）沉舟','羽','宇雨禹','小事累積也能釀成大禍'],
+['曾子殺（ㄓˋ）','彘','滯稚窒','彘就是豬，比喻對孩子守信'],
+['法家（ㄅㄧˋ）士','拂','佛福輔','能輔佐君主的賢臣','拂通「弼」'],
+['不甘（ㄕˋ）弱','示','是勢視','不肯顯得比別人差'],
+['逐（ㄌㄨˋ）中原','鹿','陸碌麓','群雄爭奪天下'],
+['（ㄇㄢˊ）頇無能','顢','瞞蠻饅','糊塗馬虎不明事理'],
+['戀（ㄓㄢˋ）職位','棧','站綻盞','捨不得離開官位'],
+['懲前（ㄅㄧˋ）後','毖','泌秘閉','記取教訓，以後謹慎'],
+['舌（ㄘㄢˋ）蓮花','粲','燦璨殘','口才極好'],
+['（ㄍㄥˇ）短汲深','綆','梗哽埂','能力不足以擔當重任'],
+['捉對（ㄙ）殺','廝','撕嘶斯','兩兩對打'],
+['謙（ㄔㄨㄥ）為懷','沖','充衝忡','態度謙虛'],
+['頭童齒（ㄏㄨㄛˋ）','豁','霍獲惑','頭禿牙缺，形容年老'],
+['心（ㄕㄨˋ）不正','術','述樹恕','居心不良'],
+['君子不（ㄑㄧˋ）','器','棄氣汽','君子不侷限於單一用途'],
+['（ㄗ）趄不前','趑','資姿咨','猶豫不敢往前'],
+['（ㄎㄨㄣˇ）範永存','壼','壺坤困','讚美婦德的輓辭','中間一橫，也作「閫範」'],
+['門衰（ㄗㄨㄛˋ）薄','祚','作柞怍','家道衰落、福分淺薄'],
+['（ㄧˊ）人口實','貽','遺怡飴','留下讓人批評的把柄'],
+['童（ㄞˊ）無知','騃','呆挨獃','像小孩一樣無知'],
+['碩學（ㄑㄧˊ）宿','耆','奇騎祈','學問高深的老前輩'],
+['斗（ㄕㄠ）之人','筲','稍梢艄','器量狹小的人'],
+['陳陳相（ㄧㄣ）','因','姻茵殷','沿襲舊套毫無創新'],
+['（ㄒㄧㄠ）首示眾','梟','銷宵霄','砍頭懸掛以警告眾人'],
+['（ㄌㄧㄡˊ）覽風光','瀏','流劉琉','大略地看'],
+['聽天（ㄧㄡˊ）命','由','猶尤油','順其自然不強求']
+];
+const ALT = {'栓':['閂'],'蹋':['踏'],'了':['瞭'],'煞':['剎'],'壼':['閫']};
+
+const BANK = [];
+[[1,R1],[2,R2],[3,R3]].forEach(function(pair){
+  pair[1].forEach(function(row,i){
+    BANK.push({r:pair[0], n:i+1, q:row[0], a:row[1], d:row[2].split(''),
+               ex:row[3]||'', note:row[4]||'', w:row[0].replace(/（[^）]*）/g,row[1])});
+  });
+});
+
+/* 清單 */
+[1,2,3].forEach(function(r){
+  const box = document.getElementById('list' + r);
+  BANK.filter(function(x){return x.r === r;}).forEach(function(x){
+    const d = document.createElement('div');
+    d.className = 'item';
+    d.innerHTML = '<div class="idx">' + x.n + '</div><div class="body">' +
+      '<div class="q">' + x.q.replace(/（([^）]*)）/g,'<em>（$1）</em>') + '</div>' +
+      '<div class="a"><b>' + x.a + '</b><span class="wd">' + x.w + '</span>' +
+      '<span class="ex">' + x.ex + '</span>' +
+      (x.note ? '<span class="nt">' + x.note + '</span>' : '') + '</div></div>';
+    box.appendChild(d);
+  });
+});
+
+/* 分頁 & 隱藏答案 */
+const tabs = document.querySelectorAll('nav button');
+const panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+const abtn = document.getElementById('abtn');
+abtn.addEventListener('click', function(){
+  const on = document.body.classList.toggle('hide-a');
+  abtn.textContent = on ? '顯示答案' : '隱藏答案';
+  abtn.classList.toggle('off', on);
+});
+
+/* 測驗 */
+const S = {rounds:[1,2,3], mode:'mc', n:30};
+let queue=[], idx=0, right=0, wrongList=[], answered=false, autoTimer=null;
+const $ = function(id){ return document.getElementById(id); };
+
+function updateAllCount(){
+  const n = BANK.filter(function(x){ return S.rounds.indexOf(x.r) > -1; }).length;
+  $('setLen').querySelector('[data-n="0"]').textContent = '全部 ' + n;
+}
+
+$('setRounds').addEventListener('click', function(e){
+  const b = e.target.closest('.chip'); if(!b) return;
+  const box = $('setRounds');
+  if(b.dataset.u === 'all'){
+    box.querySelectorAll('.chip').forEach(function(c){ c.classList.add('on'); });
+    S.rounds = [1,2,3];
+    updateAllCount();
+    return;
+  }
+  box.querySelector('[data-u="all"]').classList.remove('on');
+  b.classList.toggle('on');
+  const on = box.querySelectorAll('.chip.on:not([data-u="all"])');
+  if(!on.length){ b.classList.add('on'); return; }
+  S.rounds = [].map.call(box.querySelectorAll('.chip.on:not([data-u="all"])'), function(c){ return Number(c.dataset.u); });
+  if(S.rounds.length === 3) box.querySelector('[data-u="all"]').classList.add('on');
+  updateAllCount();
+});
+updateAllCount();
+$('setMode').addEventListener('click', function(e){
+  const b = e.target.closest('.chip'); if(!b) return;
+  $('setMode').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.mode = b.dataset.m;
+});
+$('setLen').addEventListener('click', function(e){
+  const b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+
+const shuffle = function(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+};
+const accepted = function(it){ return [it.a].concat(ALT[it.a] || []); };
+
+function start(pool){
+  clearTimeout(autoTimer); autoTimer = null;
+  let items = pool || BANK.filter(function(x){ return S.rounds.indexOf(x.r) > -1; });
+  if(!items.length){ alert('這個範圍沒有題目'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  const q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtext').innerHTML = q.q.replace(/（([^）]*)）/g,'<em>（$1）</em>');
+  $('qhint').textContent = '第' + ['','一','二','三'][q.r] + '回　第 ' + q.n + ' 題';
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+
+  const cw = $('qchoices'), tb = $('qtypebox');
+  cw.innerHTML = '';
+  if(S.mode === 'type'){
+    cw.hidden = true; tb.hidden = false;
+    $('qinput').value = ''; $('qinput').disabled = false; $('qsubmit').disabled = false;
+    setTimeout(function(){ $('qinput').focus(); }, 50);
+  }else{
+    tb.hidden = true; cw.hidden = false;
+    shuffle([q.a].concat(q.d)).forEach(function(ch){
+      const b = document.createElement('button');
+      b.className = 'choice';
+      b.textContent = ch;
+      b.addEventListener('click', function(){ pick(b, ch === q.a, q); });
+      cw.appendChild(b);
+    });
+  }
+}
+
+function pick(btn, ok, q){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.a) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:btn.textContent}); }
+  verdict(ok, q, ok ? '' : btn.textContent);
+}
+
+function submitType(){
+  if(answered) return;
+  const q = queue[idx];
+  const val = $('qinput').value.replace(/\s/g,'').trim();
+  if(!val) return;
+  answered = true;
+  $('qinput').disabled = true; $('qsubmit').disabled = true;
+  const ok = accepted(q).indexOf(val) > -1;
+  if(ok) right++; else wrongList.push({q:q, mine:val});
+  verdict(ok, q, val);
+}
+
+function verdict(ok, q, mine){
+  const alt = (ALT[q.a] || []).length ? '也可寫作：' + ALT[q.a].join('、') : '';
+  const box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'ok' : 'no');
+  box.innerHTML =
+    '<span class="vt ' + (ok ? 'ok' : 'no') + '">' + (ok ? '答對' : '答錯') + '</span>' +
+    '<span class="big">' + q.w + '</span>' +
+    (q.ex ? '<small>' + q.ex + '</small>' : '') +
+    (!ok && mine ? '<small>你寫的／選的：' + mine + '</small>' : '') +
+    (q.note ? '<small class="gold">' + q.note + '</small>' : '') +
+    (alt ? '<small>' + alt + '</small>' : '');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  if(ok){
+    $('nextBtn').hidden = true;
+    clearTimeout(autoTimer);
+    autoTimer = setTimeout(function(){ autoTimer = null; next(); }, 700);
+  }else{
+    $('nextBtn').hidden = false;
+  }
+}
+
+function next(){
+  clearTimeout(autoTimer); autoTimer = null;
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  clearTimeout(autoTimer); autoTimer = null; answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  const total = Math.max(right + wrongList.length, 1);
+  const pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對，穩了' : pct >= 80 ? '　把錯的補一補' : '　錯的先抄兩遍再考一次');
+  const wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      const d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.a + '</b>' + w.q.w +
+        '<span>' + w.q.ex + '　·　你寫的：<em>' + w.mine + '</em>' +
+        '（第' + ['','一','二','三'][w.q.r] + '回 ' + w.q.n + '）</span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('qsubmit').addEventListener('click', submitType);
+$('qinput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); answered ? next() : submitType(); }
+});
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:ch-glyph', m[1]);
+         localStorage.setItem('nx:time:ch-glyph', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>

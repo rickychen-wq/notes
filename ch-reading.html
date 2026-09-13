@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>國文 島‧讀 主題一 自我觀照</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --c1:#5f7a3f;--c2:#8a5a3f;--c3:#3f5f8a;--c4:#7a4a6b;--accent:var(--c1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --c1:#a8c98a;--c2:#e0a97c;--c3:#8fb3e8;--c4:#d9a2c4;}
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.65;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px}
+  h1{font-size:22px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .g-1{--accent:var(--c1)}.g-2{--accent:var(--c2)}.g-3{--accent:var(--c3)}
+  .g-4{--accent:var(--c4)}.g-5{--accent:var(--blue)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .blk{padding:14px 16px;border-top:.5px solid var(--sep)}
+  .blk:first-child{border-top:none}
+  .blk h4{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--accent)}
+  .blk h4 .src{font-size:13px;font-weight:500;color:var(--label3);margin-left:6px}
+  .blk p{margin:0 0 6px;font-size:15px;line-height:1.7}
+  .blk ul{margin:5px 0 0;padding-left:20px;font-size:15px;line-height:1.7}
+  .blk li{margin:4px 0}
+  .key{background:color-mix(in srgb,var(--gold) 20%,transparent);border-radius:4px;padding:0 4px;font-weight:600}
+  .quote{font-size:15px;background:var(--fill);border-radius:8px;padding:9px 12px;margin:7px 0;line-height:1.75}
+  .quote b{color:var(--accent)}
+
+  .wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{padding:9px 10px;border-top:.5px solid var(--sep);vertical-align:top;text-align:left}
+  th{font-weight:600;color:var(--label2);font-size:13px;background:var(--fill)}
+  td:first-child{font-weight:600;white-space:nowrap}
+
+  details{padding:12px 16px;border-top:.5px solid var(--sep)}
+  details:first-child{border-top:none}
+  summary{font-size:15px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;line-height:1.5}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"看解析";color:var(--blue);font-size:14px;flex-shrink:0}
+  details[open] summary::after{content:"收起"}
+  .ans{margin-top:10px;font-size:15px;line-height:1.75;padding:11px 13px;background:var(--fill);border-radius:8px}
+  .ans b{color:var(--accent)}
+  .ox{color:var(--red);font-weight:700}
+  .ok2{color:var(--green);font-weight:700}
+  .warn{border-left:3px solid var(--gold);padding:8px 11px;margin:8px 0;font-size:14px;
+    background:color-mix(in srgb,var(--gold) 10%,transparent);border-radius:0 8px 8px 0;line-height:1.65}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .hint{padding:12px 16px;font-size:14px;color:var(--label2);line-height:1.55;border-top:.5px solid var(--sep)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:24px 18px}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px;text-align:center}
+  .qprompt .qtext{font-size:20px;font-weight:700;line-height:1.55}
+  .choices{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:8px}
+  .choice{text-align:left;font-family:inherit;font-size:17px;padding:14px 16px;border-radius:12px;
+    background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent;line-height:1.5}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.7;overflow-wrap:break-word}
+  .verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.vok{color:var(--green)}
+  .verdict .vt.vno{color:var(--red)}
+  .verdict .big{display:block;font-size:19px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:15px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:700}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --c1:#5f7a3f;--c2:#8a5a3f;--c3:#3f5f8a;--c4:#7a4a6b;--accent:var(--c1);
+  }
+  html[data-theme="dark"]{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --c1:#a8c98a;--c2:#e0a97c;--c3:#8fb3e8;--c4:#d9a2c4;}
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-chinese.html">◀ 回目錄</a><span>國文 · 島讀 主題一</span></div>
+
+
+<header>
+  <div><h1>島‧讀 主題一</h1><div class="sub">自我觀照 · 第 1–8 回</div></div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">1–2回</button>
+    <button role="tab" aria-selected="false" data-t="2">3–4回</button>
+    <button role="tab" aria-selected="false" data-t="3">5–6回</button>
+    <button role="tab" aria-selected="false" data-t="4">7–8回</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ═══ 1–2 回 ═══ -->
+<section class="g-1" data-p="1">
+  <div class="hero"><div class="kicker">現代散文</div><h2>第 1–2 回</h2><div class="zh">陳列《殘骸書》／吳妖妖〈煙囪養大的〉</div></div>
+
+  <h3>第 1 回　陳列《殘骸書》</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>作者與背景<span class="src">節錄自《殘骸書》</span></h4>
+      <p>陳列是臺灣散文名家，曾因白色恐怖入獄。本文寫的是<b>入獄第一天</b>的經歷，屬於政治受難者的回憶書寫。</p>
+    </div>
+    <div class="blk">
+      <h4>文章脈絡</h4>
+      <ul>
+        <li><b>第一段</b>　寫入獄當天的流程：坐飛機被貼身監控 → 法庭上形式化的問答 → 走入看守所 → 搜身 → 關進羈押房。強調「所經歷的一切都是生命裡的第一次」。</li>
+        <li><b>第二段</b>　寫心理狀態：被宰制、被逼迫的<b>無助感</b>，坐牢前的惶恐緊張，同時又要「力求鎮定以免無法自持崩潰」的難堪。</li>
+        <li><b>第三段</b>　拉開時間距離：很多年後才明白這些「第一次」對一生的重大意義 ——「有些東西死去了，有些東西則無聲無息地在暗中滋長、啃噬」。</li>
+        <li><b>第四段起</b>　集中書寫<b>「門」</b>：營區的高牆大門 → 看守所菱形網鐵門旁的側門 → 高牆下要彎腰低頭才能穿過的矮窄鐵門 → 囚室厚重的鐵板門。</li>
+        <li><b>結尾</b>　最後一道門關上的悶響，是「人生中最為沉重的一記槌聲」。</li>
+      </ul>
+    </div>
+    <div class="blk">
+      <h4>「門」的四個象徵層次（必考）</h4>
+      <div class="wrap"><table>
+        <tr><th>面向</th><th>寫法</th><th>效果</th></tr>
+        <tr><td>移動路徑</td><td>不成一直線，<b>一再轉彎、變換方向</b></td><td>步步遠離日常、脫離社會</td></tr>
+        <tr><td>所在位置</td><td>營區、看守所、高牆下</td><td>森嚴隱蔽的壓迫感</td></tr>
+        <tr><td>形制大小</td><td>越往前<b>越小、越封閉、越隱密森嚴</b></td><td>逼人走進不可知的黑洞</td></tr>
+        <tr><td>方向性</td><td><b>只有入口，只讓人有進無出</b></td><td>心生絕望</td></tr>
+      </table></div>
+      <div class="warn">陷阱：門的材質是「鐵」，作用是<b>表現禁錮與壓迫</b>，不是用來凸顯執法者鐵面無私。選項如果往「讚美執法」的方向解，一定是錯的。</div>
+    </div>
+    <div class="blk">
+      <h4>寫作手法</h4>
+      <p>以<b>平實自然的筆法</b>寫沉重的獄中經歷。沒有激烈控訴、沒有華麗辭藻，靠細節（幾道門、搜身、難友的話）堆疊出壓迫感，情緒反而更重。</p>
+    </div>
+  </div>
+
+  <h3>第 1 回　題目解析</h3>
+  <div class="card">
+    <details><summary>1. 有關作者入獄後的遭遇，說明正確的是？</summary>
+      <div class="ans">參考答案 <b>(B)</b>　法庭上「兒戲般完全形式化的問與答」＝未受公正審判；而作者也說這些時刻「對我的一生，都是何其重大」。<br><br>
+      <span class="ox">✗</span> (A) 文中沒提到影響「對人的信賴感」。<br>
+      <span class="ox">✗</span> (C) 由難友口中得知的是「收押、押房」<b>這幾個名詞的真意</b>，不是案情始末。<br>
+      <span class="ox">✗</span> (D) 文中沒有「弭平創傷、重拾希望」，反而說有些東西死去了。</div></details>
+    <details><summary>2. 關於「門」的書寫，說明錯誤的是？</summary>
+      <div class="ans">參考答案 <b>(C)</b>　鐵門是為了寫<b>禁錮與壓迫</b>，不是凸顯執法者「鐵面無私、剛正不阿」——文章對司法是批判的，不可能轉為讚美。<br><br>
+      (A)(B)(D) 分別對應移動路徑、所在位置、形制大小，都與原文相符。</div></details>
+    <details><summary>3. 關於本文的寫作手法，最適當的是？</summary>
+      <div class="ans">參考答案 <b>(B)</b>　以平實自然的筆法書寫沉重的獄中經歷。<br><br>
+      <span class="ox">✗</span> (A)「今是而昨非」是肯定現在、否定過去，文中沒有這種轉折。<br>
+      <span class="ox">✗</span> (C) 沒有寫生命的成長與蛻變。<br>
+      <span class="ox">✗</span> (D) 幾乎沒有議論，也沒有直接諷刺時政。</div></details>
+  </div>
+
+  <h3>第 2 回　吳妖妖〈煙囪養大的〉</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>文章脈絡<span class="src">節錄改寫自〈煙囪養大的〉</span></h4>
+      <ul>
+        <li><b>開頭</b>　醫生問「你們家族有病史嗎？這是第六個人了」——家族叔伯兄哥都在高雄工業區工作，各種疾病都在<b>退休後</b>才發病。</li>
+        <li><b>課堂</b>　教授指出職業罹病率在青壯年不明顯，病因往往<b>二三十年後</b>才顯現，這是歐美二戰後六零年代就觀察到的現象。</li>
+        <li><b>質問</b>　作者問：既然歐美早發現，為何東亞仍發生？教授答：歐美環境法規成熟，重汙染工廠遷往發展中國家，而發展中國家<b>「為了賺錢都能忍受風險」</b>。作者當場反駁「歡迎」這個詞。</li>
+        <li><b>回憶</b>　小五那晚問媽媽能不能搬到「比較好的地方」，媽媽<b>沉默不語</b>；晚上聽見爸媽吵架。</li>
+        <li><b>對照</b>　在國外唸書時，歐洲小屋的煙囪飄著烹飪香、麵包香，<b>又小、又暖、又香</b>，跟家鄉的大煙囪完全不同。</li>
+        <li><b>結尾</b>　「我們都是煙囪養大的」——同一個意象，兩種截然不同的命運。</li>
+      </ul>
+    </div>
+    <div class="blk">
+      <h4>四個關鍵寫作手法</h4>
+      <div class="wrap"><table>
+        <tr><td>倒反<br>（反諷）</td><td>「各種疾病也在退休後才發病，時間剛剛好，<b>像個奇蹟</b>」——用褒詞說慘事，憤怒藏在反話裡</td></tr>
+        <tr><td>對比</td><td><b>媽媽的沉默</b>對比<b>爸爸的怒吼</b>，「沉默比怒吼更恐怖」，凸顯無處可去的悲哀</td></tr>
+        <tr><td>對話</td><td>與教授的一問一答，呈現先進國家與發展中國家的權力不對等</td></tr>
+        <tr><td>意象反轉</td><td>同樣是「煙囪」：家鄉的<b>巨大、汙染、致病</b> ⟷ 歐洲的<b>又小、又暖、又香</b></td></tr>
+      </table></div>
+      <div class="warn">注意「亮銀宇宙、閃爍絢麗比星空還耀眼」那句，寫的是<b>水銀燈與煙囪火光</b>，是<b>反諷</b>汙染，不是在譬喻美好的未來。</div>
+    </div>
+  </div>
+
+  <h3>第 2 回　題目解析</h3>
+  <div class="card">
+    <details><summary>4.（多選）下列關於上文的敘述，說明適當的是？</summary>
+      <div class="ans">參考答案 <b>(B)</b><br>
+      <span class="ok2">○</span> (B) 「就算搬家也只是從林園工業區，搬到大林蒲工業區，再搬到小港工業區」——搬到哪都一樣。<br><br>
+      <span class="ox">✗</span> (A)「唯有……才能扼止」語氣太絕對，文中沒有這個主張。<br>
+      <span class="ox">✗</span> (C) 爸媽吵架是為了搬不搬家、生活處境，不是教養衝突。<br>
+      <span class="ox">✗</span> (D) 作者對補助金是<b>質疑</b>的（懷疑獎學金是補償心態），不是主張企業提供補助。<br>
+      <span class="ox">✗</span> (E) 文章正好否定「移居能保障健康」。</div></details>
+    <details><summary>5.（多選）關於上文的寫作特色，適當的是？</summary>
+      <div class="ans">參考答案 <b>(A)(B)(D)(E)</b><br>
+      <span class="ok2">○</span> (A) 「像個奇蹟」是倒反，表達對家人退休後罹病的憤怒。<br>
+      <span class="ok2">○</span> (B) 透過與教授、與母親的對話塑造人物，呈現強權對弱勢的傾軋。<br>
+      <span class="ok2">○</span> (D) 母親的沉默對比父親的怒吼。<br>
+      <span class="ok2">○</span> (E) 以歐洲小屋煙囪的暖香，反襯自己被大煙囪餵養的日常。<br><br>
+      <span class="ox">✗</span> (C) 「亮銀宇宙、閃爍絢麗」寫的是汙染的反諷，不是希望的未來。</div></details>
+  </div>
+</section>
+
+<!-- ═══ 3–4 回 ═══ -->
+<section class="g-2" data-p="2" hidden>
+  <div class="hero"><div class="kicker">古典散文</div><h2>第 3–4 回</h2><div class="zh">柳宗元〈鈷鉧潭西小丘記〉／歸有光〈項脊軒志〉</div></div>
+
+  <h3>第 3 回　柳宗元〈鈷鉧潭西小丘記〉</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>背景</h4>
+      <p>柳宗元（唐）因參與永貞革新失敗被貶永州，寫下<b>〈永州八記〉</b>，本文是其中一篇。表面寫遊記，實則<b>託物言志</b>。</p>
+    </div>
+    <div class="blk">
+      <h4>文章脈絡</h4>
+      <ul>
+        <li><b>發現</b>　得西山後八日，又得鈷鉧潭，再得小丘。小丘「不能一畝」，面積很小。</li>
+        <li><b>買地</b>　主人說這是「唐氏之棄地，貨而不售」，開價只要四百。作者當場買下，同遊的李深源、元克己都很高興。</li>
+        <li><b>整治</b>　剷除穢草、砍掉惡木、放火燒掉 → <b>嘉木立、美竹露、奇石顯</b>，美景才顯現出來。</li>
+        <li><b>享受</b>　枕席而臥，看山之高、雲之浮、溪之流、鳥獸之遨遊。</li>
+        <li><b>議論</b>　如果這座小丘在灃、鎬、鄠、杜（長安近郊），貴族一定搶著買、千金難得；但它棄置在永州，農夫漁父經過都看不起，四百塊連年賣不掉。<b>「是其果有遭乎？」</b>——最後「書於石，所以賀茲丘之遭也」。</li>
+      </ul>
+    </div>
+    <div class="blk">
+      <h4>託物言志：小丘就是柳宗元自己</h4>
+      <div class="wrap"><table>
+        <tr><th>小丘</th><th>柳宗元</th></tr>
+        <tr><td>唐氏之棄地，貨而不售</td><td><b>懷才不遇、遭貶棄置</b></td></tr>
+        <tr><td>價值四百卻連歲不能售</td><td>諷刺<b>執政者無識人之明</b></td></tr>
+        <tr><td>剷除穢草惡木</td><td>清除障礙／小人</td></tr>
+        <tr><td>嘉木立、美竹露、奇石顯</td><td><b>本有的美好終於被看見</b></td></tr>
+        <tr><td>若在長安則千金難得</td><td>地方（境遇）決定價值，不是能力問題</td></tr>
+        <tr><td>賀茲丘之遭</td><td>表面賀小丘遇到我，實則自傷無人賞識</td></tr>
+      </table></div>
+      <div class="warn">「嘉木立，美竹露，奇石顯」是寫<b>美好本質的顯露</b>（賢才終被看見），不是「鋤奸扶良」。把它解成政治上的除奸，是過度引申。</div>
+    </div>
+    <div class="blk">
+      <h4>文言字詞</h4>
+      <div class="wrap"><table>
+        <tr><td>貨</td><td>出售、賣</td><td>售</td><td>賣<b>出去</b>（貨而不售＝要賣卻賣不掉）</td></tr>
+        <tr><td>刈</td><td>割除</td><td>穢草</td><td>雜草</td></tr>
+        <tr><td>焚</td><td>燒</td><td>匝旬</td><td>滿十天</td></tr>
+        <tr><td>陋之</td><td>輕視它、認為它簡陋</td><td>遭</td><td>遭遇、際遇</td></tr>
+        <tr><td>枕席而臥</td><td>以枕席鋪地而躺臥</td><td>效</td><td>呈現、獻出</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <h3>第 3 回　題目解析</h3>
+  <div class="card">
+    <details><summary>6. 關於「小丘」的訊息，說明正確的是？</summary>
+      <div class="ans">參考答案 <b>(C)</b>　「得西山後八日……又得鈷鉧潭……又得小丘」，且文末說「不匝旬而得異地者二」——不到十天就得到兩處勝地。<br><br>
+      <span class="ox">✗</span> (A) 「丘之小不能一畝」，面積很小不是甚廣。<br>
+      <span class="ox">✗</span> (B) 同遊的友人「皆大喜，出自意外」，沒有勸阻。<br>
+      <span class="ox">✗</span> (D) 是柳宗元自己「書於石」，不是友人撰文。</div></details>
+    <details><summary>7. 柳宗元寫小丘實以丘喻心緒，說明錯誤的是？</summary>
+      <div class="ans">參考答案 <b>(D)</b>　「嘉木立，美竹露，奇石顯」寫的是<b>清除雜蕪後，小丘本有的美好終於顯現</b>，象徵賢才的價值被看見；說成「鋤奸扶良」是把寫景過度政治化。<br><br>
+      (A)(B)(C) 都成立：棄地不售＝懷才不遇；地美價廉無人問津＝諷刺無識人之明；刈除穢草惡木＝清除障礙的決心。</div>
+      </details>
+    <details><summary>8. 關於本文的寫作手法，敘述最適當的是？</summary>
+      <div class="ans">參考答案 <b>(A)</b>　<b>先敘後議，寓情於景</b>。前段敘述得丘、買丘、整治、賞景，末段「噫！以茲丘之勝……」轉入議論，情感寄託在景物裡。<br><br>
+      <span class="ox">✗</span> (B) 沒有虛實交錯。<br>
+      <span class="ox">✗</span> (C) 是以丘自喻，不是「以景喻人、針砭時政」那麼直接。<br>
+      <span class="ox">✗</span> (D) 文字樸實，不以辭藻綺麗見長。</div></details>
+  </div>
+
+  <h3>第 4 回　歸有光〈項脊軒志〉</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>本段脈絡</h4>
+      <ul>
+        <li><b>總起</b>　「然余居於此，多可喜，亦多可悲。」——全文情感的轉折句。</li>
+        <li><b>家族分崩</b>　原本庭中南北相通，叔伯分家後「內外多置小門牆」，籬笆變成牆，<b>東犬西吠</b>、客人要穿過廚房去吃飯、雞在廳堂上棲息。</li>
+        <li><b>憶母</b>　老嫗轉述：母親曾在門外<b>以手指扣門扉</b>問「兒寒乎？欲食乎？」——語未畢，作者就哭了，老嫗也哭。</li>
+        <li><b>憶祖母</b>　祖母來看他讀書，說「吾兒，久不見若影，何竟日默默在此，大類女郎也？」離開時<b>以手闔門</b>，自言自語「吾家讀書久不效，兒之成，則可待乎！」接著拿來<b>象笏</b>說「他日汝當用之」。</li>
+        <li><b>結尾</b>　「瞻顧遺跡，如在昨日，令人<b>長號不自禁</b>。」</li>
+      </ul>
+    </div>
+    <div class="blk">
+      <h4>四條並行的線索（考表格題必備）</h4>
+      <div class="wrap"><table>
+        <tr><th>面向</th><th>變化</th></tr>
+        <tr><td>空間</td><td>南北相通、格局完整 → 築籬砌牆、形制割裂</td></tr>
+        <tr><td>親族情感</td><td>和睦共處 → 冷漠疏離（東犬西吠）</td></tr>
+        <tr><td>動作形象</td><td>母親<b>以指叩扉</b>（溫婉）／祖母<b>贈象笏</b>（期許）</td></tr>
+        <tr><td>情感強度</td><td>感慨 → <b>泣</b> → <b>長號</b>，層層遞增</td></tr>
+      </table></div>
+      <div class="warn">陷阱：本段沒有寫「手足夭折」，<b>老嫗也沒有辭世</b>。看到選項寫「慈母、祖母、手足、老嫗相繼辭世」要立刻刪掉。</div>
+    </div>
+    <div class="blk">
+      <h4>文言字詞</h4>
+      <div class="wrap"><table>
+        <tr><td>迨</td><td>等到</td><td>異爨</td><td>分家各自開伙（爨＝炊煮）</td></tr>
+        <tr><td>先妣</td><td>已過世的母親</td><td>先大母</td><td>已過世的祖母</td></tr>
+        <tr><td>婢</td><td>婢女</td><td>乳二世</td><td>哺育過兩代人</td></tr>
+        <tr><td>比去</td><td>等到離開時</td><td>闔門</td><td>關上門</td></tr>
+        <tr><td>束髮</td><td>約十五歲</td><td>象笏</td><td>象牙製的手板，上朝所持</td></tr>
+        <tr><td>頃之</td><td>不久</td><td>長號</td><td>放聲大哭</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <h3>第 4 回　題目解析</h3>
+  <div class="card">
+    <details><summary>9.（多選）能與「親情散文呈現悲劇狀態」相呼應的是？</summary>
+      <div class="ans">參考答案 <b>(B)(E)</b><br>
+      <span class="ok2">○</span> (B) 諸父異爨、內外置小門牆、東犬西吠＝親族陌路。<br>
+      <span class="ok2">○</span> (E) 祖母贈笏說「他日汝當用之」，對照作者屢試不第，正是辜負所望的悲劇。<br><br>
+      <span class="ox">✗</span> (A) 文中沒寫家貧。<br>
+      <span class="ox">✗</span> (C) 沒有手足夭折。<br>
+      <span class="ox">✗</span> (D) 妻子亡故是<b>後段</b>的內容（見第 8 回乙文），本段沒有。</div></details>
+    <details><summary>10.（多選）關於本文的寫作手法，說明適當的是？</summary>
+      <div class="ans">參考答案 <b>(A)(B)(D)(E)</b><br>
+      <span class="ok2">○</span> (A) 空間由通到隔。<span class="ok2">○</span> (B) 情感由融洽到疏離。<br>
+      <span class="ok2">○</span> (D) 指叩扉＝慈母溫婉；贈象笏＝祖母期許。<br>
+      <span class="ok2">○</span> (E) 泣 → 長號，悲慟層層遞增。<br><br>
+      <span class="ox">✗</span> (C) 老嫗與手足並未辭世，這個選項是錯的。</div></details>
+  </div>
+</section>
+
+<!-- ═══ 5–6 回 ═══ -->
+<section class="g-3" data-p="3" hidden>
+  <div class="hero"><div class="kicker">當代議題</div><h2>第 5–6 回</h2><div class="zh">自拍與容貌焦慮／書寫與原鄉</div></div>
+
+  <h3>第 5 回　甲：汪正翔〈出門以前，旅遊就已經完成〉</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>核心論點</h4>
+      <ul>
+        <li>自拍<b>不是新現象</b>，十九世紀攝影術剛應用於肖像攝影時就有攝影師自拍。</li>
+        <li>古今關鍵差別：十九世紀的人<b>無法即時看見自己</b>（要等沖洗），看到照片時「已經比較遠了，彷彿拍的是另一個人」；數位時代<b>不到一秒就顯現</b>。</li>
+        <li>即時性帶來焦慮：我們不只想看<b>此時此刻的自己</b>，也想看<b>在網路上被別人看到時的自己</b>，而這兩者是不一樣的。</li>
+        <li><span class="key">核心矛盾</span>就即刻檢視而言，自拍是<b>自我本真的確認</b>；就分享、編輯、流通而言，自拍讓人成為<b>遠離本真的擬像</b>。兩者可能是循環的。</li>
+        <li>比喻：像走過車子時看車窗倒影，不是真的想看自己，而是<b>確認自己有沒有符合社會想要的樣子</b>；相機的即刻性讓我們隨時有車窗，被社會監看的焦慮不斷放大，像在布滿鏡子的迷宮裡。</li>
+        <li><b>結尾實例</b>　母女在「號稱花海」（其實只有稀稀落落幾朵杭菊）的地方拍照，母親喊「一二三，漂不漂亮？」——女兒說不漂亮，但鏡頭裡的母女是笑的、花海是滿的，照片 po 上網時「應該也會是漂亮的」。點出<b>網路形象與真實的落差</b>。</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>第 5 回　乙：容貌焦慮症（圖表）</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th>項目</th><th>內容</th></tr>
+        <tr><td>解釋</td><td>無法克制地不停思考自身容貌瑕疵的精神狀態。臨床上稱為<b>身體臆形症</b>或身體畸形恐懼症。社群媒體、濾鏡的廣泛使用，使青少年族群、女性更在意容貌；口罩令鬆綁後，有人因此產生脫離另類安全感的焦慮。</td></tr>
+        <tr><td>常見症狀</td><td>反覆詢問或照鏡子並常和他人比較／過度在乎容貌，將缺陷或瑕疵無限放大／沒有濾鏡修圖就覺得照片中的自己不好看／過度在意他人眼光／影響生活乃至健康（厭食症、暴食症、社交人際障礙）</td></tr>
+        <tr><td>建議</td><td>轉移注意力，減少專注在外貌上的時間／減少使用網路社群軟體，避免被網路上他人所呈現之美的形象影響／學會自我肯定，接受自己的美好</td></tr>
+      </table></div>
+      <div class="warn">因果方向要看清楚：是<b>容貌焦慮「造成」社交人際障礙</b>，不是社交障礙造成焦慮。選項若把因果顛倒就是錯的。</div>
+    </div>
+  </div>
+
+  <h3>第 5 回　題目解析</h3>
+  <div class="card">
+    <details><summary>11. 甲文中有關「自拍」的說明，最適當的是？</summary>
+      <div class="ans">參考答案 <b>(C)</b>　自拍同時存在<b>確認本真</b>與<b>悖離本真</b>的矛盾——這正是甲文的核心論點。<br><br>
+      <span class="ox">✗</span> (A) 文章開頭就否定「自拍是新現象」。<br>
+      <span class="ox">✗</span> (B) 焦慮來自<b>能夠即時顯影</b>，不是無法即時。<br>
+      <span class="ox">✗</span> (D) 文中沒有「影像優缺取決於我是否在現場」的說法。</div></details>
+    <details><summary>12. 用乙圖資訊與甲文相對應，說明錯誤的是？</summary>
+      <div class="ans">參考答案 <b>(D)</b>　乙圖寫的是「因上述症狀影響生活，乃至健康，如：造成社交人際障礙」——<b>焦慮是因、社交障礙是果</b>，選項把因果倒過來了。<br><br>
+      (A)(C) 與乙圖的解釋、症狀相符；(B) 對應建議中的「學會自我肯定」。</div></details>
+    <details><summary>13. 關於甲文、乙圖的寫作手法，說明最適當的是？</summary>
+      <div class="ans">參考答案 <b>(B)</b>　甲文文末確實以花海母女自拍為例，說明網路形象與真實的落差。<br><br>
+      <span class="ox">✗</span> (A) 順序相反：甲文<b>先談自拍的歷史</b>，再做分析。<br>
+      <span class="ox">✗</span> (D) 乙圖提到「臨床上稱為身體臆形症」，是引用病名，不是「以臨床實驗為依據」。<br>
+      <span class="warn" style="display:block">(C) 有討論空間：乙圖確實有解釋、症狀、建議三部分，但它的「解釋」偏定義與誘因，未必等於完整說明「成因」。如果老師公布的答案是 (C)，理由會是這個。</span></div></details>
+  </div>
+
+  <h3>第 6 回　甲：陳思宏〈壞掉的老九，肥美的荔枝〉</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>文章脈絡</h4>
+      <ul>
+        <li><b>書寫作為策略</b>　「面對家族、成長記憶，唯一的戰略就是書寫。」寫作是澄明魔法。</li>
+        <li><b>剝離原鄉</b>　到臺北讀大學被笑「南部腔」，於是模仿臺北同學的口氣與嘴型「矯正」發音；讀英文系則苦練美國西岸發音，甚至被誤認為 ABC。刷洗土氣、學首都人穿著、染髮、修剪眉毛、戴隱形眼鏡，<b>終於不像個鄉下人</b>。</li>
+        <li><b>返鄉</b>　「跑得再遠，無論多不像鄉下人，總有返鄉時刻，躲不了。」母親在家門口被車撞，作者從柏林趕回永靖。</li>
+        <li><b>喪禮的荒謬</b>　火葬場混亂、無所謂莊嚴，工作人員嚼檳榔、滿嘴髒話；撿骨入甕時<b>依俗必須由長男拿筷子，女兒不准碰</b>，作者質問「那如果家裡沒兒子呢？」得到的答案是由男性長輩代理。</li>
+        <li><b>結論</b>　「手上的筷子充滿可笑的性別意識與迷信，這一切荒謬，就到我們這一代為止吧。」最後：「為了鬆綁，為了自由，為了再度叛逃，故鄉在後追趕，我必須繼續書寫。」</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>第 6 回　乙：葉石濤〈天譴〉</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>文章脈絡</h4>
+      <ul>
+        <li>十五、六歲開始寫文章，斷斷續續從事作家行業四十多年，卻<b>很少想過為什麼要走上這條路</b>——「糊塗到這個地步，實在無可救藥，也因為糊塗所以能夠專心一致」。</li>
+        <li>年老體衰後開始<b>反省文學帶給他的利弊得失</b>。</li>
+        <li>作家這行業非常「個人性」：創造時<b>除上帝以外任何人都不能幫助他</b>，必須面對稿紙打孤獨的仗，悲壯淒苦難以言語形容。</li>
+        <li>報酬也大：學到<b>如同絕對主一樣透視人類命運</b>，以清澄的眼睛凝視人世百相的快樂。</li>
+        <li>但代價是<b>忽略嗷嗷待哺的妻小</b>與世上許多俗務，必須放棄所有人間美好的享受，窮苦寂寞地咀嚼沮喪與絕望。</li>
+        <li><b>結論</b>　「他給家人帶來的是災難和損傷。文學是什麼？文學是上帝給特定的人降下的<b>天譴</b>吧？」</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>第 6 回　題目解析</h3>
+  <div class="card">
+    <details><summary>14. 關於甲、乙二文作者的寫作意圖，最適當的是？</summary>
+      <div class="ans">參考答案 <b>(B)</b>　甲文結尾直接寫「為了鬆綁，為了自由……我必須繼續書寫」——現實荒謬、家族擾嚷，作者以寫作獲取自由。<br><br>
+      <span class="ox">✗</span> (A) 刷洗土氣是<b>過去</b>努力的事，不是書寫的目的。<br>
+      <span class="ox">✗</span> (C) 乙文說作家「忽略妻小」是寫作的<b>代價</b>，不是為了逃避俗務才寫作。<br>
+      <span class="ox">✗</span> (D) 乙文說自己是「糊塗」走上這條路，不是為了實現年輕的夢。</div></details>
+    <details><summary>15. 關於甲、乙二文作者寫作上的共同點，最適當的是？</summary>
+      <div class="ans">參考答案 <b>(A)</b>　兩篇都在談<b>日常與寫作之間的關聯</b>：甲文是家族、返鄉與書寫；乙文是家庭生活、俗務與寫作的拉扯。<br><br>
+      <span class="ox">✗</span> (B) 乙文不是「抵禦現實」。<br>
+      <span class="ox">✗</span> (C) 只有乙文在重新定義文學。<br>
+      <span class="ox">✗</span> (D) 乙文沒有與親族和解，甲文也是要「叛逃」而非和解。</div></details>
+    <details><summary>16. 關於甲、乙二文的寫作手法，最適當的是？</summary>
+      <div class="ans">參考答案 <b>(C)</b>　甲文用<b>語言學習的細節</b>（矯正南部腔、苦練美國西岸發音、把 save the best for last 的幾個「ㄝ」搞清楚）具體說明剝離原鄉的強烈渴望。<br><br>
+      <span class="ox">✗</span> (A) 甲文不是嚴格依時序，重點也不在思念母親。<br>
+      <span class="ox">✗</span> (B) 乙文開頭是說自己<b>很少想過</b>寫作的意義，不是「先自陳寫作的意義」。<br>
+      <span class="ox">✗</span> (D) 乙文有自嘲，但沒有表達「懊悔」。</div></details>
+  </div>
+</section>
+
+<!-- ═══ 7–8 回 ═══ -->
+<section class="g-4" data-p="4" hidden>
+  <div class="hero"><div class="kicker">書評與抒情</div><h2>第 7–8 回</h2><div class="zh">楊佳嫻〈騰飛於沼澤之上〉／芒果與枇杷樹</div></div>
+
+  <h3>第 7 回　楊佳嫻〈騰飛於沼澤之上〉</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>文體與主題</h4>
+      <p>這是一篇<b>推薦序／書評</b>，評的是欣佳的散文集《原來你什麼都不想要》。主題是<b>母職、妻職與自我</b>的拉扯。</p>
+    </div>
+    <div class="blk">
+      <h4>論點推進</h4>
+      <ul>
+        <li><b>開場</b>　張愛玲說最恨「有才華的女子忽然結了婚」，當代則有「文藝女青年這種病，生個孩子就好了」——看似衝突，其實<b>一體兩面</b>，都在說婚育對女性創作的壓抑。</li>
+        <li><b>婚姻的綁定</b>　婚嫁制度把親密關係綁得更緊，「我做的一切都是為了這個家」成了情緒勒索的臺詞。</li>
+        <li><b>核心提問</b>　我們是否可能<b>深愛孩子同時厭倦母職、渴望親密關係卻同時厭倦妻職</b>？稱它為「職」，是因為它有身體與法律門檻，包含期待、框限、理想化與浪漫化。</li>
+        <li><b>書的內容</b>　〈水面下〉寫陪女兒學游泳，母女一體的感覺特別強；選泳衣時小女生已懂得反駁母親。談「哭」：哭聲曾保證孩子康健有力，卻逐漸變成隨身家事，<b>「尚未社會化的孩子想哭就哭，是終將失效的特權」</b>。</li>
+        <li><b>解決辦法</b>　收束在「傾聽與理解」，但作者提醒「開明」同時也是難題：不採取「我不理你」或打罵控制，就得<b>承擔更高的情緒勞動</b>。</li>
+        <li><b>結論</b>　「幸好有孩子，幸好有文學」，沼澤裡才還有<b>可扶的棧板、可抓的樹枝</b>。這部散文集<b>沒有寫成怨苦集成</b>，而是放在女性連續體裡來彰顯。憑藉閱讀與書寫累積的省識，讓寫沼澤的書沒有陷入沼澤——<b>鞋子裡裝滿汙泥仍能騰飛起來，不很高，為的是可以穩穩回到地上</b>。</li>
+      </ul>
+    </div>
+    <div class="blk">
+      <h4>三個比喻的對應（第 18 題直接考這個）</h4>
+      <div class="wrap"><table>
+        <tr><th>喻體</th><th>喻說意涵</th></tr>
+        <tr><td><b>沼澤</b></td><td>母職與婚姻中令人陷落、難以脫身的現實困境（20 字內）</td></tr>
+        <tr><td><b>棧板／可抓的樹枝</b></td><td>指孩子與文學，此能為陷落的現實帶來希望（題目已給）</td></tr>
+        <tr><td><b>騰飛的能力</b></td><td>藉閱讀與書寫累積省識，得以超脫困境（20 字內）</td></tr>
+      </table></div>
+      <div class="warn">寫表格題要注意「不很高，為的是可以穩穩回到地上」——騰飛<b>不是逃離</b>現實，而是保有回到現實的能力。答案不要寫成「徹底擺脫」。</div>
+    </div>
+  </div>
+
+  <h3>第 7 回　題目解析</h3>
+  <div class="card">
+    <details><summary>17. 關於《原來你什麼都不想要》一書的說明，最適當的是？</summary>
+      <div class="ans">參考答案 <b>(D)</b>　是苦悶現實的一根浮木，<b>兼容愛與厭倦</b>——正好呼應「深愛孩子同時厭倦母職」與「幸好有孩子，幸好有文學」。<br><br>
+      <span class="ox">✗</span> (A) 不是情緒管理書。<br>
+      <span class="ox">✗</span> (B) 不是「厭倦家庭卻被束縛」那麼單一。<br>
+      <span class="ox">✗</span> (C) 文中明說「這部散文集<b>沒有寫成怨苦集成</b>」。</div></details>
+    <details><summary>18. 完成「沼澤」與「騰飛的能力」的喻說意涵（各 20 字以內）</summary>
+      <div class="ans">
+        <b>① 沼澤</b>（參考寫法）<br>
+        「指母職與婚姻中令人陷落、難以脫身的困境。」（20 字）<br>
+        其他可接受方向：現實生活中不斷下陷、無力掙脫的處境。<br><br>
+        <b>② 騰飛的能力</b>（參考寫法）<br>
+        「指藉閱讀與書寫累積省識，超脫困境的力量。」（20 字）<br>
+        其他可接受方向：以文學省視自身，得以暫時超越現實。<br><br>
+        <span class="ox">注意</span>不要寫成「完全脫離現實」或「放棄家庭」，文中強調「不很高，為的是可以穩穩回到地上」。</div></details>
+    <details><summary>19. 關於本文的寫作手法，最適當的是？</summary>
+      <div class="ans">參考答案 <b>(D)</b>　<b>善用譬喻</b>：沼澤、棧板、樹枝、騰飛，具體說明閱讀與寫作對自我的影響。<br><br>
+      <span class="ox">✗</span> (A) 重點不是鼓勵女性展現才華。<br>
+      <span class="ox">✗</span> (B) 沒有正話反說勸合。<br>
+      <span class="ox">✗</span> (C) 親子關係沒有「轉為對立」。</div></details>
+  </div>
+
+  <h3>第 8 回　甲：張曉風〈這些芒果，是偷來的嗎？〉</h3>
+  <div class="card">
+    <div class="blk">
+      <ul>
+        <li>因父親的關係，自民國 <b>42 年至 104 年</b>（共 62 年）擁有一棟宿舍，一家人在其中生活成長。父母相繼棄世後必須<b>還屋</b>，把曾在狂風驟雨之夜與家人相依為命的房舍繳回國防部。</li>
+        <li>芒果是作者跑回屏東故宅——<b>那棟不再屬於我的故宅</b>——去摘的，樹在院子西邊。</li>
+        <li>回憶：從前母親身體安祥時，芒果季節若沒回家，她<b>總會打包寄來臺北</b>。父親咕咕噥噥說「臺北沒芒果賣了嗎？你就不能省點心嗎？」母親還是照寄。</li>
+        <li>結尾：「趁我齒牙猶健，鼻舌尚敏，我來咬我昔日故園中的果實，來重溫我猶存的對雙親的感念。」</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>第 8 回　乙：歸有光〈項脊軒志〉後段【108 學測】</h3>
+  <div class="card">
+    <div class="blk">
+      <ul>
+        <li>「余既為此志，後五年，吾妻來歸」——寫完前文<b>五年後</b>妻子嫁過來。</li>
+        <li>妻子常到軒中，向作者問古事，或憑几學書；回娘家後轉述小妹們的話：「聞姊家有閣子，且何謂閣子也？」</li>
+        <li>「其後六年，吾妻死，<b>室壞不修</b>。」再過兩年，作者久臥病無聊，才請人重修南閣子，形制與從前稍有不同。此後多在外，不常居住。</li>
+        <li><b>結尾名句</b>　「庭有枇杷樹，吾妻死之年所手植也，今已<b>亭亭如蓋</b>矣。」——不說思念，全篇最重的情感藏在一棵樹裡。</li>
+      </ul>
+      <div class="warn">時間要算清楚：妻子<b>來歸後六年過世</b>，所以同住是<b>六年</b>，不是「五年＋六年＝十一年」。這是 108 學測的陷阱。</div>
+    </div>
+    <div class="blk">
+      <h4>文言字詞</h4>
+      <div class="wrap"><table>
+        <tr><td>來歸</td><td>女子出嫁過來</td><td>歸寧</td><td>出嫁的女子回娘家</td></tr>
+        <tr><td>憑几學書</td><td>靠著小桌練字</td><td>閣子</td><td>小樓、小屋</td></tr>
+        <tr><td>室壞不修</td><td>屋子損壞卻不修理</td><td>葺</td><td>修理、修繕</td></tr>
+        <tr><td>手植</td><td>親手栽種</td><td>亭亭如蓋</td><td>高高聳立，像車蓋（傘蓋）一樣</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <h3>第 8 回　題目解析</h3>
+  <div class="card">
+    <details><summary>20. 有關甲、乙二文中「故居」的敘述，最適當的是？</summary>
+      <div class="ans">參考答案 <b>(B)</b>　二文都透過<b>昔日在故居中的對話</b>表達對親人已逝的傷懷：甲文有母親「臺北沒芒果賣了嗎？」與父親的咕噥；乙文有妻子轉述小妹「聞姊家有閣子」。<br><br>
+      <span class="ox">✗</span> (A) 甲文是還屋前最後回去摘芒果，不是「偶爾回故居暫住」。<br>
+      <span class="ox">✗</span> (C) 「室壞不修」之後兩年作者其實有請人重修，且甲文重點不只是思親。<br>
+      <span class="ox">✗</span> (D) 乙文「五年」是寫志後五年娶妻、「六年」是娶妻後六年妻死，同住是<b>六年</b>不是十一年。</div></details>
+    <details><summary>21. 有關「樹」在甲、乙二文中的意義，最適當的是？</summary>
+      <div class="ans">參考答案 <b>(B)</b>　乙文枇杷樹是妻子過世那年親手所植，如今「亭亭如蓋」——<b>樹長大了，人不在了</b>，象徵思念長存。<br><br>
+      <span class="ox">✗</span> (A) 甲文芒果樹是連結雙親記憶的媒介，父母已逝，不是象徵安康。<br>
+      <span class="ox">✗</span> (C) 乙文的枇杷樹是<b>妻子生前</b>手植，不是亡故後植樹紀念。<br>
+      <span class="ox">✗</span> (D) 「領悟生死有命」過度引申，二文重點都是思念。</div></details>
+  </div>
+
+  <h3>主題總結：八回都在寫什麼</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th>回</th><th>作者／出處</th><th>自我觀照的角度</th></tr>
+        <tr><td>1</td><td>陳列《殘骸書》</td><td>從牢獄經驗看被剝奪的自我</td></tr>
+        <tr><td>2</td><td>吳妖妖〈煙囪養大的〉</td><td>從環境汙染看被決定的出身</td></tr>
+        <tr><td>3</td><td>柳宗元〈鈷鉧潭西小丘記〉</td><td>以小丘自喻，寫懷才不遇</td></tr>
+        <tr><td>4</td><td>歸有光〈項脊軒志〉</td><td>從家族衰微看親情的失落</td></tr>
+        <tr><td>5</td><td>汪正翔＋容貌焦慮症</td><td>從自拍看被社會凝視的自我</td></tr>
+        <tr><td>6</td><td>陳思宏／葉石濤</td><td>書寫作為自由與代價</td></tr>
+        <tr><td>7</td><td>楊佳嫻〈騰飛於沼澤之上〉</td><td>母職與自我的拉扯</td></tr>
+        <tr><td>8</td><td>張曉風／歸有光</td><td>以物（芒果、枇杷）承載思親</td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 測驗 ═══ -->
+<section class="g-5" data-p="5" hidden>
+  <div class="hero"><div class="kicker">Quiz</div><h2>觀念測驗</h2><div class="zh">作者出處 ／ 文言字詞 ／ 文意 ／ 手法</div></div>
+
+  <div id="qsetup">
+    <h3>範圍</h3>
+    <div class="card">
+      <div class="optrow" id="setKind">
+        <button class="chip on" data-k="src">作者出處</button>
+        <button class="chip on" data-k="word">文言字詞</button>
+        <button class="chip on" data-k="mean">文意判斷</button>
+        <button class="chip on" data-k="skill">寫作手法</button>
+      </div>
+    </div>
+    <h3>題數</h3>
+    <div class="card">
+      <div class="optrow" id="setLen">
+        <button class="chip" data-n="15">15</button>
+        <button class="chip on" data-n="25">25</button>
+        <button class="chip" data-n="0">全部</button>
+      </div>
+      <div class="hint">四選一，答完都會停下來給解析，看完自己按「下一題」。</div>
+    </div>
+    <button class="bigbtn" id="startBtn">開始測驗</button>
+  </div>
+
+  <div id="qplay" hidden>
+    <div class="qbar">
+      <span id="qcount">1 / 25</span>
+      <span class="track"><i id="qprog" style="width:0%"></i></span>
+      <span id="qscore">0 對</span>
+    </div>
+    <div class="card">
+      <div class="qprompt">
+        <div class="qtype" id="qtype">—</div>
+        <div class="qtext" id="qtext">—</div>
+      </div>
+    </div>
+    <div class="choices" id="qchoices"></div>
+    <div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+    <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+
+  <div id="qdone" hidden>
+    <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3>
+    <div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button>
+    <button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+</section>
+
+<footer>島‧讀 主題一 自我觀照 · 第 1–8 回</footer>
+</main>
+
+<script>
+/* [分類, 題目, 正解, [三個干擾], 解析] */
+var RAW = [
+['src','《殘骸書》的作者是誰？','陳列',['楊佳嫻','葉石濤','陳思宏'],'陳列是臺灣散文名家，曾因白色恐怖入獄，本文寫入獄第一天的經歷。'],
+['src','〈煙囪養大的〉的作者是誰？','吳妖妖',['陳列','張曉風','汪正翔'],'寫高雄工業區的職業病與環境汙染，家族三代都被煙囪養大。'],
+['src','〈鈷鉧潭西小丘記〉的作者是誰？','柳宗元',['歐陽脩','蘇軾','韓愈'],'柳宗元被貶永州時所作，屬於〈永州八記〉之一。'],
+['src','〈項脊軒志〉的作者是誰？','歸有光',['柳宗元','袁宏道','方苞'],'明代散文家，以描寫家常瑣事、情感真摯著稱。'],
+['src','〈出門以前，旅遊就已經完成〉的作者是誰？','汪正翔',['楊佳嫻','陳思宏','吳妖妖'],'從攝影者角度談自拍與自我的關係。'],
+['src','〈壞掉的老九，肥美的荔枝〉的作者是誰？','陳思宏',['葉石濤','陳列','張曉風'],'寫從永靖到臺北、柏林的剝離原鄉經驗，以及母親喪禮上的性別荒謬。'],
+['src','〈天譴〉的作者是誰？','葉石濤',['陳思宏','楊佳嫻','汪正翔'],'反省寫作四十多年的利弊得失，稱文學是上帝降下的天譴。'],
+['src','〈騰飛於沼澤之上〉的作者是誰？','楊佳嫻',['張曉風','吳妖妖','陳列'],'是為《原來你什麼都不想要》所寫的推薦序。'],
+['src','〈這些芒果，是偷來的嗎？〉的作者是誰？','張曉風',['歸有光','楊佳嫻','陳思宏'],'寫還屋前回屏東故宅摘芒果，重溫對雙親的感念。'],
+['src','〈鈷鉧潭西小丘記〉屬於下列哪一組作品？','永州八記',['桐城派古文','唐宋八家文鈔','古文辭類纂'],'柳宗元貶謫永州期間所寫的一組山水遊記。'],
+['src','歸有光是哪一個朝代的散文家？','明代',['唐代','宋代','清代'],'明代散文家，〈項脊軒志〉是其代表作。'],
+['src','柳宗元是哪一個朝代的文學家？','唐代',['明代','宋代','漢代'],'唐代古文運動的代表人物之一，與韓愈並稱韓柳。'],
+
+['word','「唐氏之棄地，貨而不售」的「售」是什麼意思？','賣出去',['購買','展示','珍藏'],'貨＝出售，售＝賣得出去。「貨而不售」是想賣卻賣不掉。'],
+['word','「唐氏之棄地，貨而不售」的「貨」是什麼意思？','出售、賣',['貨物','錢財','交換'],'這裡的「貨」當動詞用，是賣的意思。'],
+['word','「不匝旬而得異地者二」的「匝旬」是什麼意思？','滿十天',['滿一個月','滿一年','滿一季'],'旬＝十天，匝＝滿、周遍。不到十天就得到兩處勝地。'],
+['word','「剷刈穢草，伐去惡木」的「刈」是什麼意思？','割除',['播種','灌溉','移植'],'刈＝用刀割。剷刈穢草就是把雜草割掉。'],
+['word','「農夫漁父，過而陋之」的「陋」是什麼意思？','輕視、認為簡陋',['修繕','讚美','購買'],'形容詞當動詞用（意動用法），覺得它簡陋而看不起。'],
+['word','「迨諸父異爨」的「爨」是什麼意思？','炊煮',['祭祀','爭吵','分產'],'異爨＝各自開伙，也就是分家。這是家族分崩的起點。'],
+['word','「迨諸父異爨」的「迨」是什麼意思？','等到',['雖然','因為','於是'],'迨＝等到、及至，表時間。'],
+['word','〈項脊軒志〉中「先妣」指的是誰？','已過世的母親',['已過世的祖母','已過世的父親','已過世的妻子'],'先＝已故，妣＝母親。祖母則稱「先大母」。'],
+['word','「嫗，先大母婢也，乳二世」的「乳」是什麼意思？','哺育、餵奶',['生育','照料家務','教導'],'名詞當動詞用，老嫗哺育過歸家兩代人。'],
+['word','「比去，以手闔門」的「比」是什麼意思？','等到',['比較','接近','並排'],'比去＝等到離開的時候。闔門＝把門關上。'],
+['word','「余自束髮讀書軒中」的「束髮」大約是幾歲？','十五歲左右',['七歲左右','二十歲','三十歲'],'古代男子十五歲束髮為髻，代表成童之年。'],
+['word','祖母拿來的「象笏」是什麼？','上朝時手持的手板',['祭祀用的禮器','讀書用的書板','裝飾用的玉珮'],'象牙製的笏板，是祖先曾任官的證明，寄託對孫兒的期許。'],
+['word','「令人長號不自禁」的「長號」是什麼意思？','放聲大哭',['長久嘆息','高聲呼喚','長聲吟誦'],'號＝大聲哭。情感從「泣」升到「長號」，是層層遞增。'],
+['word','「後五年，吾妻來歸」的「歸」是什麼意思？','女子出嫁',['回娘家','歸還','歸順'],'來歸＝嫁過來。回娘家則說「歸寧」。'],
+['word','「庭有枇杷樹……今已亭亭如蓋矣」的「蓋」是什麼意思？','車蓋、傘蓋',['房屋屋頂','覆蓋','大概'],'形容枇杷樹長得高大茂盛，樹冠像傘蓋一樣張開。'],
+['word','「其後六年，吾妻死，室壞不修」是什麼意思？','屋子損壞卻不加修理',['屋子倒塌無法修理','妻子生前不許修屋','修好後又損壞'],'不修不是不能修，而是心灰意冷無心整理，寫喪妻之痛。'],
+
+['mean','第 1 回中，一道道「門」主要象徵什麼？','層層禁錮與無路可退的絕望',['執法者的公正嚴明','人生階段的成長轉換','家族門第的高低之分'],'門越走越小、越封閉，且只有入口沒有出口，寫的是禁錮與絕望。'],
+['mean','第 2 回作者對工業區發放補助金與獎學金的態度是？','質疑',['感激','無感','贊同'],'作者懷疑獎學金是否有「補償心態」，並說當年種了又死的樹是不是也值得一個 A++。'],
+['mean','第 2 回中，媽媽對「能不能搬到比較好的地方」的反應是？','一整段路都沉默不語',['當場答應搬家','生氣地責罵作者','詳細解釋不能搬的原因'],'「媽媽的沉默比爸爸的怒吼更恐怖」，沉默寫出無處可去的悲哀。'],
+['mean','柳宗元寫小丘「唐氏之棄地，貨而不售」，實則自喻什麼？','懷才不遇、遭貶棄置',['家道中落、生活困頓','淡泊名利、不求聞達','年老體衰、力不從心'],'小丘被棄置在永州無人問津，正如柳宗元被貶謫的處境。'],
+['mean','柳宗元認為小丘乏人問津的關鍵原因是什麼？','所處的位置偏遠',['本身景色不佳','價格太過昂貴','主人不願出售'],'文中說若把它搬到長安近郊，貴族會爭買且千金難得——差別只在地點。'],
+['mean','〈項脊軒志〉中「東犬西吠」寫的是什麼？','家族分家後的疏離與紛亂',['庭院寬敞可養家畜','鄰里關係融洽熱鬧','夜間有盜賊入侵'],'東家的狗對著西家叫，寫出原本一家人變成彼此陌生。'],
+['mean','第 5 回甲文認為數位時代自拍造成焦慮的主因是？','影像即時顯現，讓人同時在意網路上被看見的自己',['拍照技術門檻太高','照片容易被他人盜用','相機價格越來越昂貴'],'十九世紀要等沖洗，看到時已經有距離；數位不到一秒顯現，焦慮就產生了。'],
+['mean','甲文以「走過車子時看車窗倒影」比喻什麼？','確認自己有沒有符合社會想要的樣子',['欣賞自己的外貌','檢查儀容是否整潔','回憶過去的自己'],'不是真的想看自己，而是確認社會形象，這就是被監看的焦慮來源。'],
+['mean','依乙圖，容貌焦慮症與社交人際障礙的關係是？','焦慮症狀影響生活，進而造成社交障礙',['社交障礙導致容貌焦慮','兩者沒有因果關係','社交障礙可治好容貌焦慮'],'因果方向不能顛倒：焦慮是因，社交障礙是果。'],
+['mean','乙圖對容貌焦慮症提出的建議<b>不包括</b>下列何者？','尋求醫美手術改善外貌缺陷',['轉移注意力，減少專注外貌','減少使用網路社群軟體','學會自我肯定，接受自己'],'圖中三項建議都是調整心態與行為，沒有提到醫美。'],
+['mean','第 6 回甲文作者刻意矯正南部腔、苦練美國發音，是為了什麼？','剝離原鄉身分，不想被看作鄉下人',['準備出國留學考試','從事廣播主持工作','取悅家中長輩'],'刷洗土氣、學首都人穿著，終於「不像個鄉下人」。'],
+['mean','第 6 回甲文對撿骨時「女兒不准碰筷子」的態度是？','認為是可笑的性別意識與迷信',['認為是應當遵守的傳統','感到榮幸並配合','認為與自己無關'],'作者說「這一切荒謬，就到我們這一代為止吧」。'],
+['mean','葉石濤〈天譴〉認為文學對作家的家人而言是什麼？','災難和損傷',['榮耀和財富','安慰和陪伴','教養和啟發'],'作家必須忽略妻小與俗務，所以說「他給家人帶來的是災難和損傷」。'],
+['mean','〈天譴〉中作者認為寫作最大的報酬是什麼？','學會透視人類命運、凝視人世百相的快樂',['獲得豐厚的稿費','受到讀者的崇拜','擁有安穩的生活'],'代價是孤獨與窮苦，報酬則是如絕對主一般透視人類命運。'],
+['mean','第 7 回「棧板／可抓的樹枝」比喻什麼？','孩子與文學',['婚姻與家庭','金錢與地位','朋友與社群'],'原文：「幸好有孩子，幸好有文學」，沼澤裡才還有可扶的棧板、可抓的樹枝。'],
+['mean','第 7 回所說的「騰飛」，特別強調什麼？','飛得不很高，為的是能穩穩回到地上',['徹底脫離現實生活','飛得越高越好','不再回到原本的處境'],'騰飛不是逃離，而是保有回到現實的能力，這是寫表格題最容易漏的重點。'],
+['mean','第 8 回乙文中，歸有光與妻子同住項脊軒共幾年？','六年',['五年','十一年','兩年'],'寫志後五年妻子來歸，其後六年妻死，所以同住是六年。這是 108 學測的陷阱。'],
+['mean','第 8 回乙文的枇杷樹是什麼時候種的？','妻子過世那一年，由妻子親手栽種',['妻子過世後作者種來紀念','妻子出嫁時娘家所贈','修葺南閣子時一併栽種'],'「吾妻死之年所手植也」，是妻子生前手植，不是亡故後植樹。'],
+['mean','第 8 回甲文中，母親在芒果季節會做什麼？','把芒果打包寄到臺北給作者',['要求作者一定要回家','把芒果賣給鄰居','把芒果樹砍掉'],'父親咕噥說臺北也買得到，母親還是照寄，寫出母愛的固執。'],
+
+['skill','第 2 回「各種疾病也在退休後才發病，時間剛剛好，像個奇蹟」使用了什麼手法？','倒反（反諷）',['誇飾','類疊','轉品'],'用「奇蹟」這種褒詞說家人罹病的慘事，憤怒藏在反話裡。'],
+['skill','第 2 回「媽媽的沉默比爸爸的怒吼更恐怖」主要運用什麼手法？','對比',['排比','設問','借代'],'以沉默對比怒吼，凸顯無處可去的悲哀。'],
+['skill','〈鈷鉧潭西小丘記〉的整體寫作手法是？','先敘後議，寓情於景',['先議後敘，直陳己見','全篇議論，不寫景物','虛實交錯，借景諷人'],'前段敘述得丘、整治、賞景，末段「噫！以茲丘之勝……」轉入議論。'],
+['skill','〈項脊軒志〉中情感強度的變化順序是？','感慨 → 泣 → 長號',['長號 → 泣 → 感慨','泣 → 感慨 → 長號','感慨 → 長號 → 泣'],'情感層層遞增，這是表格題最常考的一列。'],
+['skill','葉石濤「文學是上帝給特定的人降下的天譴吧？」使用了什麼手法？','設問',['映襯','轉化','摹寫'],'以問句作結，把答案留給讀者，加強反省的力道。'],
+['skill','第 7 回大量使用「沼澤、棧板、樹枝、騰飛」，屬於什麼手法？','譬喻',['誇飾','示現','頂真'],'用一組連貫的比喻，具體說明閱讀與寫作對自我的影響。'],
+['skill','第 8 回乙文結尾寫枇杷樹「今已亭亭如蓋矣」，這樣收束的效果是？','不直說思念，以物寄情，餘韻最深',['交代庭院景物的變化','說明時間過得很快','讚美妻子擅長園藝'],'全篇最重的情感藏在一棵樹裡，樹長大了人卻不在，是歸有光最著名的筆法。'],
+['skill','第 1 回作者書寫獄中經歷的筆法特色是？','平實自然，靠細節堆疊壓迫感',['辭藻華麗，鋪陳誇飾','大量議論，直接控訴','虛構情節，製造懸疑'],'沒有激烈控訴，情緒反而更沉重。'],
+['skill','第 5 回甲文的論述順序是？','先談自拍的歷史，再分析今昔差異與矛盾',['先述社會觀察，再引攝影發展','先提解決方法，再說明問題','全篇皆為個人經驗的記敘'],'開頭就說「自拍不是一個新的現象」，從十九世紀談起。']
+];
+
+var LABEL = {src:'作者出處', word:'文言字詞', mean:'文意判斷', skill:'寫作手法'};
+var BANK = RAW.map(function(r,i){ return {i:i, k:r[0], q:r[1], a:r[2], d:r[3], why:r[4]}; });
+
+var tabs = document.querySelectorAll('nav button');
+var panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+
+var S = {kinds:['src','word','mean','skill'], n:25};
+var queue=[], idx=0, right=0, wrongList=[], answered=false;
+function $(id){ return document.getElementById(id); }
+
+$('setKind').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  b.classList.toggle('on');
+  var box = $('setKind');
+  if(!box.querySelectorAll('.chip.on').length){ b.classList.add('on'); return; }
+  S.kinds = [].map.call(box.querySelectorAll('.chip.on'), function(c){ return c.dataset.k; });
+});
+$('setLen').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+
+function shuffle(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+}
+
+function start(pool){
+  var items = pool || BANK.filter(function(x){ return S.kinds.indexOf(x.k) > -1; });
+  if(!items.length){ alert('這個範圍沒有題目'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  var q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtype').textContent = LABEL[q.k];
+  $('qtext').innerHTML = q.q;
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+  var cw = $('qchoices');
+  cw.innerHTML = '';
+  shuffle([q.a].concat(q.d)).forEach(function(op){
+    var b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = op;
+    b.addEventListener('click', function(){ pick(b, op === q.a, q, op); });
+    cw.appendChild(b);
+  });
+}
+
+function pick(btn, ok, q, chosen){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.a) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:chosen}); }
+  var box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'vok' : 'vno');
+  box.innerHTML = '<span class="vt ' + (ok ? 'vok' : 'vno') + '">' + (ok ? '答對' : '答錯') + '</span>' +
+    '<span class="big">' + q.a + '</span>' +
+    '<small>' + q.why + '</small>' +
+    (ok ? '' : '<small>你選的：' + chosen + '</small>');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  $('nextBtn').hidden = false;
+}
+
+function next(){
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  var total = Math.max(right + wrongList.length, 1);
+  var pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對' : pct >= 80 ? '　把錯的補一補' : '　錯的回去看一次筆記');
+  var wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      var d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.q + '</b><span>正解：' + w.q.a + '　·　' + w.q.why + '</span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:ch-reading', m[1]);
+         localStorage.setItem('nx:time:ch-reading', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>

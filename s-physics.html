@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
+<title>物理 · 段考複習</title>
+<script>
+(function(){
+  var k='nx:theme';
+  var t=null; try{ t=localStorage.getItem(k); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  window.nxSetTheme=function(v){
+    try{ v==='system' ? localStorage.removeItem(k) : localStorage.setItem(k,v); }catch(e){}
+    if(v==='system') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme',v);
+    if(window.nxSyncTheme) window.nxSyncTheme();
+  };
+  window.nxTheme=function(){ try{ return localStorage.getItem(k)||'system'; }catch(e){ return 'system'; } };
+  window.nxScore=function(id){ try{ var v=localStorage.getItem('nx:score:'+id); return v===null?null:Number(v); }catch(e){ return null; } };
+  window.nxHide=function(){ try{ return localStorage.getItem('nx:hide')==='1'; }catch(e){ return false; } };
+})();
+</script>
+<style>
+  :root{
+    --bg:#f2f2f7;--bg2:#ffffff;--card:#ffffff;--label:#000000;--label2:#3c3c4399;
+    --label3:#3c3c434d;--sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--gold:#c8912b;
+    --shadow:0 6px 22px rgba(0,0,0,.10);--ring:rgba(0,0,0,.06);
+  }
+  html[data-theme="dark"]{
+    --bg:#0b0b0d;--bg2:#141416;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;
+    --label3:#ebebf54d;--sep:#54545866;--fill:#7878802e;--blue:#0a84ff;--gold:#e8b73d;
+    --shadow:0 6px 24px rgba(0,0,0,.5);--ring:rgba(255,255,255,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    html:not([data-theme="light"]){
+      --bg:#0b0b0d;--bg2:#141416;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;
+      --label3:#ebebf54d;--sep:#54545866;--fill:#7878802e;--blue:#0a84ff;--gold:#e8b73d;
+      --shadow:0 6px 24px rgba(0,0,0,.5);--ring:rgba(255,255,255,.08);
+    }
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--label);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;
+    font-size:17px;line-height:1.5;
+    padding:0 0 calc(40px + env(safe-area-inset-bottom));
+    -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  main{max-width:720px;margin:0 auto;padding:0 18px}
+
+  /* 進場動畫 */
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  .rise{opacity:0;animation:rise .5s cubic-bezier(.22,1,.36,1) forwards}
+  @media (prefers-reduced-motion: reduce){ .rise{animation:none;opacity:1} }
+
+  /* 背景光暈 */
+  .glow{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+  .glow i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.30;
+    animation:float 16s ease-in-out infinite alternate}
+  html[data-theme="dark"] .glow i{opacity:.22}
+  @keyframes float{from{transform:translate(0,0) scale(1)}to{transform:translate(18px,-22px) scale(1.12)}}
+
+  .pressable{transition:transform .16s cubic-bezier(.22,1,.36,1)}
+  .pressable:active{transform:scale(.975)}
+
+  .bar{display:flex;align-items:center;gap:6px;padding:calc(env(safe-area-inset-top) + 12px) 18px 8px;
+    max-width:720px;margin:0 auto}
+  .bar a{display:inline-flex;align-items:center;gap:5px;font-size:15px;font-weight:600;color:var(--blue)}
+  .hero{padding:14px 0 4px}
+  .hero .en{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--c);text-transform:uppercase}
+  h1{font-size:34px;font-weight:800;letter-spacing:-1px;margin:5px 0 8px}
+  .hero .pg{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--label2)}
+  .hero .pgbar{flex:1;height:5px;border-radius:3px;background:var(--fill);overflow:hidden}
+  .hero .pgbar i{display:block;height:100%;background:var(--c);width:0;border-radius:3px;
+    transition:width 1s cubic-bezier(.22,1,.36,1)}
+
+  h2.g{font-size:12px;font-weight:700;color:var(--label3);letter-spacing:.1em;margin:26px 0 9px}
+  .list{display:flex;flex-direction:column;gap:10px}
+  .it{position:relative;display:block;background:var(--card);border-radius:16px;padding:14px 15px;
+    box-shadow:var(--shadow);border:.5px solid var(--ring);overflow:hidden}
+  .it::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--c)}
+  .it .hd{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .it .tt{font-size:18px;font-weight:700;letter-spacing:-.3px}
+  .it .ss{font-size:13px;color:var(--label2);margin-top:2px;line-height:1.45}
+  .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+  .tags span{font-size:11px;font-weight:600;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);
+    padding:3px 8px;border-radius:100px}
+  .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+  .badge.sc{color:#fff;background:var(--c)}
+  .badge.dn{color:var(--label3);background:var(--fill)}
+  .it.todo{opacity:.5;box-shadow:none}
+  .it.todo::before{background:var(--label3)}
+  .it.todo .tt{font-weight:600}
+  .badge.wait{color:var(--label3);background:var(--fill)}
+  footer{text-align:center;font-size:12px;color:var(--label3);padding:34px 18px 0}
+</style>
+</head>
+<body>
+
+<div class="glow"><i style="background:#4a5f7a;width:280px;height:280px;left:-8%;top:-6%"></i>
+<i style="background:#4a5f7a;width:200px;height:200px;right:-10%;top:32%;animation-delay:3s"></i></div>
+<div class="bar rise"><a href="index.html">◀ 全部科目</a></div>
+<main style="--c:#4a5f7a">
+  <div class="hero">
+    <div class="en rise" style="animation-delay:40ms">Physics</div>
+    <h1 class="rise" style="animation-delay:70ms">物理</h1>
+    <div class="pg rise" style="animation-delay:95ms">
+      <span class="pgbar"><i id="pb"></i></span><span>0 / 1 已整理</span>
+    </div>
+  </div>
+  <h2 class="g rise" style="animation-delay:120ms">範圍</h2><div class="list"><div class="it todo rise" style="animation-delay:165ms"><div class="hd"><div><div class="tt">範圍待確認</div></div><span class="badge wait">整理中</span></div></div></div>
+  <footer>分數只存在你自己的瀏覽器</footer>
+</main>
+
+<script>
+setTimeout(function(){ document.getElementById('pb').style.width='0%'; }, 420);
+document.querySelectorAll('.it[data-id]').forEach(function(el){
+  var b=el.querySelector('[data-badge]'); if(!b) return;
+  var sc=nxScore(el.dataset.id);
+  if(sc===null) return;
+  if(nxHide()){ b.className='badge dn'; b.textContent='做過'; }
+  else { b.className='badge sc'; b.textContent=sc+'%'; }
+});
+</script>
+</body>
+</html>

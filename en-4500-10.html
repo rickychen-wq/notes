@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>字彙 Chapter 10</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --t1:#2f5f8a;--t2:#3f7a6b;--t3:#8a5a3f;--accent:var(--t1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --t1:#8fb3e8;--t2:#6fc9b0;--t3:#e0a97c;}
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.55;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px}
+  .titlebar{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  .cnbtn{border:none;background:var(--fill);color:var(--blue);font-size:13px;font-weight:600;
+    padding:7px 12px;border-radius:100px;font-family:inherit;flex-shrink:0;cursor:pointer}
+  .cnbtn.off{background:var(--blue);color:#fff}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .p-1{--accent:var(--t1)}.p-2{--accent:var(--t1)}.p-3{--accent:var(--t2)}
+  .p-4{--accent:var(--t3)}.p-5{--accent:var(--blue)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .row{padding:12px 16px;border-top:.5px solid var(--sep)}
+  .row:first-child{border-top:none}
+  .wline{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px}
+  .num{font-size:12px;font-weight:700;color:#fff;background:var(--accent);
+    border-radius:5px;padding:1px 6px;flex-shrink:0}
+  .wline b{font-size:19px;font-weight:600;letter-spacing:-.2px}
+  .kk{font-size:13px;color:var(--label3)}
+  .lv{font-size:11px;font-weight:700;color:var(--accent);border:1px solid var(--accent);
+    border-radius:4px;padding:0 4px}
+  .pos{font-size:12px;font-weight:600;font-style:italic;color:var(--label2)}
+  .mean{font-size:16px;color:var(--label2);margin-top:2px}
+  .nt{font-size:14px;line-height:1.55;margin-top:7px;padding:8px 11px;background:var(--fill);border-radius:8px}
+  .nt b{color:var(--gold)}
+  body.hide-cn .mean{visibility:hidden}
+
+  .ph{padding:12px 16px;border-top:.5px solid var(--sep)}
+  .ph:first-child{border-top:none}
+  .ph b{font-size:17px;font-weight:700}
+  .ph span{display:block;font-size:15px;color:var(--label2);margin-top:1px}
+  body.hide-cn .ph span{visibility:hidden}
+
+  .cmp{padding:13px 16px;border-top:.5px solid var(--sep)}
+  .cmp:first-child{border-top:none}
+  .cmp h4{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--accent)}
+  .cmp p{margin:0 0 4px;font-size:15px;line-height:1.6}
+  .cmp .hl{background:color-mix(in srgb,var(--gold) 20%,transparent);border-radius:4px;padding:0 3px;font-weight:600}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .hint{padding:12px 16px;font-size:14px;color:var(--label2);line-height:1.55;border-top:.5px solid var(--sep)}
+  .hint b{color:var(--gold)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:26px 18px;text-align:center}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px}
+  .qprompt .qtext{font-size:25px;font-weight:700;line-height:1.35;word-break:break-word}
+  .qprompt .qhint{font-size:14px;color:var(--label3);margin-top:8px}
+  .choices{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:8px}
+  .choice{text-align:left;font-family:inherit;font-size:18px;padding:15px 16px;border-radius:12px;
+    background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  .typebox{margin-top:10px;width:100%;display:flex;gap:8px}
+  .typebox input{flex:1;font-family:inherit;font-size:19px;padding:14px 16px;border-radius:12px;
+    border:1.5px solid var(--sep);background:var(--card);color:var(--label);min-width:0}
+  .typebox input:focus{outline:none;border-color:var(--blue)}
+  .typebox button{border:none;font-family:inherit;font-size:16px;font-weight:600;padding:0 18px;
+    border-radius:12px;background:var(--blue);color:#fff;cursor:pointer}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.vok{color:var(--green)}
+  .verdict .vt.vno{color:var(--red)}
+  .verdict .big{display:block;font-size:22px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .verdict small.gold{color:var(--gold)}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:16px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:700;margin-right:6px}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  .wrongrow em{font-style:normal;color:var(--red)}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --t1:#2f5f8a;--t2:#3f7a6b;--t3:#8a5a3f;--accent:var(--t1);
+  }
+  html[data-theme="dark"]{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --t1:#8fb3e8;--t2:#6fc9b0;--t3:#e0a97c;}
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-english.html">◀ 回目錄</a><span>英文 · 4500單 10</span></div>
+
+
+<header>
+  <div class="titlebar">
+    <div><h1>字彙 Chapter 10</h1><div class="sub">Science &amp; Technology · 47 字</div></div>
+    <button class="cnbtn" id="cnbtn">隱藏中文</button>
+  </div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">1–24</button>
+    <button role="tab" aria-selected="false" data-t="2">25–47</button>
+    <button role="tab" aria-selected="false" data-t="3">片語</button>
+    <button role="tab" aria-selected="false" data-t="4">易混淆</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+  <section class="p-1" data-p="1">
+    <div class="hero"><div class="kicker">Vocabulary</div><h2>單字 1–24</h2><div class="zh">beam → mathematical</div></div>
+    <div class="card" id="listA"></div>
+  </section>
+
+  <section class="p-2" data-p="2" hidden>
+    <div class="hero"><div class="kicker">Vocabulary</div><h2>單字 25–47</h2><div class="zh">mechanical → website</div></div>
+    <div class="card" id="listB"></div>
+  </section>
+
+  <section class="p-3" data-p="3" hidden>
+    <div class="hero"><div class="kicker">Idioms</div><h2>片語與搭配</h2><div class="zh">課本標 H 的慣用語</div></div>
+    <div class="card" id="listP"></div>
+  </section>
+
+  <section class="p-4" data-p="4" hidden>
+    <div class="hero"><div class="kicker">Cheat sheet</div><h2>易混淆整理</h2><div class="zh">這章最會扣分的地方</div></div>
+
+    <h3>最容易混淆的三組</h3>
+    <div class="card">
+      <div class="cmp">
+        <h4>electric / electrical / electronic</h4>
+        <p><b>electric</b>　靠電力<b>驅動</b>的：electric motor 電動馬達、electric car</p>
+        <p><b>electrical</b>　與電<b>有關</b>的（較抽象）：electrical engineering 電機工程</p>
+        <p><b>electronic</b>　含<b>電子元件</b>的：electronic equipment 電子產品</p>
+        <p><b>electricity</b>　名詞「電」，<span class="hl">不可數</span></p>
+      </div>
+      <div class="cmp">
+        <h4>statistic / statistics</h4>
+        <p><b>statistic</b> n. C　一個統計<b>數字</b>，常用複數 statistics</p>
+        <p><b>statistics</b> n. U　<b>統計學</b>，這時候是<span class="hl">單數</span>：Statistics <b>is</b> hard.</p>
+        <p>判斷法：看動詞單複數，也看意思是「數字」還是「學科」。</p>
+      </div>
+      <div class="cmp">
+        <h4>technical / technique / technological</h4>
+        <p><b>technical</b> adj. 技術的、專門性的</p>
+        <p><b>technique</b> n. 技巧、技能　<span class="hl">重音在後 [tɛkˈnik]</span></p>
+        <p><b>technological</b> adj. 技術層面的（來自 technology）</p>
+        <p><b>technician</b> n. 技術人員</p>
+      </div>
+    </div>
+
+    <h3>可數 vs 不可數（最愛考）</h3>
+    <div class="card">
+      <div class="cmp">
+        <p><b>machinery</b>　機器總稱，<span class="hl">不可數</span>　→ a <b>piece of</b> machinery</p>
+        <p><b>machine</b>　單一機器，<span class="hl">可數</span>　→ a machine</p>
+        <p><b>software</b>　<span class="hl">不可數</span>　→ a <b>piece of</b> software（↔ hardware 也是不可數）</p>
+        <p><b>chemistry / electricity / gasoline</b>　都是<span class="hl">不可數</span></p>
+      </div>
+    </div>
+
+    <h3>字首 sub- ＝ 在……之下</h3>
+    <div class="card">
+      <div class="cmp">
+        <p><b>submarine</b> n. 潛水艇（marine ＝ 海洋 → 海面之下）</p>
+        <p><b>substance</b> n. 物質；本質（stan ＝ 站立 → 立於表相之下的東西）</p>
+        <p><b>subconscious</b> n. 潛意識（conscious ＝ 意識 → 意識之下）</p>
+        <p><b>submit</b> v. 提交（mit ＝ 傳遞 → 從下方傳遞上去）</p>
+        <p><b>subscribe</b> v. 訂閱；簽名（scribe ＝ 寫 → 寫於下方）</p>
+      </div>
+    </div>
+
+    <h3>字首 tele- ＝ 遠距離</h3>
+    <div class="card">
+      <div class="cmp">
+        <p><b>telegraph</b> n. 電報（graph ＝ 書寫 → 遠距離傳播的書寫）</p>
+        <p><b>telescope</b> n. 望遠鏡（scope ＝ 觀看 → 遠距離觀察）</p>
+        <p><b>telecommunication</b> n. 電信（communicare ＝ 使普遍 → 遠距離通訊）</p>
+        <p><b>teleconference</b> n. 視訊會議（con- ＝ 一起，ferre ＝ 帶 → 遠距離會議）</p>
+      </div>
+    </div>
+
+    <h3>其他形近字</h3>
+    <div class="card">
+      <div class="cmp">
+        <p><b>industrial</b> 工業的　⟷　<b>industrious</b> 勤勉的　<span class="hl">差三個字母意思差很多</span></p>
+        <p><b>nuclear</b> 核子的　⟷　<b>unclear</b> 不清楚的　<span class="hl">字母順序陷阱</span></p>
+        <p><b>missile</b> 飛彈　⟷　<b>muscle</b> 肌肉　⟷　<b>mission</b> 任務</p>
+        <p><b>monitor</b> 螢幕／監控　⟷　<b>motor</b> 馬達　⟷　<b>mentor</b> 導師</p>
+        <p><b>rocket</b> 火箭　⟷　<b>racket</b> 球拍　⟷　<b>pocket</b> 口袋</p>
+        <p><b>beam</b> 與 <b>ray</b> 都是「光線」，beam 另有「橫樑」的意思</p>
+      </div>
+    </div>
+
+  <section class="p-5" data-p="5" hidden>
+    <div class="hero"><div class="kicker">Quiz</div><h2>字彙測驗</h2><div class="zh">中文 → 英文，有標詞性</div></div>
+
+    <div id="qsetup">
+      <h3>範圍</h3>
+      <div class="card">
+        <div class="optrow" id="setKind">
+          <button class="chip on" data-k="word">單字</button>
+          <button class="chip on" data-k="phrase">片語</button>
+        </div>
+      </div>
+      <h3>作答方式</h3>
+      <div class="card">
+        <div class="optrow" id="setMode">
+          <button class="chip on" data-m="mc">選擇題</button>
+          <button class="chip" data-m="type">手打</button>
+        </div>
+        <div class="optrow" id="setLen">
+          <div class="lb">題數</div>
+          <button class="chip" data-n="15">15</button>
+          <button class="chip on" data-n="30">30</button>
+          <button class="chip" data-n="0">全部</button>
+        </div>
+        <div class="hint">手打比對<b>不分大小寫、忽略多餘空格與標點</b>，片語裡的 sb / sth 可寫可不寫，拼錯一個字母會算對但提醒你正確拼法。每題作答後都要自己按「下一題」。</div>
+      </div>
+      <button class="bigbtn" id="startBtn">開始測驗</button>
+    </div>
+
+    <div id="qplay" hidden>
+      <div class="qbar">
+        <span id="qcount">1 / 30</span>
+        <span class="track"><i id="qprog" style="width:0%"></i></span>
+        <span id="qscore">0 對</span>
+      </div>
+      <div class="card">
+        <div class="qprompt">
+          <div class="qtype">中文 → 英文</div>
+          <div class="qtext" id="qtext">—</div>
+          <div class="qhint" id="qhint"></div>
+        </div>
+      </div>
+      <div class="choices" id="qchoices"></div>
+      <div class="typebox" id="qtypebox" hidden>
+        <input id="qinput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" placeholder="輸入英文">
+        <button id="qsubmit">送出</button>
+      </div>
+      <div id="qverdict"></div>
+      <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+      <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+    </div>
+
+    <div id="qdone" hidden>
+      <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+      <h3 id="rWrongTitle" hidden>答錯的題目</h3>
+      <div class="card" id="rWrong" hidden></div>
+      <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button>
+      <button class="bigbtn sec" id="againAll">回設定重測</button>
+    </div>
+  </section>
+
+<footer>英文字彙字識⁺ Levels 3&amp;4 · Chapter 10</footer>
+</main>
+
+<script>
+/* [編號, 英文, KK, 等級, 詞性, 中文, 註解, 干擾字（多字用 | 分隔）] */
+var WORDS = [
+[1,'beam',"[bim]",'L3','n. C','光線；橫樑','＝ray。房屋的橫樑也叫 beam。','bean|beacon|bloom'],
+[2,'bomb',"[bɑm]",'L3','n. C / vt.','炸彈／炸毀、轟炸','★<b>b 不發音</b> [bɑm]，跟 comb、climb 一樣。動名詞 bombing 轟炸。','bombard|balm|boom'],
+[3,'calculate',"[\u02c8kælkjə\u02cclet]",'L4','vt.','計算；估計','＝figure out, work out／estimate。','calibrate|circulate|cultivate'],
+[4,'calculation',"[\u02cckælkjə\u02c8leʃən]",'L4','n.','估算、計算；精算','a man of exact calculation 精打細算的人。','circulation|calibration|collaboration'],
+[5,'chemistry',"[\u02c8kɛməstrɪ]",'L4','n. U','化學','<b>不可數</b>。化學家 chemist、化學的 chemical。','chemical|chemist|ministry'],
+[6,'code',"[kod]",'L4','n. / vt.','代碼、密碼；法典、規範／編成密碼','criminal code 刑法；break the code 破解密碼。','mode|node|cord'],
+[7,'cube',"[kjub]",'L4','n. C','立方體；塊','形容詞 cubic 立方的。ice cube 冰塊。','cub|tube|curb'],
+[8,'database',"[\u02c8detə\u02ccbes]",'L3','n. C','資料庫','data（資料）＋ base（基地）。','databank|baseline|datebook'],
+[9,'diagram',"[\u02c8daɪə\u02ccgræm]",'L4','n. C','圖表；圖解','＝chart。dia-（穿過）＋ gram（書寫）。','diameter|dialogue|telegram'],
+[10,'digital',"[\u02c8dɪdʒɪtl]",'L4','adj.','數位的；數字的','↔ analog 類比的。來自 digit（數字、手指）。','digit|dignity|capital'],
+[11,'electricity',"[ɪ\u02cclɛk\u02c8trɪsətɪ]",'L3','n. U','電','<b>不可數</b>。形容詞 electric（用電的）、electrical（與電有關的）。','electronic|electrician|eccentricity'],
+[12,'electronic',"[ɪ\u02cclɛk\u02c8trɑnɪk]",'L3','adj.','電子的','★跟 <b>electric</b> 的差別：electronic 指含電子元件的產品（3C），electric 指靠電力驅動的（電扇、電車）。','electricity|electrical|economic'],
+[13,'element',"[\u02c8ɛləmənt]",'L3','n. C','要素','搭配 <b>in one\u2019s element</b> 如魚得水。化學上也指「元素」。','elephant|elegant|elementary'],
+[14,'experiment',"[ɪk\u02c8spɛrəmənt]",'L3','n. / vi.','實驗／做實驗','★<b>名詞與動詞發音不同</b>：名詞 [ɪkˈspɛrəmənt]、動詞 [ɪkˈspɛrəˌmɛnt]。搭配 experiment <b>on/with</b> sth.','experience|expedition|excrement'],
+[15,'fax',"[fæks]",'L4','vt. / n. C','傳真','fax sb. sth. 把某物傳真給某人。','facts|tax|flax'],
+[16,'gasoline',"[\u02c8gæsə\u02cclin]",'L3','n. U','汽油','<b>不可數</b>，簡稱 gas。加油站 gas station。','kerosene|vaseline|gasworks'],
+[17,'graph',"[græf]",'L4','n. C','（用直線或曲線表示的）圖表','＝chart。字根 <b>graph ＝ 書寫、圖形</b>。','graphic|paragraph|grasp'],
+[18,'industrial',"[ɪn\u02c8dʌstrɪəl]",'L3','adj.','工業的','★別跟 <b>industrious</b>（勤勉的）搞混。名詞 industry。','industrious|industry|industrialize'],
+[19,'input',"[\u02c8ɪn\u02ccpʊt]",'L4','vt. / n.','輸入','↔ <b>output</b>。三態 input-inputted/input-inputted/input。','output|imprint|income'],
+[20,'invent',"[ɪn\u02c8vɛnt]",'L3','vt.','發明；創造','＝create。發明家 inventor。','invert|event|prevent'],
+[21,'invention',"[ɪn\u02c8vɛnʃən]",'L4','n.','發明','＝creation。','inventory|intention|invasion'],
+[22,'launch',"[lɔntʃ]",'L4','n. C / vt.','（船）下水、（火箭）發射／使下水、展開推出','第二個動詞意思很常用：launch a campaign 展開一項活動。','lunch|laundry|lounge'],
+[23,'machinery',"[mə\u02c8ʃinərɪ]",'L4','n. U','機器（總稱）','★<b>集合名詞、不可數</b>。要指一臺要說 <b>a piece of machinery</b>；machine 才是可數的。','machine|mechanism|masonry'],
+[24,'mathematical',"[\u02ccmæθə\u02c8mætɪkl]",'L3','adj.','數學的','名詞 mathematics（簡稱 math）。','mathematics|methodical|mechanical'],
+[25,'mechanical',"[mə\u02c8kænɪkl]",'L4','adj.','機械的；機械般的、習慣性的','＝machine-driven，↔ manual 手動的。技工是 mechanic。','mechanic|medical|magical'],
+[26,'minus',"[\u02c8maɪnəs]",'L3','prep. / n. C / adj.','減（去）／缺點／負的','↔ <b>plus</b>。名詞＝drawback；形容詞＝negative。','plus|mines|menus'],
+[27,'missile',"[\u02c8mɪsl]",'L3','n. C','飛彈','fire a missile 發射飛彈。','mission|missing|muscle'],
+[28,'monitor',"[\u02c8mɑnətɚ]",'L4','n. C / vt.','顯示器、螢幕／監聽、監控','＝screen。動詞意思也很常考：monitor weather patterns 監測天氣型態。','mentor|minister|motor'],
+[29,'motor',"[\u02c8motɚ]",'L3','n. C','馬達；發動機','electric motor 電動馬達。','motto|monitor|meteor'],
+[30,'nuclear',"[\u02c8njuklɪɚ]",'L4','adj.','原子核的；核子的','名詞是 <b>nucleus</b>（原子核）。nuclear power plant 核電廠。','nucleus|unclear|molecular'],
+[31,'radar',"[\u02c8redɑr]",'L4','n. U','雷達','radio detecting and ranging 的縮寫。','radiant|radial|sonar'],
+[32,'ray',"[re]",'L3','n. C','光線','＝beam。the sun\u2019s rays 陽光。','rat|raw|rail'],
+[33,'rocket',"[\u02c8rɑkɪt]",'L3','n. C','火箭','launch a rocket 發射火箭。','racket|pocket|locket'],
+[34,'satellite',"[\u02c8sætl\u02ccaɪt]",'L4','n. C','衛星','send a satellite into orbit 把衛星送上軌道。','satin|sanitize|stalactite'],
+[35,'scientific',"[\u02ccsaɪən\u02c8tɪfɪk]",'L3','adj.','科學的','名詞 science、科學家 scientist。','scientist|specific|scenic'],
+[36,'software',"[\u02c8sɔft\u02ccwɛr]",'L4','n. U','（電腦）軟體','★<b>不可數</b>，一個要說 a piece of software。↔ hardware。','hardware|silverware|softener'],
+[37,'statistic',"[stə\u02c8tɪstɪk]",'L4','n. C','統計數字','★<b>常用複數</b> statistics。','static|statue|stature'],
+[38,'statistics',"[stə\u02c8tɪstɪks]",'L4','n. U','統計學','★當「統計學」時是<b>不可數、視為單數</b>；當「統計數字」時是 statistic 的複數。','stylistics|statics|statuary'],
+[39,'stereo',"[\u02c8stɛrɪo]",'L4','n. C','立體聲音響','','stereotype|steroid|sterile'],
+[40,'submarine',"[\u02c8sʌbmə\u02ccrin]",'L4','n. C','潛水艇','字首 <b>sub- ＝ 在……之下</b>＋ marine（海洋）→ 海面之下。','submerge|marine|subway'],
+[41,'technical',"[\u02c8tɛknɪkl]",'L3','adj.','技術的；專門性的','','technique|technician|tactical'],
+[42,'technique',"[tɛk\u02c8nik]",'L3','n.','技能；技巧','★唸 [tɛk\u02c8nik]，重音在後。＝skillfulness。','technical|technician|tactic'],
+[43,'technological',"[\u02cctɛknə\u02c8lɑdʒɪkl]",'L4','adj.','技術層面的','名詞 technology。','technology|terminological|biological'],
+[44,'telegraph',"[\u02c8tɛlə\u02ccgræf]",'L4','n. U / vt. vi.','電報／打電報','字首 <b>tele- ＝ 遠距離</b>＋ graph（書寫）→ 遠距離傳播的書寫。','telegram|telescope|photograph'],
+[45,'telescope',"[\u02c8tɛlə\u02ccskop]",'L4','n. C','望遠鏡','tele-（遠距離）＋ scope（觀看）。','microscope|telegraph|periscope'],
+[46,'weapon',"[\u02c8wɛpən]",'L3','n. C','武器','nuclear weapons 核武。','wagon|weaken|whip'],
+[47,'website',"[\u02c8wɛb\u02ccsaɪt]",'L4','n. C','網站','也可寫成 Web site。','webpage|weblog|worksite']
+];
+
+var PHRASES = [
+['in one\u2019s element','如魚得水','element 這裡指「最適合的環境」，像魚回到水裡一樣自在。'],
+['experiment on/with sth.','用……做實驗','on 多用於動物或對象，with 多用於器材或方法。'],
+['carry out an experiment','進行實驗','carry out 也可換成 conduct／do／perform。'],
+['by experiment','用實驗（的方式）','The theory has not yet been confirmed by experiment.']
+];
+
+
+var BANK = [];
+WORDS.forEach(function(w){
+  BANK.push({k:'word', n:w[0], en:w[1], kk:w[2], lv:w[3], pos:w[4], zh:w[5], note:w[6],
+             d:w[7] ? w[7].split('|') : null});
+});
+PHRASES.forEach(function(p,i){
+  BANK.push({k:'phrase', n:i+1, en:p[0], kk:'', lv:'', pos:'片語', zh:p[1], note:p[2], d:null});
+});
+
+function wordRow(x){
+  return '<div class="row"><div class="wline"><span class="num">' + x.n + '</span>' +
+    '<b>' + x.en + '</b><span class="kk">' + x.kk + '</span>' +
+    '<span class="lv">' + x.lv + '</span><span class="pos">' + x.pos + '</span></div>' +
+    '<div class="mean">' + x.zh + '</div>' +
+    (x.note ? '<div class="nt">' + x.note + '</div>' : '') + '</div>';
+}
+document.getElementById('listA').innerHTML =
+  BANK.filter(function(x){ return x.k === 'word' && x.n <= 24; }).map(wordRow).join('');
+document.getElementById('listB').innerHTML =
+  BANK.filter(function(x){ return x.k === 'word' && x.n >= 25; }).map(wordRow).join('');
+document.getElementById('listP').innerHTML =
+  BANK.filter(function(x){ return x.k === 'phrase'; }).map(function(x){
+    return '<div class="ph"><b>' + x.en + '</b><span>' + x.zh + '</span>' +
+      (x.note ? '<div class="nt">' + x.note + '</div>' : '') + '</div>';
+  }).join('');
+
+var tabs = document.querySelectorAll('nav button');
+var panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+var cnbtn = document.getElementById('cnbtn');
+cnbtn.addEventListener('click', function(){
+  var on = document.body.classList.toggle('hide-cn');
+  cnbtn.textContent = on ? '顯示中文' : '隱藏中文';
+  cnbtn.classList.toggle('off', on);
+});
+
+function norm(s){
+  return (s||'').toLowerCase()
+    .replace(/[\u2019\u2018`\u00b4]/g,"'")
+    .replace(/[.,;:!?"()\[\]]/g,' ')
+    .replace(/[-\u2013\u2014_\/]/g,' ')
+    .replace(/'s\b/g,' ')
+    .replace(/\b(sb|sth|somebody|someone|something|one|ones|oneself|a|an|the)\b/g,' ')
+    .replace(/\s+/g,' ').trim();
+}
+function lev(a,b){
+  var m=a.length,n=b.length;
+  if(!m) return n; if(!n) return m;
+  var prev=[],cur=[],i,j;
+  for(j=0;j<=n;j++) prev[j]=j;
+  for(i=1;i<=m;i++){
+    cur[0]=i;
+    for(j=1;j<=n;j++) cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    var t=prev; prev=cur; cur=t;
+  }
+  return prev[n];
+}
+function judge(input, item){
+  var got = norm(input);
+  if(!got) return 'no';
+  var target = norm(item.en);
+  if(got === target) return 'exact';
+  for(var i=0;i<BANK.length;i++){
+    if(BANK[i] !== item && norm(BANK[i].en) === got) return 'no';
+  }
+  if(item.d){
+    for(var j=0;j<item.d.length;j++){ if(norm(item.d[j]) === got) return 'no'; }
+  }
+  var tol = target.length >= 9 ? 2 : (target.length >= 5 ? 1 : 0);
+  if(lev(got, target) <= tol) return 'close';
+  return 'no';
+}
+
+var S = {kinds:['word','phrase'], mode:'mc', n:30};
+var queue=[], idx=0, right=0, wrongList=[], answered=false;
+function $(id){ return document.getElementById(id); }
+
+$('setKind').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  b.classList.toggle('on');
+  var box = $('setKind');
+  if(!box.querySelectorAll('.chip.on').length){ b.classList.add('on'); return; }
+  S.kinds = [].map.call(box.querySelectorAll('.chip.on'), function(c){ return c.dataset.k; });
+});
+$('setMode').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  $('setMode').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.mode = b.dataset.m;
+});
+$('setLen').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+
+function shuffle(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+}
+
+function start(pool){
+  var items = pool || BANK.filter(function(x){ return S.kinds.indexOf(x.k) > -1; });
+  if(!items.length){ alert('這個範圍沒有題目'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  var q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtext').textContent = q.zh;
+  $('qhint').textContent = q.k === 'phrase' ? '片語' : q.pos + '　·　第 ' + q.n + ' 個單字';
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+
+  var cw = $('qchoices'), tb = $('qtypebox');
+  cw.innerHTML = '';
+  if(S.mode === 'type'){
+    cw.hidden = true; tb.hidden = false;
+    $('qinput').value = ''; $('qinput').disabled = false; $('qsubmit').disabled = false;
+    $('qinput').placeholder = q.k === 'phrase' ? '輸入英文片語' : '輸入英文';
+    setTimeout(function(){ $('qinput').focus(); }, 50);
+  }else{
+    tb.hidden = true; cw.hidden = false;
+    var ds;
+    if(q.d){ ds = q.d.slice(0,3); }
+    else {
+      ds = shuffle(BANK.filter(function(x){ return x.k === q.k && x !== q; })).slice(0,3)
+             .map(function(x){ return x.en; });
+    }
+    shuffle([q.en].concat(ds)).forEach(function(op){
+      var b = document.createElement('button');
+      b.className = 'choice';
+      b.textContent = op;
+      b.addEventListener('click', function(){ pick(b, op === q.en, q, op); });
+      cw.appendChild(b);
+    });
+  }
+}
+
+function pick(btn, ok, q, chosen){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.en) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:chosen}); }
+  verdict(ok, q, ok ? '' : chosen, false);
+}
+
+function submitType(){
+  if(answered) return;
+  var q = queue[idx];
+  var val = $('qinput').value;
+  if(!val.trim()) return;
+  var r = judge(val, q);
+  answered = true;
+  $('qinput').disabled = true; $('qsubmit').disabled = true;
+  if(r !== 'no') right++;
+  else wrongList.push({q:q, mine:val.trim()});
+  verdict(r !== 'no', q, val.trim(), r === 'close');
+}
+
+function verdict(ok, q, mine, close){
+  var box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'vok' : 'vno');
+  box.innerHTML =
+    '<span class="vt ' + (ok ? 'vok' : 'vno') + '">' + (ok ? (close ? '算你對，但拼字差一點' : '答對') : '答錯') + '</span>' +
+    '<span class="big">' + q.en + '</span>' +
+    '<small>' + q.pos + '　' + q.zh + (q.kk ? '　' + q.kk : '') + '</small>' +
+    (close ? '<small class="gold">正確拼法：' + q.en + '</small>' : '') +
+    (!ok && mine ? '<small>你寫的／選的：' + mine + '</small>' : '') +
+    (q.note ? '<small>' + q.note.replace(/<[^>]+>/g,'') + '</small>' : '');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  $('nextBtn').hidden = false;
+}
+
+function next(){
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  var total = Math.max(right + wrongList.length, 1);
+  var pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對' : pct >= 80 ? '　把錯的補一補' : '　錯的先背熟再考一次');
+  var wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      var d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.en + '</b>' + w.q.pos + '　' + w.q.zh +
+        '<span>你寫的／選的：<em>' + w.mine + '</em></span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('qsubmit').addEventListener('click', submitType);
+$('qinput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); answered ? next() : submitType(); }
+});
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:en-4500-10', m[1]);
+         localStorage.setItem('nx:time:en-4500-10', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>
