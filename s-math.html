@@ -100,19 +100,6 @@
   .badge.wait{color:var(--label3);background:var(--fill)}
   footer{text-align:center;font-size:12px;color:var(--label3);padding:34px 18px 0}
 </style>
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" href="icon-192.png">
-<link rel="manifest" href="app.webmanifest">
-<meta name="apple-mobile-web-app-title" content="段考複習">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="段考複習">
-<meta property="og:title" content="數學 · 段考複習">
-<meta property="og:description" content="段考複習筆記與線上測驗">
-<meta property="og:image" content="https://rickychen-wq.github.io/notes/share.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:url" content="https://rickychen-wq.github.io/notes/s-math.html">
-<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
@@ -124,15 +111,15 @@
     <div class="en rise" style="animation-delay:40ms">Math</div>
     <h1 class="rise" style="animation-delay:70ms">數學</h1>
     <div class="pg rise" style="animation-delay:95ms">
-      <span class="pgbar"><i id="pb"></i></span><span>1 / 1 已整理</span>
+      <span class="pgbar"><i id="pb"></i></span><span>0 / 1 已整理</span>
     </div>
   </div>
-  <h2 class="g rise" style="animation-delay:120ms">段考範圍</h2><div class="list"><a class="it pressable rise" href="math.html" style="animation-delay:165ms" data-id="math"><div class="hd"><div><div class="tt">數學筆記</div><div class="ss">三角函數 1-1 ～ 1-4</div></div><span class="badge dn" data-badge>開啟</span></div><div class="tags"><span>筆記</span></div></a></div>
+  <h2 class="g rise" style="animation-delay:120ms">第 1 章 三角函數</h2><div class="list"><div class="it todo rise" style="animation-delay:165ms"><div class="hd"><div><div class="tt">1-1 ～ 1-4</div></div><span class="badge wait">整理中</span></div></div></div>
   <footer>分數只存在你自己的瀏覽器</footer>
 </main>
 
 <script>
-setTimeout(function(){ document.getElementById('pb').style.width='100%'; }, 420);
+setTimeout(function(){ document.getElementById('pb').style.width='0%'; }, 420);
 document.querySelectorAll('.it[data-id]').forEach(function(el){
   var b=el.querySelector('[data-badge]'); if(!b) return;
   var sc=nxScore(el.dataset.id);
