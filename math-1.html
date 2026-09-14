@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>數學 · 第 1 章 三角函數</title>
+<style>
+:root{
+  --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+  --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+  --accent:#7a4a9e;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+    --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+    --accent:#c4a2e8;
+  }
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;
+  background:var(--bg);color:var(--label);font-size:17px;line-height:1.55;
+  padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+
+/* ── 數學排版 ── */
+.mm{font-family:Cambria,Georgia,"Times New Roman",serif;font-size:1.04em}
+f{display:inline-flex;flex-direction:column;vertical-align:-.48em;text-align:center;
+  margin:0 .18em;line-height:1.3;font-family:Cambria,Georgia,serif}
+f>n{border-bottom:1.2px solid currentColor;padding:0 .26em}
+f>d{padding:0 .26em}
+r{border-top:1.2px solid currentColor;padding:0 .12em;margin-left:-.08em;font-family:Cambria,Georgia,serif}
+sub,sup{font-size:.7em}
+mark{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);
+  border-radius:4px;padding:0 4px;font-weight:700}
+
+/* ── 頂部 ── */
+header{position:sticky;top:0;z-index:20;background:var(--card);
+  border-bottom:.5px solid var(--sep);padding:10px 16px 0}
+header h1{margin:0;font-size:20px;font-weight:800;letter-spacing:-.4px}
+header .sub{font-size:12.5px;color:var(--label2);margin-top:2px}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-top:10px;padding-bottom:9px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;border:none;font-family:inherit;font-size:14px;font-weight:600;
+  padding:7px 14px;border-radius:100px;background:var(--fill);color:var(--label2);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--accent);color:#fff}
+
+main{max-width:720px;margin:0 auto;padding:0 16px}
+
+h2.sec{font-size:12px;font-weight:700;color:var(--label3);letter-spacing:.1em;
+  margin:26px 0 9px;text-transform:uppercase}
+h3{font-size:17px;font-weight:800;letter-spacing:-.3px;margin:22px 0 9px;
+  padding-left:10px;border-left:3px solid var(--accent)}
+
+.card{background:var(--card);border-radius:14px;padding:13px 14px;margin:9px 0;
+  border:.5px solid var(--sep)}
+.card .lab{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:7px}
+.eq{font-size:16.5px;line-height:2.1;overflow-x:auto;overflow-y:hidden;
+  padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.eq.small{font-size:15px;line-height:2}
+.nt{font-size:14px;color:var(--label2);line-height:1.75;margin-top:9px;
+  background:var(--fill);border-radius:9px;padding:9px 11px}
+.nt b{color:var(--label);font-weight:600}
+.nt:first-child{margin-top:0}
+
+.warn{background:color-mix(in srgb,var(--gold) 15%,transparent);
+  border-left:3px solid var(--gold);border-radius:9px;padding:10px 12px;margin:9px 0;
+  font-size:14.5px;line-height:1.7}
+.warn b{font-weight:700}
+
+.wrap{overflow-x:auto;margin:9px 0;border:.5px solid var(--sep);border-radius:12px;
+  background:var(--card);-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:330px;font-size:14px}
+th,td{padding:8px 10px;text-align:center;border-bottom:.5px solid var(--sep);white-space:nowrap}
+th{background:var(--fill);color:var(--accent);font-weight:700;font-size:12px;letter-spacing:.04em}
+td{font-family:Cambria,Georgia,serif;font-size:14.5px}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;
+  background:var(--card);font-family:inherit;font-size:13px}
+th:first-child{background:var(--fill)}
+tr:last-child td{border-bottom:0}
+
+/* ── 測驗 ── */
+.qhead{background:var(--card);border-radius:14px;padding:14px;margin:9px 0;border:.5px solid var(--sep)}
+.qmeta{display:flex;justify-content:space-between;align-items:center;
+  font-size:12.5px;color:var(--label2);margin-bottom:9px}
+.qbar{height:4px;border-radius:3px;background:var(--fill);overflow:hidden;margin-bottom:12px}
+.qbar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.qtext{font-size:17px;font-weight:600;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.opts button{text-align:left;font-family:inherit;font-size:15.5px;line-height:1.5;
+  padding:12px 13px;border-radius:11px;border:1px solid var(--sep);
+  background:var(--card);color:var(--label);cursor:pointer}
+.opts button:disabled{cursor:default}
+.opts button.vok{border-color:var(--green);
+  background:color-mix(in srgb,var(--green) 14%,transparent);font-weight:700}
+.opts button.vno{border-color:var(--red);
+  background:color-mix(in srgb,var(--red) 14%,transparent);font-weight:700}
+.verdict{margin-top:11px;font-size:14.5px;line-height:1.7;border-radius:11px;padding:11px 12px}
+.verdict.vok{background:color-mix(in srgb,var(--green) 13%,transparent)}
+.verdict.vno{background:color-mix(in srgb,var(--red) 13%,transparent)}
+.verdict .vt{font-weight:800;display:block;margin-bottom:4px}
+.verdict.vok .vt{color:var(--green)}
+.verdict.vno .vt{color:var(--red)}
+.bigbtn{display:block;width:100%;margin-top:11px;padding:14px;border-radius:12px;border:none;
+  background:var(--accent);color:#fff;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.ghostbtn{display:block;width:100%;margin-top:8px;padding:13px;border-radius:12px;
+  border:1px solid var(--sep);background:var(--card);color:var(--accent);
+  font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.scorebox{text-align:center;padding:8px 0 4px}
+.scorebox .pc{font-size:46px;font-weight:800;letter-spacing:-2px;color:var(--accent);line-height:1.1}
+.scorebox .dt{font-size:13.5px;color:var(--label2);margin-top:3px}
+.wronglist{margin-top:14px}
+.wronglist .wi{border-top:.5px solid var(--sep);padding:11px 0;font-size:14.5px;line-height:1.7}
+.wronglist .wi .qq{font-weight:600}
+.wronglist .wi .aa{color:var(--green);font-weight:700}
+
+footer{text-align:center;font-size:12px;color:var(--label3);padding:30px 16px 0;line-height:1.7}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+  --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+  --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+  --accent:#7a4a9e;
+}
+  html[data-theme="dark"]{
+    --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+    --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+    --accent:#c4a2e8;
+  }
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-math.html">◀ 回目錄</a><span>數學 · 第 1 章 三角函數</span></div>
+
+
+<header>
+  <h1>三角函數</h1>
+  <div class="sub">第 1 章　1-1 ～ 1-4　·　補習班講義 P1–P181</div>
+  <div class="tabs" id="tabs">
+    <button data-p="1" aria-selected="true">弧度性質</button>
+    <button data-p="2" aria-selected="false">圖形</button>
+    <button data-p="3" aria-selected="false">和差倍半</button>
+    <button data-p="4" aria-selected="false">地雷</button>
+    <button data-p="5" aria-selected="false">測驗</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════ 1 ══════════ -->
+<section data-p="1">
+
+<h2 class="sec">第一節　弧度與弧長　P1–7</h2>
+
+<h3>單位換算</h3>
+<div class="card">
+  <div class="lab">度 ⇄ 弧度</div>
+  <div class="eq mm">π 弧度 = 180°　　1 弧度 = <f><n>180°</n><d>π</d></f> ≈ 57.3°　　1° = <f><n>π</n><d>180</d></f> 弧度</div>
+  <div class="nt">弧度的定義：圓周上取一段弧，長度<b>恰好等於半徑</b>，這段弧所對的圓心角就是 1 弧度。所以弧度本身是「弧長 ÷ 半徑」，是個沒有單位的比值。</div>
+</div>
+<div class="wrap"><table>
+  <tr><th>度</th><td>30°</td><td>45°</td><td>60°</td><td>90°</td><td>120°</td><td>135°</td><td>150°</td><td>180°</td><td>270°</td><td>360°</td></tr>
+  <tr><th>弧度</th><td><f><n>π</n><d>6</d></f></td><td><f><n>π</n><d>4</d></f></td><td><f><n>π</n><d>3</d></f></td><td><f><n>π</n><d>2</d></f></td><td><f><n>2π</n><d>3</d></f></td><td><f><n>3π</n><d>4</d></f></td><td><f><n>5π</n><d>6</d></f></td><td>π</td><td><f><n>3π</n><d>2</d></f></td><td>2π</td></tr>
+</table></div>
+
+<h3>扇形三兄弟</h3>
+<div class="card">
+  <div class="lab">弧長</div>
+  <div class="eq mm">ℓ = r θ</div>
+  <div class="nt">推法：弧長佔整個圓周的比例，等於圓心角佔一圈的比例，<span class="mm"><f><n>ℓ</n><d>2πr</d></f> = <f><n>θ</n><d>2π</d></f></span>，化簡就得到 ℓ = rθ。</div>
+</div>
+<div class="card">
+  <div class="lab">扇形面積</div>
+  <div class="eq mm">S = <f><n>1</n><d>2</d></f> r<sup>2</sup> θ = <f><n>1</n><d>2</d></f> r ℓ</div>
+  <div class="nt">同樣由比例推：<span class="mm">S ÷ πr² = θ ÷ 2π</span>。後面那個寫法 <span class="mm">½rℓ</span> 把弧長當底、半徑當高，形狀上像三角形面積。</div>
+</div>
+<div class="card">
+  <div class="lab">扇形周長</div>
+  <div class="eq mm">L = 2r + ℓ = r(2 + θ)</div>
+  <div class="nt">兩條半徑加一段弧。<b>別漏掉那兩條半徑</b>。</div>
+</div>
+<div class="warn"><b>單位陷阱：</b>這三條裡的 θ <b>一律是弧度</b>。題目寫 60° 要先換成 <span class="mm">π/3</span> 再代。</div>
+
+<h3>周長固定求最大面積</h3>
+<div class="card">
+  <div class="lab">用算幾不等式推</div>
+  <div class="eq mm">L = 2r + r θ ≥ 2√<r>2r · rθ</r> = 2√<r>4S</r> = 4√<r>S</r></div>
+  <div class="nt">因為 <span class="mm">S = ½r²θ</span>，所以 <span class="mm">2r·rθ = 2r²θ = 4S</span>。結論 <b>L ≥ 4√S</b>，等號成立在 <span class="mm">2r = rθ</span>，也就是 <b>θ = 2</b>（弧度）。<br>
+  看到「周長固定、面積最大」這個模型，<b>答案永遠是 θ = 2</b>，不必重推。</div>
+</div>
+
+<h3>圓錐與繞行</h3>
+<div class="card">
+  <div class="lab">展開的關鍵等式</div>
+  <div class="eq mm">底圓周長 = 展開後的弧長　⇒　2 π r = R θ</div>
+  <div class="nt">r 是底圓半徑，R 是母線長（也就是展開後扇形的半徑），θ 是展開扇形的圓心角。把圓錐側面剪開攤平，原本繞底圓一圈的那條線變成弧，長度不變，這就是等式的來源。</div>
+</div>
+<div class="card">
+  <div class="lab">側表面積</div>
+  <div class="eq mm">側面積 = 展開扇形面積 = <f><n>1</n><d>2</d></f> R<sup>2</sup> θ</div>
+  <div class="nt">半徑是 <b>R（母線）不是 r</b>，這裡最容易代錯。</div>
+</div>
+<div class="card">
+  <div class="lab">螞蟻繞一圈的最短路徑</div>
+  <div class="eq mm">ℓ<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup> − 2 a b cos θ</div>
+  <div class="nt">曲面上的最短路徑，攤平之後就是一條直線。展開成扇形後用<b>餘弦定理</b>算那條直線：a、b 是兩點各自到頂點的距離，θ 是展開後的圓心角（由 <span class="mm">2πr = Rθ</span> 先算出來）。</div>
+</div>
+
+<h2 class="sec">第二節　三角函數的性質　P22–59</h2>
+
+<h3>直角三角形定義</h3>
+<div class="wrap"><table>
+  <tr><th>函數</th><th>定義</th><th>倒數</th><th>定義</th></tr>
+  <tr><td>sin A</td><td>對 / 斜</td><td>csc A</td><td>斜 / 對</td></tr>
+  <tr><td>cos A</td><td>鄰 / 斜</td><td>sec A</td><td>斜 / 鄰</td></tr>
+  <tr><td>tan A</td><td>對 / 鄰</td><td>cot A</td><td>鄰 / 對</td></tr>
+</table></div>
+<div class="card">
+  <div class="lab">移項後的常用式</div>
+  <div class="nt">斜 × sin A = 對　·　斜 × cos A = 鄰　·　鄰 × tan A = 對　·　對 × cot A = 鄰<br>
+  這不是另外的公式，就是上表直接移項，解直角三角形時少寫一步。</div>
+</div>
+
+<h3>特別角</h3>
+<div class="wrap"><table>
+  <tr><th>角</th><th>鄰 : 對 : 斜</th><th>sin</th><th>cos</th></tr>
+  <tr><td>30°</td><td>√3 : 1 : 2</td><td>1/2</td><td>√3/2</td></tr>
+  <tr><td>45°</td><td>1 : 1 : √2</td><td>√2/2</td><td>√2/2</td></tr>
+  <tr><td>60°</td><td>1 : √3 : 2</td><td>√3/2</td><td>1/2</td></tr>
+  <tr><td>15°</td><td>√6+√2 : √6−√2 : 4</td><td>(√6−√2)/4</td><td>(√6+√2)/4</td></tr>
+  <tr><td>22.5°</td><td>√<r>2+√2</r> : √<r>2−√2</r> : 2</td><td>√<r>2−√2</r>/2</td><td>√<r>2+√2</r>/2</td></tr>
+  <tr><td>18°</td><td>√<r>10+2√5</r> : √5−1 : 4</td><td>(√5−1)/4</td><td>√<r>10+2√5</r>/4</td></tr>
+</table></div>
+<div class="card">
+  <div class="lab">三組比值都可以自己驗</div>
+  <div class="nt">拿「鄰² + 對² = 斜²」檢查一次就知道有沒有抄錯。例如 18°：<span class="mm">(√5−1)² + (10+2√5) = (6−2√5) + (10+2√5) = 16 = 4²</span>，對得起來。15°、22.5° 同樣做法。</div>
+</div>
+<div class="card">
+  <div class="lab">sin 18° 怎麼來的（P178）</div>
+  <div class="nt">令 <span class="mm">θ = 18°</span>，則 <span class="mm">5θ = 90°</span>，所以 <span class="mm">2θ = 90° − 3θ</span>，兩邊取 sin 得 <span class="mm">sin 2θ = cos 3θ</span>。<br>
+  展開成 <span class="mm">2 sin θ cos θ = 4cos³θ − 3cos θ</span>，兩邊除以 <span class="mm">cos θ</span>（cos 18° ≠ 0）再把 cos² 換成 1 − sin²，整理得 <span class="mm">4sin²θ + 2sin θ − 1 = 0</span>。<br>
+  用公式解得 <span class="mm">sin θ = <f><n>−1 ± √5</n><d>4</d></f></span>，sin 18° 是正的，所以取 <b><span class="mm">(√5 − 1) / 4</span></b>。</div>
+</div>
+
+<h3>廣義角</h3>
+<div class="card">
+  <div class="lab">座標定義　P(x, y)，r = √<r>x² + y²</r></div>
+  <div class="eq mm">sin θ = <f><n>y</n><d>r</d></f>　cos θ = <f><n>x</n><d>r</d></f>　tan θ = <f><n>y</n><d>x</d></f>　csc θ = <f><n>r</n><d>y</d></f>　sec θ = <f><n>r</n><d>x</d></f>　cot θ = <f><n>x</n><d>y</d></f></div>
+  <div class="nt">r 恆正，所以正負號完全由 x、y 的正負決定，這就是象限符號表的根據。</div>
+</div>
+<div class="card">
+  <div class="lab">同界角</div>
+  <div class="eq mm">θ 的同界角 = θ + 2πk（k ∈ Z）　　兩角同界 ⇔ α − β = 2πk</div>
+</div>
+<div class="card">
+  <div class="lab">象限角範圍（k ∈ Z）</div>
+  <div class="eq small mm">
+  第一象限　2πk &lt; θ &lt; <f><n>π</n><d>2</d></f> + 2πk<br>
+  第二象限　<f><n>π</n><d>2</d></f> + 2πk &lt; θ &lt; π + 2πk<br>
+  第三象限　π + 2πk &lt; θ &lt; <f><n>3π</n><d>2</d></f> + 2πk<br>
+  第四象限　<f><n>3π</n><d>2</d></f> + 2πk &lt; θ &lt; 2π + 2πk</div>
+  <div class="nt">終邊剛好壓在座標軸上的叫<b>象限界角</b>，寫成 <span class="mm">θ = <f><n>π</n><d>2</d></f> k</span>，它不屬於任何象限。</div>
+</div>
+<div class="card">
+  <div class="lab">四個象限的正負號</div>
+  <div class="wrap" style="margin-top:4px"><table>
+    <tr><th>象限</th><th>I</th><th>II</th><th>III</th><th>IV</th></tr>
+    <tr><td>sin / csc</td><td>+</td><td>+</td><td>−</td><td>−</td></tr>
+    <tr><td>cos / sec</td><td>+</td><td>−</td><td>−</td><td>+</td></tr>
+    <tr><td>tan / cot</td><td>+</td><td>−</td><td>+</td><td>−</td></tr>
+  </table></div>
+  <div class="nt">不用背表，回到座標定義推：<span class="mm">sin θ = y/r</span> 在 y &gt; 0 的 I、II 象限為正；<span class="mm">cos θ = x/r</span> 在 x &gt; 0 的 I、IV 為正；<span class="mm">tan θ = y/x</span> 在 x、y 同號的 I、III 為正。<b>倒數函數跟本尊永遠同號</b>。</div>
+</div>
+
+<h3>參考角</h3>
+<div class="card">
+  <div class="lab">定義與流程</div>
+  <div class="nt">參考角 = <b>終邊與 x 軸所夾的銳角</b>。求任意角的函數值固定兩步：<br>
+  ① 看終邊在哪個象限，決定<b>正負號</b>　② 用參考角算<b>數值大小</b>。</div>
+</div>
+<div class="card">
+  <div class="lab">大角、負角先化到一圈之內</div>
+  <div class="nt">超過一圈的先加減 360°（弧度就加減 2π）的倍數化成同界角；負角也先加到正的，再找參考角。函數值只跟終邊位置有關，跟繞了幾圈無關。</div>
+</div>
+
+<h3>值域</h3>
+<div class="wrap"><table>
+  <tr><th>函數</th><th>值域</th><th>函數</th><th>值域</th></tr>
+  <tr><td>sin θ</td><td>−1 ≤ y ≤ 1</td><td>csc θ</td><td>|y| ≥ 1</td></tr>
+  <tr><td>cos θ</td><td>−1 ≤ y ≤ 1</td><td>sec θ</td><td>|y| ≥ 1</td></tr>
+  <tr><td>tan θ</td><td>y ∈ R</td><td>cot θ</td><td>y ∈ R</td></tr>
+</table></div>
+<div class="card">
+  <div class="lab">值域題的標準手法</div>
+  <div class="nt">當「每一項各有上界，而題目給的總和剛好等於各上界之和」，就代表<b>每一項都必須同時取到上界</b>，這樣才有辦法湊到。P43 說例 1（三個 cos 的高次方相加等於 3）就是這個結構。</div>
+</div>
+
+<h3>x 軸、y 軸轉化求值</h3>
+<div class="card">
+  <div class="lab">兩條規則</div>
+  <div class="nt">
+  <b>x 軸轉化（180° ± θ、360° ± θ）：函數名稱不變</b>，sin 還是 sin。<br>
+  <b>y 軸轉化（90° ± θ、270° ± θ）：正餘互化</b>，sin↔cos、tan↔cot、sec↔csc。<br>
+  正負號一律看<b>原本那個角</b>落在哪個象限。</div>
+</div>
+<div class="card">
+  <div class="lab">同一題兩條路會得到同一個答案</div>
+  <div class="nt">例如 sin 120°，走 x 軸看成 <span class="mm">sin(180° − 60°)</span>，走 y 軸看成 <span class="mm">sin(90° + 30°)</span>，算出來都是 <span class="mm">√3/2</span>。P46 那組練習就是要你看出這件事，哪條順手就用哪條。</div>
+</div>
+
+<h3>負角公式</h3>
+<div class="card">
+  <div class="lab">六條</div>
+  <div class="eq small mm">
+  sin(−θ) = −sin θ　　cos(−θ) = cos θ　　tan(−θ) = −tan θ<br>
+  csc(−θ) = −csc θ　　sec(−θ) = sec θ　　cot(−θ) = −cot θ</div>
+  <div class="nt">理由看座標：角變負是把終邊對 x 軸翻下去，<b>x 不變、y 變號</b>。所以只跟 x 有關的 <b>cos 與 sec 不變號</b>，其餘四個都變號。</div>
+</div>
+
+<h3>三角關係</h3>
+<div class="card">
+  <div class="lab">倒數關係</div>
+  <div class="eq mm">sin θ = <f><n>1</n><d>csc θ</d></f>　　cos θ = <f><n>1</n><d>sec θ</d></f>　　tan θ = <f><n>1</n><d>cot θ</d></f></div>
+</div>
+<div class="card">
+  <div class="lab">商數關係</div>
+  <div class="eq mm">tan θ = <f><n>sin θ</n><d>cos θ</d></f>　　cot θ = <f><n>cos θ</n><d>sin θ</d></f></div>
+</div>
+<div class="card">
+  <div class="lab">平方關係</div>
+  <div class="eq mm">sin<sup>2</sup>θ + cos<sup>2</sup>θ = 1　　1 + tan<sup>2</sup>θ = sec<sup>2</sup>θ　　1 + cot<sup>2</sup>θ = csc<sup>2</sup>θ</div>
+  <div class="nt">第一條就是座標定義的 <span class="mm">x² + y² = r²</span> 兩邊除以 r²。後兩條不用另外背：第一條整條除以 <span class="mm">cos²θ</span> 得第二條，除以 <span class="mm">sin²θ</span> 得第三條。</div>
+</div>
+<div class="card">
+  <div class="lab">弦切割原理（名字的由來）</div>
+  <div class="nt">「弦」指 sin、cos，「切」指 tan、cot，「割」指 sec、csc，各自對應單位圓上一段線段的長度。<br>
+  由圖可直接讀出：θ 為銳角時，<b>θ 越大 → sin、tan、sec 越大；cos、cot、csc 越小</b>，而且恆有 <span class="mm">sin θ &lt; tan θ &lt; sec θ</span>、<span class="mm">cos θ &lt; cot θ &lt; csc θ</span>。比大小的題目直接引用。</div>
+</div>
+<div class="card">
+  <div class="lab">tan θ 轉化框（P58）</div>
+  <div class="eq mm">A cos<sup>2</sup>θ + B cos θ sin θ + C sin<sup>2</sup>θ = <f><n>A + B tan θ + C tan<sup>2</sup>θ</n><d>1 + tan<sup>2</sup>θ</d></f></div>
+  <div class="nt">推法：左邊是 sin、cos 的<b>二次齊次式</b>，分母補一個 <span class="mm">1 = sin²θ + cos²θ</span>，再上下同除 <span class="mm">cos²θ</span>，全部變成 tan。<br>
+  看到這種型就這樣做，會變成一元二次方程。<b>解出來記得用 θ 的象限刪掉不合的根</b>。</div>
+</div>
+
+</section>
+
+<!-- ══════════ 2 ══════════ -->
+<section data-p="2" hidden>
+
+<h2 class="sec">第三節　三角函數的圖形　P71–117</h2>
+<div class="card">
+  <div class="nt">這節幾乎不用背，能畫圖就能做。三角不等式一律回到單位圓上看。</div>
+</div>
+
+<h3>六個函數的四要素</h3>
+<div class="wrap"><table>
+  <tr><th>函數</th><th>定義域</th><th>值域</th><th>週期</th><th>x 截距</th><th>y 截距</th></tr>
+  <tr><td>sin x</td><td>R</td><td>[−1, 1]</td><td>2π</td><td>kπ</td><td>0</td></tr>
+  <tr><td>cos x</td><td>R</td><td>[−1, 1]</td><td>2π</td><td>π/2 + kπ</td><td>1</td></tr>
+  <tr><td>tan x</td><td>x ≠ π/2 + kπ</td><td>R</td><td>π</td><td>kπ</td><td>0</td></tr>
+  <tr><td>cot x</td><td>x ≠ kπ</td><td>R</td><td>π</td><td>π/2 + kπ</td><td>無</td></tr>
+  <tr><td>sec x</td><td>x ≠ π/2 + kπ</td><td>|y| ≥ 1</td><td>2π</td><td>無</td><td>1</td></tr>
+  <tr><td>csc x</td><td>x ≠ kπ</td><td>|y| ≥ 1</td><td>2π</td><td>無</td><td>無</td></tr>
+</table></div>
+<div class="card">
+  <div class="lab">漸近線</div>
+  <div class="nt">分母為 0 的地方就是漸近線。tan x 與 sec x 的分母是 cos x，漸近線在 <span class="mm">x = π/2 + kπ</span>；cot x 與 csc x 的分母是 sin x，漸近線在 <span class="mm">x = kπ</span>。</div>
+</div>
+<div class="warn"><b>最常錯：</b>sec、csc 的值域是 <b>|y| ≥ 1</b>，中間 (−1, 1) 整段是空的，不是 R。而且它們的週期是 <b>2π</b>，不是 π。</div>
+
+<h3>平移與伸縮</h3>
+<div class="card">
+  <div class="lab">通式</div>
+  <div class="eq mm">y = a sin(b x + c) + d</div>
+  <div class="wrap" style="margin-top:11px"><table>
+    <tr><th>參數</th><th>意義</th><th>算法</th></tr>
+    <tr><td>a</td><td>振幅</td><td>|a|</td></tr>
+    <tr><td>b</td><td>週期</td><td>2π / |b|</td></tr>
+    <tr><td>c</td><td>左右平移</td><td>起點 x = −c / b</td></tr>
+    <tr><td>d</td><td>上下平移</td><td>—</td></tr>
+  </table></div>
+  <div class="nt">最大值 <b>M = |a| + d</b>，最小值 <b>m = −|a| + d</b>，反推時用 <span class="mm">|a| = (M − m)/2</span>、<span class="mm">d = (M + m)/2</span>。<br>
+  <b>tan、cot 的週期改成 <span class="mm">π / |b|</span></b>，因為它們本身週期是 π。</div>
+</div>
+
+<h3>週期分析　三種型</h3>
+<div class="card">
+  <div class="lab">型一　x 前面的係數都是 1</div>
+  <div class="eq small mm">|sin x| ⇒ P = π　　|sin x| + |cos x| ⇒ P = <f><n>π</n><d>2</d></f>　　|tan x| + |cot x| ⇒ P = <f><n>π</n><d>2</d></f></div>
+  <div class="nt">加絕對值會把負的那半翻上來，週期通常砍半。不確定的時候直接代 <span class="mm">f(x + P)</span> 驗證最快，例如驗 <span class="mm">|sin(x + π/2)| + |cos(x + π/2)| = |cos x| + |sin x|</span>，確實回到原式。</div>
+</div>
+<div class="card">
+  <div class="lab">型二　係數不是 1，但每一項都相同</div>
+  <div class="nt">先算「係數為 1 時的週期」，再除以那個係數。<br>
+  <span class="mm">|sin 2x| + |cos 2x|</span>：原型 <span class="mm">π/2</span>，除以 2 ⇒ <b>P = π/4</b><br>
+  <span class="mm">|tan (x/2)| + |cot (x/2)|</span>：原型 <span class="mm">π/2</span>，除以 1/2 ⇒ <b>P = π</b></div>
+</div>
+<div class="card">
+  <div class="lab">型三　係數不同 ⇒ 取各項週期的最小公倍數</div>
+  <div class="nt">
+  <span class="mm">sin x + cos <f><n>x</n><d>2</d></f> + tan <f><n>x</n><d>3</d></f></span>：各項週期 <span class="mm">2π、4π、3π</span>，LCM = <b>12π</b><br>
+  <span class="mm">sin 2x − cos √3 x</span>：週期分別是 <span class="mm">π</span> 與 <span class="mm"><f><n>2√3</n><d>3</d></f>π</span>，比值是無理數，找不到共同倍數 ⇒ <b>沒有週期</b></div>
+</div>
+<div class="warn"><b>經典陷阱：</b>兩項週期的比是<b>無理數</b>時，這個函數<b>沒有週期</b>。<span class="mm">sin 2x − cos √3 x</span> 就是拿來考這個的。</div>
+
+<h3>三角不等式</h3>
+<div class="card">
+  <div class="lab">解法三步</div>
+  <div class="nt">① 整理成<b>單一函數</b>（用平方關係換掉，或因式分解）<br>
+  ② 畫單位圓，標出臨界線，讀出符合的那段弧<br>
+  ③ 回頭檢查<b>定義域</b>：有 sec 就 cos x ≠ 0，有 cot 或 1/sin x 就 sin x ≠ 0</div>
+</div>
+<div class="card">
+  <div class="lab">高次的先因式分解</div>
+  <div class="nt">像 <span class="mm">2 cos x + sec²x &gt; 3</span>，因為 <span class="mm">cos²x &gt; 0</span>，兩邊乘 <span class="mm">cos²x</span> 不變號，得 <span class="mm">2cos³x − 3cos²x + 1 &gt; 0</span>，分解成 <span class="mm">(cos x − 1)²(2 cos x + 1) &gt; 0</span>，就變成單純的 cos x 範圍問題。</div>
+</div>
+<div class="warn"><b>平方項陷阱：</b><span class="mm">(cos x − 1)²(2cos x + 1) &gt; 0</span> 要成立，平方項<b>不能等於 0</b>，所以 cos x = 1 必須排除；再加上 sec 要求 cos x ≠ 0，一題可能要挖掉兩個點。</div>
+
+</section>
+
+<!-- ══════════ 3 ══════════ -->
+<section data-p="3" hidden>
+
+<h2 class="sec">第四節　和差角・倍角・半角　P122–181</h2>
+<div class="card">
+  <div class="nt">公式最密的一節，二十幾條。但真正要記的只有 <span class="mm">cos(α − β)</span> 一條，其他全部能從它推出來。</div>
+</div>
+
+<h3>正弦、餘弦和差角</h3>
+<div class="card">
+  <div class="lab">四條</div>
+  <div class="eq small mm">
+  cos(α − β) = cos α cos β <mark>+</mark> sin α sin β<br>
+  cos(α + β) = cos α cos β <mark>−</mark> sin α sin β<br>
+  sin(α + β) = sin α cos β <mark>+</mark> cos α sin β<br>
+  sin(α − β) = sin α cos β <mark>−</mark> cos α sin β</div>
+  <div class="nt">只有第一條是原始的（P122 用兩點距離公式配餘弦定理推出來）。<br>
+  第二條把 β 換成 −β，套負角公式即得；第三、四條用餘角關係 <span class="mm">sin A = cos(90° − A)</span> 轉過去。<br>
+  <b>cos 的兩條：同名相乘，符號跟題目相反。sin 的兩條：異名相乘，符號跟題目相同。</b></div>
+</div>
+
+<h3>正切和差角</h3>
+<div class="card">
+  <div class="eq mm">tan(α + β) = <f><n>tan α + tan β</n><d>1 <mark>−</mark> tan α tan β</d></f>　　tan(α − β) = <f><n>tan α − tan β</n><d>1 <mark>+</mark> tan α tan β</d></f></div>
+  <div class="nt">推法：把 <span class="mm">sin(α±β) / cos(α±β)</span> 上下同除 <span class="mm">cos α cos β</span>。<br>
+  <b>分子跟題目同號，分母跟題目反號</b>。這是整章最常寫錯的一條。</div>
+</div>
+<div class="card">
+  <div class="lab">三個常考變形</div>
+  <div class="nt">
+  ① <b>拆角</b>：<span class="mm">tan α = tan[(α + β) − β]</span>。已知兩個複合角要求單角，就這樣拆。<br>
+  ② <b>α + β = 45° 型</b>：代入得 <span class="mm">tan α + tan β + tan α tan β = 1</span>，兩邊加 1 可整理成 <span class="mm">(1 + tan α)(1 + tan β) = 2</span>。<br>
+  ③ <b>α + β = 315° 型</b>：同樣做法得 <span class="mm">(1 − tan α)(1 − tan β) = 2</span>。</div>
+</div>
+
+<h3>平方差公式</h3>
+<div class="card">
+  <div class="eq small mm">
+  sin(α + β) sin(α − β) = sin<sup>2</sup>α − sin<sup>2</sup>β = cos<sup>2</sup>β − cos<sup>2</sup>α<br>
+  cos(α + β) cos(α − β) = cos<sup>2</sup>α − sin<sup>2</sup>β</div>
+  <div class="nt">把和角、差角兩式相乘展開就得到。<br>
+  實戰上<b>反過來用</b>：看到 <span class="mm">sin²A − sin²B</span> 就湊成 <span class="mm">sin(A+B) sin(A−B)</span>，兩個角常常會湊出特別角。</div>
+</div>
+
+<h3>二倍角</h3>
+<div class="card">
+  <div class="lab">sin 2θ</div>
+  <div class="eq mm">sin 2θ = 2 sin θ cos θ = <f><n>2 tan θ</n><d>1 + tan<sup>2</sup>θ</d></f></div>
+</div>
+<div class="card">
+  <div class="lab">cos 2θ　四種寫法</div>
+  <div class="eq mm">cos 2θ = cos<sup>2</sup>θ − sin<sup>2</sup>θ = 2 cos<sup>2</sup>θ − 1 = 1 − 2 sin<sup>2</sup>θ = <f><n>1 − tan<sup>2</sup>θ</n><d>1 + tan<sup>2</sup>θ</d></f></div>
+  <div class="nt">四種都是同一條，用平方關係互換而已。挑法：題目給 sin 就用 <span class="mm">1 − 2sin²θ</span>，給 cos 就用 <span class="mm">2cos²θ − 1</span>，給 tan 就用最後一條。選錯不會算錯，只是多繞路。</div>
+</div>
+<div class="card">
+  <div class="lab">tan 2θ</div>
+  <div class="eq mm">tan 2θ = <f><n>2 tan θ</n><d>1 − tan<sup>2</sup>θ</d></f></div>
+  <div class="nt">三條倍角的 tan 版本可以用同一個直角三角形記住：以 2θ 為角，對邊 <span class="mm">2tan θ</span>、鄰邊 <span class="mm">1 − tan²θ</span>、斜邊 <span class="mm">1 + tan²θ</span>（驗一下畢氏會過）。sin 2θ、cos 2θ、tan 2θ 直接讀比值。</div>
+</div>
+
+<h3>高次倍角與降次</h3>
+<div class="card">
+  <div class="lab">高次倍角</div>
+  <div class="eq mm">sin<sup>4</sup>θ + cos<sup>4</sup>θ = 1 − 2 sin<sup>2</sup>θ cos<sup>2</sup>θ = 1 − <f><n>1</n><d>2</d></f> sin<sup>2</sup>2θ</div>
+  <div class="eq mm">sin<sup>6</sup>θ + cos<sup>6</sup>θ = 1 − 3 sin<sup>2</sup>θ cos<sup>2</sup>θ = 1 − <f><n>3</n><d>4</d></f> sin<sup>2</sup>2θ</div>
+  <div class="nt">推法：<span class="mm">a⁴ + b⁴ = (a² + b²)² − 2a²b²</span>、<span class="mm">a⁶ + b⁶ = (a² + b²)³ − 3a²b²(a² + b²)</span>，再代 <span class="mm">a² + b² = 1</span>。最後用 <span class="mm">2 sin θ cos θ = sin 2θ</span> 換掉。</div>
+</div>
+<div class="card">
+  <div class="lab">降次公式（半角的前身）</div>
+  <div class="eq mm">sin<sup>2</sup>θ = <f><n>1 − cos 2θ</n><d>2</d></f>　　cos<sup>2</sup>θ = <f><n>1 + cos 2θ</n><d>2</d></f></div>
+  <div class="nt">就是 <span class="mm">cos 2θ = 1 − 2sin²θ</span> 和 <span class="mm">cos 2θ = 2cos²θ − 1</span> 移項。把 θ 換成 θ/2 就是半角公式。</div>
+</div>
+
+<h3>三倍角</h3>
+<div class="card">
+  <div class="eq small mm">
+  sin 3θ = 3 sin θ − 4 sin<sup>3</sup>θ<br>
+  cos 3θ = 4 cos<sup>3</sup>θ − 3 cos θ<br>
+  tan 3θ = <f><n>3 tan θ − tan<sup>3</sup>θ</n><d>1 − 3 tan<sup>2</sup>θ</d></f></div>
+  <div class="nt">推法：<span class="mm">3θ = 2θ + θ</span>，套和角再把倍角展開。<br>
+  兩條的差別在於<b>誰放前面</b>：sin 是「3 在前、4 在後」，cos 是「4 在前、3 在後」，而且大係數永遠配三次方那一項。</div>
+</div>
+
+<h3>60° 分割</h3>
+<div class="card">
+  <div class="eq small mm">
+  sin θ · sin(60° + θ) · sin(60° − θ) = <f><n>1</n><d>4</d></f> sin 3θ<br>
+  cos θ · cos(60° + θ) · cos(60° − θ) = <f><n>1</n><d>4</d></f> cos 3θ<br>
+  tan θ · tan(60° + θ) · tan(60° − θ) = tan 3θ</div>
+  <div class="nt">看到三個角<b>彼此差 60°</b> 的乘積就套，例如 <span class="mm">sin10°·sin50°·sin70°</span>（10、70、50 就是 θ、60+θ、60−θ，θ = 10°）或 <span class="mm">cos20°·cos40°·cos80°</span>。<br>
+  <b>tan 那條沒有 ¼</b>，因為 sin 的 ¼ 跟 cos 的 ¼ 相除消掉了。</div>
+</div>
+
+<h3>半角</h3>
+<div class="card">
+  <div class="eq mm">sin <f><n>θ</n><d>2</d></f> = ± √<r><f><n>1 − cos θ</n><d>2</d></f></r>　　cos <f><n>θ</n><d>2</d></f> = ± √<r><f><n>1 + cos θ</n><d>2</d></f></r></div>
+  <div class="nt">由降次公式把 θ 換成 θ/2 再開根號。開根號才產生那個 ±。</div>
+</div>
+<div class="warn"><b>±</b> 號由 <b>θ/2 落在哪個象限</b>決定，<b>不是看 θ</b>。這是半角題唯一的難點。</div>
+<div class="card">
+  <div class="lab">tan 半角　沒有 ±，優先用這條</div>
+  <div class="eq mm">tan <f><n>θ</n><d>2</d></f> = <f><n>sin θ</n><d>1 + cos θ</d></f> = <f><n>1 − cos θ</n><d>sin θ</d></f></div>
+  <div class="nt">推法：<span class="mm">tan(θ/2) = sin(θ/2)/cos(θ/2)</span>，上下同乘 <span class="mm">2cos(θ/2)</span> 得第一式，同乘 <span class="mm">2sin(θ/2)</span> 得第二式。<br>
+  這兩個寫法<b>符號自動正確</b>，不用判象限。要算 tan 半角一律用它。</div>
+</div>
+<div class="card">
+  <div class="lab">√(1 ± sin θ) 的拆法</div>
+  <div class="eq mm">√<r>1 + sin θ</r> = |sin <f><n>θ</n><d>2</d></f> + cos <f><n>θ</n><d>2</d></f>|　　√<r>1 − sin θ</r> = |sin <f><n>θ</n><d>2</d></f> − cos <f><n>θ</n><d>2</d></f>|</div>
+  <div class="nt">因為 <span class="mm">(sin θ/2 ± cos θ/2)² = 1 ± 2 sin(θ/2)cos(θ/2) = 1 ± sin θ</span>。<br>
+  <b>絕對值不能直接拿掉</b>，要先判斷括號裡是正是負，再決定要不要整個變號。</div>
+</div>
+<div class="card">
+  <div class="lab">怎麼判斷 θ/2 在哪一象限</div>
+  <div class="nt">把 θ 的象限範圍寫成含 k 的不等式，<b>整條除以 2</b>，再逐一代 k = 0, 1 看落在哪裡。<br>
+  例：θ 在第三象限 ⇒ <span class="mm">180° + 360°k &lt; θ &lt; 270° + 360°k</span> ⇒ <span class="mm">90° + 180°k &lt; θ/2 &lt; 135° + 180°k</span>。k = 0 時 θ/2 在第二象限，k = 1 時在第四象限。<br>
+  <b>答案不唯一，要分情況討論</b>，這正是半角一定要加 ± 的原因。</div>
+</div>
+
+<h2 class="sec">附錄　和差化積・積化和差</h2>
+<div class="card">
+  <div class="nt">你掃的 58 頁到 P181 半角為止，這兩組沒掃到，通常排在半角之後、P185 左右。段考範圍有到就看，沒到就跳過。</div>
+</div>
+<div class="card">
+  <div class="lab">積化和差</div>
+  <div class="eq small mm">
+  sin α cos β = <f><n>1</n><d>2</d></f>[sin(α+β) + sin(α−β)]<br>
+  cos α sin β = <f><n>1</n><d>2</d></f>[sin(α+β) − sin(α−β)]<br>
+  cos α cos β = <f><n>1</n><d>2</d></f>[cos(α+β) + cos(α−β)]<br>
+  sin α sin β = −<f><n>1</n><d>2</d></f>[cos(α+β) − cos(α−β)]</div>
+  <div class="nt">來源就是把和角、差角兩條相加或相減。例如 <span class="mm">sin(α+β) + sin(α−β) = 2 sin α cos β</span>。</div>
+</div>
+<div class="card">
+  <div class="lab">和差化積</div>
+  <div class="eq small mm">
+  sin A + sin B = 2 sin <f><n>A+B</n><d>2</d></f> cos <f><n>A−B</n><d>2</d></f><br>
+  sin A − sin B = 2 cos <f><n>A+B</n><d>2</d></f> sin <f><n>A−B</n><d>2</d></f><br>
+  cos A + cos B = 2 cos <f><n>A+B</n><d>2</d></f> cos <f><n>A−B</n><d>2</d></f><br>
+  cos A − cos B = −2 sin <f><n>A+B</n><d>2</d></f> sin <f><n>A−B</n><d>2</d></f></div>
+  <div class="nt">把積化和差令 <span class="mm">A = α+β</span>、<span class="mm">B = α−β</span> 反解即得。<b>只有 cos A − cos B 前面帶負號</b>，其他三條都是正的。</div>
+</div>
+
+</section>
+
+<!-- ══════════ 4 ══════════ -->
+<section data-p="4" hidden>
+
+<h2 class="sec">十二個最常扣分的地方</h2>
+<div class="card">
+  <div class="nt">考前十分鐘只看這頁也行。</div>
+</div>
+
+<div class="warn"><b>1　符號｜</b><span class="mm">cos(α − β) = cos α cos β <b>+</b> sin α sin β</span>。差角配加號、和角配減號，<b>跟直覺相反</b>。</div>
+<div class="warn"><b>2　符號｜</b><span class="mm">tan(α + β)</span> 的分母是 <b>1 − tan α tan β</b>。分子同號、分母反號。</div>
+<div class="warn"><b>3　值域｜</b>sec、csc 的值域是 <b>|y| ≥ 1</b>，中間 (−1, 1) 是空的，不是 R。</div>
+<div class="warn"><b>4　半角｜</b>± 看 <b>θ/2</b> 落在哪象限，不是看 θ。而且通常<b>要分 k 討論</b>，答案可能有兩個。</div>
+<div class="warn"><b>5　單位｜</b>扇形 <span class="mm">S = ½r²θ</span>、<span class="mm">ℓ = rθ</span> 的 θ <b>一定是弧度</b>。看到 60° 先換成 π/3。</div>
+<div class="warn"><b>6　週期｜</b><span class="mm">|sin x|</span> 是 <b>π</b> 不是 2π；<span class="mm">sec x</span> 是 <b>2π</b> 不是 π。</div>
+<div class="warn"><b>7　週期｜</b>兩項週期比是<b>無理數</b>就沒有週期。<span class="mm">sin 2x − cos √3 x</span> 是經典陷阱。</div>
+<div class="warn"><b>8　定義域｜</b>解不等式一定要回頭檢查：有 sec 就 cos x ≠ 0，有 cot 或 1/sin x 就 sin x ≠ 0。</div>
+<div class="warn"><b>9　絕對值｜</b><span class="mm">√(1 ± sin θ)</span> 拆開後<b>絕對值不能直接拿掉</b>，要先判斷 <span class="mm">sin(θ/2) ± cos(θ/2)</span> 的正負。</div>
+<div class="warn"><b>10　有無意義｜</b><span class="mm">tan(π/2)</span> 無意義；<span class="mm">sin θ = 5</span> 不可能。送分題，別看太快。</div>
+<div class="warn"><b>11　平方項｜</b>因式分解出平方項時，<span class="mm">(cos x − 1)² &gt; 0</span> 要把 cos x = 1 排除掉。</div>
+<div class="warn"><b>12　看清題目｜</b>算出 <span class="mm">tan(α − γ)</span> 卻被問 <span class="mm">tan(γ − α)</span>，要<b>變號</b>。</div>
+
+</section>
+
+<!-- ══════════ 5 ══════════ -->
+<section data-p="5" hidden>
+
+<h2 class="sec">測驗　24 題</h2>
+
+<div id="qStart" class="card">
+  <div class="nt">全部選擇題，每題四個選項。答完會顯示解析，要自己按「下一題」才會前進。結束後可以只重測錯的那幾題。</div>
+  <button class="bigbtn" id="btnStart">開始測驗</button>
+</div>
+
+<div id="qPlay" hidden>
+  <div class="qhead">
+    <div class="qmeta"><span id="qNo">第 1 題</span><span id="qCat"></span></div>
+    <div class="qbar"><i id="qFill"></i></div>
+    <div class="qtext" id="qText"></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="verdict" id="qVerdict" hidden></div>
+    <button class="bigbtn" id="btnNext" hidden>下一題</button>
+  </div>
+</div>
+
+<div id="qDone" hidden>
+  <div class="qhead">
+    <div class="scorebox">
+      <div class="pc" id="rScore">0%</div>
+      <div class="dt" id="rDetail"></div>
+    </div>
+    <div class="wronglist" id="rWrong"></div>
+    <button class="bigbtn" id="btnRetryWrong" hidden>只測錯的這些</button>
+    <button class="ghostbtn" id="btnRetryAll">全部重測</button>
+  </div>
+</div>
+
+</section>
+
+<footer>
+數學 · 第 1 章 三角函數　·　內容為自行整理，僅供複習參考
+</footer>
+
+</main>
+
+<script>
+/* ── 分頁 ── */
+(function(){
+  var tabs = document.getElementById("tabs");
+  tabs.addEventListener("click", function(e){
+    var b = e.target.closest("button");
+    if(!b) return;
+    var p = b.getAttribute("data-p");
+    tabs.querySelectorAll("button").forEach(function(x){
+      x.setAttribute("aria-selected", String(x === b));
+    });
+    document.querySelectorAll("section[data-p]").forEach(function(s){
+      s.hidden = (s.getAttribute("data-p") !== p);
+    });
+    window.scrollTo(0, 0);
+  });
+})();
+
+/* ── 測驗 ──
+   資料格式：[分類, 題目, 正解, [三個干擾], 解析]               */
+var RAW = [
+
+["弧度","扇形公式 ℓ = rθ、S = ½r²θ 裡的 θ，必須使用哪一種單位？",
+ "弧度",["度","度分秒（六十分制）","百分度（grad）"],
+ "這兩條是從「弧長佔圓周的比例 = 圓心角佔一圈的比例」推來的，推導過程用的就是弧度。代入度數會整整差一個 π/180 的倍數。"],
+
+["弧度","扇形周長固定時面積最大，此時圓心角 θ 等於多少？",
+ "2",["1","π","π/2"],
+ "由算幾不等式 L = 2r + rθ ≥ 2√(2r·rθ) = 4√S，等號在 2r = rθ 時成立，也就是 θ = 2 弧度。"],
+
+["弧度","圓錐側面展開後，底圓半徑 r、母線長 R、展開扇形圓心角 θ 之間的關係是？",
+ "2πr = Rθ",["2πR = rθ","πr = Rθ","2πr = 2Rθ"],
+ "把側面剪開攤平，原本繞底圓一圈的那條線變成展開扇形的弧。弧長不變，所以底圓周長 2πr 等於弧長 Rθ。"],
+
+["弧度","圓錐的側表面積怎麼算（R 為母線長、θ 為展開扇形的圓心角）？",
+ "½ R²θ",["½ r²θ","π r²","R θ"],
+ "側面攤平就是一個半徑為母線 R 的扇形，套扇形面積公式。半徑是 R 不是底圓半徑 r，這裡最容易代錯。"],
+
+["性質","sin 18° 的值是多少？",
+ "(√5 − 1) / 4",["(√5 + 1) / 4","(√6 − √2) / 4","(√3 − 1) / 4"],
+ "由 5θ = 90° 推出 sin 2θ = cos 3θ，整理成 4sin²θ + 2sinθ − 1 = 0，解得 (−1 ± √5)/4，取正根。(√6 − √2)/4 是 sin 15°。"],
+
+["性質","終邊落在第三象限的角，下列哪一個函數值為正？",
+ "tan θ",["sin θ","cos θ","sec θ"],
+ "第三象限的 x、y 同為負。tan θ = y/x 兩負相除為正；sin θ = y/r 與 cos θ = x/r 都是負的，sec 跟 cos 同號也是負的。"],
+
+["性質","負角公式中，哪兩個函數不會把負號吐出來？",
+ "cos 與 sec",["sin 與 csc","tan 與 cot","六個都會變號"],
+ "角取負是把終邊對 x 軸翻下去，x 不變、y 變號。只跟 x 有關的 cos = x/r 與 sec = r/x 不變號，其餘四個都變號。"],
+
+["性質","以 y 軸為基準做轉化（90° ± θ、270° ± θ）時，函數名稱會怎麼變？",
+ "正餘互化，sin 與 cos 互換",["名稱完全不變","一律變成倒數函數","只有 tan 會變成 cot，其餘不變"],
+ "y 軸轉化會把角的「鄰邊、對邊」角色對調，所以 sin↔cos、tan↔cot、sec↔csc 全部互換。x 軸轉化（180°、360°）才是名稱不變。"],
+
+["性質","sec θ 的值域是？",
+ "|y| ≥ 1",["−1 ≤ y ≤ 1","y ∈ R","y > 0"],
+ "sec θ = 1/cos θ，而 |cos θ| ≤ 1，取倒數後絕對值只會變大，所以 |sec θ| ≥ 1。中間 (−1, 1) 整段取不到。"],
+
+["性質","1 + cot²θ 等於下列何者？",
+ "csc²θ",["sec²θ","tan²θ","1"],
+ "把 sin²θ + cos²θ = 1 整條除以 sin²θ 就得到 1 + cot²θ = csc²θ。除以 cos²θ 得到的才是 1 + tan²θ = sec²θ。"],
+
+["性質","θ 為銳角時，下列大小關係何者正確？",
+ "sin θ < tan θ < sec θ",["tan θ < sin θ < sec θ","sec θ < tan θ < sin θ","cos θ < sin θ < tan θ"],
+ "由弦切割原理的圖可直接讀出。代數上看：tan θ = sin θ / cos θ，除以小於 1 的正數會變大；sec θ = tan θ / sin θ，同理又更大。"],
+
+["圖形","y = a sin(bx + c) + d 的週期怎麼算？",
+ "2π / |b|",["2π / |a|","2π |b|","|b| / 2π"],
+ "只有 x 前面的係數 b 會壓縮或拉長週期，a 管振幅、d 管上下平移。tan、cot 因為本身週期是 π，要改成 π / |b|。"],
+
+["圖形","函數 |sin x| 的週期是？",
+ "π",["2π","π / 2","4π"],
+ "加絕對值把 x 軸下方那半翻上來，圖形每 π 就重複一次，週期砍半。"],
+
+["圖形","函數 |sin x| + |cos x| 的週期是？",
+ "π / 2",["π","2π","π / 4"],
+ "代入驗證：把 x 換成 x + π/2，|sin(x + π/2)| + |cos(x + π/2)| = |cos x| + |sin x|，回到原式，所以 π/2 就是週期。"],
+
+["圖形","函數 sin 2x − cos √3 x 的週期是？",
+ "沒有週期",["π","2π","2√3 π / 3"],
+ "兩項的週期分別是 π 與 2√3π/3，比值是無理數，找不到共同的倍數，所以整個函數沒有週期。"],
+
+["圖形","sec x 的週期是？",
+ "2π",["π","π / 2","4π"],
+ "sec x = 1/cos x，取倒數不會改變重複的間隔，所以跟 cos x 一樣是 2π。週期是 π 的是 tan 與 cot。"],
+
+["圖形","解含有 sec x 的三角不等式時，最後一定要排除哪一種情況？",
+ "cos x = 0",["sin x = 0","tan x = 0","x = 0"],
+ "sec x = 1/cos x，分母不能為零。這一步常常在整理成單一函數之後被忘掉，答案區間就會多含幾個點。"],
+
+["和差倍半","cos(α − β) 展開後等於？",
+ "cos α cos β + sin α sin β",["cos α cos β − sin α sin β","sin α cos β + cos α sin β","sin α sin β − cos α cos β"],
+ "cos 的和差角是同名相乘，而且符號跟題目相反：差角配加號、和角配減號。這條是整節唯一要記的原始公式。"],
+
+["和差倍半","tan(α + β) 的分母是什麼？",
+ "1 − tan α tan β",["1 + tan α tan β","tan α tan β − 1","1 − tan α − tan β"],
+ "分子跟題目同號、分母跟題目反號。可由 sin(α+β)/cos(α+β) 上下同除 cos α cos β 推出。"],
+
+["和差倍半","cos 2θ 用 tan θ 表示時等於？",
+ "(1 − tan²θ) / (1 + tan²θ)",["(2 tan θ) / (1 + tan²θ)","(2 tan θ) / (1 − tan²θ)","(1 + tan²θ) / (1 − tan²θ)"],
+ "由 cos 2θ = cos²θ − sin²θ 上下同除 cos²θ 得到。(2tanθ)/(1+tan²θ) 是 sin 2θ，(2tanθ)/(1−tan²θ) 是 tan 2θ。"],
+
+["和差倍半","sin 3θ 展開後等於？",
+ "3 sin θ − 4 sin³θ",["4 sin³θ − 3 sin θ","4 cos³θ − 3 cos θ","3 cos θ − 4 cos³θ"],
+ "由 3θ = 2θ + θ 套和角再展開倍角得到。sin 是「3 在前、4 在後」，cos 3θ 才是「4 在前、3 在後」。"],
+
+["和差倍半","tan θ · tan(60° + θ) · tan(60° − θ) 等於？",
+ "tan 3θ",["¼ tan 3θ","tan³θ","3 tan θ − tan³θ"],
+ "sin 版與 cos 版各自帶 ¼，相除之後 ¼ 消掉，所以 tan 這條前面沒有係數。"],
+
+["和差倍半","半角公式 sin(θ/2) = ±√((1 − cos θ)/2) 裡的正負號，由什麼決定？",
+ "θ/2 所在的象限",["θ 所在的象限","cos θ 的正負","一律取正號"],
+ "算出來的是 sin(θ/2)，符號當然看 θ/2 的終邊在哪。而且 θ/2 的象限通常要分 k 討論，答案可能不只一個。"],
+
+["和差倍半","√(1 + sin θ) 化簡後等於？",
+ "|sin(θ/2) + cos(θ/2)|",["sin(θ/2) + cos(θ/2)","|sin(θ/2) − cos(θ/2)|","1 + sin(θ/2)"],
+ "因為 (sin θ/2 + cos θ/2)² = 1 + 2sin(θ/2)cos(θ/2) = 1 + sin θ。開根號得到的是絕對值，不能直接拿掉。"]
+
+];
+
+(function(){
+  var elStart = document.getElementById("qStart"),
+      elPlay  = document.getElementById("qPlay"),
+      elDone  = document.getElementById("qDone"),
+      qNo = document.getElementById("qNo"),
+      qCat = document.getElementById("qCat"),
+      qFill = document.getElementById("qFill"),
+      qText = document.getElementById("qText"),
+      qOpts = document.getElementById("qOpts"),
+      qVerdict = document.getElementById("qVerdict"),
+      btnNext = document.getElementById("btnNext"),
+      rScore = document.getElementById("rScore"),
+      rDetail = document.getElementById("rDetail"),
+      rWrong = document.getElementById("rWrong"),
+      btnRetryWrong = document.getElementById("btnRetryWrong"),
+      btnRetryAll = document.getElementById("btnRetryAll");
+
+  var pool = [], idx = 0, right = 0, wrong = [];
+
+  function shuffle(a){
+    var b = a.slice();
+    for(var i = b.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = b[i]; b[i] = b[j]; b[j] = t;
+    }
+    return b;
+  }
+
+  function start(list){
+    pool = shuffle(list);
+    idx = 0; right = 0; wrong = [];
+    elStart.hidden = true;
+    elDone.hidden = true;
+    elPlay.hidden = false;
+    render();
+  }
+
+  function render(){
+    var q = pool[idx];
+    qNo.textContent = "第 " + (idx + 1) + " 題　/　" + pool.length;
+    qCat.textContent = q[0];
+    qFill.style.width = (idx / pool.length * 100) + "%";
+    qText.innerHTML = q[1];
+    qVerdict.hidden = true;
+    qVerdict.className = "verdict";
+    btnNext.hidden = true;
+    btnNext.textContent = (idx === pool.length - 1) ? "看結果" : "下一題";
+
+    qOpts.innerHTML = "";
+    var choices = shuffle([q[2]].concat(q[3]));
+    choices.forEach(function(c){
+      var b = document.createElement("button");
+      b.innerHTML = c;
+      b.value = c;
+      b.onclick = function(){ answer(b, c, q); };
+      qOpts.appendChild(b);
+    });
+  }
+
+  function answer(btn, picked, q){
+    var good = (picked === q[2]);
+    Array.prototype.forEach.call(qOpts.children, function(b){
+      b.disabled = true;
+      if(b.value === q[2]) b.classList.add("vok");
+    });
+    if(good){
+      right++;
+    } else {
+      btn.classList.add("vno");
+      wrong.push(q);
+    }
+    qVerdict.className = "verdict " + (good ? "vok" : "vno");
+    qVerdict.innerHTML =
+      "<span class=\"vt\">" + (good ? "答對了" : "正解：" + q[2]) + "</span>" + q[4];
+    qVerdict.hidden = false;
+    btnNext.hidden = false;
+  }
+
+  btnNext.onclick = function(){
+    idx++;
+    if(idx < pool.length){ render(); }
+    else { finish(); }
+  };
+
+  function finish(){
+    elPlay.hidden = true;
+    elDone.hidden = false;
+    var pc = Math.round(right / pool.length * 100);
+    rScore.textContent = pc + "%";
+    rDetail.textContent = "答對 " + right + " / " + pool.length + " 題";
+    rWrong.innerHTML = "";
+    if(wrong.length){
+      wrong.forEach(function(q){
+        var d = document.createElement("div");
+        d.className = "wi";
+        d.innerHTML = "<div class=\"qq\">" + q[1] + "</div>" +
+                      "<div class=\"aa\">" + q[2] + "</div>";
+        rWrong.appendChild(d);
+      });
+      btnRetryWrong.hidden = false;
+    } else {
+      btnRetryWrong.hidden = true;
+    }
+    window.scrollTo(0, 0);
+  }
+
+  document.getElementById("btnStart").onclick = function(){ start(RAW); };
+  btnRetryAll.onclick = function(){ start(RAW); };
+  btnRetryWrong.onclick = function(){ start(wrong); };
+})();
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:math-1', m[1]);
+         localStorage.setItem('nx:time:math-1', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>
