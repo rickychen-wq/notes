@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>化學 第2章 氣體</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#fff;--label:#000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --s1:#2f6f6b;--s2:#4a5f9e;--s3:#a2523f;--s4:#7a5a9e;--s5:#0a84ff;--accent:var(--s1)
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --bg:#000;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;
+    --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+    --s1:#5fc8c0;--s2:#9aabe8;--s3:#e8917c;--s4:#c4a2e8
+  }}
+  html[data-theme="light"]{--bg:#f2f2f7;--card:#fff;--label:#000;--label2:#3c3c4399;--label3:#3c3c434d;--sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;--s1:#2f6f6b;--s2:#4a5f9e;--s3:#a2523f;--s4:#7a5a9e}
+  html[data-theme="dark"]{--bg:#000;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;--sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;--s1:#5fc8c0;--s2:#9aabe8;--s3:#e8917c;--s4:#c4a2e8}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent} [hidden]{display:none!important}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue",sans-serif;background:var(--bg);color:var(--label);font-size:17px;line-height:1.55;padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}.nxbar span{font-size:13px;color:var(--label2)}
+  header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--sep);padding:10px 16px 8px}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0}.sub{font-size:13px;color:var(--label2);margin-top:2px}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px;overflow-x:auto}
+  nav button{flex:1;min-width:52px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--label);padding:7px 5px;border-radius:7px;cursor:pointer;white-space:nowrap}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+  main{padding:0 16px;max-width:720px;margin:0 auto}.s-1{--accent:var(--s1)}.s-2{--accent:var(--s2)}.s-3{--accent:var(--s3)}.s-4{--accent:var(--s4)}.s-5{--accent:var(--s5)}
+  .hero{padding:22px 4px 6px}.hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}.hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}.hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}.card{background:var(--card);border-radius:12px;overflow:hidden}
+  .blk{padding:13px 16px;border-top:.5px solid var(--sep)}.blk:first-child{border-top:none}.blk h4{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--accent)}
+  .blk p{margin:0 0 5px;font-size:15px;line-height:1.62}.blk ul,.blk ol{margin:4px 0 0;padding-left:20px;font-size:15px;line-height:1.65}.blk li{margin:3px 0}.sm{font-size:14px!important;color:var(--label2)}
+  .eq{font-family:ui-monospace,Menlo,monospace;font-size:15px;background:var(--fill);padding:9px 11px;border-radius:8px;margin:7px 0;line-height:1.75;overflow-x:auto}
+  .key{background:color-mix(in srgb,var(--gold) 18%,transparent);border-radius:4px;padding:0 3px;font-weight:600}.hot{color:var(--red);font-weight:700}.ok{color:var(--green);font-weight:700}
+  .tag{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--accent);border-radius:5px;padding:1px 6px;margin-right:6px;vertical-align:2px}.tag.red{background:var(--red)}
+  table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 9px;border-top:.5px solid var(--sep);vertical-align:top;text-align:left}th{font-weight:600;color:var(--label2);font-size:13px;background:var(--fill)}tr:first-child td{border-top:none}.wrap{overflow-x:auto}
+  details{padding:12px 16px;border-top:.5px solid var(--sep)}details:first-child{border-top:none}summary{font-size:15px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}summary::-webkit-details-marker{display:none}summary::after{content:"看答案";color:var(--blue);font-size:14px;flex-shrink:0}details[open] summary::after{content:"收起"}.ans{margin-top:9px;font-size:15px;line-height:1.65;padding:10px 12px;background:var(--fill);border-radius:8px}.ans b{color:var(--accent)}
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}.optrow:first-child{border-top:none}.optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}.chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}.chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}.bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}.track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}.track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:24px 18px;text-align:center}.qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px}.qprompt .qtext{font-size:22px;font-weight:700;line-height:1.4}.choices{margin-top:10px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}.choice{font-family:inherit;font-size:16px;font-weight:600;padding:15px 8px;border-radius:12px;background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent;line-height:1.35}.choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}.choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;font-size:15px;line-height:1.6;overflow-wrap:break-word}.verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}.verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}.verdict .vt{font-weight:700;display:block;margin-bottom:4px}.verdict .vt.vok{color:var(--green)}.verdict .vt.vno{color:var(--red)}.verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .score{text-align:center;padding:30px 16px 10px}.score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}.score .lbl{font-size:15px;color:var(--label2);margin-top:6px}.wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:15px}.wrongrow:first-child{border-top:none}.wrongrow b{font-weight:700;display:block}.wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+  @media(max-width:420px){.choices{grid-template-columns:1fr}.qprompt .qtext{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-chem.html">◀ 回目錄</a><span>化學 · 第 2 章 氣體</span></div>
+<header>
+  <div><h1>化學 · 第 2 章</h1><div class="sub">氣體性質、氣體定律與理想氣體 · 段考範圍</div></div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1" data-h="2-1">2-1</button>
+    <button role="tab" aria-selected="false" data-t="2" data-h="2-2">2-2</button>
+    <button role="tab" aria-selected="false" data-t="3" data-h="2-3">2-3</button>
+    <button role="tab" aria-selected="false" data-t="4" data-h="formula">總表</button>
+    <button role="tab" aria-selected="false" data-t="5" data-h="quiz">測驗</button>
+  </nav>
+</header>
+<main>
+
+<section class="s-1" data-p="1">
+  <div class="hero"><div class="kicker">2-1</div><h2>氣體性質</h2><div class="zh">氣體通性 · 大氣壓 · 壓力單位 · 壓力計</div></div>
+  <h3>重點一　氣體的通性</h3>
+  <div class="card">
+    <div class="blk"><h4>氣體和固、液體差在哪裡？</h4><div class="wrap"><table><tr><th>性質</th><th>固體</th><th>液體</th><th>氣體</th></tr><tr><td>體積</td><td>固定</td><td>固定</td><td><b>不固定</b></td></tr><tr><td>形狀</td><td>固定</td><td>隨容器</td><td>隨容器</td></tr><tr><td>粒子距離</td><td>小</td><td>較小</td><td><b>最大</b></td></tr><tr><td>粒子作用力</td><td>大</td><td>中</td><td><b>最小</b></td></tr><tr><td>可壓縮、膨脹</td><td>很小</td><td>很小</td><td><b>最大</b></td></tr></table></div></div>
+    <div class="blk"><h4>四個一定要會的結論</h4><ul><li>氣體會自發擴散並充滿整個密閉容器，互不反應的氣體可任意比例形成均勻混合物。</li><li>氣體分子本身體積很小；課本所說的氣體體積，是分子的<b>運動範圍＝容器體積</b>。</li><li>外界壓力變大，氣體體積變小；外界壓力變小，氣體體積變大。</li><li>多數氣體無色，但不是全部：Cl<sub>2</sub> 黃綠色、NO<sub>2</sub> 紅棕色。</li></ul></div>
+  </div>
+  <h3>重點二　壓力與大氣壓</h3>
+  <div class="card">
+    <div class="blk"><h4>壓力的本質</h4><p>氣體粒子撞擊容器壁產生作用力，單位面積所受的垂直力就是壓力。</p><div class="eq">P = F / A　　1 Pa = 1 N/m²</div></div>
+    <div class="blk"><h4>托里切利實驗</h4><p>標準大氣壓可托住高度約 760 mm 的汞柱，因此定義：</p><div class="eq">1 atm = 76 cmHg = 760 mmHg = 760 torr<br>= 1.013 × 10⁵ Pa = 1013 hPa<br>= 1033.6 cmH₂O ≈ 10 mH₂O</div><p class="sm">液柱壓力可用 <b>P = h × d</b> 比較；同壓力下，液體密度愈大，所需液柱高度愈小。</p></div>
+    <div class="blk"><h4>水深快速判斷</h4><p>水中每下降約 10 m，水壓增加約 1 atm；求人體承受的<b>總壓</b>還要加水面上的 1 atm 大氣壓。</p><div class="eq">水深 20 m：總壓 ≈ 1 + 20/10 = 3 atm</div></div>
+  </div>
+  <h3>重點三　壓力計判讀</h3>
+  <div class="card">
+    <div class="blk"><h4>先看開口端，再看哪邊液面較低</h4><div class="wrap"><table><tr><th>情況</th><th>氣體壓力</th></tr><tr><td>閉口端為真空</td><td><b>P<sub>gas</sub> = Δh</b></td></tr><tr><td>開口式、兩側等高</td><td><b>P<sub>gas</sub> = P<sub>atm</sub></b></td></tr><tr><td>氣體側液面較低</td><td><b>P<sub>gas</sub> = P<sub>atm</sub> + Δh</b></td></tr><tr><td>氣體側液面較高</td><td><b>P<sub>gas</sub> = P<sub>atm</sub> - Δh</b></td></tr></table></div><p class="sm"><span class="tag red">口訣</span>壓力大的一側會把液面壓低；所以氣體側低就加，氣體側高就減。</p></div>
+  </div>
+  <h3>快速練習</h3>
+  <div class="card">
+    <details><summary>大氣壓 760 mmHg，氣體側液面比開口側低 19 mm，P<sub>gas</sub>？</summary><div class="ans"><b>779 mmHg。</b>氣體側較低，表示氣體壓力較大，所以 760 + 19。</div></details>
+    <details><summary>大氣壓 760 mmHg，氣體側液面比開口側高 120 mm，P<sub>gas</sub>？</summary><div class="ans"><b>640 mmHg。</b>氣體側較高，表示氣體壓力較小，所以 760 - 120。</div></details>
+  </div>
+</section>
+
+<section class="s-2" data-p="2" hidden>
+  <div class="hero"><div class="kicker">2-2</div><h2>氣體定律</h2><div class="zh">波以耳 · 查理－給呂薩克 · 亞佛加厥</div></div>
+  <h3>先判斷誰固定</h3>
+  <div class="card"><div class="blk"><div class="wrap"><table><tr><th>定律</th><th>固定</th><th>關係</th><th>公式</th></tr><tr><td><b>波以耳</b></td><td>n、T</td><td>P 與 V 反比</td><td>P<sub>1</sub>V<sub>1</sub> = P<sub>2</sub>V<sub>2</sub></td></tr><tr><td><b>查理</b></td><td>n、P</td><td>V 與 T 正比</td><td>V<sub>1</sub>/T<sub>1</sub> = V<sub>2</sub>/T<sub>2</sub></td></tr><tr><td><b>亞佛加厥</b></td><td>P、T</td><td>V 與 n 正比</td><td>V<sub>1</sub>/n<sub>1</sub> = V<sub>2</sub>/n<sub>2</sub></td></tr></table></div></div></div>
+  <h3>重點一　波以耳定律</h3>
+  <div class="card">
+    <div class="blk"><h4>定溫、定量：P 與 V 成反比</h4><div class="eq">PV = k<br>P₁V₁ = P₂V₂<br>P ∝ 1/V，V ∝ 1/P</div><p class="sm">壓力變為 2 倍，體積變為 1/2；但前提一定是<b>氣體量和溫度不變</b>。</p></div>
+    <div class="blk"><h4>圖形判斷</h4><ul><li>P 對 V：向右下彎的反比曲線，不是直線。</li><li>P 對 1/V、V 對 1/P：過原點的正斜率直線。</li><li>PV 對 P 或 V：水平線，因為 PV 為定值。</li></ul></div>
+    <details><summary>1.0 atm、1500 L 的氣體壓入 125 atm 鋼瓶，體積？</summary><div class="ans">定溫，用 P₁V₁=P₂V₂：V₂=(1.0×1500)/125=<b>12 L</b>。</div></details>
+  </div>
+  <h3>重點二　查理－給呂薩克定律</h3>
+  <div class="card">
+    <div class="blk"><h4>溫度必須換成 K</h4><div class="eq">T(K) = t(°C) + 273.15<br>0°C = 273.15 K<br>-273.15°C = 0 K（絕對零度）</div><p class="sm"><span class="hot">不能直接用攝氏溫度做比例。</span>考題常把 27°C 寫成 300 K、127°C 寫成 400 K。</p></div>
+    <div class="blk"><h4>定壓、定量：V 與絕對溫度 T 成正比</h4><div class="eq">V/T = k<br>V₁/T₁ = V₂/T₂</div><p>若以 0°C 的體積 V<sub>0</sub> 表示：</p><div class="eq">V<sub>t</sub> = V<sub>0</sub>(1 + t/273.15)</div></div>
+    <div class="blk"><h4>圖形判斷</h4><ul><li>V 對 T(K)：過原點的直線。</li><li>V 對 t(°C)：延長後在 -273.15°C 與橫軸相交。</li><li>V/T 對 V 或 T：水平線。</li></ul></div>
+    <details><summary>氣體在 300 K 時 2.0 L，定壓加熱至 450 K，體積？</summary><div class="ans">V₂=2.0×450/300=<b>3.0 L</b>。</div></details>
+  </div>
+  <h3>重點三　亞佛加厥定律</h3>
+  <div class="card">
+    <div class="blk"><h4>定溫、定壓：V 與莫耳數 n 成正比</h4><div class="eq">V/n = k<br>V₁/n₁ = V₂/n₂</div><p>同溫、同壓下，相同體積的任何氣體都含有相同的分子數，也就是相同莫耳數。</p></div>
+    <div class="blk"><h4>用氣體密度求分子量</h4><div class="eq">0°C、1 atm：M = d × 22.4<br>25°C、1 atm：M = d × 24.5</div><p class="sm">M 單位 g/mol，d 單位 g/L。只在題目指定的溫壓下，才能直接用對應的莫耳體積。</p></div>
+  </div>
+  <h3>固定同一份氣體的綜合式</h3>
+  <div class="card"><div class="blk"><div class="eq">P₁V₁/T₁ = P₂V₂/T₂　（n 固定，T 用 K）</div><p class="sm">只要莫耳數不變，壓力、體積、溫度同時改變時用這條。</p></div></div>
+</section>
+
+<section class="s-3" data-p="3" hidden>
+  <div class="hero"><div class="kicker">2-3</div><h2>理想氣體方程式</h2><div class="zh">PV=nRT · 分子量與密度 · 真實氣體</div></div>
+  <h3>重點一　PV = nRT</h3>
+  <div class="card">
+    <div class="blk"><h4>四個量一次整理</h4><p>波以耳、查理與亞佛加厥定律可合併成：</p><div class="eq">PV = nRT</div><div class="wrap"><table><tr><th>符號</th><th>意義</th><th>常用單位</th></tr><tr><td>P</td><td>絕對壓力</td><td>atm 或 Pa</td></tr><tr><td>V</td><td>氣體體積</td><td>L 或 m³</td></tr><tr><td>n</td><td>莫耳數</td><td>mol</td></tr><tr><td>T</td><td>絕對溫度</td><td>K</td></tr></table></div></div>
+    <div class="blk"><h4>R 的數值要和單位配套</h4><div class="eq">R = 0.082 L·atm/(mol·K)<br>R = 8.314 J/(mol·K)<br>R = 1.987 cal/(mol·K)</div><p class="sm">若 P 用 atm、V 用 L，就選 0.082；若題目在算能量或使用 SI 單位，通常選 8.314。</p></div>
+    <div class="blk"><h4>標準狀況與常用莫耳體積</h4><div class="eq">0°C、1 atm：1 mol ≈ 22.4 L<br>25°C、1 atm：1 mol ≈ 24.5 L</div></div>
+  </div>
+  <h3>重點二　重量、分子量與密度</h3>
+  <div class="card">
+    <div class="blk"><h4>看到克數先換莫耳數</h4><div class="eq">n = w/M<br>PV = (w/M)RT<br>M = wRT/(PV)</div><p class="sm">w 是氣體重量（g），M 是分子量（g/mol）。</p></div>
+    <div class="blk"><h4>看到密度 d</h4><p>因為 d=w/V，所以可整理為：</p><div class="eq">PM = dRT<br>M = dRT/P<br>d = PM/(RT)</div><p class="sm">使用 R=0.082 時，d 通常用 g/L、P 用 atm、T 用 K。</p></div>
+  </div>
+  <h3>重點三　理想氣體與真實氣體</h3>
+  <div class="card">
+    <div class="blk"><h4>理想氣體的兩個核心假設</h4><ol><li>分子間作用力視為 0。</li><li>分子本身體積視為 0，可當作有質量的質點。</li></ol><p class="sm">並假設分子碰撞為完全彈性碰撞，因此理想氣體不液化、不凝固。</p></div>
+    <div class="blk"><h4>真實氣體何時最接近理想？</h4><div class="eq">高溫、低壓</div><ul><li>高溫：分子移動快，分子間作用力相對可忽略。</li><li>低壓：分子距離大，分子本身體積相對可忽略。</li><li>一般分子量愈小、沸點愈低，愈接近理想氣體；He 最接近，其次 H<sub>2</sub>。</li></ul></div>
+    <div class="blk"><h4>判斷指標</h4><div class="eq">理想氣體：PV/(nRT) = 1<br>真實氣體：PV/(nRT) 通常不等於 1</div></div>
+  </div>
+  <h3>快速練習</h3>
+  <div class="card">
+    <details><summary>0°C、1 atm 下，0.50 mol 理想氣體體積？</summary><div class="ans">標準狀況每莫耳約 22.4 L，所以 0.50×22.4=<b>11.2 L</b>。</div></details>
+    <details><summary>0°C、1 atm 下，某氣體密度 1.25 g/L，分子量？</summary><div class="ans">M=d×22.4=1.25×22.4=<b>28.0 g/mol</b>。</div></details>
+  </div>
+</section>
+
+<section class="s-4" data-p="4" hidden>
+  <div class="hero"><div class="kicker">Cheat sheet</div><h2>考前公式總表</h2><div class="zh">先看固定條件，再選公式</div></div>
+  <h3>一頁記完</h3>
+  <div class="card">
+    <div class="blk"><h4>壓力</h4><div class="eq">P=F/A<br>1 atm=760 mmHg=760 torr=1.013×10⁵ Pa<br>開口式：氣體側低就 +Δh，氣體側高就 -Δh</div></div>
+    <div class="blk"><h4>三大定律</h4><div class="eq">波以耳（n,T 固定）：P₁V₁=P₂V₂<br>查理（n,P 固定）：V₁/T₁=V₂/T₂<br>亞佛加厥（P,T 固定）：V₁/n₁=V₂/n₂</div></div>
+    <div class="blk"><h4>溫度</h4><div class="eq">T(K)=t(°C)+273.15<br>氣體公式中的 T 一律使用 K</div></div>
+    <div class="blk"><h4>理想氣體</h4><div class="eq">PV=nRT<br>n=w/M<br>M=wRT/(PV)=dRT/P</div></div>
+    <div class="blk"><h4>最常用數值</h4><div class="eq">R=0.082 L·atm/(mol·K)<br>R=8.314 J/(mol·K)<br>0°C、1 atm：22.4 L/mol<br>25°C、1 atm：24.5 L/mol</div></div>
+  </div>
+  <h3>十二個最常扣分的地方</h3>
+  <div class="card"><div class="blk"><ol><li>把攝氏溫度直接代入比例或 PV=nRT。</li><li>沒有先確認定溫、定壓或定量。</li><li>把 P 和 V 當成線性反比；P-V 圖其實是曲線。</li><li>壓力計只背加減，沒有看氣體側液面高低。</li><li>題目問總壓卻忘了加水面上的 1 atm。</li><li>mmHg 與 atm 混用卻沒有換單位。</li><li>把 1 Pa 誤認成 1 N，而漏掉每平方公尺。</li><li>同溫同壓等體積是等分子數，不是等重量。</li><li>使用 R=0.082，卻把體積用 m³ 或壓力用 Pa。</li><li>看到重量 w，忘記用 n=w/M。</li><li>把高溫高壓當成接近理想；正確是高溫低壓。</li><li>把理想氣體分子本身體積說成很小；模型中是視為 0。</li></ol></div></div>
+</section>
+
+<section class="s-5" data-p="5" hidden>
+  <div class="hero"><div class="kicker">Quiz</div><h2>第 2 章綜合測驗</h2><div class="zh">觀念、單位、壓力計與計算題；每題作答後附解析</div></div>
+  <div id="qsetup">
+    <h3>設定</h3><div class="card"><div class="optrow" id="setLen"><div class="lb">題數</div><button class="chip" data-n="15">15</button><button class="chip on" data-n="25">25</button><button class="chip" data-n="0">全部</button></div><div class="blk"><p class="sm">題目會隨機抽取，但答案與解析不會隨機生成。計算題皆已另外驗算。</p></div></div>
+    <button class="bigbtn" id="startBtn">開始測驗</button>
+  </div>
+  <div id="qplay" hidden>
+    <div class="qbar"><span id="qcount">1 / 25</span><span class="track"><i id="qprog" style="width:0%"></i></span><span id="qscore">0 對</span></div>
+    <div class="card"><div class="qprompt"><div class="qtype" id="qtype">—</div><div class="qtext" id="qtext">—</div></div></div>
+    <div class="choices" id="qchoices"></div><div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button><button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+  <div id="qdone" hidden>
+    <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3><div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button><button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+</section>
+
+<footer>化學 第 2 章 · 氣體（範圍 2-1～2-3）</footer>
+</main>
+<script>
+const BANK = [
+  {t:'2-1 氣體通性',q:'課本中的「氣體體積」是指什麼？',c:['單一分子的大小','所有分子實體體積總和','分子的運動範圍，也就是容器體積','粒子間空隙的一半'],a:2,w:'氣體分子本身體積很小；氣體體積指分子的運動範圍，等於容器體積。'},
+  {t:'2-1 氣體通性',q:'下列哪一項不是所有氣體都具有的性質？',c:['可流動','可壓縮','體積由容器決定','無色無味'],a:3,w:'多數氣體無色，但 Cl₂ 為黃綠色、NO₂ 為紅棕色，因此不能說所有氣體都無色無味。'},
+  {t:'2-1 壓力',q:'壓力 P 的定義式為何？',c:['P=F×A','P=F/A','P=A/F','P=mV'],a:1,w:'壓力是單位面積所受的垂直作用力，所以 P=F/A。'},
+  {t:'2-1 壓力',q:'1 Pa 等於下列何者？',c:['1 N','1 N·m','1 N/m','1 N/m²'],a:3,w:'帕斯卡是壓力單位，1 Pa=1 N/m²。'},
+  {t:'2-1 單位',q:'1 atm 等於多少 mmHg？',c:['76','100','760','1013'],a:2,w:'標準大氣壓定義為 760 mmHg，也等於 760 torr。'},
+  {t:'2-1 單位',q:'下列何者最接近 1 atm？',c:['1.013×10³ Pa','1.013×10⁴ Pa','1.013×10⁵ Pa','1.013×10⁶ Pa'],a:2,w:'1 atm=1.013×10⁵ Pa=1013 hPa。'},
+  {t:'2-1 壓力計',q:'閉口式壓力計的封閉端為真空，液面高差 240 mmHg，氣體壓力為何？',c:['240 mmHg','520 mmHg','760 mmHg','1000 mmHg'],a:0,w:'閉口端是真空，氣體壓力直接等於液面高差 Δh。'},
+  {t:'2-1 壓力計',q:'開口式壓力計中，氣體側液面較低代表什麼？',c:['Pgas=0','Pgas<Patm','Pgas=Patm','Pgas>Patm'],a:3,w:'壓力較大的一側會把液面壓低，因此氣體側較低表示 Pgas>Patm。'},
+  {t:'2-1 壓力計',q:'Patm=760 mmHg，氣體側液面比開口側低 100 mm，Pgas 為何？',c:['660 mmHg','760 mmHg','860 mmHg','1000 mmHg'],a:2,w:'氣體側低，所以 Pgas=Patm+Δh=760+100=860 mmHg。'},
+  {t:'2-1 壓力計',q:'Patm=760 mmHg，氣體側液面比開口側高 90 mm，Pgas 為何？',c:['670 mmHg','760 mmHg','850 mmHg','930 mmHg'],a:0,w:'氣體側高，所以 Pgas=Patm-Δh=760-90=670 mmHg。'},
+  {t:'2-1 水壓',q:'水面大氣壓為 1 atm，潛水員在水下約 20 m 承受的總壓約為？',c:['1 atm','2 atm','3 atm','20 atm'],a:2,w:'每 10 m 水深增加約 1 atm，再加水面大氣壓 1 atm，所以總壓約 3 atm。'},
+  {t:'2-2 波以耳',q:'波以耳定律成立時，必須固定哪兩項？',c:['P、V','n、T','P、T','V、n'],a:1,w:'波以耳定律描述定量氣體在定溫下 P 與 V 的關係，因此固定 n、T。'},
+  {t:'2-2 波以耳',q:'定溫、定量時，壓力變成原來 4 倍，體積變成原來多少？',c:['4 倍','2 倍','1/2','1/4'],a:3,w:'PV 為定值，所以 P 變 4 倍，V 變為 1/4。'},
+  {t:'2-2 波以耳',q:'1.0 atm、2.0 L 的氣體定溫壓縮至 0.50 L，末壓為何？',c:['0.25 atm','1.0 atm','2.0 atm','4.0 atm'],a:3,w:'P₂=P₁V₁/V₂=1.0×2.0/0.50=4.0 atm。'},
+  {t:'2-2 圖形',q:'波以耳定律的 P-V 圖形是哪一種？',c:['過原點直線','水平線','向右下彎的反比曲線','向右上彎曲線'],a:2,w:'P 與 V 成反比，P-V 圖是雙曲線型，不是直線。'},
+  {t:'2-2 溫標',q:'27°C 換算成絕對溫度約為多少？',c:['246 K','273 K','300 K','327 K'],a:2,w:'T=27+273.15=300.15 K，通常取約 300 K。'},
+  {t:'2-2 溫標',q:'絕對零度等於多少攝氏度？',c:['-373.15°C','-273.15°C','0°C','273.15°C'],a:1,w:'0 K=-273.15°C，課本計算常近似為 -273°C。'},
+  {t:'2-2 查理',q:'查理定律計算時，溫度必須使用哪一種單位？',c:['°C','°F','K','溫差即可'],a:2,w:'V 與絕對溫度成正比，因此比例式中的 T 必須用 K。'},
+  {t:'2-2 查理',q:'定壓下，氣體在 300 K 時為 2.0 L，加熱至 450 K 後體積為何？',c:['1.33 L','2.0 L','3.0 L','4.5 L'],a:2,w:'V₂=V₁T₂/T₁=2.0×450/300=3.0 L。'},
+  {t:'2-2 圖形',q:'查理定律的 V-T(K) 圖形為何？',c:['過原點直線','不過原點直線','反比曲線','水平線'],a:0,w:'定壓、定量時 V∝T(K)，所以是過原點直線。'},
+  {t:'2-2 亞佛加厥',q:'亞佛加厥定律成立時，固定哪兩項？',c:['P、T','P、V','V、T','n、T'],a:0,w:'定溫、定壓時，體積 V 與莫耳數 n 成正比。'},
+  {t:'2-2 亞佛加厥',q:'同溫、同壓下，相同體積的不同氣體一定相同的是？',c:['重量','密度','分子量','分子數'],a:3,w:'亞佛加厥定律：同溫同壓下，等體積氣體含相同分子數（相同莫耳數）。'},
+  {t:'2-2 亞佛加厥',q:'定溫定壓下，2 mol 氣體體積為 5 L；6 mol 時體積為何？',c:['10 L','15 L','20 L','30 L'],a:1,w:'V∝n，莫耳數變 3 倍，體積也變 3 倍：15 L。'},
+  {t:'2-2 密度',q:'0°C、1 atm 下，氣體密度為 1.25 g/L，其分子量約為？',c:['22.4','28.0','30.6','44.8'],a:1,w:'M=d×22.4=1.25×22.4=28.0 g/mol。'},
+  {t:'2-2 綜合式',q:'同一份氣體的 P、V、T 同時改變時，可使用哪個關係式？',c:['P₁V₁/T₁=P₂V₂/T₂','P₁T₁/V₁=P₂T₂/V₂','P₁V₁T₁=P₂V₂T₂','P₁/T₁=P₂/T₂'],a:0,w:'莫耳數固定時，PV/T 為定值；T 必須用 K。'},
+  {t:'2-3 理想氣體',q:'理想氣體方程式為何？',c:['PV=RT','PV=nRT','P=nVRT','PT=nRV'],a:1,w:'理想氣體方程式為 PV=nRT。'},
+  {t:'2-3 氣體常數',q:'P 用 atm、V 用 L 時，R 應選哪一個？',c:['0.082 L·atm/(mol·K)','1.987 cal/(mol·K)','8.314 J/(mol·K)','760 L·atm/mol'],a:0,w:'壓力為 atm、體積為 L 時，使用 R=0.082 L·atm/(mol·K)。'},
+  {t:'2-3 莫耳體積',q:'0°C、1 atm 下，0.50 mol 理想氣體體積約為？',c:['5.6 L','11.2 L','22.4 L','24.5 L'],a:1,w:'標準狀況莫耳體積約 22.4 L/mol，所以 0.50 mol 為 11.2 L。'},
+  {t:'2-3 莫耳數',q:'已知氣體重量 w 與分子量 M，莫耳數 n 為何？',c:['wM','M/w','w/M','w+M'],a:2,w:'莫耳數=重量÷分子量，所以 n=w/M。'},
+  {t:'2-3 密度',q:'由 PV=nRT 與 d=w/V 可推得分子量 M 為何？',c:['M=P/(dRT)','M=dRT/P','M=PR/(dT)','M=dP/(RT)'],a:1,w:'代入 n=w/M 並用 d=w/V，可得 PM=dRT，因此 M=dRT/P。'},
+  {t:'2-3 理想模型',q:'理想氣體模型中，分子間作用力與分子本身體積分別視為？',c:['皆為 0','皆無限大','作用力為 0、體積不為 0','作用力不為 0、體積為 0'],a:0,w:'理想氣體假設分子間無作用力，且分子本身體積可忽略為 0。'},
+  {t:'2-3 真實氣體',q:'真實氣體在何種條件下最接近理想氣體？',c:['低溫高壓','低溫低壓','高溫高壓','高溫低壓'],a:3,w:'高溫使分子間作用力相對不重要；低壓使分子距離大、本身體積可忽略。'},
+  {t:'2-3 真實氣體',q:'課本指出最接近理想氣體的真實氣體為何？',c:['Cl₂','CO₂','H₂','He'],a:3,w:'He 分子量小、沸點低、作用力弱，最接近理想氣體；其次為 H₂。'},
+  {t:'2-3 判斷指標',q:'理想氣體的 PV/(nRT) 應等於多少？',c:['0','1','R','273'],a:1,w:'由 PV=nRT，兩邊同除以 nRT，可得 PV/(nRT)=1。'},
+  {t:'2-3 觀念',q:'下列何者符合理想氣體模型？',c:['可以液化','碰撞為完全彈性碰撞','分子有明顯體積','分子間吸引力很強'],a:1,w:'理想氣體粒子進行完全彈性碰撞，且忽略分子體積與分子間作用力。'}
+];
+
+const tabs=document.querySelectorAll('nav button'),panels=document.querySelectorAll('section[data-p]');
+function showTab(n,writeHash){
+  tabs.forEach(function(x){x.setAttribute('aria-selected',x.dataset.t===String(n));});
+  panels.forEach(function(p){p.hidden=p.dataset.p!==String(n);});
+  if(writeHash){const b=document.querySelector('nav button[data-t="'+n+'"]');if(b)history.replaceState(null,'','#'+b.dataset.h);}
+  window.scrollTo({top:0});
+}
+tabs.forEach(function(t){t.addEventListener('click',function(){showTab(t.dataset.t,true);});});
+const hashMap={'2-1':'1','2-2':'2','2-3':'3','formula':'4','quiz':'5'};
+showTab(hashMap[location.hash.slice(1)]||'1',false);
+
+const S={n:25};let queue=[],idx=0,right=0,wrongList=[],answered=false;const $=function(id){return document.getElementById(id);};
+$('setLen').addEventListener('click',function(e){const b=e.target.closest('.chip');if(!b)return;$('setLen').querySelectorAll('.chip').forEach(function(c){c.classList.toggle('on',c===b);});S.n=Number(b.dataset.n);});
+function shuffle(a){return a.map(function(v){return[Math.random(),v];}).sort(function(x,y){return x[0]-y[0];}).map(function(v){return v[1];});}
+function start(pool){let items=shuffle(pool||BANK.slice());if(S.n>0&&!pool)items=items.slice(0,S.n);queue=items;idx=0;right=0;wrongList=[];$('qsetup').hidden=true;$('qdone').hidden=true;$('qplay').hidden=false;render();window.scrollTo({top:0});}
+function render(){answered=false;const q=queue[idx];$('qcount').textContent=(idx+1)+' / '+queue.length;$('qscore').textContent=right+' 對';$('qprog').style.width=(idx/queue.length*100)+'%';$('qtype').textContent=q.t;$('qtext').textContent=q.q;$('qverdict').innerHTML='';$('nextBtn').hidden=true;const cw=$('qchoices');cw.innerHTML='';q.c.forEach(function(o,i){const b=document.createElement('button');b.className='choice';b.textContent=o;b.addEventListener('click',function(){pick(b,i===q.a,q,i);});cw.appendChild(b);});}
+function pick(btn,ok,q,chosen){if(answered)return;answered=true;[].forEach.call($('qchoices').children,function(c,i){c.disabled=true;if(i===q.a)c.classList.add('right');});if(ok)right++;else{btn.classList.add('wrong');wrongList.push({q:q,mine:chosen});}const box=document.createElement('div');box.className='verdict '+(ok?'vok':'vno');box.innerHTML='<span class="vt '+(ok?'vok':'vno')+'">'+(ok?'答對':'答錯')+'</span><b>正確答案：'+q.c[q.a]+'</b><small>'+q.w+'</small>'+(ok?'':'<small>你選的：'+q.c[chosen]+'</small>');$('qverdict').appendChild(box);$('qscore').textContent=right+' 對';$('nextBtn').hidden=false;}
+function next(){if(!answered)return;idx++;if(idx>=queue.length)finish();else{render();window.scrollTo({top:0});}}
+function finish(){$('qplay').hidden=true;$('qdone').hidden=false;const total=Math.max(right+wrongList.length,1),pct=Math.round(right/total*100);$('rScore').textContent=pct+'%';$('rLine').textContent=right+' / '+total+' 題答對'+(pct===100?'　全部觀念都過關':pct>=80?'　把錯題解析再看一次':'　先回公式總表重看一遍');const wrap=$('rWrong');wrap.innerHTML='';if(wrongList.length){$('rWrongTitle').hidden=false;wrap.hidden=false;$('againWrong').hidden=false;wrongList.forEach(function(w){const d=document.createElement('div');d.className='wrongrow';d.innerHTML='<b>'+w.q.q+'</b>正解：'+w.q.c[w.q.a]+'<span>'+w.q.w+'（你選了 '+w.q.c[w.mine]+'）</span>';wrap.appendChild(d);});}else{$('rWrongTitle').hidden=true;wrap.hidden=true;$('againWrong').hidden=true;}window.scrollTo({top:0});}
+$('nextBtn').addEventListener('click',next);$('startBtn').addEventListener('click',function(){start();});$('quitBtn').addEventListener('click',finish);$('againWrong').addEventListener('click',function(){start(wrongList.map(function(w){return w.q;}));});$('againAll').addEventListener('click',function(){$('qdone').hidden=true;$('qsetup').hidden=false;window.scrollTo({top:0});});
+(function(){let t=null;try{t=localStorage.getItem('nx:theme');}catch(e){}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);const el=$('rScore');new MutationObserver(function(){const m=(el.textContent||'').match(/(\d+)%/);if(!m)return;try{['chem-2-1','chem-2-2','chem-2-3'].forEach(function(id){localStorage.setItem('nx:score:'+id,m[1]);localStorage.setItem('nx:time:'+id,String(Date.now()));});}catch(e){}}).observe(el,{childList:true,characterData:true,subtree:true});})();
+</script>
+</body>
+</html>
