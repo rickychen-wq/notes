@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>國文段考默寫｜燭之武退秦師</title>
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--label:#000;--label2:#3c3c4399;--label3:#3c3c434d;--sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;--accent:#2f7a5f}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;--sep:#54545899;--fill:#7878805c;--blue:#0a84ff;--green:#30d158;--red:#ff453a;--gold:#e8b73d;--accent:#6fd1a8}}
+html[data-theme="light"]{--bg:#f2f2f7;--card:#fff;--label:#000;--label2:#3c3c4399;--label3:#3c3c434d;--sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;--accent:#2f7a5f}
+html[data-theme="dark"]{--bg:#000;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;--sep:#54545899;--fill:#7878805c;--blue:#0a84ff;--green:#30d158;--red:#ff453a;--gold:#e8b73d;--accent:#6fd1a8}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}[hidden]{display:none!important}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--label);font:17px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;padding-bottom:calc(42px + env(safe-area-inset-bottom))}
+.nxbar{display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);border-bottom:.5px solid var(--sep)}
+.nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}.nxbar span{font-size:13px;color:var(--label2)}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--sep);padding:10px 16px 8px}
+.titlebar{display:flex;align-items:baseline;justify-content:space-between;gap:10px}h1{font-size:23px;line-height:1.25;letter-spacing:-.5px;margin:0}.sub{font-size:13px;color:var(--label2);margin-top:2px}
+.hidebtn{border:0;background:var(--fill);color:var(--blue);font:600 13px inherit;padding:7px 12px;border-radius:100px;white-space:nowrap}.hidebtn.on{background:var(--accent);color:#fff}
+nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}nav button{flex:1;border:0;background:transparent;color:var(--label);font:600 13px inherit;padding:7px 2px;border-radius:7px}nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px #0002}
+main{max-width:720px;margin:auto;padding:0 16px}.hero{padding:22px 4px 7px}.kicker{color:var(--accent);font-size:13px;font-weight:700}.hero h2{font-size:23px;line-height:1.3;margin:3px 0 2px}.hero .zh{font-size:15px;color:var(--label2)}
+h3{font-size:13px;font-weight:600;color:var(--label2);margin:22px 0 7px;padding-left:16px}.card{background:var(--card);border-radius:12px;overflow:hidden}.warn{margin-top:12px;padding:12px 14px;border-radius:11px;background:color-mix(in srgb,var(--gold) 14%,var(--card));font-size:15px}.warn b{color:var(--gold)}
+.passage{padding:15px 17px;border-top:.5px solid var(--sep);font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:19px;line-height:2}.passage:first-child{border-top:0}.passage .n{display:inline-grid;place-items:center;width:23px;height:23px;margin-right:7px;border-radius:7px;background:var(--accent);color:#fff;font:700 12px -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;vertical-align:2px}.passage .meaning{display:block;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;font-size:14px;line-height:1.55;color:var(--label2);margin-top:7px}.blur .source{filter:blur(7px);user-select:none}.blur .meaning{visibility:hidden}
+.row{padding:12px 16px;border-top:.5px solid var(--sep)}.row:first-child{border-top:0}.term{display:flex;justify-content:space-between;gap:12px;align-items:baseline}.term b{font-size:18px}.term span{font-size:14px;color:var(--label2);text-align:right}.note{font-size:14px;margin-top:6px;padding:8px 10px;border-radius:8px;background:var(--fill)}.note b{color:var(--gold)}
+.level{display:flex;gap:7px;padding:12px 16px;flex-wrap:wrap}.chip{border:1.5px solid transparent;background:var(--fill);color:var(--label);font:600 14px inherit;padding:8px 14px;border-radius:100px}.chip.on{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.cloze{padding:16px;font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:19px;line-height:2.2}.blank{display:inline-block;min-width:2.2em;padding:0 5px;margin:0 2px;border-bottom:2px solid var(--accent);color:transparent;border-radius:4px;line-height:1.5;vertical-align:baseline;transition:.2s}.blank.show{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.actions{display:flex;gap:8px;margin-top:14px}.btn{flex:1;border:0;border-radius:12px;background:var(--blue);color:#fff;font:600 16px inherit;padding:13px}.btn.secondary{background:var(--fill);color:var(--blue)}
+.setup{padding:12px 16px}.setup label{display:block;font-size:14px;color:var(--label2);margin-bottom:6px}.setup select,.answer{width:100%;border:1.5px solid var(--sep);border-radius:12px;background:var(--card);color:var(--label);font:17px/1.65 inherit;padding:12px 14px}.answer{min-height:230px;resize:vertical}.setup select:focus,.answer:focus{outline:0;border-color:var(--blue)}
+.prompt{padding:13px 16px;color:var(--label2);font-size:15px}.prompt b{color:var(--label)}.result{padding:16px;margin-top:12px;border-radius:12px;background:var(--card)}.score{font-size:42px;font-weight:800;line-height:1}.score.good{color:var(--green)}.score.mid{color:var(--gold)}.score.bad{color:var(--red)}.result p{font-size:14px;color:var(--label2);margin:6px 0 0}.correction{margin-top:12px;padding:12px;border-radius:9px;background:var(--fill);font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:17px;line-height:1.9}.correction .miss{color:var(--red);font-weight:700;text-decoration:underline}.correction .extra{color:var(--gold);text-decoration:line-through}.legend{font:13px -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:var(--label2);margin-top:6px}.legend b{color:var(--red)}
+footer{text-align:center;color:var(--label3);font-size:13px;padding:32px 16px 0}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-chinese.html">◀ 回目錄</a><span>國文 · 段考默寫</span></div>
+<header><div class="titlebar"><div><h1>燭之武退秦師</h1><div class="sub">見秦伯曰 → 唯君圖之</div></div><button class="hidebtn" id="hideBtn">遮住原文</button></div><nav role="tablist"><button role="tab" aria-selected="true" data-t="1">原文</button><button role="tab" aria-selected="false" data-t="2">易錯字</button><button role="tab" aria-selected="false" data-t="3">挖空</button><button role="tab" aria-selected="false" data-t="4">默寫</button></nav></header>
+<main>
+<section data-p="1"><div class="hero"><div class="kicker">Original Text</div><h2>默寫範圍</h2><div class="zh">依照課本圖片分成五段，先掌握說服順序再背。</div></div><div class="card" id="sourceCard"></div><div class="warn"><b>範圍確認：</b>從「見秦伯曰」開始，到「唯君圖之」結束；不含前面的「夜縋而出」，也不含後面的「秦伯說」。</div></section>
+<section data-p="2" hidden><div class="hero"><div class="kicker">Exam Traps</div><h2>最容易寫錯的字</h2><div class="zh">這些要照課本版本，不要換成意思相近的字。</div></div><div class="card">
+<div class="row"><div class="term"><b>敢以煩執事</b><span>煩、執</span></div><div class="note">「執事」是對秦伯的敬稱，不是「直事」。</div></div>
+<div class="row"><div class="term"><b>越國以鄙遠</b><span>鄙</span></div><div class="note">鄙：把遠方的鄭國當作邊邑。不可寫「彼」。</div></div>
+<div class="row"><div class="term"><b>焉用亡鄭以陪鄰</b><span>陪</span></div><div class="note"><b>課本是「陪鄰」</b>，意思是增加鄰國的土地。</div></div>
+<div class="row"><div class="term"><b>若舍鄭以為東道主</b><span>舍</span></div><div class="note"><b>照圖片寫「舍」</b>，不要自行換成「捨」。</div></div>
+<div class="row"><div class="term"><b>行李之往來</b><span>行李</span></div><div class="note">古義是出使的人，不是旅行箱。</div></div>
+<div class="row"><div class="term"><b>共其乏困</b><span>共</span></div><div class="note"><b>課本是「共」</b>，通「供」；默寫仍照原文寫「共」。</div></div>
+<div class="row"><div class="term"><b>君嘗為晉君賜矣</b><span>嘗、賜</span></div><div class="note">為：給予；賜：恩惠。句意是秦伯曾給晉君恩惠。</div></div>
+<div class="row"><div class="term"><b>許君焦、瑕</b><span>焦、瑕</span></div><div class="note">兩個地名，中間是頓號。</div></div>
+<div class="row"><div class="term"><b>朝濟而夕設版焉</b><span>濟、版</span></div><div class="note">濟：渡河；版：築土牆所用的夾板。</div></div>
+<div class="row"><div class="term"><b>夫晉，何厭之有</b><span>厭</span></div><div class="note">厭：滿足。不是「饜」或「壓」。</div></div>
+<div class="row"><div class="term"><b>又欲肆其西封</b><span>肆、封</span></div><div class="note">肆：延伸、擴張；封：疆界。</div></div>
+<div class="row"><div class="term"><b>若不闕秦／闕秦以利晉</b><span>闕</span></div><div class="note"><b>兩個「闕秦」都要寫門字框的「闕」</b>，意思是侵損秦國。</div></div>
+<div class="row"><div class="term"><b>唯君圖之</b><span>唯、圖</span></div><div class="note">唯：希望；圖：考慮。結尾不要寫成「惟」。</div></div>
+</div></section>
+<section data-p="3" hidden><div class="hero"><div class="kicker">Cloze Practice</div><h2>挖空練習</h2><div class="zh">先在腦中補完，再點「顯示答案」。</div></div><div class="card"><div class="level" id="levels"><button class="chip on" data-level="easy">重點字</button><button class="chip" data-level="medium">加強</button><button class="chip" data-level="hard">高強度</button></div></div><div class="card" style="margin-top:12px"><div class="cloze" id="cloze"></div></div><div class="actions"><button class="btn" id="revealBtn">顯示答案</button><button class="btn secondary" id="newBtn">換一組挖空</button></div></section>
+<section data-p="4" hidden><div class="hero"><div class="kicker">Dictation Test</div><h2>默寫測驗</h2><div class="zh">空格、換行與標點不計分；文字內容逐字核對。</div></div><div class="card"><div class="setup"><label for="range">選擇範圍</label><select id="range"></select></div><div class="prompt" id="prompt"></div><div class="setup"><textarea class="answer" id="answer" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="從這裡開始默寫……"></textarea></div></div><div class="actions"><button class="btn" id="checkBtn">核對答案</button><button class="btn secondary" id="clearBtn">清空重寫</button></div><div id="result"></div></section>
+<footer>國文 · 第一次段考默寫</footer>
+</main>
+<script>
+(function(){var t=null;try{t=localStorage.getItem('nx:theme')}catch(e){}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)})();
+var PARTS=[
+{name:'第 1 段',hint:'見秦伯曰 → 敢以煩執事',text:'見秦伯曰：「秦、晉圍鄭，鄭既知亡矣！若亡鄭而有益於君，敢以煩執事。',meaning:'先承認鄭國處境，再提出：若滅鄭對秦國有利，才敢勞煩秦伯。'},
+{name:'第 2 段',hint:'越國以鄙遠 → 君之薄也',text:'越國以鄙遠，君知其難也。焉用亡鄭以陪鄰？鄰之厚，君之薄也。',meaning:'指出秦國越過晉國控制鄭國很困難；滅鄭只會讓晉國變強、秦國相對變弱。'},
+{name:'第 3 段',hint:'若舍鄭 → 君亦無所害',text:'若舍鄭以為東道主，行李之往來，共其乏困，君亦無所害。',meaning:'提出保留鄭國的好處：鄭國可以接待秦國使者、供應缺乏的物資。'},
+{name:'第 4 段',hint:'且君嘗 → 君之所知也',text:'且君嘗為晉君賜矣，許君焦、瑕，朝濟而夕設版焉！君之所知也。',meaning:'用晉惠公背信的舊事提醒秦伯：晉國不可信。'},
+{name:'第 5 段',hint:'夫晉 → 唯君圖之',text:'夫晉，何厭之有？既東封鄭，又欲肆其西封。若不闕秦，將焉取之？闕秦以利晉，唯君圖之！」',meaning:'推論晉國擴張不會停止，將來必會侵損秦國；最後請秦伯自行考量。'}
+];
+var FULL=PARTS.map(function(p){return p.text}).join('');
+function esc(s){return s.replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+document.getElementById('sourceCard').innerHTML=PARTS.map(function(p,i){return'<div class="passage"><span class="n">'+(i+1)+'</span><span class="source">'+p.text+'</span><span class="meaning">'+p.meaning+'</span></div>'}).join('');
+var tabs=document.querySelectorAll('nav button'),panels=document.querySelectorAll('section[data-p]');tabs.forEach(function(t){t.onclick=function(){tabs.forEach(function(x){x.setAttribute('aria-selected',x===t)});panels.forEach(function(p){p.hidden=p.dataset.p!==t.dataset.t});window.scrollTo({top:0})}});
+var hide=false;document.getElementById('hideBtn').onclick=function(){hide=!hide;document.getElementById('sourceCard').classList.toggle('blur',hide);this.classList.toggle('on',hide);this.textContent=hide?'顯示原文':'遮住原文'};
+var KEY=['執事','鄙遠','陪鄰','舍鄭','東道主','行李','共其乏困','嘗為','賜矣','焦','瑕','朝濟','設版','何厭','東封','肆其西封','闕秦','唯君圖之'];
+var level='easy',revealed=false,round=0;
+function seedList(){var a=KEY.slice();for(var i=a.length-1;i>0;i--){var j=(i*7+round*5)% (i+1),x=a[i];a[i]=a[j];a[j]=x}return a}
+function drawCloze(){revealed=false;document.getElementById('revealBtn').textContent='顯示答案';var count=level==='easy'?10:level==='medium'?15:KEY.length;var chosen=seedList().slice(0,count);var html=esc(FULL);chosen.sort(function(a,b){return b.length-a.length}).forEach(function(w){html=html.split(w).join('<span class="blank">'+w+'</span>')});if(level==='hard'){var singles=['秦','晉','鄭','君','國','亡','封','利','薄','厚'];singles.forEach(function(w){html=html.replace(new RegExp(w,'g'),'<span class="blank">'+w+'</span>')})}document.getElementById('cloze').innerHTML=html}
+document.getElementById('levels').onclick=function(e){var b=e.target.closest('.chip');if(!b)return;this.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x===b)});level=b.dataset.level;round++;drawCloze()};
+document.getElementById('revealBtn').onclick=function(){revealed=!revealed;document.querySelectorAll('.blank').forEach(function(x){x.classList.toggle('show',revealed)});this.textContent=revealed?'隱藏答案':'顯示答案'};
+document.getElementById('newBtn').onclick=function(){round++;drawCloze()};drawCloze();
+var range=document.getElementById('range');range.innerHTML=PARTS.map(function(p,i){return'<option value="'+i+'">'+p.name+'｜'+p.hint+'</option>'}).join('')+'<option value="all">全文｜見秦伯曰 → 唯君圖之</option>';
+function current(){return range.value==='all'?{name:'全文',hint:'見秦伯曰 → 唯君圖之',text:FULL}:PARTS[Number(range.value)]}
+function updatePrompt(){var p=current();document.getElementById('prompt').innerHTML='<b>'+p.name+'</b>　'+p.hint;document.getElementById('answer').value='';document.getElementById('result').innerHTML=''}range.onchange=updatePrompt;updatePrompt();
+function norm(s){return(s||'').replace(/[\s，。！？、；：「」『』（）,.!?;:'"\-—…]/g,'')}
+function lcs(a,b){var m=a.length,n=b.length,dp=Array(m+1);for(var i=0;i<=m;i++)dp[i]=new Uint16Array(n+1);for(i=1;i<=m;i++)for(var j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);var out=[],x=m,y=n;while(x||y){if(x&&y&&a[x-1]===b[y-1]){out.push(['same',a[x-1]]);x--;y--}else if(y&&(!x||dp[x][y-1]>=dp[x-1][y])){out.push(['miss',b[y-1]]);y--}else{out.push(['extra',a[x-1]]);x--}}return{len:dp[m][n],ops:out.reverse()}}
+document.getElementById('checkBtn').onclick=function(){var p=current(),got=norm(document.getElementById('answer').value),ans=norm(p.text);if(!got){document.getElementById('result').innerHTML='<div class="result"><p>還沒輸入內容。</p></div>';return}var d=lcs(got,ans),score=Math.round(d.len/Math.max(got.length,ans.length)*100),cls=score>=90?'good':score>=70?'mid':'bad';var diff=d.ops.map(function(o){return o[0]==='same'?esc(o[1]):'<span class="'+o[0]+'">'+esc(o[1])+'</span>'}).join('');document.getElementById('result').innerHTML='<div class="result"><div class="score '+cls+'">'+score+'%</div><p>答對 '+d.len+' 個字｜正解 '+ans.length+' 字｜你寫 '+got.length+' 字</p><div class="correction">'+diff+'</div><div class="legend"><b>紅色底線</b>＝漏掉或寫錯後缺少的字；<span style="color:var(--gold)">刪除線</span>＝多寫的字。標點與空格不計分。</div></div>';try{localStorage.setItem('nx:score:ch-dictation',String(score));localStorage.setItem('nx:time:ch-dictation',String(Date.now()))}catch(e){};document.getElementById('result').scrollIntoView({behavior:'smooth',block:'nearest'})};
+document.getElementById('clearBtn').onclick=function(){document.getElementById('answer').value='';document.getElementById('result').innerHTML='';document.getElementById('answer').focus()};
+</script>
+</body>
+</html>

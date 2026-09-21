@@ -111,15 +111,16 @@
     <div class="en rise" style="animation-delay:40ms">Chinese</div>
     <h1 class="rise" style="animation-delay:70ms">國文</h1>
     <div class="pg rise" style="animation-delay:95ms">
-      <span class="pgbar"><i id="pb"></i></span><span>2 / 5 已整理</span>
+      <span class="pgbar"><i id="pb"></i></span><span>3 / 6 已整理</span>
     </div>
   </div>
+  <h2 class="g rise" style="animation-delay:120ms">段考重點</h2><div class="list"><a class="it pressable rise" href="ch-dictation.html" style="animation-delay:150ms" data-id="ch-dictation"><div class="hd"><div><div class="tt">段考默寫｜燭之武退秦師</div><div class="ss">見秦伯曰 → 唯君圖之</div></div><span class="badge dn" data-badge>開啟</span></div><div class="tags"><span>原文</span><span>易錯字</span><span>挖空</span><span>默寫</span></div></a></div>
   <h2 class="g rise" style="animation-delay:120ms">課本</h2><div class="list"><div class="it todo rise" style="animation-delay:165ms"><div class="hd"><div><div class="tt">課本 L1</div><div class="ss">含講義</div></div><span class="badge wait">整理中</span></div></div><div class="it todo rise" style="animation-delay:210ms"><div class="hd"><div><div class="tt">課本 L2</div><div class="ss">含講義</div></div><span class="badge wait">整理中</span></div></div><div class="it todo rise" style="animation-delay:255ms"><div class="hd"><div><div class="tt">課本 L3</div><div class="ss">含講義</div></div><span class="badge wait">整理中</span></div></div></div><h2 class="g rise" style="animation-delay:300ms">講義</h2><div class="list"><a class="it pressable rise" href="ch-glyph.html" style="animation-delay:345ms" data-id="ch-glyph"><div class="hd"><div><div class="tt">字音字形 壢字</div><div class="ss">第 1–3 回 · 290 題</div></div><span class="badge dn" data-badge>開啟</span></div><div class="tags"><span>題庫</span><span>易錯字</span><span>測驗</span></div></a><a class="it pressable rise" href="ch-reading.html" style="animation-delay:390ms" data-id="ch-reading"><div class="hd"><div><div class="tt">島讀 主題一 自我觀照</div><div class="ss">第 1–8 回 · 21 題解析</div></div><span class="badge dn" data-badge>開啟</span></div><div class="tags"><span>脈絡</span><span>文言字詞</span><span>測驗</span></div></a></div>
   <footer>分數只存在你自己的瀏覽器</footer>
 </main>
 
 <script>
-setTimeout(function(){ document.getElementById('pb').style.width='40%'; }, 420);
+setTimeout(function(){ document.getElementById('pb').style.width='50%'; }, 420);
 document.querySelectorAll('.it[data-id]').forEach(function(el){
   var b=el.querySelector('[data-badge]'); if(!b) return;
   var sc=nxScore(el.dataset.id);
