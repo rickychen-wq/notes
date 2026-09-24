@@ -43,10 +43,7 @@ async function loadSystem(){
   try{
     const snap=await getDoc(doc(db,'settings','system'));systemExists=snap.exists();
     if(!systemExists){registrationAllowed=true;systemNotice.hidden=false;systemNotice.textContent='目前尚未建立管理員。第一個成功註冊的帳號會成為管理員，完成後註冊會自動關閉。';return;}
-    const data=snap.data(),now=new Date();
-    const openAt=data.openAt&&data.openAt.toDate?data.openAt.toDate():null;
-    const closeAt=data.closeAt&&data.closeAt.toDate?data.closeAt.toDate():null;
-    registrationAllowed=data.registrationOpen===true&&(!openAt||now>=openAt)&&(!closeAt||now<=closeAt);
+    const data=snap.data();registrationAllowed=data.registrationOpen===true;
     const registerTab=tabs.querySelector('[data-mode="register"]');registerTab.hidden=!registrationAllowed;
     if(!registrationAllowed&&new URLSearchParams(location.search).get('mode')==='register')setMode('login');
   }catch(error){systemNotice.hidden=false;systemNotice.className='notice notice--error';systemNotice.textContent='無法讀取註冊狀態，請稍後重新整理。';}

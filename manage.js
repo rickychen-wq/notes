@@ -1,14 +1,16 @@
-import {collection,db,doc,formatDuration,getDocs,getDoc,serverTimestamp,Timestamp,updateDoc,waitForSession} from './firebase-core.js';
+import {auth,collection,db,doc,formatDuration,getDocs,getDoc,serverTimestamp,updateDoc,updatePassword,waitForSession} from './firebase-core.js';
 import {getUserStats} from './analytics.js';
 
 const toggle=document.getElementById('registrationToggle');let systemData=null;
 function esc(value){const span=document.createElement('span');span.textContent=String(value??'');return span.innerHTML;}
-function toLocalInput(timestamp){if(!timestamp||!timestamp.toDate)return'';const d=timestamp.toDate(),offset=d.getTimezoneOffset();return new Date(d.getTime()-offset*60000).toISOString().slice(0,16);}
+function setRegistrationState(open){
+  toggle.setAttribute('aria-pressed',String(open));
+  const state=document.getElementById('registrationState');state.textContent=open?'已開放':'已關閉';state.classList.toggle('switch__state--open',open);
+}
 
 async function loadSystem(){
   const snap=await getDoc(doc(db,'settings','system'));if(!snap.exists())throw new Error('system-missing');systemData=snap.data();
-  toggle.setAttribute('aria-pressed',String(systemData.registrationOpen===true));
-  document.getElementById('openAt').value=toLocalInput(systemData.openAt);document.getElementById('closeAt').value=toLocalInput(systemData.closeAt);
+  setRegistrationState(systemData.registrationOpen===true);
 }
 
 async function loadUsers(){
@@ -28,18 +30,27 @@ async function loadUsers(){
 }
 
 function preview(){
-  systemData={registrationOpen:false};document.getElementById('adminStats').innerHTML='<div class="stat-card"><b>6</b><span>使用者</span></div><div class="stat-card"><b>4</b><span>7 天活躍</span></div><div class="stat-card"><b>8 小時 24 分</b><span>閱讀時間</span></div><div class="stat-card"><b>84%</b><span>測驗平均</span></div>';
+  systemData={registrationOpen:false};setRegistrationState(false);document.getElementById('adminStats').innerHTML='<div class="stat-card"><b>6</b><span>使用者</span></div><div class="stat-card"><b>4</b><span>7 天活躍</span></div><div class="stat-card"><b>8 小時 24 分</b><span>閱讀時間</span></div><div class="stat-card"><b>84%</b><span>測驗平均</span></div>';
   document.getElementById('userRows').innerHTML='<div class="row"><div class="row__main"><div class="row__title">Chen <span class="pill pill--admin" style="padding:2px 7px">管理員</span></div><div class="row__sub">7 天閱讀 2 小時 18 分 · 測驗 12 次</div></div><div class="row__value">91%</div></div><div class="row"><div class="row__main"><div class="row__title">測試同學</div><div class="row__sub">7 天閱讀 48 分鐘 · 測驗 4 次</div></div><div class="row__value">78%</div></div>';
 }
 
-toggle.addEventListener('click',function(){toggle.setAttribute('aria-pressed',String(toggle.getAttribute('aria-pressed')!=='true'));});
+toggle.addEventListener('click',function(){setRegistrationState(toggle.getAttribute('aria-pressed')!=='true');});
 document.getElementById('saveSettings').addEventListener('click',async function(){
-  const button=this,notice=document.getElementById('settingsNotice'),openValue=document.getElementById('openAt').value,closeValue=document.getElementById('closeAt').value;
-  const openDate=openValue?new Date(openValue):null,closeDate=closeValue?new Date(closeValue):null;
-  notice.hidden=false;if(openDate&&closeDate&&closeDate<=openDate){notice.className='notice notice--error';notice.textContent='截止時間必須晚於開始時間。';return;}
+  const button=this,notice=document.getElementById('settingsNotice');notice.hidden=false;
   button.disabled=true;
-  try{await updateDoc(doc(db,'settings','system'),{registrationOpen:toggle.getAttribute('aria-pressed')==='true',openAt:openDate?Timestamp.fromDate(openDate):null,closeAt:closeDate?Timestamp.fromDate(closeDate):null,updatedAt:serverTimestamp()});notice.className='notice notice--success';notice.textContent='註冊設定已儲存。';}
+  try{await updateDoc(doc(db,'settings','system'),{registrationOpen:toggle.getAttribute('aria-pressed')==='true',openAt:null,closeAt:null,updatedAt:serverTimestamp()});notice.className='notice notice--success';notice.textContent='註冊設定已儲存。';}
   catch(error){console.error(error);notice.className='notice notice--error';notice.textContent='設定沒有儲存成功，請稍後再試。';}
+  finally{button.disabled=false;}
+});
+
+document.getElementById('adminPasswordForm').addEventListener('submit',async function(event){
+  event.preventDefault();const first=document.getElementById('adminNewPassword').value,second=document.getElementById('adminConfirmPassword').value;
+  const notice=document.getElementById('adminPasswordNotice');notice.hidden=false;
+  if(first.length<6){notice.className='notice notice--error';notice.textContent='密碼至少需要 6 個字元。';return;}
+  if(first!==second){notice.className='notice notice--error';notice.textContent='兩次輸入的密碼不一致。';return;}
+  const button=event.currentTarget.querySelector('button[type="submit"]');button.disabled=true;
+  try{await updatePassword(auth.currentUser,first);notice.className='notice notice--success';notice.textContent='管理員密碼已更新。';event.currentTarget.reset();}
+  catch(error){notice.className='notice notice--error';notice.textContent=error.code&&error.code.includes('requires-recent-login')?'請重新登入管理員帳號後再更新密碼。':'密碼更新失敗，請稍後再試。';}
   finally{button.disabled=false;}
 });
 

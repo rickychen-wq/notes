@@ -32,3 +32,11 @@ export async function getUserStats(uid,days){
     lastActiveAt:attempts.map(function(a){return timestampToDate(a.at);}).filter(Boolean)[0]||null
   };
 }
+
+export async function getUserHistory(uid){
+  const historyQuery=query(collection(db,'users',uid,'attempts'),orderBy('at','desc'));
+  const attemptSnap=await getDocs(historyQuery);
+  const attempts=attemptSnap.docs.map(function(s){return Object.assign({id:s.id},s.data());});
+  const {topWrongWords,wrongQuestions}=summarizeWrongItems(attempts);
+  return{attempts,topWrongWords,wrongQuestions};
+}

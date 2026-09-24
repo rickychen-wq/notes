@@ -59,9 +59,9 @@ for(const file of jsFiles){
   catch(error){fail(file,`JavaScript syntax error: ${String(error.stderr||error.message).trim()}`);}
 }
 
-if(htmlFiles.length!==30)fail('project',`expected 30 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==31)fail('project',`expected 31 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==29)fail('project',`expected 29 protected pages, found ${protectedCount}`);
+if(protectedCount!==30)fail('project',`expected 30 protected pages, found ${protectedCount}`);
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},
@@ -70,11 +70,20 @@ const wrongSummary=summarizeWrongItems([
 ]);
 if(wrongSummary.topWrongWords.length!==1||wrongSummary.topWrongWords[0].term!=='hypothesis'||wrongSummary.topWrongWords[0].count!==2)fail('stats-utils.js','common English words include a phrase or another subject');
 if(wrongSummary.wrongQuestions.length!==5)fail('stats-utils.js','non-word mistakes were not preserved in the other-question list');
+const detailedSummary=summarizeWrongItems([{subject:'english',pageTitle:'字彙 Chapter 10',wrongItems:[{term:'Hypothesis',meaning:'n. 假設',correctAnswer:'Hypothesis',userAnswer:'hypotesis'}]},{subject:'chemistry',pageTitle:'化學 第 2 章',wrongItems:[{question:'理想氣體的適用條件',correctAnswer:'高溫、低壓',userAnswer:'低溫、高壓'}]}]);
+if(detailedSummary.topWrongWords[0]?.meaning!=='n. 假設'||detailedSummary.topWrongWords[0]?.lessons[0]?.lesson!=='字彙 Chapter 10')fail('stats-utils.js','English word details or lesson grouping were lost');
+if(detailedSummary.wrongQuestions[0]?.correctAnswer!=='高溫、低壓'||detailedSummary.wrongQuestions[0]?.userAnswer!=='低溫、高壓')fail('stats-utils.js','wrong-question answer details were lost');
 if(attemptIdFromScoreId('chem-2-1')!=='chem-2'||attemptIdFromScoreId('chem-2-2')!==null||attemptIdFromScoreId('chem-2-3')!==null)fail('stats-utils.js','Chemistry chapter 2 attempts are not canonicalized');
 const oldStore=new Map([['nx:score:en-book-l1','88'],['nx:time:en-book-l1','123'],['nx:synced:old','1'],['nx:theme','dark']]);
 const storageMock={get length(){return oldStore.size;},key(index){return[...oldStore.keys()][index]??null;},getItem(key){return oldStore.get(key)??null;},setItem(key,value){oldStore.set(key,String(value));},removeItem(key){oldStore.delete(key);}};
 if(!discardLegacyScores(storageMock,'firebase-v1')||oldStore.has('nx:score:en-book-l1')||oldStore.has('nx:time:en-book-l1')||oldStore.has('nx:synced:old')||oldStore.get('nx:theme')!=='dark'||oldStore.get('nx:score-era')!=='firebase-v1')fail('stats-utils.js','legacy scores were not discarded safely');
 if(discardLegacyScores(storageMock,'firebase-v1'))fail('stats-utils.js','current score era was cleared more than once');
+
+const manageSource=fs.readFileSync(path.join(root,'manage.html'),'utf8');
+if(/id=["'](?:openAt|closeAt)["']/.test(manageSource))fail('manage.html','scheduled registration inputs are still present');
+const meSource=fs.readFileSync(path.join(root,'me.html'),'utf8');
+if(/id=["']passwordForm["']/.test(meSource))fail('me.html','regular users can still change passwords');
+if(!fs.existsSync(path.join(root,'history.html'))||!fs.existsSync(path.join(root,'history.js')))fail('history','full learning history page is missing');
 
 if(errors.length){
   console.error(`Validation failed with ${errors.length} issue(s):`);

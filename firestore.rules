@@ -18,9 +18,7 @@ service cloud.firestore {
     function registrationOpen() {
       let config = get(/databases/$(database)/documents/settings/system).data;
       return systemExists()
-        && config.registrationOpen == true
-        && (config.openAt == null || request.time >= config.openAt)
-        && (config.closeAt == null || request.time <= config.closeAt);
+        && config.registrationOpen == true;
     }
 
     match /settings/system {

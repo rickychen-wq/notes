@@ -4,12 +4,13 @@ import {
 } from './firebase-core.js';
 import {attemptIdFromScoreId,discardLegacyScores} from './stats-utils.js';
 
-const SPECIAL_PAGES=new Set(['index','me','manage','login']);
+const SPECIAL_PAGES=new Set(['index','me','manage','history','login']);
 const pageId=pageIdFromPath();
 const subject=subjectFromPage(pageId);
 let currentSession=null;
 let activity=null;
 let scoreQueue=Promise.resolve();
+let quizStartedAt=null;
 const recordedScores=new Set();
 const SCORE_ERA='firebase-v1';
 
@@ -92,11 +93,62 @@ async function flushActivity(){
   finally{activity.flushing=false;}
 }
 
+function clean(value){return String(value||'').replace(/\s+/g,' ').trim();}
+
+function textWithout(element,selectors){
+  const clone=element.cloneNode(true);selectors.forEach(function(selector){clone.querySelectorAll(selector).forEach(function(el){el.remove();});});
+  return clean(clone.textContent);
+}
+
+function userAnswerFrom(value){
+  const match=clean(value).match(/你(?:寫的／選的|寫的|選了)[：:\s]*([^（）·\n]+)/);
+  return match?clean(match[1]):'';
+}
+
+function correctAnswerFrom(value){
+  const match=clean(value).match(/(?:正解|正確答案)[：:\s]*([^·（\n]+)/);
+  return match?clean(match[1]):'';
+}
+
 function collectWrongItems(){
-  const selectors=['#rWrong .wrongrow b','#rWrong .wi .qq','.q.wrong .answer b','.wrongrow b'];
-  const values=[];
-  selectors.forEach(function(selector){document.querySelectorAll(selector).forEach(function(el){const value=el.textContent.trim();if(value&&!values.includes(value))values.push(value);});});
+  const values=[],seen=new Set(),lesson=document.title;
+  function add(item){
+    const key=[item.term,item.question,item.correctAnswer,item.userAnswer].join('\u0000');
+    if((item.term||item.question)&&!seen.has(key)){seen.add(key);values.push(item);}
+  }
+  document.querySelectorAll('#rWrong .wrongrow').forEach(function(row){
+    const bold=row.querySelector('b');if(!bold)return;
+    const primary=clean(bold.textContent),note=clean(row.querySelector('span')?.textContent);
+    let remainder=textWithout(row,['b','span']),question=primary,correct=correctAnswerFrom(remainder+' '+note);
+    if(subject==='english'){
+      add({term:primary,meaning:remainder,question:remainder||primary,correctAnswer:primary,
+        userAnswer:userAnswerFrom(note),lesson,subject});return;
+    }
+    if(remainder.includes('→')){
+      const parts=remainder.split('→');question=clean(primary+' '+parts.shift());correct=clean(parts.join('→'))||correct;
+    }else if(pageId==='ch-glyph'&&remainder){question=remainder;correct=primary;}
+    add({question,correctAnswer:correct,userAnswer:userAnswerFrom(note),lesson,subject});
+  });
+  document.querySelectorAll('#rWrong .wi').forEach(function(row){
+    add({question:clean(row.querySelector('.qq')?.textContent),correctAnswer:clean(row.querySelector('.aa')?.textContent),
+      userAnswer:'',lesson,subject});
+  });
+  document.querySelectorAll('.q.wrong').forEach(function(row){
+    const correct=clean(row.querySelector('.answer b')?.textContent);if(!correct)return;
+    add({term:subject==='english'?correct:'',question:clean(row.querySelector('.prompt,.qtext')?.textContent)||correct,
+      correctAnswer:correct,userAnswer:'',lesson,subject});
+  });
   return values.slice(0,30);
+}
+
+function collectAttemptMeta(score,stamp){
+  const sources=['rLine','rDetail'].map(function(id){return document.getElementById(id)?.textContent||'';});
+  document.querySelectorAll('.result').forEach(function(el){sources.push(el.textContent||'');});
+  let correctCount=null,totalQuestions=null;
+  for(const source of sources){const match=source.match(/(\d+)\s*\/\s*(\d+)/);if(match){correctCount=Number(match[1]);totalQuestions=Number(match[2]);break;}}
+  if(pageId==='ch-dictation'){correctCount=Number(score)===100?1:0;totalQuestions=1;}
+  const durationSeconds=quizStartedAt?Math.max(1,Math.round((stamp-quizStartedAt)/1000)):null;
+  return{correctCount,totalQuestions,durationSeconds};
 }
 
 async function recordAttempt(id,score,at){
@@ -106,18 +158,23 @@ async function recordAttempt(id,score,at){
   if(recordedScores.has(dedupe)) return;recordedScores.add(dedupe);
   const attemptId=id+'-'+stamp+'-'+Math.random().toString(36).slice(2,8);
   const attemptRef=doc(db,'users',currentSession.user.uid,'attempts',attemptId);
+  const meta=collectAttemptMeta(score,stamp);
   const batch=writeBatch(db);
   batch.set(attemptRef,{uid:currentSession.user.uid,pageId:id,pageTitle:document.title,subject:subjectFromPage(id),
-    score:Number(score),wrongItems:collectWrongItems(),at:serverTimestamp(),path:location.pathname});
+    score:Number(score),wrongItems:collectWrongItems(),correctCount:meta.correctCount,totalQuestions:meta.totalQuestions,
+    durationSeconds:meta.durationSeconds,completedAtMs:stamp,at:serverTimestamp(),path:location.pathname});
   batch.set(doc(db,'users',currentSession.user.uid,'daily',currentDay()),{uid:currentSession.user.uid,day:currentDay(),
     quizAttempts:increment(1),lastActiveAt:serverTimestamp()},{merge:true});
-  try{await batch.commit();}
+  try{await batch.commit();quizStartedAt=null;}
   catch(error){recordedScores.delete(dedupe);console.warn('Quiz attempt was not recorded',error);}
 }
 
 function patchScoreStorage(){
   const original=Storage.prototype.setItem;
   if(original.__nxPatched) return;
+  ['startBtn','btnStart','againWrong','btnRetryWrong'].forEach(function(id){document.getElementById(id)?.addEventListener('click',function(){quizStartedAt=Date.now();});});
+  const writtenAnswer=document.getElementById('answer');
+  if(writtenAnswer)writtenAnswer.addEventListener('input',function(){if(!quizStartedAt)quizStartedAt=Date.now();});
   function patched(key,value){
     original.call(this,key,value);
     if(this===localStorage&&String(key).startsWith('nx:score:')){

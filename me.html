@@ -18,12 +18,13 @@
   <h2 class="section-title">最近 7 天</h2><section class="card"><div class="card__body"><div class="trend" id="trend"><div class="loading"><span class="spinner"></span></div></div></div></section>
   <div class="grid-2">
     <div><h2 class="section-title">科目分布</h2><section class="card rows" id="subjects"><div class="loading"><span class="spinner"></span></div></section></div>
-    <div><h2 class="section-title">最近測驗</h2><section class="card rows" id="attempts"><div class="loading"><span class="spinner"></span></div></section></div>
+    <div><h2 class="section-title">最近測驗</h2><section class="card"><div class="rows" id="attempts"><div class="loading"><span class="spinner"></span></div></div><div class="section-footer" id="attemptHistoryLink"><a class="text-link" href="history.html?view=attempts">查看所有歷史</a></div></section></div>
   </div>
-  <h2 class="section-title">常錯英文</h2><section class="card rows" id="wrongWords"><div class="loading"><span class="spinner"></span></div></section>
-  <h2 class="section-title">其他錯題</h2><section class="card rows" id="wrongQuestions"><div class="loading"><span class="spinner"></span></div></section>
-  <h2 class="section-title">帳戶</h2><section class="card"><div class="card__body"><form id="passwordForm"><div class="grid-2"><label class="field"><span>新密碼</span><input id="newPassword" type="password" minlength="6" autocomplete="new-password" required></label><label class="field"><span>再次輸入</span><input id="confirmPassword" type="password" minlength="6" autocomplete="new-password" required></label></div><div id="passwordNotice" class="notice" hidden></div><div class="actions"><button class="primary" type="submit">更新密碼</button><button class="secondary" id="logoutButton" type="button">登出</button></div></form></div></section>
+  <h2 class="section-title">常錯英文</h2><section class="card"><div class="rows" id="wrongWords"><div class="loading"><span class="spinner"></span></div></div><div class="section-footer" id="wordHistoryLink"><a class="text-link" href="history.html?view=words">查看詳細分類</a></div></section>
+  <h2 class="section-title">其他錯題</h2><section class="card"><div class="rows" id="wrongQuestions"><div class="loading"><span class="spinner"></span></div></div><div class="section-footer" id="questionHistoryLink" hidden><a class="text-link" href="history.html?view=questions">查看所有錯題</a></div></section>
+  <h2 class="section-title">帳戶</h2><section class="card"><div class="card__body"><p class="lead" style="margin-top:0">一般使用者的密碼由管理員協助處理。</p><div class="actions" style="margin-top:16px"><button class="secondary" id="logoutButton" type="button">登出</button></div></div></section>
 </main>
+<dialog class="detail-dialog" id="detailDialog"><div class="detail-dialog__head"><h2 id="detailTitle">詳細內容</h2><button id="detailClose" type="button" aria-label="關閉">×</button></div><div class="detail-dialog__body" id="detailBody"></div></dialog>
 <script type="module" src="me.js"></script>
 </body>
 </html>
