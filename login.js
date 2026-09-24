@@ -10,6 +10,17 @@ const formNotice=document.getElementById('formNotice');
 const systemNotice=document.getElementById('systemNotice');
 let systemExists=false,registrationAllowed=false;
 
+const loginStage=document.querySelector('.login-stage');
+if(loginStage&&matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  document.addEventListener('pointermove',function(event){
+    const x=event.clientX/innerWidth-.5,y=event.clientY/innerHeight-.5;
+    loginStage.style.setProperty('--tilt-x',(-y*2.2).toFixed(2)+'deg');
+    loginStage.style.setProperty('--tilt-y',(x*2.8).toFixed(2)+'deg');
+    loginStage.style.setProperty('--glow-x',(event.clientX/innerWidth*100).toFixed(1)+'%');
+    loginStage.style.setProperty('--glow-y',(event.clientY/innerHeight*100).toFixed(1)+'%');
+  },{passive:true});
+}
+
 function safeNext(){
   const raw=new URLSearchParams(location.search).get('next')||'index.html';
   return /^[a-zA-Z0-9_.-]+\.html(?:[?#].*)?$/.test(raw)?raw:'index.html';

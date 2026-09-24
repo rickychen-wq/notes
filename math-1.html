@@ -122,6 +122,7 @@ tr:last-child td{border-bottom:0}
 .wronglist .wi{border-top:.5px solid var(--sep);padding:11px 0;font-size:14.5px;line-height:1.7}
 .wronglist .wi .qq{font-weight:600}
 .wronglist .wi .aa{color:var(--green);font-weight:700}
+.wronglist .wi .mine{margin-top:3px;color:var(--label2);font-size:13px}
 
 footer{text-align:center;font-size:12px;color:var(--label3);padding:30px 16px 0;line-height:1.7}
 
@@ -834,7 +835,7 @@ var RAW = [
       right++;
     } else {
       btn.classList.add("vno");
-      wrong.push(q);
+      wrong.push({q:q, mine:picked});
     }
     qVerdict.className = "verdict " + (good ? "vok" : "vno");
     qVerdict.innerHTML =
@@ -857,11 +858,13 @@ var RAW = [
     rDetail.textContent = "答對 " + right + " / " + pool.length + " 題";
     rWrong.innerHTML = "";
     if(wrong.length){
-      wrong.forEach(function(q){
+      wrong.forEach(function(item){
+        var q = item.q;
         var d = document.createElement("div");
         d.className = "wi";
         d.innerHTML = "<div class=\"qq\">" + q[1] + "</div>" +
-                      "<div class=\"aa\">" + q[2] + "</div>";
+                      "<div class=\"aa\">" + q[2] + "</div>" +
+                      "<div class=\"mine\">你選了：" + item.mine + "</div>";
         rWrong.appendChild(d);
       });
       btnRetryWrong.hidden = false;
@@ -873,7 +876,7 @@ var RAW = [
 
   document.getElementById("btnStart").onclick = function(){ start(RAW); };
   btnRetryAll.onclick = function(){ start(RAW); };
-  btnRetryWrong.onclick = function(){ start(wrong); };
+  btnRetryWrong.onclick = function(){ start(wrong.map(function(item){ return item.q; })); };
 })();
 </script>
 

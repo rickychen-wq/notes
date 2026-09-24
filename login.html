@@ -10,29 +10,35 @@
 <link rel="stylesheet" href="account-pages.css"><link rel="stylesheet" href="app-shell.css">
 <script>(function(){try{var t=localStorage.getItem('nx:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}})()</script>
 </head>
-<body>
-<div class="ambient"><i style="width:330px;height:330px;left:-90px;top:-100px;background:#0a84ff"></i><i style="width:300px;height:300px;right:-100px;bottom:8%;background:#7a5af8;animation-delay:2s"></i></div>
-<main class="page page--narrow">
-  <div class="login-brand"><p class="eyebrow">115-1 第一次段考</p><h1>回來複習。</h1><p class="lead">你的筆記、測驗和學習進度都在同一個地方。</p></div>
+<body class="login-page">
+<div class="login-backdrop" aria-hidden="true">
+  <i class="login-orb login-orb--blue"></i><i class="login-orb login-orb--violet"></i><i class="login-orb login-orb--aqua"></i>
+  <span class="glass-shard glass-shard--one"></span><span class="glass-shard glass-shard--two"></span><span class="glass-shard glass-shard--three"></span>
+</div>
+<main class="login-stage page--narrow">
+  <div class="login-brand">
+    <div class="login-brand__mark" aria-hidden="true"><span></span><span></span><b>N</b></div>
+    <p class="eyebrow">115-1 第一次段考</p><h1>歡迎回來。</h1><p class="lead">接著上次的進度，讓每一次複習都留下成果。</p>
+  </div>
   <section class="card login-card">
     <div class="card__body">
       <div class="segmented" id="authTabs"><button type="button" data-mode="login" aria-pressed="true">登入</button><button type="button" data-mode="register" aria-pressed="false">註冊</button></div>
       <div id="systemNotice" class="notice" hidden></div>
       <div id="formNotice" class="notice notice--error" role="status" aria-live="polite" hidden></div>
       <form id="loginForm">
-        <label class="field"><span>姓名</span><input id="loginName" name="name" autocomplete="username" maxlength="32" required></label>
-        <label class="field"><span>密碼</span><input id="loginPassword" name="password" type="password" autocomplete="current-password" minlength="6" required></label>
-        <button class="primary" type="submit">登入</button>
+        <label class="field"><span>姓名</span><div class="field-control"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a7 7 0 0 0-14 0"/></svg><input id="loginName" name="name" autocomplete="username" maxlength="32" placeholder="輸入你的姓名" required></div></label>
+        <label class="field"><span>密碼</span><div class="field-control"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10"/></svg><input id="loginPassword" name="password" type="password" autocomplete="current-password" minlength="6" placeholder="輸入密碼" required></div></label>
+        <button class="primary login-submit" type="submit"><span>登入</span><i aria-hidden="true">→</i></button>
       </form>
       <form id="registerForm" hidden>
-        <label class="field"><span>姓名</span><input id="registerName" name="name" autocomplete="username" maxlength="32" required></label>
-        <label class="field"><span>密碼</span><input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="6" required></label>
-        <label class="field"><span>確認密碼</span><input id="registerConfirm" name="confirm" type="password" autocomplete="new-password" minlength="6" required></label>
-        <button class="primary" type="submit" id="registerSubmit">建立帳號</button>
+        <label class="field"><span>姓名</span><div class="field-control"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a7 7 0 0 0-14 0"/></svg><input id="registerName" name="name" autocomplete="username" maxlength="32" placeholder="輸入你的姓名" required></div></label>
+        <label class="field"><span>密碼</span><div class="field-control"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10"/></svg><input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="6" placeholder="至少 6 個字元" required></div></label>
+        <label class="field"><span>確認密碼</span><div class="field-control"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 12 3 3 7-7"/><rect x="4" y="4" width="16" height="16" rx="5"/></svg><input id="registerConfirm" name="confirm" type="password" autocomplete="new-password" minlength="6" placeholder="再輸入一次密碼" required></div></label>
+        <button class="primary login-submit" type="submit" id="registerSubmit"><span>建立帳號</span><i aria-hidden="true">→</i></button>
       </form>
     </div>
   </section>
-  <p class="lead" style="text-align:center;margin-top:18px">帳號只使用姓名作為登入 ID；不會公開顯示 Email。</p>
+  <p class="login-privacy"><span aria-hidden="true">●</span> 帳號僅使用姓名作為登入 ID，不會公開顯示 Email。</p>
 </main>
 <script type="module" src="login.js"></script>
 </body>

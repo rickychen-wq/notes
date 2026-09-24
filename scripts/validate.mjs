@@ -4,6 +4,7 @@ import vm from 'node:vm';
 import {execFileSync} from 'node:child_process';
 import {attemptIdFromScoreId,discardLegacyScores} from '../stats-utils.js';
 import {summarizeWrongItems} from '../wrong-items.js';
+import {correctAnswerFrom,userAnswerFrom} from '../attempt-utils.js';
 
 const root=path.resolve(import.meta.dirname,'..');
 const files=fs.readdirSync(root).filter((name)=>fs.statSync(path.join(root,name)).isFile());
@@ -84,6 +85,8 @@ const legacySummary=summarizeWrongItems([
 ]);
 if(!legacySummary.topWrongWords[0]?.meaning)fail('answer-catalog.js','legacy English meanings are not restored');
 if(legacySummary.wrongQuestions.some(function(item){return!item.correctAnswer;}))fail('answer-catalog.js','legacy correct answers are not restored');
+if(userAnswerFrom('解析（你選了：低溫、高壓）')!=='低溫、高壓'||userAnswerFrom('你寫的／選的：hypotesis')!=='hypotesis')fail('attempt-utils.js','selected wrong answers are not parsed');
+if(correctAnswerFrom('正解：高溫、低壓　·　解析')!=='高溫、低壓')fail('attempt-utils.js','correct answer is not parsed');
 if(attemptIdFromScoreId('chem-2-1')!=='chem-2'||attemptIdFromScoreId('chem-2-2')!==null||attemptIdFromScoreId('chem-2-3')!==null)fail('stats-utils.js','Chemistry chapter 2 attempts are not canonicalized');
 const oldStore=new Map([['nx:score:en-book-l1','88'],['nx:time:en-book-l1','123'],['nx:synced:old','1'],['nx:theme','dark']]);
 const storageMock={get length(){return oldStore.size;},key(index){return[...oldStore.keys()][index]??null;},getItem(key){return oldStore.get(key)??null;},setItem(key,value){oldStore.set(key,String(value));},removeItem(key){oldStore.delete(key);}};
@@ -95,6 +98,12 @@ if(/id=["'](?:openAt|closeAt)["']/.test(manageSource))fail('manage.html','schedu
 const meSource=fs.readFileSync(path.join(root,'me.html'),'utf8');
 if(/id=["']passwordForm["']/.test(meSource))fail('me.html','regular users can still change passwords');
 if(!fs.existsSync(path.join(root,'history.html'))||!fs.existsSync(path.join(root,'history.js')))fail('history','full learning history page is missing');
+const loginSource=fs.readFileSync(path.join(root,'login.html'),'utf8');
+if(!/class=["']login-page["']/.test(loginSource)||!loginSource.includes('login-backdrop')||!loginSource.includes('viewport-fit=cover'))fail('login.html','mobile glass login layout is incomplete');
+const readingSource=fs.readFileSync(path.join(root,'ch-reading.html'),'utf8');
+if(!/你選了：['"]?\s*\+\s*w\.mine/.test(readingSource))fail('ch-reading.html','selected wrong answer is not rendered for persistence');
+const mathSource=fs.readFileSync(path.join(root,'math-1.html'),'utf8');
+if(!mathSource.includes('wrong.push({q:q, mine:picked})')||!mathSource.includes('item.mine'))fail('math-1.html','selected wrong answer is not retained');
 
 if(errors.length){
   console.error(`Validation failed with ${errors.length} issue(s):`);

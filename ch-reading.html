@@ -819,7 +819,7 @@ function finish(){
     wrongList.forEach(function(w){
       var d = document.createElement('div');
       d.className = 'wrongrow';
-      d.innerHTML = '<b>' + w.q.q + '</b><span>正解：' + w.q.a + '　·　' + w.q.why + '</span>';
+      d.innerHTML = '<b>' + w.q.q + '</b><span>正解：' + w.q.a + '　·　' + w.q.why + '　·　你選了：' + w.mine + '</span>';
       wrap.appendChild(d);
     });
   }else{

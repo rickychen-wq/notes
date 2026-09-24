@@ -3,6 +3,7 @@ import {
   serverTimestamp,setDoc,signOut,subjectFromPage,writeBatch
 } from './firebase-core.js';
 import {attemptIdFromScoreId,discardLegacyScores} from './stats-utils.js';
+import {clean,correctAnswerFrom,userAnswerFrom} from './attempt-utils.js';
 
 const SPECIAL_PAGES=new Set(['index','me','manage','history','login']);
 const pageId=pageIdFromPath();
@@ -93,21 +94,9 @@ async function flushActivity(){
   finally{activity.flushing=false;}
 }
 
-function clean(value){return String(value||'').replace(/\s+/g,' ').trim();}
-
 function textWithout(element,selectors){
   const clone=element.cloneNode(true);selectors.forEach(function(selector){clone.querySelectorAll(selector).forEach(function(el){el.remove();});});
   return clean(clone.textContent);
-}
-
-function userAnswerFrom(value){
-  const match=clean(value).match(/你(?:寫的／選的|寫的|選了)[：:\s]*([^（）·\n]+)/);
-  return match?clean(match[1]):'';
-}
-
-function correctAnswerFrom(value){
-  const match=clean(value).match(/(?:正解|正確答案)[：:\s]*([^·（\n]+)/);
-  return match?clean(match[1]):'';
 }
 
 function collectWrongItems(){
@@ -131,7 +120,7 @@ function collectWrongItems(){
   });
   document.querySelectorAll('#rWrong .wi').forEach(function(row){
     add({question:clean(row.querySelector('.qq')?.textContent),correctAnswer:clean(row.querySelector('.aa')?.textContent),
-      userAnswer:'',lesson,subject});
+      userAnswer:userAnswerFrom(row.querySelector('.mine')?.textContent),lesson,subject});
   });
   document.querySelectorAll('.q.wrong').forEach(function(row){
     const correct=clean(row.querySelector('.answer b')?.textContent);if(!correct)return;
