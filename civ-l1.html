@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>公民第 1 章｜社會規範與法治建構</title>
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+})();
+</script>
+<style>
+:root{
+  --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+  --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;
+  --gold:#c8912b;--accent:#a05a3f;--accent2:#8a6a3f;
+}
+html[data-theme="dark"]{
+  --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+  --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;
+  --gold:#e8b73d;--accent:#e8a07c;--accent2:#dcb887;
+}
+@media (prefers-color-scheme: dark){
+  html:not([data-theme="light"]){
+    --bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+    --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;
+    --gold:#e8b73d;--accent:#e8a07c;--accent2:#dcb887;
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;
+  background:var(--bg);color:var(--label);font-size:17px;line-height:1.6;
+  padding-bottom:calc(48px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+.nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+  border-bottom:.5px solid var(--sep)}
+.nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+.nxbar span{font-size:13px;color:var(--label2)}
+header{position:sticky;top:0;z-index:20;padding:10px 16px 8px;
+  background:color-mix(in srgb,var(--bg) 82%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:.5px solid var(--sep)}
+header h1{font-size:23px;font-weight:750;letter-spacing:-.5px;margin:0}
+.sub{font-size:13px;color:var(--label2);margin-top:2px}
+nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+nav button{min-width:0;flex:1;border:none;background:transparent;font-family:inherit;font-size:12.5px;
+  font-weight:600;color:var(--label);padding:7px 2px;border-radius:7px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+main{padding:0 16px;max-width:720px;margin:0 auto}
+.hero{padding:22px 4px 7px}
+.hero .kicker{font-size:13px;font-weight:650;color:var(--accent)}
+.hero h2{font-size:24px;font-weight:750;letter-spacing:-.4px;margin:4px 0 2px}
+.hero .zh{font-size:15px;color:var(--label2)}
+h3{font-size:13px;font-weight:650;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+.card{background:var(--card);border-radius:12px;overflow:hidden}
+.blk{padding:14px 16px;border-top:.5px solid var(--sep)}
+.blk:first-child{border-top:none}
+.blk h4{margin:0 0 7px;font-size:16px;font-weight:700;color:var(--accent)}
+.blk p{margin:0;font-size:15px}
+.blk ul{margin:5px 0 0;padding-left:20px;font-size:15px}
+.blk li{margin:5px 0}
+.sm{font-size:14px;color:var(--label2)}
+.key{background:color-mix(in srgb,var(--gold) 20%,transparent);border-radius:4px;padding:0 4px;font-weight:650}
+.flow{font-size:15px;background:var(--fill);border-radius:9px;padding:10px 12px;line-height:1.9}
+.warn{border-left:3px solid var(--red);padding:9px 12px;margin-top:9px;font-size:14.5px;
+  background:color-mix(in srgb,var(--red) 8%,transparent);border-radius:0 8px 8px 0}
+.warn b{color:var(--red)}
+.note{border-left:3px solid var(--accent);padding:9px 12px;margin-top:9px;font-size:14.5px;
+  background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 8px 8px 0}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{padding:9px 10px;border-top:.5px solid var(--sep);vertical-align:top;text-align:left}
+th{font-weight:650;color:var(--label2);font-size:13px;background:var(--fill)}
+tr:first-child td{border-top:none}
+.step{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;padding:11px 0;border-top:.5px solid var(--sep)}
+.step:first-child{border-top:none;padding-top:0}
+.step:last-child{padding-bottom:0}
+.step .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-size:13px;font-weight:750}
+.step b{font-size:15px}.step p{font-size:14px;color:var(--label2);margin:2px 0 0}
+footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+</style>
+</head>
+<body>
+<div class="nxbar"><a href="s-civics.html">◀ 回目錄</a><span>公民 · 第 1 章</span></div>
+
+<header>
+  <div><h1>社會規範與法治建構</h1><div class="sub">第 1 章 · 段考核心重點</div></div>
+  <nav role="tablist" aria-label="章節分頁">
+    <button role="tab" aria-selected="true" data-t="1">社會規範</button>
+    <button role="tab" aria-selected="false" data-t="2">規範變遷</button>
+    <button role="tab" aria-selected="false" data-t="3">民主立法</button>
+    <button role="tab" aria-selected="false" data-t="4">法律適用</button>
+  </nav>
+</header>
+
+<main>
+<section data-p="1">
+  <div class="hero"><div class="kicker">第一節</div><h2>社會規範如何影響生活</h2><div class="zh">先分清楚規範的功能與控制方式</div></div>
+
+  <h3>核心概念</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>社會規範</h4>
+      <p>社會成員共同認可並願意遵守的行為準則。它讓人能預測彼此行為，主要作用是<span class="key">維持社會秩序</span>與<span class="key">形成社會控制</span>。</p>
+    </div>
+    <div class="blk">
+      <h4>三種社會控制</h4>
+      <div class="wrap"><table>
+        <tr><th>類型</th><th>判斷重點</th><th>例子</th></tr>
+        <tr><td><b>正式外在控制</b></td><td>有法律、政府與強制力</td><td>警察開罰、法院判決</td></tr>
+        <tr><td><b>非正式外在控制</b></td><td>來自輿論、習俗或團體壓力</td><td>批評、讚賞、排斥</td></tr>
+        <tr><td><b>內在控制</b></td><td>價值已被個人內化</td><td>良心不安、羞愧</td></tr>
+      </table></div>
+      <div class="warn"><b>判斷方式：</b>看「迫使他守規範的力量從哪裡來」，不是只看他做了什麼。</div>
+    </div>
+  </div>
+
+  <h3>規範也可能製造不平等</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>從想法到行動</h4>
+      <div class="flow"><b>刻板印象</b>（固定認知） → <b>偏見</b>（負面評價） → <b>歧視</b>（不公平行動）</div>
+    </div>
+    <div class="blk">
+      <h4>制度性歧視</h4>
+      <p>現行法律、政策或日常慣例累積後，讓特定群體長期處於不利地位。<b>不一定有人故意歧視</b>，結果仍可能不公平。</p>
+    </div>
+    <div class="blk">
+      <h4>性別規範常考名詞</h4>
+      <ul>
+        <li><b>玻璃天花板：</b>表面可升遷，實際存在無形阻礙。</li>
+        <li><b>貧窮女性化：</b>女性因照顧責任、就業機會與薪資差異，更容易陷入貧窮。</li>
+        <li><b>性別主流化：</b>政策各階段都評估不同性別受到的影響，追求實質平等。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section data-p="2" hidden>
+  <div class="hero"><div class="kicker">第二節</div><h2>規範何時需要改變</h2><div class="zh">傳統與多數認同，不等於永遠合理</div></div>
+
+  <h3>規範會隨社會改變</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>檢查標準</h4>
+      <p>當價值觀、人權觀念或生活環境改變，原有規範就可能被質疑。判斷重點是：<span class="key">是否侵害基本人權</span>，而不是「以前一直都這樣」。</p>
+    </div>
+    <div class="blk">
+      <h4>課本的重要例子</h4>
+      <ul>
+        <li><b>扶養父母：</b>不再被視為毫無條件的義務，法院會考量父母過去是否盡到扶養責任。</li>
+        <li><b>家庭暴力：</b>從家庭私事轉為需要法律介入的公共問題。</li>
+        <li><b>種族隔離、童婚：</b>即使存在已久，只要侵害人權仍應改變。</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>科技帶來的新挑戰</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th>科技</th><th>主要爭議</th></tr>
+        <tr><td><b>人工智慧</b></td><td>大量蒐集個資可能侵犯隱私；訓練資料可能造成演算法偏見。</td></tr>
+        <tr><td><b>網路科技</b></td><td>偷拍、散布私密影像等新型犯罪，使法律必須持續修正。</td></tr>
+        <tr><td><b>生物科技</b></td><td>器官複製、基因改造能治病，也可能造成生命倫理與資源不平等問題。</td></tr>
+      </table></div>
+      <div class="note">科技通常比法律發展得快，所以要透過公共討論，在科技效益、倫理與人權之間重新建立規範。</div>
+    </div>
+  </div>
+</section>
+
+<section data-p="3" hidden>
+  <div class="hero"><div class="kicker">第三節</div><h2>民主立法與學生自治</h2><div class="zh">程序正確，才能避免權力任意運作</div></div>
+
+  <h3>法律制定流程</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="flow"><b>提案</b> → <b>審議</b> → <b>公布</b> → <b>施行</b></div>
+      <p class="sm" style="margin-top:8px">政府機關可提出法律案；立法委員的提案須有 <b>15 人以上連署</b>。</p>
+    </div>
+    <div class="blk">
+      <h4>審議階段</h4>
+      <div class="wrap"><table>
+        <tr><th>階段</th><th>重點</th></tr>
+        <tr><td><b>一讀</b></td><td>宣讀法律案名稱，通常交付委員會審查。</td></tr>
+        <tr><td><b>委員會</b></td><td>專業審查，可舉行公聽會；爭議也可進行黨團協商。</td></tr>
+        <tr><td><b>二讀</b></td><td>逐條討論、修改與表決，是最重要的階段。</td></tr>
+        <tr><td><b>三讀</b></td><td>原則上只能修正文字，不再大幅更動內容。</td></tr>
+      </table></div>
+      <div class="warn"><b>最常考：</b>實質逐條討論在二讀；三讀不是再從頭審一次。</div>
+    </div>
+    <div class="blk">
+      <h4>公布與施行</h4>
+      <p>法律經三讀通過後，仍須由總統公布。若沒有另訂施行日期，原則上自公布日起算至<span class="key">第 3 日</span>生效。</p>
+    </div>
+  </div>
+
+  <h3>學生自治</h3>
+  <div class="card">
+    <div class="blk">
+      <p>學生可提出意見、選出代表、參與校務會議並共同制定校園規範。這是在校園中練習民主參與。</p>
+      <div class="note"><b>自治不等於不受限制：</b>學生享有參與權，也要遵守法律與正當制定的校規，並對共同決定負責。</div>
+    </div>
+  </div>
+</section>
+
+<section data-p="4" hidden>
+  <div class="hero"><div class="kicker">第四節</div><h2>法律如何解釋與適用</h2><div class="zh">先找法條意思，再判斷個案是否符合</div></div>
+
+  <h3>四種解釋方法</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="wrap"><table>
+        <tr><th>方法</th><th>判斷依據</th></tr>
+        <tr><td><b>文義解釋</b></td><td>法條文字的一般意思。</td></tr>
+        <tr><td><b>歷史解釋</b></td><td>制定背景、立法資料及當時立法者的想法。</td></tr>
+        <tr><td><b>體系解釋</b></td><td>與其他法條及整體法律制度一起理解。</td></tr>
+        <tr><td><b>目的解釋</b></td><td>依法律想保護的價值與目的判斷。</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <h3>法律適用的五項原則</h3>
+  <div class="card">
+    <div class="blk">
+      <ul>
+        <li><b>法規位階：</b>憲法 ＞ 法律 ＞ 命令；下位規範牴觸上位規範時無效。</li>
+        <li><b>誠實信用：</b>行使權利與履行義務時，不能欺騙或違背信賴。</li>
+        <li><b>禁止權利濫用：</b>不能以損害他人為主要目的來行使權利。</li>
+        <li><b>特別法優先：</b>同一事件同時適用普通法與特別法時，先用特別法。</li>
+        <li><b>程序法優先：</b>法院先依程序法受理、審判，再依實體法判斷權利義務。</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>實際套用法律</h3>
+  <div class="card">
+    <div class="blk">
+      <div class="step"><div class="n">1</div><div><b>確認法律規範</b><p>找出可能適用的法條與構成要件。</p></div></div>
+      <div class="step"><div class="n">2</div><div><b>判斷能否適用</b><p>把案件事實與法條要件逐一比較。</p></div></div>
+      <div class="step"><div class="n">3</div><div><b>衡量法律效果</b><p>要件全部符合，才產生法條規定的效果。</p></div></div>
+    </div>
+  </div>
+
+  <h3>考前最後確認</h3>
+  <div class="card">
+    <div class="blk">
+      <ul>
+        <li>法律解釋可以綜合多種方法，不是只能選一種。</li>
+        <li>實體法原則上不溯及既往；刑法有「新法較有利時用新法」的例外。</li>
+        <li>程序進行中若程序法修正，原則上改用新的程序法。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>依課本內容重新整理 · 僅保留段考核心</footer>
+
+<script>
+var tabs=document.querySelectorAll('nav button');
+var panels=document.querySelectorAll('section[data-p]');
+tabs.forEach(function(tab){
+  tab.addEventListener('click',function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected',String(x===tab)); });
+    panels.forEach(function(panel){ panel.hidden=panel.dataset.p!==tab.dataset.t; });
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
