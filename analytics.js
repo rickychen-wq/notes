@@ -1,5 +1,5 @@
 import {SUBJECT_LABELS,Timestamp,collection,currentDay,db,getDocs,limit,orderBy,query,timestampToDate,where} from './firebase-core.js';
-import {summarizeWrongItems} from './stats-utils.js';
+import {summarizeWrongItems} from './wrong-items.js';
 
 function emptyDays(count){
   const list=[];for(let i=count-1;i>=0;i--) list.push({day:currentDay(-i),activeSeconds:0,pageViews:0,quizAttempts:0,subjectSeconds:{}});

@@ -2,13 +2,17 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import {execFileSync} from 'node:child_process';
-import {attemptIdFromScoreId,discardLegacyScores,summarizeWrongItems} from '../stats-utils.js';
+import {attemptIdFromScoreId,discardLegacyScores} from '../stats-utils.js';
+import {summarizeWrongItems} from '../wrong-items.js';
 
 const root=path.resolve(import.meta.dirname,'..');
 const files=fs.readdirSync(root).filter((name)=>fs.statSync(path.join(root,name)).isFile());
 const htmlFiles=files.filter((name)=>name.endsWith('.html')).sort();
 const jsFiles=files.filter((name)=>name.endsWith('.js')).sort();
 const errors=[];
+
+try{execFileSync(process.execPath,[path.join(root,'scripts','build-answer-catalog.mjs'),'--check'],{stdio:'pipe'});}
+catch(error){fail('answer-catalog.js',String(error.stderr||error.message).trim());}
 
 function fail(file,message){errors.push(`${file}: ${message}`);}
 function localTarget(value){
@@ -73,6 +77,13 @@ if(wrongSummary.wrongQuestions.length!==5)fail('stats-utils.js','non-word mistak
 const detailedSummary=summarizeWrongItems([{subject:'english',pageTitle:'字彙 Chapter 10',wrongItems:[{term:'Hypothesis',meaning:'n. 假設',correctAnswer:'Hypothesis',userAnswer:'hypotesis'}]},{subject:'chemistry',pageTitle:'化學 第 2 章',wrongItems:[{question:'理想氣體的適用條件',correctAnswer:'高溫、低壓',userAnswer:'低溫、高壓'}]}]);
 if(detailedSummary.topWrongWords[0]?.meaning!=='n. 假設'||detailedSummary.topWrongWords[0]?.lessons[0]?.lesson!=='字彙 Chapter 10')fail('stats-utils.js','English word details or lesson grouping were lost');
 if(detailedSummary.wrongQuestions[0]?.correctAnswer!=='高溫、低壓'||detailedSummary.wrongQuestions[0]?.userAnswer!=='低溫、高壓')fail('stats-utils.js','wrong-question answer details were lost');
+const legacySummary=summarizeWrongItems([
+  {pageId:'en-book-l1',pageTitle:'英文課本 Lesson 1',subject:'english',wrongItems:['employ']},
+  {pageId:'chem-2',pageTitle:'化學 第 2 章',subject:'chemistry',wrongItems:['理想氣體方程式為何？']},
+  {pageId:'math-1',pageTitle:'數學 第 1 章',subject:'math',wrongItems:['sin 18° 的值是多少？']}
+]);
+if(!legacySummary.topWrongWords[0]?.meaning)fail('answer-catalog.js','legacy English meanings are not restored');
+if(legacySummary.wrongQuestions.some(function(item){return!item.correctAnswer;}))fail('answer-catalog.js','legacy correct answers are not restored');
 if(attemptIdFromScoreId('chem-2-1')!=='chem-2'||attemptIdFromScoreId('chem-2-2')!==null||attemptIdFromScoreId('chem-2-3')!==null)fail('stats-utils.js','Chemistry chapter 2 attempts are not canonicalized');
 const oldStore=new Map([['nx:score:en-book-l1','88'],['nx:time:en-book-l1','123'],['nx:synced:old','1'],['nx:theme','dark']]);
 const storageMock={get length(){return oldStore.size;},key(index){return[...oldStore.keys()][index]??null;},getItem(key){return oldStore.get(key)??null;},setItem(key,value){oldStore.set(key,String(value));},removeItem(key){oldStore.delete(key);}};
