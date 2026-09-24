@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>公民 · 段考複習</title>
 <script>
 (function(){
@@ -21,7 +22,6 @@
   };
   window.nxTheme=function(){ try{ return localStorage.getItem(k)||'system'; }catch(e){ return 'system'; } };
   window.nxScore=function(id){ try{ var v=localStorage.getItem('nx:score:'+id); return v===null?null:Number(v); }catch(e){ return null; } };
-  window.nxHide=function(){ try{ return localStorage.getItem('nx:hide')==='1'; }catch(e){ return false; } };
 })();
 </script>
 <style>
@@ -100,6 +100,10 @@
   .badge.wait{color:var(--label3);background:var(--fill)}
   footer{text-align:center;font-size:12px;color:var(--label3);padding:34px 18px 0}
 </style>
+
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
 </head>
 <body>
 
@@ -115,7 +119,7 @@
     </div>
   </div>
   <h2 class="g rise" style="animation-delay:120ms">課本</h2><div class="list"><a class="it pressable rise" href="civ-l1.html" style="animation-delay:165ms"><div class="hd"><div><div class="tt">Lesson 1</div><div class="ss">社會規範與法治建構</div></div><span class="badge dn">開啟</span></div><div class="tags"><span>社會規範</span><span>民主立法</span><span>法律適用</span></div></a><div class="it todo rise" style="animation-delay:210ms"><div class="hd"><div><div class="tt">Lesson 2</div></div><span class="badge wait">整理中</span></div></div></div>
-  <footer>分數只存在你自己的瀏覽器</footer>
+  <footer>測驗成績會同步到你的帳戶</footer>
 </main>
 
 <script>
@@ -124,8 +128,7 @@ document.querySelectorAll('.it[data-id]').forEach(function(el){
   var b=el.querySelector('[data-badge]'); if(!b) return;
   var sc=nxScore(el.dataset.id);
   if(sc===null) return;
-  if(nxHide()){ b.className='badge dn'; b.textContent='做過'; }
-  else { b.className='badge sc'; b.textContent=sc+'%'; }
+  b.className='badge sc'; b.textContent=sc+'%';
 });
 </script>
 </body>

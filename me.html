@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>我的學習狀況｜段考複習</title>
+<link rel="stylesheet" href="account-pages.css"><link rel="stylesheet" href="app-shell.css">
+<script>(function(){try{var t=localStorage.getItem('nx:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<script src="auth-prelude.js"></script><script type="module" src="auth-gate.js"></script>
+</head>
+<body>
+<div class="ambient"><i style="width:340px;height:340px;left:-100px;top:-130px;background:#0a84ff"></i><i style="width:320px;height:320px;right:-100px;top:38%;background:#34c759;animation-delay:2s"></i></div>
+<div class="sitebar"><a href="index.html">◀ 回首頁</a><span class="sitebar__mark">LEARNING</span></div>
+<main class="page">
+  <section class="hero"><div class="hero__row"><div><p class="eyebrow">個人學習狀況</p><h1 id="profileTitle">載入中</h1><p class="lead">近 30 天的閱讀與測驗紀錄。</p></div><span class="pill" id="rolePill">學習者</span></div></section>
+  <div class="stats" id="stats"><div class="stat-card"><b>—</b><span>今天閱讀</span></div><div class="stat-card"><b>—</b><span>30 天閱讀</span></div><div class="stat-card"><b>—</b><span>測驗平均</span></div><div class="stat-card"><b>—</b><span>最常讀科目</span></div></div>
+  <h2 class="section-title">最近 7 天</h2><section class="card"><div class="card__body"><div class="trend" id="trend"><div class="loading"><span class="spinner"></span></div></div></div></section>
+  <div class="grid-2">
+    <div><h2 class="section-title">科目分布</h2><section class="card rows" id="subjects"><div class="loading"><span class="spinner"></span></div></section></div>
+    <div><h2 class="section-title">最近測驗</h2><section class="card rows" id="attempts"><div class="loading"><span class="spinner"></span></div></section></div>
+  </div>
+  <h2 class="section-title">常錯英文</h2><section class="card rows" id="wrongWords"><div class="loading"><span class="spinner"></span></div></section>
+  <h2 class="section-title">其他錯題</h2><section class="card rows" id="wrongQuestions"><div class="loading"><span class="spinner"></span></div></section>
+  <h2 class="section-title">帳戶</h2><section class="card"><div class="card__body"><form id="passwordForm"><div class="grid-2"><label class="field"><span>新密碼</span><input id="newPassword" type="password" minlength="6" autocomplete="new-password" required></label><label class="field"><span>再次輸入</span><input id="confirmPassword" type="password" minlength="6" autocomplete="new-password" required></label></div><div id="passwordNotice" class="notice" hidden></div><div class="actions"><button class="primary" type="submit">更新密碼</button><button class="secondary" id="logoutButton" type="button">登出</button></div></form></div></section>
+</main>
+<script type="module" src="me.js"></script>
+</body>
+</html>

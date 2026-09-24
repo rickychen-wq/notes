@@ -1,0 +1,50 @@
+:root{
+  --nx-bg:#f2f2f7;--nx-card:#ffffff;--nx-label:#000000;--nx-label2:#3c3c4399;
+  --nx-label3:#3c3c434d;--nx-sep:#3c3c4326;--nx-fill:#78788014;--nx-blue:#0a84ff;
+  --nx-green:#34c759;--nx-red:#ff3b30;--nx-gold:#c8912b;--nx-shadow:0 10px 34px rgba(0,0,0,.12)
+}
+html[data-theme="dark"]{
+  --nx-bg:#0b0b0d;--nx-card:#1c1c1e;--nx-label:#fff;--nx-label2:#ebebf599;
+  --nx-label3:#ebebf54d;--nx-sep:#54545866;--nx-fill:#7878802e;--nx-green:#30d158;
+  --nx-red:#ff453a;--nx-gold:#e8b73d;--nx-shadow:0 12px 38px rgba(0,0,0,.52)
+}
+@media (prefers-color-scheme:dark){
+  html:not([data-theme="light"]){
+    --nx-bg:#0b0b0d;--nx-card:#1c1c1e;--nx-label:#fff;--nx-label2:#ebebf599;
+    --nx-label3:#ebebf54d;--nx-sep:#54545866;--nx-fill:#7878802e;--nx-green:#30d158;
+    --nx-red:#ff453a;--nx-gold:#e8b73d;--nx-shadow:0 12px 38px rgba(0,0,0,.52)
+  }
+}
+html.nx-auth-pending body{visibility:hidden}
+body.nx-has-account{padding-bottom:max(92px,calc(58px + env(safe-area-inset-bottom)))!important}
+.nx-account{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:9998;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Segoe UI",sans-serif}
+.nx-account__button{display:flex;align-items:center;gap:9px;max-width:210px;padding:7px 12px 7px 7px;
+  color:var(--nx-label);background:color-mix(in srgb,var(--nx-card) 88%,transparent);border:.5px solid var(--nx-sep);
+  border-radius:999px;box-shadow:var(--nx-shadow);backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);font:inherit;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+.nx-account__button:active{transform:scale(.97)}
+.nx-account__avatar{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;color:#fff;
+  background:linear-gradient(145deg,#0a84ff,#7a5af8);font-size:14px;font-weight:800;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.28)}
+.nx-account__copy{min-width:0;text-align:left;line-height:1.15}.nx-account__name{display:block;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;font-size:13px;font-weight:750}.nx-account__role{display:block;margin-top:3px;color:var(--nx-label2);font-size:10px}
+.nx-account__menu{position:absolute;right:0;bottom:52px;width:190px;padding:6px;background:var(--nx-card);
+  border:.5px solid var(--nx-sep);border-radius:16px;box-shadow:var(--nx-shadow);transform-origin:bottom right;
+  animation:nx-pop .18s cubic-bezier(.22,1,.36,1)}
+.nx-account__menu[hidden]{display:none}.nx-account__menu a,.nx-account__menu button{display:flex;align-items:center;width:100%;
+  min-height:40px;padding:9px 11px;border:0;border-radius:11px;color:var(--nx-label);background:transparent;
+  text-decoration:none;font:600 14px/1.3 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;cursor:pointer}
+.nx-account__menu a:hover,.nx-account__menu button:hover{background:var(--nx-fill)}
+.nx-account__menu .nx-danger{color:var(--nx-red)}
+.nx-connection-error{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:24px;background:var(--nx-bg);
+  color:var(--nx-label);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif}
+.nx-connection-error__card{width:min(420px,100%);padding:28px;background:var(--nx-card);border:.5px solid var(--nx-sep);
+  border-radius:24px;box-shadow:var(--nx-shadow);text-align:center}.nx-connection-error h1{margin:0 0 8px;font-size:24px}
+.nx-connection-error p{margin:0 0 20px;color:var(--nx-label2);font-size:14px}.nx-connection-error button{border:0;
+  border-radius:12px;padding:11px 18px;background:var(--nx-blue);color:#fff;font-weight:750;cursor:pointer}
+@keyframes nx-pop{from{opacity:0;transform:translateY(7px) scale(.96)}to{opacity:1;transform:none}}
+@view-transition{navigation:auto}::view-transition-old(root){animation:120ms ease-out both nx-page-out}
+::view-transition-new(root){animation:260ms cubic-bezier(.22,1,.36,1) both nx-page-in}
+@keyframes nx-page-out{to{opacity:0;transform:scale(.992)}}@keyframes nx-page-in{from{opacity:0;transform:translateY(7px)}}
+@media(max-width:520px){.nx-account__button{padding:7px}.nx-account__copy{display:none}.nx-account__avatar{width:34px;height:34px}}
+@media (prefers-reduced-motion:reduce){.nx-account__menu{animation:none}::view-transition-old(root),::view-transition-new(root){animation:none}}

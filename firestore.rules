@@ -1,0 +1,96 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function systemExists() {
+      return exists(/databases/$(database)/documents/settings/system);
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function registrationOpen() {
+      let config = get(/databases/$(database)/documents/settings/system).data;
+      return systemExists()
+        && config.registrationOpen == true
+        && (config.openAt == null || request.time >= config.openAt)
+        && (config.closeAt == null || request.time <= config.closeAt);
+    }
+
+    match /settings/system {
+      allow read: if true;
+      allow create: if signedIn()
+        && !systemExists()
+        && request.resource.data.adminUid == request.auth.uid
+        && getAfter(/databases/$(database)/documents/admins/$(request.auth.uid)).data.uid == request.auth.uid
+        && getAfter(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      allow update: if isAdmin()
+        && request.resource.data.adminUid == resource.data.adminUid;
+      allow delete: if false;
+    }
+
+    match /admins/{uid} {
+      allow read: if isAdmin();
+      allow create: if signedIn()
+        && uid == request.auth.uid
+        && !systemExists()
+        && request.resource.data.uid == uid
+        && getAfter(/databases/$(database)/documents/settings/system).data.adminUid == uid;
+      allow update, delete: if false;
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.uid == uid
+        && request.resource.data.name is string
+        && request.resource.data.nameKey is string
+        && (
+          (request.resource.data.role == 'user' && registrationOpen())
+          ||
+          (request.resource.data.role == 'admin'
+            && !systemExists()
+            && getAfter(/databases/$(database)/documents/settings/system).data.adminUid == uid
+            && getAfter(/databases/$(database)/documents/admins/$(uid)).data.uid == uid)
+        );
+      allow update: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.name == resource.data.name
+        && request.resource.data.nameKey == resource.data.nameKey
+        && request.resource.data.role == resource.data.role;
+      allow delete: if false;
+
+      match /daily/{day} {
+        allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+        allow create, update: if signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.uid == uid;
+        allow delete: if false;
+      }
+
+      match /events/{eventId} {
+        allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+        allow create, update: if signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.uid == uid;
+        allow delete: if false;
+      }
+
+      match /attempts/{attemptId} {
+        allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+        allow create: if signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.uid == uid;
+        allow update, delete: if false;
+      }
+    }
+  }
+}

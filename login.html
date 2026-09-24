@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>登入｜段考複習</title>
+<link rel="stylesheet" href="account-pages.css"><link rel="stylesheet" href="app-shell.css">
+<script>(function(){try{var t=localStorage.getItem('nx:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}})()</script>
+</head>
+<body>
+<div class="ambient"><i style="width:330px;height:330px;left:-90px;top:-100px;background:#0a84ff"></i><i style="width:300px;height:300px;right:-100px;bottom:8%;background:#7a5af8;animation-delay:2s"></i></div>
+<main class="page page--narrow">
+  <div class="login-brand"><p class="eyebrow">115-1 第一次段考</p><h1>回來複習。</h1><p class="lead">你的筆記、測驗和學習進度都在同一個地方。</p></div>
+  <section class="card login-card">
+    <div class="card__body">
+      <div class="segmented" id="authTabs"><button type="button" data-mode="login" aria-pressed="true">登入</button><button type="button" data-mode="register" aria-pressed="false">註冊</button></div>
+      <div id="systemNotice" class="notice" hidden></div>
+      <div id="formNotice" class="notice notice--error" role="status" aria-live="polite" hidden></div>
+      <form id="loginForm">
+        <label class="field"><span>姓名</span><input id="loginName" name="name" autocomplete="username" maxlength="32" required></label>
+        <label class="field"><span>密碼</span><input id="loginPassword" name="password" type="password" autocomplete="current-password" minlength="6" required></label>
+        <button class="primary" type="submit">登入</button>
+      </form>
+      <form id="registerForm" hidden>
+        <label class="field"><span>姓名</span><input id="registerName" name="name" autocomplete="username" maxlength="32" required></label>
+        <label class="field"><span>密碼</span><input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="6" required></label>
+        <label class="field"><span>確認密碼</span><input id="registerConfirm" name="confirm" type="password" autocomplete="new-password" minlength="6" required></label>
+        <button class="primary" type="submit" id="registerSubmit">建立帳號</button>
+      </form>
+    </div>
+  </section>
+  <p class="lead" style="text-align:center;margin-top:18px">帳號只使用姓名作為登入 ID；不會公開顯示 Email。</p>
+</main>
+<script type="module" src="login.js"></script>
+</body>
+</html>

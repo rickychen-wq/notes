@@ -1,5 +1,5 @@
 (function(){
-  var key='nx:hide';
+  var key='nx:hide-cn';
   try{ if(localStorage.getItem(key)==='1') document.body.classList.add('hide-cn'); }catch(e){}
   var cn=document.getElementById('cnbtn');
   function sync(){if(!cn)return;var off=document.body.classList.contains('hide-cn');cn.classList.toggle('off',off);cn.textContent=off?'顯示中文':'隱藏中文';}

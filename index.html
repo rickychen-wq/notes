@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>段考複習</title>
 <script>
 (function(){
@@ -20,8 +21,7 @@
     if(window.nxSyncTheme) window.nxSyncTheme();
   };
   window.nxTheme=function(){ try{ return localStorage.getItem(k)||'system'; }catch(e){ return 'system'; } };
-  window.nxScore=function(id){ try{ var v=localStorage.getItem('nx:score:'+id); return v===null?null:Number(v); }catch(e){ return null; } };
-  window.nxHide=function(){ try{ return localStorage.getItem('nx:hide')==='1'; }catch(e){ return false; } };
+  try{ localStorage.removeItem('nx:hide'); }catch(e){}
 })();
 </script>
 <style>
@@ -106,16 +106,21 @@
   .seg button{border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:600;
     color:var(--label);padding:6px 12px;border-radius:7px;cursor:pointer}
   .seg button[aria-pressed="true"]{background:var(--card);box-shadow:0 2px 6px rgba(0,0,0,.16)}
-  .sw{width:50px;height:30px;border-radius:16px;background:var(--fill);border:none;position:relative;
-    cursor:pointer;transition:background .22s;flex-shrink:0}
-  .sw i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;
-    box-shadow:0 1px 4px rgba(0,0,0,.3);transition:transform .22s cubic-bezier(.22,1,.36,1)}
-  .sw[aria-pressed="true"]{background:#34c759}
-  .sw[aria-pressed="true"] i{transform:translateX(20px)}
-  .danger{border:none;background:transparent;font-family:inherit;font-size:15px;color:#ff3b30;
-    font-weight:600;cursor:pointer;padding:0}
+  .account-card{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:12px;margin:20px 0 4px}
+  .account-main,.account-metric{background:var(--card);border:.5px solid var(--ring);border-radius:18px;box-shadow:var(--shadow)}
+  .account-main{padding:17px}.account-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .account-hello{font-size:20px;font-weight:800;letter-spacing:-.4px}.account-copy{margin-top:4px;color:var(--label2);font-size:12.5px}
+  .account-role{padding:4px 8px;border-radius:999px;background:var(--fill);color:var(--label2);font-size:10px;font-weight:800}
+  .account-links{display:flex;gap:8px;margin-top:14px}.account-links a{flex:1;padding:9px 10px;border-radius:11px;background:var(--fill);
+    color:var(--blue);font-size:13px;font-weight:750;text-align:center}.account-metric{display:flex;flex-direction:column;justify-content:center;padding:17px}
+  .account-metric b{font-size:25px;letter-spacing:-.7px}.account-metric span{margin-top:3px;color:var(--label2);font-size:12px}
+  @media(max-width:520px){.account-card{grid-template-columns:1fr}.account-metric{flex-direction:row;align-items:center;justify-content:space-between;padding:14px 17px}.account-metric b{font-size:20px}.account-metric span{margin-top:0}}
   footer{text-align:center;font-size:12px;color:var(--label3);padding:34px 18px 0;line-height:1.7}
 </style>
+
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
 </head>
 <body>
 
@@ -132,6 +137,14 @@
     </div>
   </div>
 
+  <section class="account-card rise" style="animation-delay:135ms" aria-label="帳戶摘要">
+    <div class="account-main">
+      <div class="account-top"><div><div class="account-hello" id="homeGreeting">載入帳戶…</div><div class="account-copy" id="homeSummary">正在同步你的學習狀況</div></div><span class="account-role" id="homeRole">學習者</span></div>
+      <div class="account-links"><a href="me.html">我的學習狀況</a><a href="manage.html" id="manageLink" hidden>管理中心</a></div>
+    </div>
+    <div class="account-metric"><b id="homeMetric">—</b><span id="homeMetricLabel">最近 7 天閱讀</span></div>
+  </section>
+
   <div class="grid"><a class="sub pressable rise" href="s-chinese.html" style="--c:#2f7a5f;animation-delay:140ms" data-done="3" data-total="6"><div class="nm">國文</div><div class="en">Chinese</div><div class="ds">課本、講義、默寫</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">3/6</span></div></a><a class="sub pressable rise" href="s-english.html" style="--c:#3f5f9e;animation-delay:195ms" data-done="9" data-total="12"><div class="nm">英文</div><div class="en">English</div><div class="ds">課本、雜誌、4500 單</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">9/12</span></div></a><a class="sub pressable rise" href="s-math.html" style="--c:#7a4a9e;animation-delay:250ms" data-done="1" data-total="1"><div class="nm">數學</div><div class="en">Math</div><div class="ds">第 1 章 三角函數</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">1/1</span></div></a><a class="sub pressable rise" href="s-bio.html" style="--c:#3f7a4a;animation-delay:305ms" data-done="1" data-total="4"><div class="nm">生物</div><div class="en">Biology</div><div class="ds">2-1、2-2、3-1、3-2</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">1/4</span></div></a><a class="sub pressable rise" href="s-chem.html" style="--c:#2f6f6b;animation-delay:360ms" data-done="4" data-total="4"><div class="nm">化學</div><div class="en">Chemistry</div><div class="ds">第 1 章、第 2 章</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">4/4</span></div></a><a class="sub pressable rise" href="s-physics.html" style="--c:#4a5f7a;animation-delay:415ms" data-done="0" data-total="1"><div class="nm">物理</div><div class="en">Physics</div><div class="ds">範圍</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">0/1</span></div></a><a class="sub pressable rise" href="s-geo.html" style="--c:#8a6a3f;animation-delay:470ms" data-done="0" data-total="2"><div class="nm">地理</div><div class="en">Geography</div><div class="ds">課本</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">0/2</span></div></a><a class="sub pressable rise" href="s-civics.html" style="--c:#a05a3f;animation-delay:525ms" data-done="1" data-total="2"><div class="nm">公民</div><div class="en">Civics</div><div class="ds">課本</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">1/2</span></div></a></div>
 
   <h2 class="sec rise" style="animation-delay:560ms">設定</h2>
@@ -142,18 +155,10 @@
         <button data-v="system">系統</button><button data-v="light">亮</button><button data-v="dark">暗</button>
       </div>
     </div>
-    <div class="prow">
-      <div class="lb">隱藏測驗分數<small>只顯示是否做過，不顯示百分比</small></div>
-      <button class="sw" id="swHide"><i></i></button>
-    </div>
-    <div class="prow">
-      <div class="lb">清除測驗紀錄<small>分數只存在這支手機裡</small></div>
-      <button class="danger" id="btnClear">清除</button>
-    </div>
   </div>
 
   <footer>
-    分數只儲存在你自己的瀏覽器，不會上傳，別人打開連結看不到你的成績。<br>
+    學習與測驗紀錄會安全同步到你的帳戶。<br>
     內容為自行整理，僅供複習參考。
   </footer>
 </main>
@@ -173,19 +178,7 @@ document.getElementById('segTheme').addEventListener('click', function(e){
   var b=e.target.closest('button'); if(!b) return; nxSetTheme(b.dataset.v); syncSeg(); });
 syncSeg();
 
-var sw=document.getElementById('swHide');
-function syncSw(){ sw.setAttribute('aria-pressed', String(nxHide())); }
-sw.addEventListener('click', function(){
-  try{ localStorage.setItem('nx:hide', nxHide()?'0':'1'); }catch(e){}
-  syncSw(); });
-syncSw();
-
-document.getElementById('btnClear').addEventListener('click', function(){
-  if(!confirm('確定要清除所有測驗紀錄嗎？')) return;
-  try{ Object.keys(localStorage).forEach(function(k){
-    if(k.indexOf('nx:score:')===0||k.indexOf('nx:time:')===0) localStorage.removeItem(k); }); }catch(e){}
-  alert('已清除');
-});
 </script>
+<script type="module" src="home.js"></script>
 </body>
 </html>

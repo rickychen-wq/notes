@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>生物 · 段考複習</title>
 <script>
 (function(){
@@ -21,7 +22,6 @@
   };
   window.nxTheme=function(){ try{ return localStorage.getItem(k)||'system'; }catch(e){ return 'system'; } };
   window.nxScore=function(id){ try{ var v=localStorage.getItem('nx:score:'+id); return v===null?null:Number(v); }catch(e){ return null; } };
-  window.nxHide=function(){ try{ return localStorage.getItem('nx:hide')==='1'; }catch(e){ return false; } };
 })();
 </script>
 <style>
@@ -100,6 +100,10 @@
   .badge.wait{color:var(--label3);background:var(--fill)}
   footer{text-align:center;font-size:12px;color:var(--label3);padding:34px 18px 0}
 </style>
+
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
 </head>
 <body>
 
@@ -115,7 +119,7 @@
     </div>
   </div>
   <h2 class="g rise" style="animation-delay:120ms">第 2 章</h2><div class="list"><div class="it todo rise" style="animation-delay:165ms"><div class="hd"><div><div class="tt">2-1 植物組織</div><div class="ss">小單元一</div></div><span class="badge wait">整理中</span></div></div><div class="it todo rise" style="animation-delay:210ms"><div class="hd"><div><div class="tt">2-2 植物營養器官的構造</div><div class="ss">小單元二</div></div><span class="badge wait">整理中</span></div></div></div><h2 class="g rise" style="animation-delay:255ms">第 3 章</h2><div class="list"><div class="it todo rise" style="animation-delay:300ms"><div class="hd"><div><div class="tt">3-1 植物的運輸與氣體交換</div><div class="ss">水分與無機鹽的運輸 · 氣孔與皮孔</div></div><span class="badge wait">整理中</span></div></div><a class="it pressable rise" href="bio-photo.html" style="animation-delay:345ms" data-id="bio-photo"><div class="hd"><div><div class="tt">3-2 ATP 與光合作用</div><div class="ss">小單元六 · 光反應 · 52 題</div></div><span class="badge dn" data-badge>開啟</span></div><div class="tags"><span>筆記</span><span>圖解</span><span>測驗</span></div></a></div>
-  <footer>分數只存在你自己的瀏覽器</footer>
+  <footer>測驗成績會同步到你的帳戶</footer>
 </main>
 
 <script>
@@ -124,8 +128,7 @@ document.querySelectorAll('.it[data-id]').forEach(function(el){
   var b=el.querySelector('[data-badge]'); if(!b) return;
   var sc=nxScore(el.dataset.id);
   if(sc===null) return;
-  if(nxHide()){ b.className='badge dn'; b.textContent='做過'; }
-  else { b.className='badge sc'; b.textContent=sc+'%'; }
+  b.className='badge sc'; b.textContent=sc+'%';
 });
 </script>
 </body>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>管理中心｜段考複習</title>
+<link rel="stylesheet" href="account-pages.css"><link rel="stylesheet" href="app-shell.css">
+<script>(function(){try{var t=localStorage.getItem('nx:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<script src="auth-prelude.js"></script><script type="module" src="auth-gate.js"></script>
+</head>
+<body>
+<div class="ambient"><i style="width:360px;height:360px;left:-100px;top:-130px;background:#c8912b"></i><i style="width:320px;height:320px;right:-110px;top:38%;background:#7a5af8;animation-delay:2s"></i></div>
+<div class="sitebar"><a href="index.html">◀ 回首頁</a><span class="sitebar__mark">ADMIN</span></div>
+<main class="page">
+  <section class="hero"><div class="hero__row"><div><p class="eyebrow">管理中心</p><h1>全體學習狀況</h1><p class="lead">查看使用者活動、測驗表現與註冊設定。</p></div><span class="pill pill--admin">管理員</span></div></section>
+  <div class="stats" id="adminStats"><div class="stat-card"><b>—</b><span>使用者</span></div><div class="stat-card"><b>—</b><span>7 天活躍</span></div><div class="stat-card"><b>—</b><span>閱讀時間</span></div><div class="stat-card"><b>—</b><span>測驗平均</span></div></div>
+  <h2 class="section-title">註冊設定</h2><section class="card"><div class="card__body"><div class="switch"><div><h2>開放註冊</h2><p class="lead">可選擇開放與截止時間；留空代表不限時間。</p></div><button class="toggle" id="registrationToggle" type="button" aria-pressed="false" aria-label="切換註冊狀態"></button></div><div class="grid-2" style="margin-top:18px"><label class="field"><span>開始時間</span><input id="openAt" type="datetime-local"></label><label class="field"><span>截止時間</span><input id="closeAt" type="datetime-local"></label></div><div id="settingsNotice" class="notice" hidden></div><button class="primary" id="saveSettings" type="button">儲存註冊設定</button></div></section>
+  <h2 class="section-title">使用者</h2><section class="card rows" id="userRows"><div class="loading"><span class="spinner"></span></div></section>
+</main>
+<script type="module" src="manage.js"></script>
+</body>
+</html>

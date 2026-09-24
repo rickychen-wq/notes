@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)"><title>雜誌 U10–U14 複習</title><style>
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)"><link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>雜誌 U10–U14 複習</title><style>
   :root{
     --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
     --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
@@ -158,7 +159,11 @@
   .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
   .nxbar span{font-size:13px;color:var(--label2)}
   body>header{padding-top:10px !important}
-</style></head><body>
+</style>
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
+</head><body>
 <div class="nxbar"><a href="s-english.html">◀ 回目錄</a><span>英文 · 雜誌 U10–U14</span></div>
 <header><div class="titlebar"><div><h1>雜誌 U10–U14</h1><div class="sub">太空人 · 預約英文 · 澳洲大環島 · 麻醉 · 旅遊寫作</div></div><button class="cnbtn" id="cnbtn">隱藏中文</button></div><nav role="tablist"><button role="tab" aria-selected="true" data-t="1">U10–11</button><button role="tab" aria-selected="false" data-t="2">U12</button><button role="tab" aria-selected="false" data-t="3">U13</button><button role="tab" aria-selected="false" data-t="4">U14</button><button role="tab" aria-selected="false" data-t="5">測驗</button></nav></header>
 <main><section class="s-1" data-p="1"><div class="hero"><div class="kicker">UNIT 10–11 · People & Conversation</div><h2>從太空人到預約英文</h2><div class="zh">U10 看挫折後如何改寫計畫；U11 掌握訂位、預約與包車的禮貌問法。</div></div>
@@ -218,7 +223,7 @@ document.getElementById('p14').innerHTML = BANK.filter(function(v){ return v.k =
 var tabs=document.querySelectorAll('nav button'),panels=document.querySelectorAll('section[data-p]');
 tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(x){x.setAttribute('aria-selected',x===t);});panels.forEach(function(p){p.hidden=p.dataset.p!==t.dataset.t;});window.scrollTo({top:0});});});
 var cnbtn=document.getElementById('cnbtn');cnbtn.addEventListener('click',function(){var on=document.body.classList.toggle('hide-cn');cnbtn.textContent=on?'顯示中文':'隱藏中文';cnbtn.classList.toggle('off',on);});
-function norm(s){return(s||'').toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.,;:!?"()[]]/g,' ').replace(/[-–—_/]/g,' ').replace(/…/g,' ').replace(/'s/g,' ').replace(/(sb|sth|somebody|someone|something|one|ones|oneself|vr|a|an|the)/g,' ').replace(/s+/g,' ').trim();}
+function norm(s){return(s||'').toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.,;:!?"()\[\]]/g,' ').replace(/[-–—_\/]/g,' ').replace(/…/g,' ').replace(/'s\b/g,' ').replace(/\b(sb|sth|somebody|someone|something|one|ones|oneself|vr|a|an|the)\b/g,' ').replace(/\s+/g,' ').trim();}
 function lev(a,b){var m=a.length,n=b.length;if(!m)return n;if(!n)return m;var prev=[],cur=[],i,j;for(j=0;j<=n;j++)prev[j]=j;for(i=1;i<=m;i++){cur[0]=i;for(j=1;j<=n;j++)cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));var t=prev;prev=cur;cur=t;}return prev[n];}
 function judge(input,item){var got=norm(input);if(!got)return'no';var target=norm(item.en);if(got===target)return'exact';for(var i=0;i<BANK.length;i++){if(BANK[i]!==item&&norm(BANK[i].en)===got)return'no';}if(item.d){for(var j=0;j<item.d.length;j++){if(norm(item.d[j])===got)return'no';}}var tol=target.length>=9?2:(target.length>=5?1:0);return lev(got,target)<=tol?'close':'no';}
 var S={kinds:["u10","u11","u12","u13","u14","phrase"],mode:'mc',n:30},queue=[],idx=0,right=0,wrongList=[],answered=false;function $(id){return document.getElementById(id);}
