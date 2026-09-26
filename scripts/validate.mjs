@@ -103,7 +103,8 @@ if(!/class=["']login-page["']/.test(loginSource)||!loginSource.includes('login-b
 if(!loginSource.includes('Safari 或 Chrome 外部瀏覽器')||!loginSource.includes('Instagram 內建瀏覽器可能卡住'))fail('login.html','external-browser registration guidance is missing');
 if(!loginSource.includes('account-pages.css?v='))fail('login.html','login stylesheet cache busting is missing');
 const accountCssSource=fs.readFileSync(path.join(root,'account-pages.css'),'utf8');
-if(!accountCssSource.includes('min-height:100dvh')||!accountCssSource.includes('.login-card{border-right:0;border-left:0;border-radius:0;transform:none}'))fail('account-pages.css','mobile login layout is not full-bleed');
+if(!accountCssSource.includes('min-height:100dvh'))fail('account-pages.css','mobile login layout does not fill the dynamic viewport height');
+if(accountCssSource.includes('.login-card{border-right:0;border-left:0;border-radius:0'))fail('account-pages.css','mobile login card lost its original inset rounded layout');
 const firebaseSource=fs.readFileSync(path.join(root,'firebase-core.js'),'utf8');
 if(!firebaseSource.includes('initializeAuth(app')||!firebaseSource.includes('indexedDBLocalPersistence')||!firebaseSource.includes('browserLocalPersistence')||!firebaseSource.includes('browserSessionPersistence'))fail('firebase-core.js','cross-browser authentication persistence fallback is incomplete');
 if(/setPersistence\([^;]+\.catch/.test(firebaseSource))fail('firebase-core.js','authentication persistence still runs without being awaited');
