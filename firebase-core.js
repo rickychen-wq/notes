@@ -1,7 +1,7 @@
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
 import {
-  browserLocalPersistence,createUserWithEmailAndPassword,deleteUser,getAuth,onAuthStateChanged,
-  setPersistence,signInWithEmailAndPassword,signOut,updatePassword
+  browserLocalPersistence,browserSessionPersistence,createUserWithEmailAndPassword,deleteUser,indexedDBLocalPersistence,
+  initializeAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut,updatePassword
 } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
 import {
   Timestamp,collection,doc,getDoc,getDocs,getFirestore,increment,limit,orderBy,query,
@@ -19,9 +19,11 @@ export const firebaseConfig={
 };
 
 export const app=initializeApp(firebaseConfig);
-export const auth=getAuth(app);
+export const auth=initializeAuth(app,{
+  persistence:[indexedDBLocalPersistence,browserLocalPersistence,browserSessionPersistence]
+});
+export const authStateReady=auth.authStateReady();
 export const db=getFirestore(app);
-setPersistence(auth,browserLocalPersistence).catch(function(error){console.warn('Auth persistence unavailable',error);});
 
 export {
   Timestamp,collection,createUserWithEmailAndPassword,deleteUser,doc,getDoc,getDocs,increment,limit,
@@ -50,6 +52,24 @@ export async function loadProfile(uid){
 export function waitForSession(){
   if(window.NX_SESSION) return Promise.resolve(window.NX_SESSION);
   return new Promise(function(resolve){window.addEventListener('nx:auth-ready',function(){resolve(window.NX_SESSION);},{once:true});});
+}
+
+const AUTH_TRANSITION_KEY='nx:auth-transition';
+
+export function markAuthTransition(){
+  try{sessionStorage.setItem(AUTH_TRANSITION_KEY,String(Date.now()));}catch(error){}
+}
+
+export function clearAuthTransition(){
+  try{sessionStorage.removeItem(AUTH_TRANSITION_KEY);}catch(error){}
+}
+
+export function consumeAuthTransition(){
+  try{
+    const value=Number(sessionStorage.getItem(AUTH_TRANSITION_KEY));
+    sessionStorage.removeItem(AUTH_TRANSITION_KEY);
+    return Number.isFinite(value)&&Date.now()-value<120000;
+  }catch(error){return false;}
 }
 
 export function isLocalPreview(){

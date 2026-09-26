@@ -1,6 +1,6 @@
 import {
-  auth,createUserWithEmailAndPassword,db,deleteUser,doc,getDoc,nameToEmail,normalizeName,onAuthStateChanged,
-  serverTimestamp,setDoc,signInWithEmailAndPassword,signOut,writeBatch
+  auth,authStateReady,createUserWithEmailAndPassword,db,deleteUser,doc,getDoc,markAuthTransition,nameToEmail,
+  normalizeName,onAuthStateChanged,serverTimestamp,setDoc,signInWithEmailAndPassword,signOut,writeBatch
 } from './firebase-core.js';
 
 const tabs=document.getElementById('authTabs');
@@ -9,6 +9,7 @@ const registerForm=document.getElementById('registerForm');
 const formNotice=document.getElementById('formNotice');
 const systemNotice=document.getElementById('systemNotice');
 let systemExists=false,registrationAllowed=false;
+let redirecting=false;
 
 const loginStage=document.querySelector('.login-stage');
 if(loginStage&&matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
@@ -31,6 +32,11 @@ function showMessage(message,type){
   formNotice.className='notice '+(type==='success'?'notice--success':'notice--error');
 }
 
+function finishAuth(target){
+  if(redirecting)return;
+  redirecting=true;markAuthTransition();location.replace(target);
+}
+
 function authMessage(error){
   const code=error&&error.code||'';
   if(code.includes('invalid-credential')||code.includes('wrong-password')||code.includes('user-not-found')) return '姓名或密碼不正確。';
@@ -38,6 +44,7 @@ function authMessage(error){
   if(code.includes('weak-password')) return '密碼至少需要 6 個字元。';
   if(code.includes('too-many-requests')) return '嘗試次數太多，請稍後再試。';
   if(code.includes('network-request-failed')) return '網路連線失敗，請檢查網路後再試。';
+  if(code.includes('web-storage-unsupported')) return '這個瀏覽器無法保存登入狀態，請用右上角選單改在 Safari 或 Chrome 開啟。';
   if(code.includes('operation-not-allowed')) return 'Firebase 的 Email／Password 登入尚未啟用。';
   if(code.includes('permission-denied')) return '雲端權限拒絕了這次操作，請檢查 Firestore 規則。';
   return '操作沒有完成，請稍後再試。';
@@ -63,9 +70,10 @@ async function loadSystem(){
 loginForm.addEventListener('submit',async function(event){
   event.preventDefault();showMessage('');const button=loginForm.querySelector('button[type="submit"]');button.disabled=true;
   try{
+    await authStateReady;
     const email=await nameToEmail(document.getElementById('loginName').value);
     await signInWithEmailAndPassword(auth,email,document.getElementById('loginPassword').value);
-    location.replace(safeNext());
+    finishAuth(safeNext());
   }catch(error){showMessage(authMessage(error));button.disabled=false;}
 });
 
@@ -77,6 +85,7 @@ registerForm.addEventListener('submit',async function(event){
   if(password.length<6){showMessage('密碼至少需要 6 個字元。');return;}
   const button=document.getElementById('registerSubmit');button.disabled=true;let credential=null;
   try{
+    await authStateReady;
     await loadSystem();if(systemExists&&!registrationAllowed)throw Object.assign(new Error('registration-closed'),{code:'registration-closed'});
     const email=await nameToEmail(name);credential=await createUserWithEmailAndPassword(auth,email,password);
     const uid=credential.user.uid;
@@ -89,15 +98,20 @@ registerForm.addEventListener('submit',async function(event){
     }else{
       await setDoc(doc(db,'users',uid),{uid,name,nameKey,role:'user',createdAt:serverTimestamp(),lastLoginAt:serverTimestamp()});
     }
-    location.replace('index.html');
+    finishAuth('index.html');
   }catch(error){
     if(credential&&credential.user){try{await deleteUser(credential.user);}catch(cleanupError){console.warn(cleanupError);}try{await signOut(auth);}catch(signoutError){}}
     showMessage(error.code==='registration-closed'?'目前沒有開放註冊。':authMessage(error));button.disabled=false;
   }
 });
 
-onAuthStateChanged(auth,async function(user){
-  if(!user)return;const profile=await getDoc(doc(db,'users',user.uid));if(profile.exists())location.replace(safeNext());
-});
+authStateReady.then(function(){
+  onAuthStateChanged(auth,async function(user){
+    if(!user||redirecting)return;
+    const profile=await getDoc(doc(db,'users',user.uid));if(profile.exists())finishAuth(safeNext());
+  });
+}).catch(function(error){showMessage(authMessage(error));});
 
-loadSystem().then(function(){if(new URLSearchParams(location.search).get('mode')==='register'&&registrationAllowed)setMode('register');});
+const query=new URLSearchParams(location.search);
+if(query.get('error')==='session-lost')showMessage('剛才的瀏覽器沒有保留登入狀態。請再試一次；若仍失敗，請用右上角選單改在 Safari 或 Chrome 開啟。');
+loadSystem().then(function(){if(query.get('mode')==='register'&&registrationAllowed)setMode('register');});

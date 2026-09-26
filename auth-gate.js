@@ -1,6 +1,6 @@
 import {
-  auth,currentDay,db,doc,increment,isLocalPreview,loadProfile,onAuthStateChanged,pageIdFromPath,
-  serverTimestamp,setDoc,signOut,subjectFromPage,writeBatch
+  auth,authStateReady,clearAuthTransition,consumeAuthTransition,currentDay,db,doc,increment,isLocalPreview,
+  loadProfile,onAuthStateChanged,pageIdFromPath,serverTimestamp,setDoc,signOut,subjectFromPage,writeBatch
 } from './firebase-core.js';
 import {attemptIdFromScoreId,discardLegacyScores} from './stats-utils.js';
 import {clean,correctAnswerFrom,userAnswerFrom} from './attempt-utils.js';
@@ -21,6 +21,7 @@ function reveal(){
 }
 
 function setSession(session){
+  clearAuthTransition();
   currentSession=session;window.NX_SESSION=session;
   window.dispatchEvent(new CustomEvent('nx:auth-ready',{detail:session}));
 }
@@ -191,25 +192,28 @@ async function start(){
     const session={user:{uid:'preview-user'},profile:{uid:'preview-user',name:role==='admin'?'Chen 管理員':'測試同學',role},preview:true};
     setSession(session);reveal();injectAccount(session);return;
   }
+  try{await authStateReady;}
+  catch(error){console.error(error);showConnectionError(true);return;}
   onAuthStateChanged(auth,async function(user){
     try{
-      if(!user){location.replace(nextLoginUrl());return;}
+      if(!user){location.replace(nextLoginUrl()+(consumeAuthTransition()?'&error=session-lost':''));return;}
       const profile=await loadProfile(user.uid);
       if(!profile){await signOut(auth);location.replace('login.html?error=profile');return;}
       if(clearOldLocalScores()){location.reload();return;}
       const session={user,profile};setSession(session);reveal();injectAccount(session);patchScoreStorage();
       updateProfileLogin(session).catch(function(error){console.warn('Login timestamp was not updated',error);});
       beginActivity(session);
-    }catch(error){console.error(error);showConnectionError();}
-  },function(error){console.error(error);showConnectionError();});
+    }catch(error){console.error(error);showConnectionError(false);}
+  },function(error){console.error(error);showConnectionError(false);});
 }
 
 async function updateProfileLogin(session){
   await setDoc(doc(db,'users',session.user.uid),{uid:session.user.uid,lastLoginAt:serverTimestamp()},{merge:true});
 }
 
-function showConnectionError(){
-  reveal();document.body.innerHTML='<div class="nx-connection-error"><div class="nx-connection-error__card"><h1>無法連上登入服務</h1><p>目前無法確認帳戶狀態，為了保護資料，頁面沒有繼續載入。</p><button type="button" id="nxRetry">重新整理</button></div></div>';
+function showConnectionError(storageUnavailable){
+  const copy=storageUnavailable?'這個瀏覽器無法保存登入狀態，請用右上角選單改在 Safari 或 Chrome 開啟。':'目前無法確認帳戶狀態，為了保護資料，頁面沒有繼續載入。';
+  reveal();document.body.innerHTML='<div class="nx-connection-error"><div class="nx-connection-error__card"><h1>無法連上登入服務</h1><p>'+copy+'</p><button type="button" id="nxRetry">重新整理</button></div></div>';
   document.getElementById('nxRetry').addEventListener('click',function(){location.reload();});
 }
 

@@ -100,6 +100,13 @@ if(/id=["']passwordForm["']/.test(meSource))fail('me.html','regular users can st
 if(!fs.existsSync(path.join(root,'history.html'))||!fs.existsSync(path.join(root,'history.js')))fail('history','full learning history page is missing');
 const loginSource=fs.readFileSync(path.join(root,'login.html'),'utf8');
 if(!/class=["']login-page["']/.test(loginSource)||!loginSource.includes('login-backdrop')||!loginSource.includes('viewport-fit=cover'))fail('login.html','mobile glass login layout is incomplete');
+const firebaseSource=fs.readFileSync(path.join(root,'firebase-core.js'),'utf8');
+if(!firebaseSource.includes('initializeAuth(app')||!firebaseSource.includes('indexedDBLocalPersistence')||!firebaseSource.includes('browserLocalPersistence')||!firebaseSource.includes('browserSessionPersistence'))fail('firebase-core.js','cross-browser authentication persistence fallback is incomplete');
+if(/setPersistence\([^;]+\.catch/.test(firebaseSource))fail('firebase-core.js','authentication persistence still runs without being awaited');
+const loginJsSource=fs.readFileSync(path.join(root,'login.js'),'utf8');
+const authGateSource=fs.readFileSync(path.join(root,'auth-gate.js'),'utf8');
+if(!loginJsSource.includes('await authStateReady')||!loginJsSource.includes('markAuthTransition()'))fail('login.js','login can redirect before authentication storage is ready');
+if(!authGateSource.includes('await authStateReady')||!authGateSource.includes("error=session-lost"))fail('auth-gate.js','protected pages can check authentication before storage is ready');
 const readingSource=fs.readFileSync(path.join(root,'ch-reading.html'),'utf8');
 if(!/你選了：['"]?\s*\+\s*w\.mine/.test(readingSource))fail('ch-reading.html','selected wrong answer is not rendered for persistence');
 const mathSource=fs.readFileSync(path.join(root,'math-1.html'),'utf8');
