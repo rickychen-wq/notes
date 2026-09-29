@@ -36,7 +36,7 @@ function addDetail(catalog,pageId,key,detail){
 }
 
 const meanings={},details={};
-const englishPages=['en-book-l1.html','en-book-l2.html','en-4500-9-1.html','en-4500-9-2.html','en-4500-10.html','en-mag-4-6.html','en-mag-7-9.html','en-mag-10-14.html'];
+const englishPages=['en-book-l1.html','en-book-l2.html','en-4500-9-1.html','en-4500-9-2.html','en-4500-10.html','en-4500-11-1.html','en-4500-11-2.html','en-mag-4-6.html','en-mag-7-9.html','en-mag-10-14.html'];
 for(const file of englishPages){
   const pageId=path.basename(file,'.html');
   for(const row of readArray(file,'WORDS')){

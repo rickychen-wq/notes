@@ -49,8 +49,8 @@ for(const file of htmlFiles){
     catch(error){fail(file,`inline script syntax error: ${error.message}`);}
   }
 
-  if(['en-book-l2.html','en-mag-7-9.html','en-mag-10-14.html'].includes(file)){
-    const match=source.match(/function norm\(s\)\{[^\r\n]+\}/);
+  if(['en-book-l2.html','en-mag-7-9.html','en-mag-10-14.html','en-4500-11-1.html','en-4500-11-2.html'].includes(file)){
+    const match=source.match(/function norm\(s\)\{[\s\S]*?\}/);
     if(!match)fail(file,'missing answer normalization function');
     else{
       const context={};vm.runInNewContext(match[0],context);
@@ -64,9 +64,9 @@ for(const file of jsFiles){
   catch(error){fail(file,`JavaScript syntax error: ${String(error.stderr||error.message).trim()}`);}
 }
 
-if(htmlFiles.length!==31)fail('project',`expected 31 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==33)fail('project',`expected 33 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==30)fail('project',`expected 30 protected pages, found ${protectedCount}`);
+if(protectedCount!==32)fail('project',`expected 32 protected pages, found ${protectedCount}`);
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},
