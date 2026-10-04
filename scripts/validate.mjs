@@ -20,6 +20,12 @@ function localTarget(value){
   if(!value||/^(?:https?:|data:|mailto:|tel:|javascript:|#)/i.test(value))return null;
   return value.split(/[?#]/,1)[0];
 }
+function readInlineArray(file,name){
+  const source=fs.readFileSync(path.join(root,file),'utf8');
+  const match=source.match(new RegExp(`^var ${name} = (.*);$`,'m'));
+  if(!match)throw new Error(`${file}: missing ${name} array`);
+  return vm.runInNewContext(`(${match[1]})`,Object.create(null),{timeout:1000});
+}
 
 for(const file of htmlFiles){
   const source=fs.readFileSync(path.join(root,file),'utf8');
@@ -49,7 +55,7 @@ for(const file of htmlFiles){
     catch(error){fail(file,`inline script syntax error: ${error.message}`);}
   }
 
-  if(['en-book-l2.html','en-mag-7-9.html','en-mag-10-14.html','en-4500-11-1.html','en-4500-11-2.html'].includes(file)){
+  if(['en-book-l2.html','en-book-l3.html','en-mag-7-9.html','en-mag-10-14.html','en-4500-11-1.html','en-4500-11-2.html'].includes(file)){
     const match=source.match(/function norm\(s\)\{[\s\S]*?\}/);
     if(!match)fail(file,'missing answer normalization function');
     else{
@@ -64,9 +70,33 @@ for(const file of jsFiles){
   catch(error){fail(file,`JavaScript syntax error: ${String(error.stderr||error.message).trim()}`);}
 }
 
-if(htmlFiles.length!==33)fail('project',`expected 33 HTML pages, found ${htmlFiles.length}`);
+const lesson3Words=readInlineArray('en-book-l3.html','WORDS');
+const lesson3Phrases=readInlineArray('en-book-l3.html','PHRASES');
+if(lesson3Words.length!==36||lesson3Phrases.length!==6)fail('en-book-l3.html','expected 36 word forms and 6 phrases');
+const lesson3Source=fs.readFileSync(path.join(root,'en-book-l3.html'),'utf8');
+if(!lesson3Source.includes("v.from==='l3'"))fail('en-book-l3.html','phrase section is not connected to the Lesson 3 bank');
+const lesson3Headwords=new Set(lesson3Words.map((row)=>row[2]));
+const lesson3Prompts=new Set();
+for(const expected of ['humankind','universe','fur','enable','upright','generous','conflict','distribution','benefit','slaughter','underneath','freeze','victim','miserable','hollow','furious','theft','punish','banish','torture','civilization']){
+  if(!lesson3Headwords.has(expected))fail('en-book-l3.html',`missing textbook headword: ${expected}`);
+}
+for(const row of lesson3Words){
+  const promptKey=`${row[4]}|${row[5]}`;
+  if(lesson3Prompts.has(promptKey))fail('en-book-l3.html',`duplicate quiz prompt: ${promptKey}`);
+  lesson3Prompts.add(promptKey);
+  const distractors=String(row[7]||'').split('|').filter(Boolean);
+  if(distractors.length!==3||new Set(distractors.map((item)=>item.toLowerCase())).size!==3)fail('en-book-l3.html',`invalid distractors for ${row[2]}`);
+  if(distractors.some((item)=>item.toLowerCase()===String(row[2]).toLowerCase()))fail('en-book-l3.html',`correct answer repeated among distractors for ${row[2]}`);
+}
+for(const row of lesson3Phrases){
+  const distractors=String(row[4]||'').split('|').filter(Boolean);
+  if(distractors.length!==3||new Set(distractors.map((item)=>item.toLowerCase())).size!==3)fail('en-book-l3.html',`invalid phrase distractors for ${row[1]}`);
+  if(distractors.some((item)=>item.toLowerCase()===String(row[1]).toLowerCase()))fail('en-book-l3.html',`correct phrase repeated among distractors for ${row[1]}`);
+}
+
+if(htmlFiles.length!==34)fail('project',`expected 34 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==32)fail('project',`expected 32 protected pages, found ${protectedCount}`);
+if(protectedCount!==33)fail('project',`expected 33 protected pages, found ${protectedCount}`);
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},
