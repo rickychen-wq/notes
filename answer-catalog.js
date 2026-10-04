@@ -40,13 +40,15 @@ export const ENGLISH_MEANINGS={
   "backhand": "n. 反手拍",
   "badly": "adv. 不好地；嚴重地；非常",
   "bandage": "n. C / vt. 繃帶；用繃帶包紮",
+  "banish": "vt. 放逐；驅逐",
+  "banishment": "n. U 放逐；流放",
   "bare": "adj. / vt. 赤裸的；空的／露出",
   "baseline": "n. 底線",
   "beam": "n. C 光線；橫樑",
   "behavior": "習性；行為、舉止",
   "belly": "n. C 腹部；肚子",
   "beloved": "adj. 心愛的、深愛的；深受喜愛的",
-  "benefit": "n. C U / vt. vi. 利益；好處／有利於；受惠",
+  "benefit": "n. C/U 益處；好處；福利",
   "bind": "vt. vi. 綑綁；使聯結；使黏合",
   "bleed": "vi. 流血",
   "blink": "vi. / n. C （迅速）眨眼",
@@ -77,6 +79,8 @@ export const ENGLISH_MEANINGS={
   "circulate": "vt. vi. （使）循環；流通",
   "circulation": "n. 循環；流傳；發行量",
   "circumstance": "n. C 情況；情勢（常用複數）",
+  "civilization": "n. C/U 文明",
+  "civilized": "adj. 文明的；有教養的",
   "coarse": "adj. 粗糙的；粗俗的",
   "code": "n. / vt. 代碼、密碼；法典、規範／編成密碼",
   "coincidence": "n. 巧合",
@@ -95,6 +99,7 @@ export const ENGLISH_MEANINGS={
   "conduct": "v. 進行；實施；指揮",
   "confine": "vt. 使離不開；侷限",
   "confirm": "vt. vi. 確認；證實",
+  "conflict": "n. C/U 衝突；抵觸",
   "consequent": "adj. 因而產生的；隨之發生的",
   "conserve": "保存、節省；保護",
   "consist": "vi. 由……組成；在於",
@@ -148,6 +153,8 @@ export const ENGLISH_MEANINGS={
   "distinct": "adj. 清晰易辨的；明顯不同的",
   "distinguish": "vt. vi. 分辨；區別；辨認出",
   "distinguished": "adj. 傑出的；卓越的",
+  "distribute": "vt. 分發；分配",
+  "distribution": "n. C/U 分配；分布；經銷",
   "diverse": "adj. 不同的；多元的；各式各樣的",
   "diversity": "n. C U 差異性；多元性；多樣性",
   "dominant": "adj. 主要的；主導的",
@@ -176,7 +183,7 @@ export const ENGLISH_MEANINGS={
   "employee": "n. C 員工；受僱者",
   "employer": "n. C 雇主",
   "employment": "n. U 工作；受僱",
-  "enable": "vt. 使能夠",
+  "enable": "vt. 使……能夠……",
   "encounter": "v./n. 偶然遇到；遭遇",
   "endanger": "vt. 危害；使遭受危險",
   "endeavor": "v. / n. 努力；竭力嘗試",
@@ -219,9 +226,13 @@ export const ENGLISH_MEANINGS={
   "forge": "v. 建立；開闢；打造",
   "formula": "n. 公式；配方；分子式",
   "frail": "adj. 虛弱的",
+  "freeze": "vi. 受凍；結冰；凍住",
   "fright": "n. U 驚嚇",
   "frighten": "vt. 使驚嚇",
   "frown": "vi. / n. C 皺眉（表示不滿）",
+  "fur": "n. U （動物的）毛；毛皮",
+  "furious": "adj. 暴怒的；猛烈的",
+  "fury": "n. U 狂怒；暴怒",
   "gallery": "n. 畫廊、藝廊；美術館、展覽館",
   "gasoline": "n. U 汽油",
   "gaze": "vi. / n. U 凝視；注視",
@@ -229,6 +240,8 @@ export const ENGLISH_MEANINGS={
   "gene": "n. C 基因",
   "generate": "產生（能量、想法等）",
   "generation": "世代、一代人",
+  "generosity": "n. U 慷慨；大方",
+  "generous": "adj. 慷慨的；大方的",
   "germ": "n. C 細菌",
   "glance": "vi. / n. C 瞥視；一瞥",
   "glimpse": "vt. / n. C 瞥見；一瞥",
@@ -244,7 +257,10 @@ export const ENGLISH_MEANINGS={
   "hesitation": "n. U 猶豫",
   "high-end": "adj. 高檔的、尖端的",
   "highlight": "v. / n. 使突出、突顯；強調／最精彩的部分",
+  "hollow": "adj. 中空的；空洞的",
   "hug": "n. C / vt. 擁抱",
+  "humanity": "n. U 人類；人性",
+  "humankind": "n. U 人類",
   "hunger": "n. 飢餓感（U）；渴望（C）",
   "ill": "adj. 生病的",
   "illness": "n. C U 疾病；生病",
@@ -288,6 +304,8 @@ export const ENGLISH_MEANINGS={
   "merge": "v. 合併；融合",
   "minus": "prep. / n. C / adj. 減（去）／缺點／負的",
   "miraculous": "adj. 奇蹟般的",
+  "miserable": "adj. 悲慘的；痛苦的",
+  "misery": "n. C/U 痛苦；慘況",
   "missile": "n. C 飛彈",
   "monitor": "n. C / vt. 顯示器、螢幕／監聽、監控",
   "motivation": "n. 動機；積極性",
@@ -343,6 +361,9 @@ export const ENGLISH_MEANINGS={
   "promptly": "adv. 準時地；迅速地",
   "psychology": "n. 心理學；心理",
   "punch": "vt. / n. C 重擊；按（按鍵）／拳打",
+  "punish": "vt. 懲罰",
+  "punishment": "n. C/U 懲罰；處罰",
+  "punitive": "adj. 懲罰性的",
   "purchase": "v./n. 購買；購買物",
   "racket": "n. 球拍",
   "radar": "n. U 雷達",
@@ -382,6 +403,7 @@ export const ENGLISH_MEANINGS={
   "shuttlecock": "n. 羽毛球",
   "sigh": "vi. / n. C 嘆氣／嘆息",
   "sighting": "目擊、發現",
+  "slaughter": "vt. 宰殺；屠殺",
   "slight": "adj. 些微的；輕微的",
   "slightly": "adv. 稍微；略微",
   "smash": "v. / n. 殺球",
@@ -427,9 +449,12 @@ export const ENGLISH_MEANINGS={
   "telescope": "n. C 望遠鏡",
   "terminal": "adj. 末期的；臨終的",
   "terrifying": "adj. 令人非常害怕的",
+  "theft": "n. C/U 偷竊；偷竊罪",
+  "thief": "n. C 小偷",
   "thirst": "n. 口渴；渴望",
   "thumb": "n. C 拇指",
   "tickle": "vt. / n. 搔癢；逗樂／癢的感覺",
+  "torture": "vt./n. C/U 折磨；酷刑",
   "toss": "vt. / n. C 扔；拋",
   "tremble": "vi. / n. 顫抖",
   "tremendous": "adj. 相當大的",
@@ -440,15 +465,20 @@ export const ENGLISH_MEANINGS={
   "ultimately": "最終；說到底",
   "umpire": "n. 主審",
   "undergo": "v. 經歷；接受",
+  "underneath": "prep./adv. 在……下面；在下面",
   "undertake": "v. 著手進行；承擔",
   "unexplained": "無法解釋的、原因不詳的",
   "unidentified": "不明的、未知的",
   "unique": "adj. 獨特的；獨一無二的",
+  "universal": "adj. 普遍的；全體共有的",
+  "universe": "n. sing. 宇宙",
+  "upright": "adv. 直立地",
   "upward": "向上地",
   "variation": "變體；變化形式",
   "vast": "adj. 巨大的；遼闊的",
   "version": "n. 版本；變化形式",
   "vibrancy": "n. 蓬勃朝氣；活力",
+  "victim": "n. C 受害者；罹難者；罹病者",
   "virus": "n. C 病毒；電腦病毒",
   "visible": "adj. 顯著的；可見的",
   "vision": "n. 視力；眼光、遠見；幻想、幻覺",
@@ -4168,6 +4198,160 @@ export const LEGACY_WRONG_DETAILS={
     "unique": {
       "correctAnswer": "unique",
       "question": "adj. 獨特的；獨一無二的"
+    }
+  },
+  "en-book-l3": {
+    "as a result": {
+      "correctAnswer": "as a result",
+      "question": "因此；結果"
+    },
+    "banish": {
+      "correctAnswer": "banish",
+      "question": "vt. 放逐；驅逐"
+    },
+    "banishment": {
+      "correctAnswer": "banishment",
+      "question": "n. U 放逐；流放"
+    },
+    "benefit": {
+      "correctAnswer": "benefit",
+      "question": "n. C/U 益處；好處；福利"
+    },
+    "civilization": {
+      "correctAnswer": "civilization",
+      "question": "n. C/U 文明"
+    },
+    "civilized": {
+      "correctAnswer": "civilized",
+      "question": "adj. 文明的；有教養的"
+    },
+    "conflict": {
+      "correctAnswer": "conflict",
+      "question": "n. C/U 衝突；抵觸"
+    },
+    "distribute": {
+      "correctAnswer": "distribute",
+      "question": "vt. 分發；分配"
+    },
+    "distribution": {
+      "correctAnswer": "distribution",
+      "question": "n. C/U 分配；分布；經銷"
+    },
+    "enable": {
+      "correctAnswer": "enable",
+      "question": "vt. 使……能夠……"
+    },
+    "fall victim to": {
+      "correctAnswer": "fall victim to",
+      "question": "成為……的受害者；受……所害"
+    },
+    "feed on": {
+      "correctAnswer": "feed on",
+      "question": "以……為食"
+    },
+    "freeze": {
+      "correctAnswer": "freeze",
+      "question": "vi. 受凍；結冰；凍住"
+    },
+    "fur": {
+      "correctAnswer": "fur",
+      "question": "n. U （動物的）毛；毛皮"
+    },
+    "furious": {
+      "correctAnswer": "furious",
+      "question": "adj. 暴怒的；猛烈的"
+    },
+    "fury": {
+      "correctAnswer": "fury",
+      "question": "n. U 狂怒；暴怒"
+    },
+    "generosity": {
+      "correctAnswer": "generosity",
+      "question": "n. U 慷慨；大方"
+    },
+    "generous": {
+      "correctAnswer": "generous",
+      "question": "adj. 慷慨的；大方的"
+    },
+    "hollow": {
+      "correctAnswer": "hollow",
+      "question": "adj. 中空的；空洞的"
+    },
+    "humanity": {
+      "correctAnswer": "humanity",
+      "question": "n. U 人類；人性"
+    },
+    "humankind": {
+      "correctAnswer": "humankind",
+      "question": "n. U 人類"
+    },
+    "make up for": {
+      "correctAnswer": "make up for",
+      "question": "彌補"
+    },
+    "miserable": {
+      "correctAnswer": "miserable",
+      "question": "adj. 悲慘的；痛苦的"
+    },
+    "misery": {
+      "correctAnswer": "misery",
+      "question": "n. C/U 痛苦；慘況"
+    },
+    "punish": {
+      "correctAnswer": "punish",
+      "question": "vt. 懲罰"
+    },
+    "punishment": {
+      "correctAnswer": "punishment",
+      "question": "n. C/U 懲罰；處罰"
+    },
+    "punitive": {
+      "correctAnswer": "punitive",
+      "question": "adj. 懲罰性的"
+    },
+    "run out of": {
+      "correctAnswer": "run out of",
+      "question": "用完……；耗盡……"
+    },
+    "set the stage for": {
+      "correctAnswer": "set the stage for",
+      "question": "為……作好準備；促成……"
+    },
+    "slaughter": {
+      "correctAnswer": "slaughter",
+      "question": "vt. 宰殺；屠殺"
+    },
+    "theft": {
+      "correctAnswer": "theft",
+      "question": "n. C/U 偷竊；偷竊罪"
+    },
+    "thief": {
+      "correctAnswer": "thief",
+      "question": "n. C 小偷"
+    },
+    "torture": {
+      "correctAnswer": "torture",
+      "question": "vt./n. C/U 折磨；酷刑"
+    },
+    "underneath": {
+      "correctAnswer": "underneath",
+      "question": "prep./adv. 在……下面；在下面"
+    },
+    "universal": {
+      "correctAnswer": "universal",
+      "question": "adj. 普遍的；全體共有的"
+    },
+    "universe": {
+      "correctAnswer": "universe",
+      "question": "n. sing. 宇宙"
+    },
+    "upright": {
+      "correctAnswer": "upright",
+      "question": "adv. 直立地"
+    },
+    "victim": {
+      "correctAnswer": "victim",
+      "question": "n. C 受害者；罹難者；罹病者"
     }
   },
   "en-mag-1-3": {
