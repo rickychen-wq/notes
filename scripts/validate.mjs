@@ -94,9 +94,35 @@ for(const row of lesson3Phrases){
   if(distractors.some((item)=>item.toLowerCase()===String(row[1]).toLowerCase()))fail('en-book-l3.html',`correct phrase repeated among distractors for ${row[1]}`);
 }
 
-if(htmlFiles.length!==34)fail('project',`expected 34 HTML pages, found ${htmlFiles.length}`);
+const bio21Source=fs.readFileSync(path.join(root,'bio-2-1.html'),'utf8');
+const bio21Match=bio21Source.match(/var RAW = (\[[\s\S]*?\n\]);/);
+if(!bio21Match)fail('bio-2-1.html','missing RAW quiz bank');
+else{
+  const bio21Raw=vm.runInNewContext(`(${bio21Match[1]})`,Object.create(null),{timeout:1000});
+  if(bio21Raw.length!==40)fail('bio-2-1.html',`expected 40 quiz questions, found ${bio21Raw.length}`);
+  const counts=new Map(),questions=new Set();
+  for(const row of bio21Raw){
+    const [kind,question,answer,distractors,explanation]=row;
+    counts.set(kind,(counts.get(kind)||0)+1);
+    if(questions.has(question))fail('bio-2-1.html',`duplicate quiz question: ${question}`);
+    questions.add(question);
+    if(!question||!answer||!explanation)fail('bio-2-1.html','quiz row has an empty required field');
+    if(!Array.isArray(distractors)||distractors.length!==3||new Set(distractors).size!==3)fail('bio-2-1.html',`invalid distractors for: ${question}`);
+    if(distractors.includes(answer))fail('bio-2-1.html',`correct answer repeated among distractors for: ${question}`);
+  }
+  for(const kind of ['cell','surface','vascular','system'])if(counts.get(kind)!==10)fail('bio-2-1.html',`expected 10 ${kind} questions, found ${counts.get(kind)||0}`);
+}
+for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bio-2-1"]){
+  if(!bio21Source.includes(marker))fail('bio-2-1.html',`missing quiz marker: ${marker}`);
+}
+const bioSubjectSource=fs.readFileSync(path.join(root,'s-bio.html'),'utf8');
+if(!bioSubjectSource.includes('href="bio-2-1.html"')||!bioSubjectSource.includes('2 / 4 已整理')||!bioSubjectSource.includes("style.width='50%'"))fail('s-bio.html','Biology 2-1 card or progress is incomplete');
+const homeSource=fs.readFileSync(path.join(root,'index.html'),'utf8');
+if(!homeSource.includes('23 / 32')||!homeSource.includes('data-done="2" data-total="4"')||!homeSource.includes('var d=23, t=32'))fail('index.html','overall or Biology progress was not updated');
+
+if(htmlFiles.length!==35)fail('project',`expected 35 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==33)fail('project',`expected 33 protected pages, found ${protectedCount}`);
+if(protectedCount!==34)fail('project',`expected 34 protected pages, found ${protectedCount}`);
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},

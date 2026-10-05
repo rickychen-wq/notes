@@ -59,7 +59,7 @@ for(const item of readArray('en-mag-1-3.html','BANK')){
   addDetail(details,'en-mag-1-3',term,{question:meaning||term,correctAnswer:term});
 }
 
-for(const file of ['bio-photo.html','ch-reading.html','math-1.html']){
+for(const file of ['bio-photo.html','bio-2-1.html','ch-reading.html','math-1.html']){
   const pageId=path.basename(file,'.html');
   for(const row of readArray(file,'RAW'))addDetail(details,pageId,row[1],{question:plain(row[1]),correctAnswer:plain(row[2])});
 }
