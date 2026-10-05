@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>生物 2-1 植物體的組成層次</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --b1:#2f6f5f;--b2:#4a5f9e;--b3:#8a5a3f;--b4:#3f7a4a;--b5:#0a84ff;--accent:var(--b1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --b1:#5fc8b0;--b2:#9aabe8;--b3:#e0a97c;--b4:#7fd18a;}
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.6;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .u-1{--accent:var(--b1)}.u-2{--accent:var(--b2)}.u-3{--accent:var(--b3)}
+  .u-4{--accent:var(--b4)}.u-5{--accent:var(--b5)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .blk{padding:14px 16px;border-top:.5px solid var(--sep)}
+  .blk:first-child{border-top:none}
+  .blk h4{margin:0 0 7px;font-size:16px;font-weight:700;color:var(--accent)}
+  .blk p{margin:0 0 5px;font-size:15px}
+  .blk ul{margin:5px 0 0;padding-left:20px;font-size:15px}
+  .blk li{margin:4px 0}
+  .blk .sm{font-size:14px;color:var(--label2)}
+  .key{background:color-mix(in srgb,var(--gold) 20%,transparent);border-radius:4px;padding:0 4px;font-weight:600}
+  .eq{font-family:ui-monospace,Menlo,monospace;font-size:15px;background:var(--fill);
+    padding:9px 12px;border-radius:8px;margin:7px 0;line-height:1.8;overflow-x:auto}
+  .flow{font-size:15px;background:var(--fill);border-radius:8px;padding:10px 12px;margin:7px 0;line-height:1.9}
+  .warn{border-left:3px solid var(--red);padding:9px 12px;margin:8px 0;font-size:14.5px;
+    background:color-mix(in srgb,var(--red) 8%,transparent);border-radius:0 8px 8px 0}
+  .warn b{color:var(--red)}
+  .wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{padding:9px 10px;border-top:.5px solid var(--sep);vertical-align:top;text-align:left}
+  th{font-weight:600;color:var(--label2);font-size:13px;background:var(--fill)}
+  tr:first-child td{border-top:none}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .hint{padding:12px 16px;font-size:14px;color:var(--label2);line-height:1.55;border-top:.5px solid var(--sep)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:24px 18px}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px;text-align:center}
+  .qprompt .qtext{font-size:20px;font-weight:700;line-height:1.5}
+  .choices{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:8px}
+  .choice{text-align:left;font-family:inherit;font-size:16px;padding:14px 16px;border-radius:12px;
+    background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent;line-height:1.45}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.vok{color:var(--green)}
+  .verdict .vt.vno{color:var(--red)}
+  .verdict .big{display:block;font-size:19px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:15px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:700}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --b1:#2f6f5f;--b2:#4a5f9e;--b3:#8a5a3f;--b4:#3f7a4a;--b5:#0a84ff;--accent:var(--b1);
+  }
+  html[data-theme="dark"]{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --b1:#5fc8b0;--b2:#9aabe8;--b3:#e0a97c;--b4:#7fd18a;}
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
+</head>
+<body>
+<div class="nxbar"><a href="s-bio.html">◀ 回目錄</a><span>生物 · 2-1 植物體的組成層次</span></div>
+
+
+<header>
+  <div><h1>生物 · 2-1 植物體</h1><div class="sub">細胞種類、四大組織與三大組織系統</div></div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">細胞</button>
+    <button role="tab" aria-selected="false" data-t="2">表皮</button>
+    <button role="tab" aria-selected="false" data-t="3">維管</button>
+    <button role="tab" aria-selected="false" data-t="4">系統</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ════ 細胞 ════ -->
+<section class="u-1" data-p="1">
+  <div class="hero"><div class="kicker">2-1.0 ～ 2-1.1</div><h2>組成層次與三種細胞</h2><div class="zh">先分清楚「細胞、組織、組織系統」</div></div>
+
+  <h3>一、整章地圖</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>植物體的組成層次</h4>
+      <div class="flow"><b>細胞</b> → <b>組織</b> → <b>組織系統</b> → <b>器官</b> → <b>個體</b></div>
+      <p>根、莖、葉是植物的<b>器官</b>；同類組織在不同器官中連續分布、共同執行功能，才稱為<b>組織系統</b>。</p>
+      <div class="warn">植物強調<b>組織系統</b>；動物常寫「細胞 → 組織 → 器官 → <b>器官系統</b> → 個體」。</div>
+    </div>
+    <div class="blk">
+      <h4>植物的演化觀念</h4>
+      <p>植物具有胚胎，又稱<b>胚胎植物</b>；和綠藻具有較近的共同祖先。</p>
+      <p class="sm">不同植物類群是由共同祖先逐漸分化，不是現在的苔蘚一路變成蕨類、裸子植物、被子植物。</p>
+    </div>
+  </div>
+
+  <h3>二、依細胞壁分成三類</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>細胞</th><th>細胞壁</th><th>成熟時</th><th>重點功能</th></tr>
+      <tr><td><b>薄壁</b></td><td>只有初生壁，較薄</td><td>活</td><td>光合、儲存、填充、修復與分裂</td></tr>
+      <tr><td><b>厚角</b></td><td>初生壁<b>不均勻</b>增厚</td><td>活</td><td>支撐仍在生長的嫩莖、葉柄</td></tr>
+      <tr><td><b>厚壁</b></td><td>有發達次生壁，常木質化</td><td>通常死</td><td>支持、保護、部分運輸</td></tr>
+    </table></div>
+    <div class="blk">
+      <h4>厚壁細胞的兩種常見型態</h4>
+      <ul><li><b>纖維細胞</b>：細長，主要支持。</li><li><b>石細胞</b>：形狀較不規則，可形成堅硬構造。</li></ul>
+      <div class="warn"><b>細胞壁厚，不等於有次生壁。</b>厚角細胞只是初生壁不均勻增厚。</div>
+    </div>
+  </div>
+
+  <h3>三、細胞壁的順序與成分</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>由外往內</h4>
+      <div class="flow"><b>中膠層</b> → <b>初生細胞壁</b> → <b>次生細胞壁</b> → <b>細胞膜</b></div>
+      <p class="sm">次生壁是細胞停止延長後，繼續沉積在初生壁的<b>內側</b>。</p>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>成分</th><th>性質與位置</th><th>核心功能</th></tr>
+      <tr><td><b>果膠質</b></td><td>醣類；中膠層、初生壁</td><td>黏合相鄰細胞</td></tr>
+      <tr><td><b>纖維素</b></td><td>醣類；各類植物細胞壁</td><td>韌性、機械強度</td></tr>
+      <tr><td><b>木質素</b></td><td>酚類聚合物；常沉積於次生壁</td><td>堅硬、支持、較不透水</td></tr>
+      <tr><td><b>木栓質</b></td><td>脂質性、蠟質</td><td>防水、減少水分散失</td></tr>
+    </table></div>
+    <div class="blk"><div class="warn"><b>木質素 ≠ 木栓質。</b>前者讓次生壁硬化；後者偏蠟質、防水。</div></div>
+  </div>
+</section>
+
+<!-- ════ 分生與表皮 ════ -->
+<section class="u-2" data-p="2" hidden>
+  <div class="hero"><div class="kicker">2-1.2</div><h2>分生組織與表皮組織</h2><div class="zh">一個負責長新細胞，一個守住最外層</div></div>
+
+  <h3>一、分生組織</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>功能與細胞特徵</h4>
+      <p>分生細胞持續進行<b>有絲分裂</b>，先增加細胞數；新細胞再延長、分化成各種組織。</p>
+      <ul><li>細胞週期短、分裂快</li><li>細胞小、核相對大、細胞質濃</li><li>細胞壁薄，尚未高度特化</li></ul>
+      <div class="warn"><b>分裂 ≠ 分化。</b>分裂增加數量；分化才產生不同構造與功能。</div>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>比較</th><th>初生分生組織</th><th>次生分生組織</th></tr>
+      <tr><td>常見位置／種類</td><td>根尖、莖頂生長點</td><td>維管束形成層、木栓形成層</td></tr>
+      <tr><td>生長方向</td><td><b>縱向伸長</b></td><td><b>橫向增粗</b></td></tr>
+      <tr><td>形成</td><td>初生組織</td><td>次生木質部、次生韌皮部、木栓層等</td></tr>
+    </table></div>
+    <div class="blk">
+      <p>初生、次生是在講<b>生長型態與來源</b>，不是植物年紀；同一株植物可在不同位置同時進行兩種生長。</p>
+      <div class="warn"><b>木栓形成層</b>才是次生分生組織；木栓層是它產生的組織。</div>
+    </div>
+  </div>
+
+  <h3>二、表皮與特化構造</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>表皮不只負責保護</h4>
+      <p>表皮細胞位在植物體外側、通常緊密排列，可保護、防止病原入侵、減少水分散失；特定位置也能吸收或調節氣體交換。</p>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>構造</th><th>形成方式／特徵</th><th>主要功能</th></tr>
+      <tr><td><b>根毛</b></td><td>單一表皮細胞向外延伸</td><td>增加吸收水與無機鹽的表面積</td></tr>
+      <tr><td><b>保衛細胞</b></td><td>兩個圍成氣孔；多數具有葉綠體</td><td>控制氣孔，調節氣體交換與蒸散</td></tr>
+      <tr><td><b>毛茸</b></td><td>表皮特化的毛狀構造</td><td>保護；部分可分泌物質</td></tr>
+      <tr><td><b>角質層</b></td><td>常在地上部表皮外</td><td>減少水分散失</td></tr>
+    </table></div>
+    <div class="blk">
+      <div class="warn"><b>根毛 ≠ 毛茸。</b>根毛重點是吸收；毛茸重點是保護或分泌。</div>
+      <div class="warn"><b>並非所有表皮外都有角質層。</b>根部吸收區若角質層太厚，反而不利吸水。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 維管束 ════ -->
+<section class="u-3" data-p="3" hidden>
+  <div class="hero"><div class="kicker">2-1.2</div><h2>維管束組織</h2><div class="zh">木質部運水，韌皮部運有機養分</div></div>
+
+  <h3>一、兩套運輸組織</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>木質部 Xylem</h4>
+      <p>運輸<b>水與無機鹽</b>，同時具有支持功能。主要輸導細胞是<b>導管、管胞</b>。</p>
+    </div>
+    <div class="blk">
+      <h4>韌皮部 Phloem</h4>
+      <p>運輸<b>有機養分</b>；不只糖，也可運輸部分胺基酸、蛋白質與訊息相關物質。主要細胞是<b>篩管、伴細胞</b>。</p>
+    </div>
+  </div>
+
+  <h3>二、四種細胞一次比較</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>細胞</th><th>所屬</th><th>成熟狀態</th><th>核／質</th><th>功能與通道</th></tr>
+      <tr><td><b>導管</b></td><td>木質部</td><td>死；厚壁、木質化</td><td>皆無</td><td>水、無機鹽；穿孔板與壁孔</td></tr>
+      <tr><td><b>管胞</b></td><td>木質部</td><td>死；厚壁、木質化</td><td>皆無</td><td>水、無機鹽；主要經壁孔</td></tr>
+      <tr><td><b>篩管</b></td><td>韌皮部</td><td><b>活</b>；薄壁</td><td>無核、有部分細胞質</td><td>有機養分；篩板上的篩孔</td></tr>
+      <tr><td><b>伴細胞</b></td><td>韌皮部</td><td><b>活</b>；薄壁</td><td>有核、有細胞質</td><td>協助篩管代謝與運輸</td></tr>
+    </table></div>
+    <div class="blk"><div class="warn"><b>沒有細胞核，不一定是死細胞。</b>成熟篩管仍是活細胞，只是沒有細胞核，靠伴細胞協助。</div></div>
+  </div>
+
+  <h3>三、細胞間的三種連通構造</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>原生質絲</h4>
+      <p>穿過細胞壁，使相鄰<b>活細胞的細胞質</b>連通，利於物質與訊息傳遞。</p>
+    </div>
+    <div class="blk">
+      <h4>壁孔</h4>
+      <p>常見於導管、管胞；此處缺少<b>次生壁</b>，但通常仍有初生壁與中膠層，可供水分橫向通過。</p>
+    </div>
+    <div class="blk">
+      <h4>篩孔</h4>
+      <p>位在相鄰篩管之間的<b>篩板</b>，讓有機養分與細胞質通過。</p>
+      <div class="warn">壁孔不是細胞壁完全消失；篩板也沒有完全消失，只是上面有篩孔。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 基本組織與系統 ════ -->
+<section class="u-4" data-p="4" hidden>
+  <div class="hero"><div class="kicker">2-1.2 ～ 2-1.3</div><h2>基本組織與組織系統</h2><div class="zh">四大組織，最後整合成三大系統</div></div>
+
+  <h3>一、基本組織</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>定義與功能</h4>
+      <p>不屬於分生、表皮、維管束組織的其他組織，可歸入<b>基本組織</b>，負責光合作用、儲存、填充與支持。</p>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>位置／組織</th><th>構造重點</th><th>主要功能</th></tr>
+      <tr><td>根、莖的<b>皮層與髓</b></td><td>多由薄壁細胞構成</td><td>儲存水分、養分與填充</td></tr>
+      <tr><td>葉片的<b>柵狀組織</b></td><td>排列緊密、通常葉綠體較多</td><td>主要進行光合作用</td></tr>
+      <tr><td>葉片的<b>海綿組織</b></td><td>排列疏鬆、細胞間隙大</td><td>利於氣體交換，也能光合作用</td></tr>
+    </table></div>
+  </div>
+
+  <h3>二、四大組織 vs 三大組織系統</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>四大植物組織</h4>
+      <div class="flow"><b>分生組織</b>／<b>表皮組織</b>／<b>維管束組織</b>／<b>基本組織</b></div>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>組織系統</th><th>主要成員</th><th>主要功能</th></tr>
+      <tr><td><b>表皮組織系統</b></td><td>表皮、根毛、保衛細胞、毛茸</td><td>保護、吸收、氣體交換、減少散水</td></tr>
+      <tr><td><b>維管束組織系統</b></td><td>木質部、韌皮部</td><td>運輸與支持</td></tr>
+      <tr><td><b>基本組織系統</b></td><td>皮層、髓、葉肉等</td><td>光合、儲存、填充、支持</td></tr>
+    </table></div>
+    <div class="blk"><div class="warn"><b>沒有「分生組織系統」。</b>分生組織集中在特定位置，沒有在不同器官間形成連續分布的系統。</div></div>
+  </div>
+
+  <h3>三、考前最後確認</h3>
+  <div class="card">
+    <div class="blk">
+      <ul>
+        <li><b>薄壁、厚角、厚壁</b>是細胞種類；分生、表皮、維管束、基本才是組織種類。</li>
+        <li><b>初生／次生生長</b>講生長來源；<b>初生／次生細胞壁</b>講形成順序，兩套概念不同。</li>
+        <li>同一組織可由多種細胞組成，例如韌皮部含篩管、伴細胞等。</li>
+        <li>並非所有維管束都有維管束形成層。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 測驗 ════ -->
+<section class="u-5" data-p="5" hidden>
+  <div class="hero"><div class="kicker">Quiz</div><h2>2-1 觀念測驗</h2><div class="zh">40 題題庫；作答後停下來看解析</div></div>
+
+  <div id="qsetup">
+    <h3>範圍</h3>
+    <div class="card">
+      <div class="optrow" id="setKind">
+        <button class="chip on" data-k="cell">細胞與細胞壁</button>
+        <button class="chip on" data-k="surface">分生與表皮</button>
+        <button class="chip on" data-k="vascular">維管束</button>
+        <button class="chip on" data-k="system">基本與系統</button>
+      </div>
+    </div>
+    <h3>題數</h3>
+    <div class="card">
+      <div class="optrow" id="setLen">
+        <button class="chip" data-n="15">15</button>
+        <button class="chip on" data-n="25">25</button>
+        <button class="chip" data-n="0">全部 40</button>
+      </div>
+      <div class="hint">四選一。答完不會自動跳題，看完解析再按「下一題」。</div>
+    </div>
+    <button class="bigbtn" id="startBtn">開始測驗</button>
+  </div>
+
+  <div id="qplay" hidden>
+    <div class="qbar"><span id="qcount">1 / 25</span><span class="track"><i id="qprog" style="width:0%"></i></span><span id="qscore">0 對</span></div>
+    <div class="card"><div class="qprompt"><div class="qtype" id="qtype">—</div><div class="qtext" id="qtext">—</div></div></div>
+    <div class="choices" id="qchoices"></div>
+    <div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+    <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+
+  <div id="qdone" hidden>
+    <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3>
+    <div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button>
+    <button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+</section>
+
+<footer>生物 2-1 · 植物體的組成層次</footer>
+</main>
+
+<script>
+/* [分類, 題目, 正解, [三個干擾], 解析] */
+var RAW = [
+['cell','植物體由小到大的組成層次，何者正確？','細胞 → 組織 → 組織系統 → 器官 → 個體',['細胞 → 組織 → 器官 → 組織系統 → 個體','組織 → 細胞 → 組織系統 → 器官 → 個體','細胞 → 器官 → 組織 → 器官系統 → 個體'],'植物先由細胞構成組織；同類組織可形成組織系統，再共同構成器官與個體。'],
+['cell','下列何者屬於植物的器官？','葉',['葉肉','木質部','薄壁細胞'],'根、莖、葉是器官；葉肉是組織，木質部是組織，薄壁細胞是細胞種類。'],
+['cell','關於植物演化的敘述，何者正確？','植物與綠藻具有較近的共同祖先',['現代苔蘚直接演化成現代蕨類','現代蕨類直接演化成裸子植物','所有植物都由現代綠藻直接變成'],'各植物類群由共同祖先逐漸分化，不能畫成現代類群彼此直接轉變。'],
+['cell','薄壁細胞成熟後通常是什麼狀態？','活細胞',['死細胞且無細胞壁','死細胞但有細胞核','只剩次生細胞壁'],'薄壁細胞只有較薄的初生壁，成熟後仍活著，可執行光合、儲存等功能。'],
+['cell','厚角細胞的細胞壁最典型的特徵是？','初生細胞壁不均勻增厚',['次生細胞壁均勻增厚','沒有初生細胞壁','細胞壁完全木質化'],'厚角細胞沒有真正的次生壁，是初生壁在角落等處不均勻增厚。'],
+['cell','厚壁細胞成熟後通常如何？','死亡且次生細胞壁常木質化',['存活且只有薄的初生壁','存活且沒有細胞壁','死亡且沒有次生細胞壁'],'厚壁細胞具有厚的次生壁，常沉積木質素，成熟後通常死亡。'],
+['cell','植物細胞由外往內的構造順序，何者正確？','中膠層 → 初生細胞壁 → 次生細胞壁 → 細胞膜',['中膠層 → 次生細胞壁 → 初生細胞壁 → 細胞膜','細胞膜 → 中膠層 → 初生細胞壁 → 次生細胞壁','初生細胞壁 → 中膠層 → 細胞膜 → 次生細胞壁'],'次生壁形成在初生壁內側，細胞膜位於最內側。'],
+['cell','中膠層中常見、能黏合相鄰細胞的成分是？','果膠質',['木質素','木栓質','幾丁質'],'果膠質具有黏合性，常見於中膠層及初生細胞壁。'],
+['cell','常沉積於次生細胞壁，使其堅硬並增加支持力的是？','木質素',['木栓質','果膠質','澱粉'],'木質素是酚類聚合物；不要和脂質性、具防水作用的木栓質混淆。'],
+['cell','下列何者最符合木栓質的性質？','脂質性、蠟質，能降低透水性',['醣類，負責黏合相鄰細胞','酚類聚合物，使導管木質化','蛋白質，負責運輸水分'],'木栓質偏脂質性與蠟質，可防水並減少水分散失。'],
+
+['surface','分生組織增加植物細胞數量時主要進行何種分裂？','有絲分裂',['減數分裂','出芽生殖','二分裂'],'植物生長靠分生細胞持續進行有絲分裂；減數分裂用於產生孢子等生殖過程。'],
+['surface','「分裂」與「分化」的差別，何者正確？','分裂增加細胞數；分化產生不同構造與功能',['分裂產生不同功能；分化增加細胞數','兩者都只增加細胞體積','兩者完全相同'],'分生細胞先分裂產生新細胞，新細胞再逐漸分化。'],
+['surface','下列何者不是分生組織細胞的典型特徵？','細胞體積大且高度特化',['細胞週期短','細胞核相對較大','細胞壁薄'],'分生細胞通常小、核相對大、細胞質濃、壁薄，且尚未高度特化。'],
+['surface','根尖與莖頂的分生組織主要造成哪種生長？','初級生長，使植物伸長',['次級生長，使植物增粗','減數生長，使細胞數減少','木栓生長，只形成木栓層'],'根尖、莖頂屬初生分生組織，主要促進縱向伸長。'],
+['surface','下列何者屬於次生分生組織？','維管束形成層',['木栓層','表皮','髓'],'維管束形成層與木栓形成層才是次生分生組織；木栓層是其產物。'],
+['surface','同一棵植物能否同時進行初級生長與次級生長？','可以，可能發生在不同位置',['不可以，必須先完全停止初級生長','只有草本植物可以','只有根部可以'],'初生、次生描述生長型態與來源，不是依植物年齡排成互斥的階段。'],
+['surface','根毛是如何形成的？','單一表皮細胞向外延伸',['多個表皮細胞融合','表皮細胞進行減數分裂','木質部細胞向外突出'],'根毛不是另外分裂出一顆細胞，而是單一表皮細胞的延伸。'],
+['surface','多數植物的保衛細胞與一般表皮細胞相比，常見的差異是？','保衛細胞具有葉綠體',['一般表皮細胞都有葉綠體','保衛細胞一定沒有細胞核','一般表皮細胞都是死細胞'],'一般表皮細胞通常沒有葉綠體，多數植物的保衛細胞具有葉綠體。'],
+['surface','毛茸的主要功能通常是？','保護，部分可分泌物質',['增加根部吸水面積','運輸水與無機鹽','形成次生木質部'],'增加根部吸收面積的是根毛；毛茸主要保護，有些可分泌。'],
+['surface','關於角質層的敘述，何者正確？','地上部常有，但根部吸收區不適合太厚',['所有表皮外一定都有厚角質層','只存在於根毛外側','能促進水分大量散失'],'角質層可減少散水；根部吸收區若太厚會妨礙吸水，因此不是所有表皮都有。'],
+
+['vascular','木質部的主要運輸物質是？','水與無機鹽',['糖與胺基酸','氧氣與二氧化碳','蛋白質與核酸'],'木質部運水與無機鹽，並兼具支持功能。'],
+['vascular','韌皮部主要運輸什麼？','有機養分',['只運輸水','只運輸無機鹽','只運輸氧氣'],'韌皮部運輸有機養分，不只糖，也可包含其他有機物與訊息相關物質。'],
+['vascular','導管與管胞成熟後的共同特徵是？','皆為死細胞，無細胞核與細胞質',['皆為活細胞且有細胞核','皆為活細胞但沒有細胞核','皆只有薄的初生細胞壁'],'兩者屬木質部，成熟後死亡、壁厚且木質化，負責輸水與支持。'],
+['vascular','管胞之間的水分主要經由何種構造移動？','壁孔',['篩孔','氣孔','原生質絲'],'管胞沒有穿孔板形成的開放管道，相鄰細胞間主要靠壁孔運水。'],
+['vascular','成熟篩管細胞的狀態是？','活細胞，無細胞核但仍有部分細胞質',['死細胞，無核也無細胞質','活細胞，有完整細胞核','死細胞，但保留細胞核'],'篩管是「無核但仍活」的重要例外，需要伴細胞協助代謝。'],
+['vascular','伴細胞的主要作用是？','協助篩管維持代謝與進行運輸',['形成導管的穿孔板','運輸水與無機鹽','製造木栓質防水'],'伴細胞是有核活細胞，可支援無核的成熟篩管。'],
+['vascular','相鄰篩管細胞上下相接處的構造稱為？','篩板',['穿孔板','細胞板','中膠層'],'篩板上有許多篩孔，讓有機養分與細胞質通過。'],
+['vascular','原生質絲的功能是？','使相鄰活細胞的細胞質連通',['使成熟導管重新產生細胞質','將篩管轉變成伴細胞','讓角質層完全防水'],'原生質絲穿過細胞壁，連接相鄰活植物細胞的細胞質。'],
+['vascular','關於壁孔的敘述，何者正確？','缺少次生細胞壁，但通常保留初生壁與中膠層',['該處所有細胞壁完全消失','只存在於保衛細胞','是篩板上的大型孔洞'],'壁孔是次生壁未沉積的部位，不代表整面細胞壁都消失。'],
+['vascular','下列配對何者正確？','篩孔—位於篩板上',['壁孔—只位於篩管','原生質絲—只位於死細胞','穿孔板—位於伴細胞間'],'篩管上下相接處為篩板，篩板上有篩孔。'],
+
+['system','根、莖中的皮層與髓通常歸入哪一類組織？','基本組織',['表皮組織','分生組織','維管束組織'],'基本組織負責儲存、填充、光合與支持，皮層和髓是常見例子。'],
+['system','葉片中排列緊密、通常葉綠體較多的是？','柵狀組織',['海綿組織','木栓層','形成層'],'柵狀組織排列較緊密，是葉片主要進行光合作用的位置。'],
+['system','海綿組織具有較大細胞間隙，主要有利於什麼？','氣體交換',['次生生長','水的長距離運輸','木質化'],'海綿組織排列疏鬆、間隙大，利於氣體交換，也能進行光合作用。'],
+['system','植物體的四大組織不包含下列何者？','器官組織',['分生組織','表皮組織','基本組織'],'四大類是分生、表皮、維管束、基本組織。'],
+['system','植物主要有幾大組織系統？','3 大',['2 大','4 大','5 大'],'三大系統是表皮、維管束與基本組織系統。'],
+['system','為什麼沒有「分生組織系統」？','分生組織集中於特定位置，未形成跨器官連續系統',['分生組織不是植物組織','分生細胞不能分裂','分生組織只存在於動物'],'分生組織是四大組織之一，但沒有像另外三類那樣形成連續分布的組織系統。'],
+['system','下列何者屬於表皮組織系統？','保衛細胞',['管胞','篩管','髓'],'表皮組織系統包含表皮及其特化的根毛、保衛細胞、毛茸等。'],
+['system','下列何者同屬維管束組織系統？','木質部與韌皮部',['表皮與皮層','柵狀組織與保衛細胞','分生組織與髓'],'維管束系統由木質部與韌皮部構成，連續分布於根、莖、葉。'],
+['system','「薄壁、厚角、厚壁」與「分生、表皮、維管束、基本」分別是在分類什麼？','前者是細胞種類，後者是組織種類',['前者是組織系統，後者是器官','前者是器官，後者是細胞種類','兩者都是組織種類'],'細胞種類和組織種類是不同層級；一種組織也可含多種細胞。'],
+['system','關於「初生／次生」兩種用法，何者正確？','生長與細胞壁各有自己的初生、次生概念',['初生生長就是只有初生細胞壁','次生生長只發生在次生壁內','兩種用法完全等同'],'初生／次生生長談來源與方向；初生／次生細胞壁談形成先後，不能混為一談。']
+];
+
+var LABEL = {cell:'細胞與細胞壁', surface:'分生與表皮', vascular:'維管束', system:'基本與系統'};
+var BANK = RAW.map(function(r,i){
+  return {i:i, k:r[0], q:r[1], a:r[2], d:r[3], why:r[4]};
+});
+
+var tabs = document.querySelectorAll('nav button');
+var panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+
+var S = {kinds:['cell','surface','vascular','system'], n:25};
+var queue=[], idx=0, right=0, wrongList=[], answered=false;
+function $(id){ return document.getElementById(id); }
+
+$('setKind').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  b.classList.toggle('on');
+  var box = $('setKind');
+  if(!box.querySelectorAll('.chip.on').length){ b.classList.add('on'); return; }
+  S.kinds = [].map.call(box.querySelectorAll('.chip.on'), function(c){ return c.dataset.k; });
+});
+$('setLen').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+
+function shuffle(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+}
+
+function start(pool){
+  var items = pool || BANK.filter(function(x){ return S.kinds.indexOf(x.k) > -1; });
+  if(!items.length){ alert('這個範圍沒有題目'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  var q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtype').textContent = LABEL[q.k];
+  $('qtext').textContent = q.q;
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+  var cw = $('qchoices');
+  cw.innerHTML = '';
+  shuffle([q.a].concat(q.d)).forEach(function(op){
+    var b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = op;
+    b.addEventListener('click', function(){ pick(b, op === q.a, q, op); });
+    cw.appendChild(b);
+  });
+}
+
+function pick(btn, ok, q, chosen){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.a) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:chosen}); }
+  var box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'vok' : 'vno');
+  box.innerHTML = '<span class="vt ' + (ok ? 'vok' : 'vno') + '">' + (ok ? '答對' : '答錯') + '</span>' +
+    '<span class="big">' + q.a + '</span>' +
+    '<small>' + q.why + '</small>' +
+    (ok ? '' : '<small>你選的：' + chosen + '</small>');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  $('nextBtn').hidden = false;
+}
+
+function next(){
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  var total = Math.max(right + wrongList.length, 1);
+  var pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對' : pct >= 80 ? '　把錯的補一補' : '　錯的回去看一次筆記');
+  var wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      var d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.q + '</b><span>正解：' + w.q.a + '　·　' + w.q.why + '（你選了 ' + w.mine + '）</span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:bio-2-1', m[1]);
+         localStorage.setItem('nx:time:bio-2-1', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>
