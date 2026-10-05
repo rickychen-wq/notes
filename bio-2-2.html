@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>生物 2-2 營養器官的形態、構造與功能</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --b1:#2f6f5f;--b2:#4a5f9e;--b3:#8a5a3f;--b4:#3f7a4a;--b5:#0a84ff;--accent:var(--b1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --b1:#5fc8b0;--b2:#9aabe8;--b3:#e0a97c;--b4:#7fd18a;}
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.6;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .u-1{--accent:var(--b1)}.u-2{--accent:var(--b2)}.u-3{--accent:var(--b3)}
+  .u-4{--accent:var(--b4)}.u-5{--accent:var(--b5)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .blk{padding:14px 16px;border-top:.5px solid var(--sep)}
+  .blk:first-child{border-top:none}
+  .blk h4{margin:0 0 7px;font-size:16px;font-weight:700;color:var(--accent)}
+  .blk p{margin:0 0 5px;font-size:15px}
+  .blk ul{margin:5px 0 0;padding-left:20px;font-size:15px}
+  .blk li{margin:4px 0}
+  .blk .sm{font-size:14px;color:var(--label2)}
+  .key{background:color-mix(in srgb,var(--gold) 20%,transparent);border-radius:4px;padding:0 4px;font-weight:600}
+  .eq{font-family:ui-monospace,Menlo,monospace;font-size:15px;background:var(--fill);
+    padding:9px 12px;border-radius:8px;margin:7px 0;line-height:1.8;overflow-x:auto}
+  .flow{font-size:15px;background:var(--fill);border-radius:8px;padding:10px 12px;margin:7px 0;line-height:1.9}
+  .warn{border-left:3px solid var(--red);padding:9px 12px;margin:8px 0;font-size:14.5px;
+    background:color-mix(in srgb,var(--red) 8%,transparent);border-radius:0 8px 8px 0}
+  .warn b{color:var(--red)}
+  .wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{padding:9px 10px;border-top:.5px solid var(--sep);vertical-align:top;text-align:left}
+  th{font-weight:600;color:var(--label2);font-size:13px;background:var(--fill)}
+  tr:first-child td{border-top:none}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .hint{padding:12px 16px;font-size:14px;color:var(--label2);line-height:1.55;border-top:.5px solid var(--sep)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:24px 18px}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px;text-align:center}
+  .qprompt .qtext{font-size:20px;font-weight:700;line-height:1.5}
+  .choices{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:8px}
+  .choice{text-align:left;font-family:inherit;font-size:16px;padding:14px 16px;border-radius:12px;
+    background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent;line-height:1.45}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.vok{color:var(--green)}
+  .verdict .vt.vno{color:var(--red)}
+  .verdict .big{display:block;font-size:19px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:15px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:700}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --b1:#2f6f5f;--b2:#4a5f9e;--b3:#8a5a3f;--b4:#3f7a4a;--b5:#0a84ff;--accent:var(--b1);
+  }
+  html[data-theme="dark"]{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --b1:#5fc8b0;--b2:#9aabe8;--b3:#e0a97c;--b4:#7fd18a;}
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
+</head>
+<body>
+<div class="nxbar"><a href="s-bio.html">◀ 回目錄</a><span>生物 · 2-2 營養器官</span></div>
+
+
+<header>
+  <div><h1>生物 · 2-2 營養器官</h1><div class="sub">根、莖、葉的形態、構造與功能</div></div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">根</button>
+    <button role="tab" aria-selected="false" data-t="2">莖</button>
+    <button role="tab" aria-selected="false" data-t="3">木本莖</button>
+    <button role="tab" aria-selected="false" data-t="4">葉</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ════ 根 ════ -->
+<section class="u-1" data-p="1">
+  <div class="hero"><div class="kicker">2-2.1</div><h2>根的形態與構造</h2><div class="zh">吸收、固定、儲存，並連接地上部</div></div>
+
+  <h3>一、功能與根系</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>根的主要工作</h4>
+      <ul><li>吸收水與無機鹽</li><li>支持、固定植物體</li><li>儲存養分</li><li>營養器官繁殖</li></ul>
+      <p class="sm">變態根還可特化：榕樹氣生根吸收空氣水氣；海茄苳呼吸根露出泥面進行氣體交換；大萍水生根表皮薄；菟絲子寄生根伸入寄主吸收養分。</p>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>根系</th><th>外部形態</th><th>特性</th><th>常見植物</th></tr>
+      <tr><td><b>軸根系</b></td><td>初生根形成明顯主根，再長側根</td><td>可深入土壤，水土保持佳</td><td>裸子植物、雙子葉木本、多數雙子葉草本</td></tr>
+      <tr><td><b>鬚根系</b></td><td>初生根萎縮，由莖基部長出許多不定根</td><td>分布淺，能固定表土、減少沖蝕</td><td>單子葉植物、少數雙子葉草本</td></tr>
+    </table></div>
+  </div>
+
+  <h3>二、根尖由前端往上</h3>
+  <div class="card">
+    <div class="flow"><b>根帽</b> → <b>生長點</b> → <b>延長區</b> → <b>成熟區</b></div>
+    <div class="wrap"><table>
+      <tr><th>部位</th><th>細胞狀態</th><th>主要功能</th></tr>
+      <tr><td><b>根帽</b></td><td>位於最前端</td><td>保護生長點，避免土壤摩擦損傷</td></tr>
+      <tr><td><b>生長點</b></td><td>初生分生組織，持續有絲分裂</td><td>增加根帽與延長區的細胞數</td></tr>
+      <tr><td><b>延長區</b></td><td>細胞快速增大、伸長</td><td>推動根向土中延伸</td></tr>
+      <tr><td><b>成熟區</b></td><td>細胞完成分化，外有根毛</td><td>吸收、運輸水與無機鹽</td></tr>
+    </table></div>
+    <div class="blk"><div class="warn">生長點靠<b>分裂</b>增加細胞數；延長區靠細胞<b>增大</b>使根伸長。成熟區不是主要分裂區。</div></div>
+  </div>
+
+  <h3>三、成熟區橫切</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>由外往內</h4>
+      <div class="flow"><b>表皮</b> → <b>皮層</b> → <b>內皮</b> → <b>周鞘</b> → <b>中柱維管組織</b></div>
+      <ul>
+        <li><b>表皮</b>：單層、排列緊密，通常沒有角質層；向外延伸形成根毛。</li>
+        <li><b>皮層</b>：多層薄壁細胞，負責儲存。</li>
+        <li><b>內皮</b>：皮層最內一層，卡氏帶可控制水與無機鹽進入中柱。</li>
+        <li><b>周鞘</b>：中柱最外層，可分裂形成側根。</li>
+      </ul>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>比較</th><th>雙子葉根</th><th>單子葉根</th></tr>
+      <tr><td>木質部、韌皮部</td><td>木質部在中央呈輻射狀，韌皮部位於其間</td><td>環狀相間；木質部較內、韌皮部較外</td></tr>
+      <tr><td>形成層</td><td><b>有</b>，介於木質部與韌皮部</td><td><b>無</b>，根無法持續增粗</td></tr>
+      <tr><td>中央</td><td>主要是木質部</td><td>有薄壁細胞構成、可儲存的<b>髓</b></td></tr>
+    </table></div>
+    <div class="blk"><div class="warn"><b>根毛 ≠ 側根。</b>根毛是成熟區單一表皮細胞的外凸；側根是周鞘細胞分裂形成的多細胞構造，內有維管束。</div></div>
+  </div>
+</section>
+
+<!-- ════ 莖 ════ -->
+<section class="u-2" data-p="2" hidden>
+  <div class="hero"><div class="kicker">2-2.2</div><h2>莖的形態與基本構造</h2><div class="zh">先辨認節、節間、芽，再看維管束排列</div></div>
+
+  <h3>一、功能與外部形態</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>莖的功能</h4>
+      <ul><li>支持植物體</li><li>運輸物質</li><li>儲存養分</li><li>營養器官繁殖</li></ul>
+      <p class="sm">變態莖例：走莖延伸生長；塊莖、肉質莖、鱗莖可儲存養分；蓮、薑等根莖可繁殖，水生植物的根莖常具通氣構造。</p>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>構造</th><th>定義與功能</th></tr>
+      <tr><td><b>節</b></td><td>著生葉與芽的位置；芽內有分生組織</td></tr>
+      <tr><td><b>節間</b></td><td>相鄰兩節之間</td></tr>
+      <tr><td><b>頂芽</b></td><td>位在頂端，使莖持續生長</td></tr>
+      <tr><td><b>側芽</b></td><td>位在節上，可長出新枝、葉或花</td></tr>
+    </table></div>
+  </div>
+
+  <h3>二、草質莖與木質莖</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>類型</th><th>特性</th><th>主要支持來源</th></tr>
+      <tr><td><b>草質莖</b></td><td>柔軟、矮小</td><td>細胞膨壓</td></tr>
+      <tr><td><b>木質莖</b></td><td>堅硬、高大</td><td>木質化厚壁細胞</td></tr>
+    </table></div>
+    <div class="blk"><p>木質莖可再分為：有明顯主幹的<b>喬木</b>、基部叢生且主幹不明顯的<b>灌木</b>、攀附其他物體的<b>木質藤本</b>。</p></div>
+  </div>
+
+  <h3>三、草質莖橫切比較</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>比較</th><th>單子葉草質莖</th><th>雙子葉草質莖</th></tr>
+      <tr><td>維管束排列</td><td><b>散生</b>於基本組織，外多內少、外小內大</td><td><b>環狀</b>排列</td></tr>
+      <tr><td>形成層</td><td>無，不能持續增粗</td><td>有，但不發達，增粗有限</td></tr>
+      <tr><td>其他</td><td>竹、水稻等常見髓腔</td><td>中央有髓；髓射線連接髓與皮層，可橫向運輸</td></tr>
+      <tr><td>維管束內外</td><td colspan="2"><b>木質部朝內，韌皮部朝外</b></td></tr>
+    </table></div>
+    <div class="blk"><div class="warn">葉脈也有木質部與韌皮部，但單、雙子葉植物的<b>葉脈都沒有形成層</b>。</div></div>
+  </div>
+</section>
+
+<!-- ════ 木本莖 ════ -->
+<section class="u-3" data-p="3" hidden>
+  <div class="hero"><div class="kicker">2-2.2</div><h2>木本莖與次級生長</h2><div class="zh">形成層、樹皮、木材與年輪</div></div>
+
+  <h3>一、單子葉木質莖</h3>
+  <div class="card">
+    <div class="blk">
+      <p>竹子、椰子等單子葉木質莖，維管束仍呈<b>散生</b>，通常沒有維管束形成層；細胞木質化後能強力支撐，但不能像雙子葉木本莖那樣持續次級生長。</p>
+      <div class="warn">外層雖會木質化，仍<b>不能稱為樹皮</b>；樹皮是雙子葉木本莖次級生長形成的構造。</div>
+    </div>
+  </div>
+
+  <h3>二、雙子葉木質莖由外往內</h3>
+  <div class="card">
+    <div class="flow"><b>木栓層</b> → <b>木栓形成層</b> → <b>栓皮層</b> → <b>皮層</b> → <b>韌皮部</b> → <b>維管束形成層</b> → <b>木質部</b> → <b>髓</b></div>
+    <div class="blk">
+      <h4>兩種形成層</h4>
+      <ul>
+        <li><b>木栓形成層</b>：向外產生含木栓質、已死亡的木栓細胞；向內產生栓皮層。</li>
+        <li><b>維管束形成層</b>：向內產生次生木質部，向外產生次生韌皮部；產生的木質部通常較多。</li>
+      </ul>
+      <p class="sm">木栓層、木栓形成層、栓皮層合稱周皮；木質部逐年累積形成木材。</p>
+    </div>
+  </div>
+
+  <h3>三、木材與年輪</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>比較</th><th>邊材</th><th>心材</th></tr>
+      <tr><td>位置／形成</td><td>外側、較晚形成</td><td>內側、較早形成</td></tr>
+      <tr><td>顏色</td><td>較淡</td><td>較深</td></tr>
+      <tr><td>主要功能</td><td><b>運輸</b></td><td><b>支持</b></td></tr>
+    </table></div>
+    <div class="wrap"><table>
+      <tr><th>比較</th><th>早材（春材）</th><th>晚材（夏材）</th></tr>
+      <tr><td>環境與生長</td><td>溫暖潮濕；生長快</td><td>寒冷乾燥；生長慢</td></tr>
+      <tr><td>細胞</td><td>較大、壁薄</td><td>較小、壁厚</td></tr>
+      <tr><td>顏色</td><td>較淡</td><td>較深</td></tr>
+    </table></div>
+    <div class="blk"><p>生長季節差異明顯，且維管束形成層能持續分裂，才容易形成清楚年輪；一輪通常由同一生長年度的早材與晚材構成。</p></div>
+  </div>
+
+  <h3>四、皮孔與氣孔</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>構造</th><th>形成／控制</th><th>位置與功能</th></tr>
+      <tr><td><b>氣孔</b></td><td>兩個保衛細胞圍成，可開閉</td><td>葉與幼嫩莖；氣體進出與蒸散</td></tr>
+      <tr><td><b>皮孔</b></td><td>木栓層裂開，不能主動關閉</td><td>木本莖樹皮；氣體進出</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- ════ 葉 ════ -->
+<section class="u-4" data-p="4" hidden>
+  <div class="hero"><div class="kicker">2-2.3</div><h2>葉的形態與內部構造</h2><div class="zh">葉序、葉形、葉脈與葉肉</div></div>
+
+  <h3>一、功能與外部形態</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>葉的主要工作</h4>
+      <p>葉片多扁平以接收光線，主要進行<b>光合作用</b>，也能儲存養分、營養繁殖或特化成捕蟲葉、攀附捲鬚、苞葉等。</p>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>比較</th><th>單子葉植物</th><th>雙子葉植物</th></tr>
+      <tr><td>葉脈</td><td><b>平行脈</b></td><td><b>網狀脈</b></td></tr>
+      <tr><td>與莖連接</td><td>葉鞘</td><td>葉柄</td></tr>
+      <tr><td>托葉</td><td>通常無</td><td>可有，保護葉芽</td></tr>
+    </table></div>
+    <div class="blk"><p>葉脈就是維管束，可分成主脈、側脈與細脈，負責運輸並支撐、固定葉片。</p></div>
+  </div>
+
+  <h3>二、葉序與葉形</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>葉序</th><th>同一節的葉片數</th></tr>
+      <tr><td><b>互生</b></td><td>1 片</td></tr>
+      <tr><td><b>對生</b></td><td>2 片</td></tr>
+      <tr><td><b>輪生</b></td><td>多於 2 片</td></tr>
+    </table></div>
+    <div class="blk">
+      <h4>單葉與複葉怎麼分</h4>
+      <ul><li><b>單葉</b>：一個葉柄只連一片葉片，葉緣缺刻也仍是一片。</li><li><b>複葉</b>：一個葉柄有兩片以上小葉，各小葉基部彼此不相連。</li></ul>
+      <div class="warn">判斷單位看<b>側芽</b>：真正葉柄基部可有側芽，小葉基部沒有側芽。三出、掌狀、羽狀都屬複葉。</div>
+    </div>
+  </div>
+
+  <h3>三、葉片內部構造</h3>
+  <div class="card">
+    <div class="blk">
+      <h4>由上往下</h4>
+      <div class="flow"><b>角質層</b> → <b>上表皮</b> → <b>柵狀組織</b> → <b>海綿組織</b> → <b>下表皮</b> → <b>角質層</b></div>
+    </div>
+    <div class="wrap"><table>
+      <tr><th>構造</th><th>細胞與排列</th><th>主要功能</th></tr>
+      <tr><td><b>表皮</b></td><td>單層扁平細胞，通常無葉綠體；外有蠟質角質層</td><td>保護、減少水分散失</td></tr>
+      <tr><td><b>保衛細胞</b></td><td>具有葉綠體，兩個圍成氣孔</td><td>控制氣體進出與水分蒸散</td></tr>
+      <tr><td><b>柵狀組織</b></td><td>近上表皮，長柱狀、排列緊密、葉綠體多</td><td>主要進行光合作用</td></tr>
+      <tr><td><b>海綿組織</b></td><td>近下表皮，不規則、排列疏鬆、間隙大</td><td>促進氣體與水分交換</td></tr>
+      <tr><td><b>葉脈</b></td><td>木質部在上、韌皮部在下</td><td>運輸與支持；沒有形成層</td></tr>
+    </table></div>
+    <div class="blk"><div class="warn">一般表皮細胞通常沒有葉綠體，但<b>保衛細胞有</b>。柵狀與海綿組織合稱葉肉，都是薄壁細胞。</div></div>
+  </div>
+</section>
+
+<!-- ════ 測驗 ════ -->
+<section class="u-5" data-p="5" hidden>
+  <div class="hero"><div class="kicker">Quiz</div><h2>2-2 觀念測驗</h2><div class="zh">40 題題庫；把構造位置與功能一起考</div></div>
+
+  <div id="qsetup">
+    <h3>範圍</h3>
+    <div class="card"><div class="optrow" id="setKind">
+      <button class="chip on" data-k="root">根</button>
+      <button class="chip on" data-k="stem">莖</button>
+      <button class="chip on" data-k="wood">木本莖</button>
+      <button class="chip on" data-k="leaf">葉</button>
+    </div></div>
+    <h3>題數</h3>
+    <div class="card">
+      <div class="optrow" id="setLen"><button class="chip" data-n="15">15</button><button class="chip on" data-n="25">25</button><button class="chip" data-n="0">全部 40</button></div>
+      <div class="hint">四選一。答完不會自動跳題，看完解析再按「下一題」。</div>
+    </div>
+    <button class="bigbtn" id="startBtn">開始測驗</button>
+  </div>
+
+  <div id="qplay" hidden>
+    <div class="qbar"><span id="qcount">1 / 25</span><span class="track"><i id="qprog" style="width:0%"></i></span><span id="qscore">0 對</span></div>
+    <div class="card"><div class="qprompt"><div class="qtype" id="qtype">—</div><div class="qtext" id="qtext">—</div></div></div>
+    <div class="choices" id="qchoices"></div><div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button><button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+
+  <div id="qdone" hidden>
+    <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3><div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button><button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+</section>
+
+<footer>生物 2-2 · 營養器官的形態、構造與功能</footer>
+</main>
+
+<script>
+/* [分類, 題目, 正解, [三個干擾], 解析] */
+var RAW = [
+['root','下列何者不是根的一般功能？','製造花粉',['吸收水與無機鹽','固定植物體','儲存養分'],'根可吸收、固定、儲存並進行營養繁殖；製造花粉是花的生殖功能。'],
+['root','軸根系的主要特徵是？','初生根形成明顯主根，再長出側根',['初生根萎縮後由莖基部長出不定根','所有根的粗細都完全相同','只分布在土壤最表面'],'軸根系保留明顯主根，常能深入土壤。'],
+['root','鬚根系主要由什麼形成？','莖基部長出的許多不定根',['一條持續生長的主根','成熟區的根毛膨大','周鞘只產生一條側根'],'鬚根系的初生根多會萎縮，改由莖基部的不定根構成。'],
+['root','根尖由最前端往上，順序何者正確？','根帽 → 生長點 → 延長區 → 成熟區',['生長點 → 根帽 → 成熟區 → 延長區','根帽 → 延長區 → 生長點 → 成熟區','成熟區 → 延長區 → 生長點 → 根帽'],'根帽在最前端保護生長點，之後依序是延長區與成熟區。'],
+['root','使根向土中伸長的主要部位是？','延長區',['成熟區','根帽','內皮'],'生長點先產生新細胞，延長區細胞再快速增大，使根伸長。'],
+['root','根部吸收水與無機鹽的主要位置是？','成熟區',['生長點','根帽','髓'],'成熟區已有分化完成的輸導組織，外側根毛可增加吸收面積。'],
+['root','根的內皮中，能控制水與無機鹽進入中柱的構造是？','卡氏帶',['角質層','篩板','皮孔'],'內皮細胞壁的卡氏帶可控制水與溶質進入中柱。'],
+['root','側根主要由哪一層細胞分裂形成？','周鞘',['表皮','內皮','根帽'],'周鞘位在中柱最外層，可分裂形成多細胞且具維管束的側根。'],
+['root','雙子葉植物根的木質部通常如何排列？','在中央呈輻射狀，韌皮部位於其間',['與韌皮部散生於整個皮層','只在表皮外側形成一圈','圍繞中央髓呈規則圓環'],'雙子葉根中央常見星狀或輻射狀木質部，韌皮部在其間。'],
+['root','單子葉植物根的中央通常具有什麼？','髓',['根帽','葉肉','木栓形成層'],'單子葉根中央有薄壁細胞構成的髓，木質部與韌皮部環狀相間。'],
+
+['stem','下列何者不是莖的一般功能？','由土壤吸收水與無機鹽',['支持植物體','運輸物質','儲存養分'],'從土壤直接吸收水與無機鹽主要是根的功能。'],
+['stem','相鄰兩個節之間的部分稱為？','節間',['側芽','葉柄','髓射線'],'葉與芽著生的位置叫節，兩節之間叫節間。'],
+['stem','莖頂端使莖持續生長的構造是？','頂芽',['側芽','托葉','根毛'],'頂芽內含分生組織，使主莖延長；側芽可長出新枝、葉或花。'],
+['stem','下列何者屬於變態莖？','馬鈴薯的塊莖',['胡蘿蔔的儲藏根','榕樹的氣生根','菟絲子的寄生根'],'馬鈴薯塊莖是地下莖；另外走莖、鱗莖、肉質莖、根莖也屬變態莖。'],
+['stem','草質莖主要依靠什麼提供支持力？','細胞膨壓',['年輪','木栓質','心材'],'草質莖柔軟，主要靠細胞含水形成的膨壓支撐。'],
+['stem','具有明顯主幹、分支點較高的木質植物稱為？','喬木',['灌木','木質藤本','草本'],'喬木主幹明顯；灌木主幹不明顯且常由基部叢生。'],
+['stem','單子葉草質莖的維管束通常如何排列？','散生於基本組織中',['形成一個連續環','只集中於中央髓','位在表皮之外'],'單子葉莖維管束散生，常呈外多內少、外小內大的分布。'],
+['stem','雙子葉草質莖的維管束通常如何排列？','環狀排列',['完全散生','只在表皮形成一層','只集中於髓腔'],'雙子葉草質莖的維管束呈環狀，束間形成層可連成一圈。'],
+['stem','莖的維管束中，木質部與韌皮部的位置通常為何？','木質部朝內，韌皮部朝外',['木質部朝外，韌皮部朝內','兩者都在表皮外','兩者位置完全隨機'],'莖的維管束一般是木質部在內、韌皮部在外。'],
+['stem','雙子葉草質莖的髓射線主要功能是？','儲存養分並進行橫向運輸',['形成氣孔','吸收土壤水分','產生側根'],'髓射線從髓向皮層延伸，可儲存並橫向運送物質。'],
+
+['wood','竹子等單子葉木質莖為何不能像雙子葉木本莖持續增粗？','通常沒有維管束形成層',['沒有木質部','沒有任何木質化細胞','沒有維管束'],'單子葉木質莖靠細胞木質化支撐，但維管束散生且通常沒有形成層。'],
+['wood','雙子葉木本莖的維管束形成層向內主要產生什麼？','次生木質部',['次生韌皮部','木栓層','栓皮層'],'維管束形成層向內生木質部、向外生韌皮部，而且木質部產量較多。'],
+['wood','木栓形成層向外產生的細胞通常有何特徵？','死亡且細胞壁含木栓質',['存活且有大量葉綠體','形成導管以運水','形成保衛細胞控制開閉'],'向外形成的木栓細胞成熟後死亡，壁中含木栓質，負責保護。'],
+['wood','木栓層、木栓形成層與栓皮層合稱什麼？','周皮',['葉肉','中柱','維管束'],'三者合稱周皮，取代老莖原本的表皮保護功能。'],
+['wood','邊材的主要特徵是？','位於外側、較淡，主要負責運輸',['位於內側、較深，主要負責支持','位於樹皮外，負責光合作用','由韌皮部形成，負責運糖'],'邊材是較新形成的木質部，仍能有效輸水。'],
+['wood','心材的主要特徵是？','位於內側、較深，主要負責支持',['位於外側、較淡，主要負責運輸','由形成層外側產生','只存在於草質莖'],'心材是較老的木質部，運輸功能降低，以支持為主。'],
+['wood','早材細胞通常具有何種特徵？','較大、壁薄、顏色較淡',['較小、壁厚、顏色較深','全部死亡且沒有細胞壁','只形成於寒冷乾燥時'],'早材形成於生長較快的溫暖潮濕季節，因此細胞較大、壁較薄。'],
+['wood','形成清楚年輪需要的條件是？','季節差異明顯且維管束形成層能持續分裂',['全年氣候完全相同且無形成層','只有木栓形成層分裂','莖內完全沒有木質部'],'早材、晚材差異要明顯，且維管束形成層需週期性產生次生木質部。'],
+['wood','皮孔與氣孔最重要的差別是？','皮孔不能主動關閉，氣孔可由保衛細胞控制',['皮孔有保衛細胞，氣孔沒有','皮孔只運糖，氣孔只運水','兩者都能完全關閉'],'皮孔是木栓層裂開的通氣處，沒有保衛細胞控制；氣孔可調節開閉。'],
+['wood','下列哪一層不屬於雙子葉木本莖的樹皮範圍？','木質部',['木栓層','皮層','韌皮部'],'樹皮位在維管束形成層外側；木質部位在形成層內側，形成木材。'],
+
+['leaf','葉片扁平的主要優勢是？','增加接收光線的面積',['減少所有氣體交換','讓葉脈消失','阻止水分運輸'],'扁平葉片可擴大受光面積，有利光合作用。'],
+['leaf','單子葉植物的葉脈通常為？','平行脈',['網狀脈','輻射脈','散生脈'],'單子葉常見平行脈；雙子葉常見網狀脈。'],
+['leaf','雙子葉植物的葉通常以何種構造連接莖？','葉柄',['葉鞘','根毛','根帽'],'雙子葉葉片多藉葉柄連莖；單子葉常以葉鞘包圍莖。'],
+['leaf','同一節只有一片葉的葉序稱為？','互生',['對生','輪生','複生'],'互生每節一片；對生每節兩片；輪生每節多於兩片。'],
+['leaf','判斷複葉的小葉時，最可靠的依據是？','小葉基部沒有側芽',['小葉一定很小','小葉一定呈鋸齒狀','小葉一定有托葉'],'真正一片葉的葉柄基部可有側芽；複葉的小葉基部沒有側芽。'],
+['leaf','一般葉表皮細胞與保衛細胞的葉綠體情況，何者正確？','一般表皮通常無葉綠體，保衛細胞有',['兩者通常都沒有葉綠體','一般表皮有，保衛細胞沒有','兩者一定都有大量葉綠體'],'一般表皮以保護為主；保衛細胞有葉綠體並控制氣孔。'],
+['leaf','柵狀組織通常位於何處？','近上表皮，排列緊密且葉綠體多',['近下表皮，排列疏鬆且沒有葉綠體','葉脈內，只有厚壁細胞','角質層外側'],'柵狀組織受光較多，是葉片主要光合作用位置。'],
+['leaf','海綿組織的主要構造特徵是？','細胞排列疏鬆，細胞間隙大',['細胞呈長柱狀且排列緊密','細胞壁全部木質化','完全沒有葉綠體'],'海綿組織大間隙有利氣體與水分交換，也能進行光合作用。'],
+['leaf','葉脈維管束中，木質部與韌皮部通常如何排列？','木質部在上，韌皮部在下',['木質部在下，韌皮部在上','兩者都在表皮外','木質部與韌皮部完全混合'],'葉脈內木質部朝上表皮，韌皮部朝下表皮。'],
+['leaf','關於葉脈形成層的敘述，何者正確？','單、雙子葉植物的葉脈都沒有形成層',['只有雙子葉葉脈有形成層','只有單子葉葉脈有形成層','所有葉脈都有形成層'],'葉脈負責運輸與支持，但不靠形成層進行持續次級增粗。']
+];
+
+var LABEL = {root:'根', stem:'莖', wood:'木本莖', leaf:'葉'};
+var BANK = RAW.map(function(r,i){
+  return {i:i, k:r[0], q:r[1], a:r[2], d:r[3], why:r[4]};
+});
+
+var tabs = document.querySelectorAll('nav button');
+var panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+
+var S = {kinds:['root','stem','wood','leaf'], n:25};
+var queue=[], idx=0, right=0, wrongList=[], answered=false;
+function $(id){ return document.getElementById(id); }
+
+$('setKind').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  b.classList.toggle('on');
+  var box = $('setKind');
+  if(!box.querySelectorAll('.chip.on').length){ b.classList.add('on'); return; }
+  S.kinds = [].map.call(box.querySelectorAll('.chip.on'), function(c){ return c.dataset.k; });
+});
+$('setLen').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+
+function shuffle(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+}
+
+function start(pool){
+  var items = pool || BANK.filter(function(x){ return S.kinds.indexOf(x.k) > -1; });
+  if(!items.length){ alert('這個範圍沒有題目'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  var q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtype').textContent = LABEL[q.k];
+  $('qtext').textContent = q.q;
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+  var cw = $('qchoices');
+  cw.innerHTML = '';
+  shuffle([q.a].concat(q.d)).forEach(function(op){
+    var b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = op;
+    b.addEventListener('click', function(){ pick(b, op === q.a, q, op); });
+    cw.appendChild(b);
+  });
+}
+
+function pick(btn, ok, q, chosen){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.a) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:chosen}); }
+  var box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'vok' : 'vno');
+  box.innerHTML = '<span class="vt ' + (ok ? 'vok' : 'vno') + '">' + (ok ? '答對' : '答錯') + '</span>' +
+    '<span class="big">' + q.a + '</span>' +
+    '<small>' + q.why + '</small>' +
+    (ok ? '' : '<small>你選的：' + chosen + '</small>');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  $('nextBtn').hidden = false;
+}
+
+function next(){
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  var total = Math.max(right + wrongList.length, 1);
+  var pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對' : pct >= 80 ? '　把錯的補一補' : '　錯的回去看一次筆記');
+  var wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      var d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.q + '</b><span>正解：' + w.q.a + '　·　' + w.q.why + '（你選了 ' + w.mine + '）</span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:bio-2-2', m[1]);
+         localStorage.setItem('nx:time:bio-2-2', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>
