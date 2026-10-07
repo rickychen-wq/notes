@@ -116,9 +116,9 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio21Source.includes(marker))fail('bio-2-1.html',`missing quiz marker: ${marker}`);
 }
 const bioSubjectSource=fs.readFileSync(path.join(root,'s-bio.html'),'utf8');
-if(!bioSubjectSource.includes('href="bio-2-1.html"')||!bioSubjectSource.includes('href="bio-2-2.html"')||!bioSubjectSource.includes('3 / 4 已整理')||!bioSubjectSource.includes("style.width='75%'"))fail('s-bio.html','Biology 2-1/2-2 cards or progress are incomplete');
+if(!bioSubjectSource.includes('href="bio-2-1.html"')||!bioSubjectSource.includes('href="bio-2-2.html"')||!bioSubjectSource.includes('href="bio-3-1.html"')||!bioSubjectSource.includes('4 / 4 已整理')||!bioSubjectSource.includes("style.width='100%'"))fail('s-bio.html','Biology cards or progress are incomplete');
 const homeSource=fs.readFileSync(path.join(root,'index.html'),'utf8');
-if(!homeSource.includes('24 / 29')||!homeSource.includes('data-done="3" data-total="4"')||!homeSource.includes('var d=24, t=29'))fail('index.html','overall or Biology progress was not updated');
+if(!homeSource.includes('25 / 29')||!homeSource.includes('data-done="4" data-total="4"')||!homeSource.includes('var d=25, t=29')||!homeSource.includes('六個科目的筆記與測驗'))fail('index.html','overall or Biology progress was not updated');
 if(/s-(?:physics|geo)\.html/.test(homeSource)||/[>](?:物理|地理)[<]/.test(homeSource))fail('index.html','removed Physics or Geography card is still visible');
 if(fs.existsSync(path.join(root,'s-physics.html'))||fs.existsSync(path.join(root,'s-geo.html')))fail('project','removed Physics or Geography subject page still exists');
 
@@ -144,9 +144,31 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio22Source.includes(marker))fail('bio-2-2.html',`missing quiz marker: ${marker}`);
 }
 
-if(htmlFiles.length!==34)fail('project',`expected 34 HTML pages, found ${htmlFiles.length}`);
+const bio31Source=fs.readFileSync(path.join(root,'bio-3-1.html'),'utf8');
+const bio31Match=bio31Source.match(/var RAW = (\[[\s\S]*?\n\]);/);
+if(!bio31Match)fail('bio-3-1.html','missing RAW quiz bank');
+else{
+  const bio31Raw=vm.runInNewContext(`(${bio31Match[1]})`,Object.create(null),{timeout:1000});
+  if(bio31Raw.length!==40)fail('bio-3-1.html',`expected 40 quiz questions, found ${bio31Raw.length}`);
+  const counts=new Map(),questions=new Set();
+  for(const row of bio31Raw){
+    const [kind,question,answer,distractors,explanation]=row;
+    counts.set(kind,(counts.get(kind)||0)+1);
+    if(questions.has(question))fail('bio-3-1.html',`duplicate quiz question: ${question}`);
+    questions.add(question);
+    if(!question||!answer||!explanation)fail('bio-3-1.html','quiz row has an empty required field');
+    if(!Array.isArray(distractors)||distractors.length!==3||new Set(distractors).size!==3)fail('bio-3-1.html',`invalid distractors for: ${question}`);
+    if(distractors.includes(answer))fail('bio-3-1.html',`correct answer repeated among distractors for: ${question}`);
+  }
+  for(const kind of ['uptake','radial','xylem','stomata'])if(counts.get(kind)!==10)fail('bio-3-1.html',`expected 10 ${kind} questions, found ${counts.get(kind)||0}`);
+}
+for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bio-3-1"]){
+  if(!bio31Source.includes(marker))fail('bio-3-1.html',`missing quiz marker: ${marker}`);
+}
+
+if(htmlFiles.length!==35)fail('project',`expected 35 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==33)fail('project',`expected 33 protected pages, found ${protectedCount}`);
+if(protectedCount!==34)fail('project',`expected 34 protected pages, found ${protectedCount}`);
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},
