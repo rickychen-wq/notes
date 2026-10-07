@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>生物 3-1 水和礦物質的吸收與運輸</title>
+<style>
+  :root{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --b1:#2f6f5f;--b2:#4a5f9e;--b3:#8a5a3f;--b4:#3f7a4a;--b5:#0a84ff;--accent:var(--b1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --b1:#5fc8b0;--b2:#9aabe8;--b3:#e0a97c;--b4:#7fd18a;}
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue",sans-serif;
+    background:var(--bg);color:var(--label);font-size:17px;line-height:1.6;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid var(--sep);padding:calc(env(safe-area-inset-top) + 10px) 16px 8px}
+  h1{font-size:23px;font-weight:700;letter-spacing:-.5px;margin:0}
+  .sub{font-size:13px;color:var(--label2);margin-top:2px}
+  nav{display:flex;gap:2px;margin-top:12px;padding:2px;background:var(--fill);border-radius:9px}
+  nav button{flex:1;border:none;background:transparent;font-family:inherit;font-size:13px;
+    font-weight:600;color:var(--label);padding:7px 0;border-radius:7px;cursor:pointer}
+  nav button[aria-selected="true"]{background:var(--card);box-shadow:0 3px 8px rgba(0,0,0,.12)}
+
+  main{padding:0 16px;max-width:720px;margin:0 auto}
+  section[hidden]{display:none}
+  .u-1{--accent:var(--b1)}.u-2{--accent:var(--b2)}.u-3{--accent:var(--b3)}
+  .u-4{--accent:var(--b4)}.u-5{--accent:var(--b5)}
+  .hero{padding:22px 4px 6px}
+  .hero .kicker{font-size:13px;font-weight:600;color:var(--accent)}
+  .hero h2{font-size:24px;font-weight:700;letter-spacing:-.4px;margin:4px 0 2px}
+  .hero .zh{font-size:15px;color:var(--label2)}
+  h3{font-size:13px;font-weight:600;color:var(--label2);margin:24px 0 7px;padding-left:16px}
+  .card{background:var(--card);border-radius:12px;overflow:hidden}
+
+  .blk{padding:14px 16px;border-top:.5px solid var(--sep)}
+  .blk:first-child{border-top:none}
+  .blk h4{margin:0 0 7px;font-size:16px;font-weight:700;color:var(--accent)}
+  .blk p{margin:0 0 5px;font-size:15px}
+  .blk ul{margin:5px 0 0;padding-left:20px;font-size:15px}
+  .blk li{margin:4px 0}
+  .blk .sm{font-size:14px;color:var(--label2)}
+  .key{background:color-mix(in srgb,var(--gold) 20%,transparent);border-radius:4px;padding:0 4px;font-weight:600}
+  .eq{font-family:ui-monospace,Menlo,monospace;font-size:15px;background:var(--fill);
+    padding:9px 12px;border-radius:8px;margin:7px 0;line-height:1.8;overflow-x:auto}
+  .flow{font-size:15px;background:var(--fill);border-radius:8px;padding:10px 12px;margin:7px 0;line-height:1.9}
+  .warn{border-left:3px solid var(--red);padding:9px 12px;margin:8px 0;font-size:14.5px;
+    background:color-mix(in srgb,var(--red) 8%,transparent);border-radius:0 8px 8px 0}
+  .warn b{color:var(--red)}
+  .wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{padding:9px 10px;border-top:.5px solid var(--sep);vertical-align:top;text-align:left}
+  th{font-weight:600;color:var(--label2);font-size:13px;background:var(--fill)}
+  tr:first-child td{border-top:none}
+
+  .optrow{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:.5px solid var(--sep)}
+  .optrow:first-child{border-top:none}
+  .optrow .lb{font-size:15px;font-weight:600;width:100%;margin-bottom:2px}
+  .chip{font-family:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:100px;
+    background:var(--fill);color:var(--label);cursor:pointer;border:1.5px solid transparent}
+  .chip.on{border-color:var(--gold);color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+  .bigbtn{display:block;width:100%;border:none;font-family:inherit;font-size:17px;font-weight:600;
+    padding:15px;border-radius:12px;background:var(--blue);color:#fff;margin-top:16px;cursor:pointer}
+  .bigbtn.sec{background:var(--fill);color:var(--blue)}
+  .hint{padding:12px 16px;font-size:14px;color:var(--label2);line-height:1.55;border-top:.5px solid var(--sep)}
+
+  .qbar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--label2);padding:4px 2px 10px}
+  .track{flex:1;height:5px;background:var(--fill);border-radius:3px;overflow:hidden}
+  .track i{display:block;height:100%;background:var(--blue);border-radius:3px;transition:width .25s}
+  .qprompt{padding:24px 18px}
+  .qprompt .qtype{font-size:12px;font-weight:600;color:var(--label3);margin-bottom:8px;text-align:center}
+  .qprompt .qtext{font-size:20px;font-weight:700;line-height:1.5}
+  .choices{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:8px}
+  .choice{text-align:left;font-family:inherit;font-size:16px;padding:14px 16px;border-radius:12px;
+    background:var(--card);color:var(--label);cursor:pointer;border:1.5px solid transparent;line-height:1.45}
+  .choice.right{border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+  .choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+  #qverdict{display:block;width:100%}
+  .verdict{display:block;width:100%;margin-top:12px;padding:14px 16px;border-radius:12px;
+    font-size:16px;line-height:1.6;overflow-wrap:break-word}
+  .verdict.vok{background:color-mix(in srgb,var(--green) 15%,var(--card))}
+  .verdict.vno{background:color-mix(in srgb,var(--red) 13%,var(--card))}
+  .verdict .vt{font-weight:700;display:block;margin-bottom:4px}
+  .verdict .vt.vok{color:var(--green)}
+  .verdict .vt.vno{color:var(--red)}
+  .verdict .big{display:block;font-size:19px;font-weight:700;color:var(--label);margin-bottom:2px}
+  .verdict small{display:block;color:var(--label2);font-size:14px;margin-top:5px}
+  .score{text-align:center;padding:30px 16px 10px}
+  .score .big{font-size:56px;font-weight:700;letter-spacing:-2px;line-height:1}
+  .score .lbl{font-size:15px;color:var(--label2);margin-top:6px}
+  .wrongrow{padding:11px 16px;border-top:.5px solid var(--sep);font-size:15px}
+  .wrongrow:first-child{border-top:none}
+  .wrongrow b{font-weight:700}
+  .wrongrow span{color:var(--label2);display:block;font-size:14px;margin-top:2px}
+  footer{padding:32px 16px calc(24px + env(safe-area-inset-bottom));text-align:center;font-size:13px;color:var(--label3)}
+
+  /* ── 目錄整合：主題覆寫與返回列 ── */
+  html[data-theme="light"]{
+    --bg:#f2f2f7;--card:#ffffff;--label:#000000;--label2:#3c3c4399;--label3:#3c3c434d;
+    --sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;
+    --b1:#2f6f5f;--b2:#4a5f9e;--b3:#8a5a3f;--b4:#3f7a4a;--b5:#0a84ff;--accent:var(--b1);
+  }
+  html[data-theme="dark"]{--bg:#000000;--card:#1c1c1e;--label:#ffffff;--label2:#ebebf599;--label3:#ebebf54d;
+      --sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;
+      --b1:#5fc8b0;--b2:#9aabe8;--b3:#e0a97c;--b4:#7fd18a;}
+  .nxbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;background:var(--card);
+    border-bottom:.5px solid var(--sep)}
+  .nxbar a{color:var(--blue);font-weight:600;font-size:15px;text-decoration:none}
+  .nxbar span{font-size:13px;color:var(--label2)}
+  body>header{padding-top:10px !important}
+</style>
+
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
+</head>
+<body>
+<div class="nxbar"><a href="s-bio.html">◀ 回目錄</a><span>生物 · 3-1 植物的運輸</span></div>
+
+
+<header>
+  <div><h1>生物 · 3-1 植物的運輸</h1><div class="sub">水和礦物質的吸收、運輸與蒸散</div></div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-t="1">吸收</button>
+    <button role="tab" aria-selected="false" data-t="2">橫向運輸</button>
+    <button role="tab" aria-selected="false" data-t="3">縱向運輸</button>
+    <button role="tab" aria-selected="false" data-t="4">蒸散與氣孔</button>
+    <button role="tab" aria-selected="false" data-t="5">測驗</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ════ 吸收 ════ -->
+<section class="u-1" data-p="1">
+  <div class="hero"><div class="kicker">3-1.1</div><h2>水和礦物質的吸收</h2><div class="zh">必需元素、根毛、菌根與根瘤</div></div>
+
+  <h3>一、植物的必需元素</h3>
+  <div class="card">
+    <div class="blk"><p><b>必需元素</b>是植物生長發育不可缺少的元素，約 17 種。分類標準是植物需要的<b>含量</b>，不是重要程度。</p></div>
+    <div class="wrap"><table>
+      <tr><th>類型</th><th>判定</th><th>元素</th></tr>
+      <tr><td><b>大量元素</b></td><td>乾重 10 mmol/kg 以上</td><td>C、H、O、N、P、S、K、Ca、Mg</td></tr>
+      <tr><td><b>微量元素</b></td><td>乾重 10 mmol/kg 以下</td><td>Cl、Fe、B、Mn、Zn、Cu、Ni、Mo</td></tr>
+    </table></div>
+    <div class="wrap"><table>
+      <tr><th>元素</th><th>常考功能</th></tr>
+      <tr><td>C</td><td>大部分有機物的骨架</td></tr>
+      <tr><td>H、O</td><td>醣類、蛋白質、脂質的成分</td></tr>
+      <tr><td>N</td><td>蛋白質、核酸、葉綠素的成分</td></tr>
+      <tr><td>P</td><td>核酸與細胞膜磷脂的成分</td></tr>
+      <tr><td>K</td><td>調控氣孔開閉；也是多種酵素的輔因子</td></tr>
+      <tr><td>Mg</td><td>葉綠素的成分</td></tr>
+    </table></div>
+    <div class="blk"><p><b>氮肥（葉肥）</b>促進枝葉；<b>磷肥（花果肥）</b>促進開花結果；<b>鉀肥（根莖肥）</b>使根莖強壯並提高抗病力。</p></div>
+  </div>
+
+  <h3>二、根怎麼吸收</h3>
+  <div class="card"><div class="blk">
+    <p>主要吸收部位是<b>成熟區</b>：外有根毛增加表面積，內部已有維管束可接著運輸。</p>
+    <div class="flow">礦物離子：<b>主動運輸</b>或<b>促進性擴散</b>進入根部<br>水：根內溶質累積、滲透壓升高 → 水由土壤<b>滲透</b>進入</div>
+    <div class="warn">先吸收礦物離子，才會提高根細胞的滲透壓、促使水進入。水本身不是靠主動運輸。</div>
+  </div></div>
+
+  <h3>三、根部的互利共生</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>構造</th><th>微生物給植物</th><th>植物給微生物</th></tr>
+      <tr><td><b>菌根</b></td><td>菌絲增加吸收面積；酸性物質提高礦物溶解度；生長因子促根生長；抗生素保護根部</td><td>醣類等有機養分</td></tr>
+      <tr><td><b>根瘤</b></td><td>根瘤菌以固氮酶將 N₂ 轉成 NH₄⁺；土壤中的硝化菌還可把 NH₄⁺ 轉成 NO₃⁻，供植物取得氮</td><td>醣類等有機養分</td></tr>
+    </table></div>
+    <div class="blk"><div class="warn"><b>菌根是真菌＋根；根瘤是根瘤菌＋豆科植物根。</b>兩者都互利，但功能不同。</div></div>
+  </div>
+
+  <h3>四、施肥與灌水的陷阱</h3>
+  <div class="card"><div class="blk"><ul>
+    <li>施肥過多：土壤溶質濃度過高、滲透壓大於根部，水反而由根流向土壤。</li>
+    <li>長期淹水：根部缺氧，細胞呼吸下降，ATP 不足，使主動吸收礦物離子受阻。</li>
+  </ul></div></div>
+</section>
+
+<!-- ════ 橫向運輸 ════ -->
+<section class="u-2" data-p="2" hidden>
+  <div class="hero"><div class="kicker">3-1.1</div><h2>根部的橫向運輸</h2><div class="zh">由表皮穿過皮層，最後進入木質部</div></div>
+
+  <h3>一、運輸方向與動力</h3>
+  <div class="card">
+    <div class="flow"><b>表皮</b> → <b>皮層</b> → <b>內皮</b> → <b>周鞘</b> → <b>木質部</b></div>
+    <div class="blk"><p>根細胞主動吸收礦物離子，使越靠近中柱的細胞溶質濃度與<b>滲透壓</b>越高，形成由外小、向內大的滲透壓梯度，水與礦物質因此往內移動。</p></div>
+  </div>
+
+  <h3>二、兩條橫向路徑</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>比較</th><th>共質體運輸</th><th>質外體運輸</th></tr>
+      <tr><td>走哪裡</td><td>先進入細胞，經細胞質與原生質絲向內</td><td>沿細胞壁與細胞間隙流動，不進入細胞內</td></tr>
+      <tr><td>速度</td><td>較慢</td><td>較快</td></tr>
+      <tr><td>能量</td><td>吸收階段可涉及主動運輸</td><td>路徑本身不耗能</td></tr>
+      <tr><td>能否一路進中柱</td><td>可以</td><td>不行，會被內皮的卡氏帶擋住</td></tr>
+    </table></div>
+    <div class="blk"><p>兩種路徑可互相切換。走質外體的水與溶質到內皮時，必須跨膜進入內皮細胞，改走共質體才能進入木質部。</p></div>
+  </div>
+
+  <h3>三、卡氏帶到底在做什麼</h3>
+  <div class="card"><div class="blk">
+    <p>卡氏帶位於<b>內皮細胞壁</b>，含木栓質，會阻斷細胞壁中的質外體路徑。它迫使物質先通過細胞膜，讓植物能選擇性控制哪些離子進入中柱。</p>
+    <div class="warn">卡氏帶不是把水完全擋在根外，而是阻止它<b>只沿細胞壁直接闖進中柱</b>。</div>
+  </div></div>
+</section>
+
+<!-- ════ 縱向運輸 ════ -->
+<section class="u-3" data-p="3" hidden>
+  <div class="hero"><div class="kicker">3-1.2</div><h2>木質部的縱向運輸</h2><div class="zh">根壓、毛細現象與蒸散拉力</div></div>
+
+  <h3>一、通道與方向</h3>
+  <div class="card"><div class="blk">
+    <p>水與礦物質在維管束的<b>木質部</b>中，由根往莖、葉進行<b>單方向向上</b>運輸，整體不直接消耗植物代謝能量。</p>
+    <div class="flow">根部吸收 → <b>根壓推</b> → <b>內聚力維持連續水柱</b> → <b>蒸散拉力往上拉</b></div>
+  </div></div>
+
+  <h3>二、三種動力比較</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>動力</th><th>原理</th><th>重要性與現象</th></tr>
+      <tr><td><b>根壓</b></td><td>主動吸收離子提高根部滲透壓，水進入後形成向上的推力；卡氏帶減少回流</td><td>幼苗、草本較明顯；夜間可造成泌溢</td></tr>
+      <tr><td><b>毛細現象</b></td><td>水分子間的內聚力，加上水對木質部管壁的附著力，使水沿細管上升</td><td>作用有限，但可維持水柱連續；水柱中斷會妨礙運輸</td></tr>
+      <tr><td><b>蒸散拉力</b></td><td>葉肉水分蒸發使水膜彎曲、表面張力形成負壓，將連續水柱往上拉</td><td><b>最主要動力</b>，可將水拉到高大植物頂端</td></tr>
+    </table></div>
+  </div>
+
+  <h3>三、內聚力—張力理論</h3>
+  <div class="card"><div class="blk">
+    <div class="flow">葉肉細胞水分蒸發 → 水膜彎曲加深 → 表面張力造成負壓 → 拉動木質部水柱 → 根部水分補上</div>
+    <ul><li><b>內聚力</b>：水分子彼此以氫鍵相吸，使水柱不易斷裂。</li><li><b>張力</b>：蒸散造成的負壓，提供向上的拉力。</li></ul>
+    <div class="warn">蒸散不是「把水推上去」，而是葉端產生負壓把水柱<b>往上拉</b>。</div>
+  </div></div>
+
+  <h3>四、泌溢不是露水</h3>
+  <div class="card"><div class="blk"><p>夜晚或濕度高時氣孔多關閉、蒸散弱，但根壓仍持續把水向上推，多出的水會從葉緣的<b>水孔</b>滲出，稱為<b>泌溢</b>。露水則是空氣中的水氣凝結在葉面。</p></div></div>
+</section>
+
+<!-- ════ 蒸散與氣孔 ════ -->
+<section class="u-4" data-p="4" hidden>
+  <div class="hero"><div class="kicker">3-1.2</div><h2>蒸散作用與氣孔開閉</h2><div class="zh">什麼會加快蒸散，以及保衛細胞怎麼控制</div></div>
+
+  <h3>一、蒸散作用的意義</h3>
+  <div class="card"><div class="blk"><p>植物由根吸收的水，通常有 90% 以上會由葉片蒸散到環境。蒸散是水向上運輸最主要的動力，也能帶走熱量、降低植物體溫。</p></div></div>
+
+  <h3>二、哪些條件會加快蒸散</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>環境因素</th><th>蒸散較快的條件</th></tr>
+      <tr><td>溫度</td><td>較高</td></tr>
+      <tr><td>空氣濕度</td><td>較低</td></tr>
+      <tr><td>風速</td><td>有微風，可帶走葉面水氣</td></tr>
+      <tr><td>光照</td><td>較強，通常促使氣孔開啟</td></tr>
+      <tr><td>土壤水分</td><td>充足</td></tr>
+    </table></div>
+    <div class="blk"><p>植物本身若葉面積大、氣孔密度高且分布廣、角質層薄，通常蒸散也較快。</p></div>
+  </div>
+
+  <h3>三、保衛細胞的構造</h3>
+  <div class="card"><div class="blk"><ul>
+    <li>雙子葉植物的保衛細胞常呈半月形或腎形，內有葉綠體。</li>
+    <li>靠氣孔一側的<b>內側細胞壁較厚</b>，外側細胞壁較薄。</li>
+    <li>細胞壁的纖維素微纖絲呈輻射狀排列，限制橫向變形。</li>
+  </ul></div></div>
+
+  <h3>四、氣孔怎麼開、怎麼關</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>步驟</th><th>開啟</th><th>關閉</th></tr>
+      <tr><td>離子／醣類</td><td>進入或在保衛細胞累積</td><td>離開或減少</td></tr>
+      <tr><td>滲透壓</td><td>變大</td><td>變小</td></tr>
+      <tr><td>水分</td><td>進入細胞</td><td>離開細胞</td></tr>
+      <tr><td>膨壓</td><td>變大，保衛細胞膨脹彎曲</td><td>變小，保衛細胞萎縮緊貼</td></tr>
+      <tr><td>結果</td><td><b>氣孔開啟</b></td><td><b>氣孔關閉</b></td></tr>
+    </table></div>
+    <div class="blk"><p>吸水時，外側薄壁較容易縱向伸展；微纖絲限制橫向膨脹並拉開內側厚壁，所以兩個保衛細胞向外彎，氣孔張開。</p></div>
+  </div>
+
+  <h3>五、控制氣孔的條件</h3>
+  <div class="card">
+    <div class="wrap"><table>
+      <tr><th>促進開啟</th><th>促進關閉</th></tr>
+      <tr><td>土壤水分充足、照光、葉內 CO₂ 濃度低、K⁺與醣類在保衛細胞累積</td><td>缺水、黑暗或弱光、葉內 CO₂ 濃度高、溫度過高、ABA 增加</td></tr>
+    </table></div>
+    <div class="blk"><div class="warn">ABA（離層酸）是植物缺水時的重要訊號，會促進離子離開保衛細胞，使水跟著流出、氣孔關閉。</div></div>
+  </div>
+</section>
+
+
+<!-- ════ 測驗 ════ -->
+<section class="u-5" data-p="5" hidden>
+  <div class="hero"><div class="kicker">Quiz</div><h2>3-1 觀念測驗</h2><div class="zh">40 題題庫；吸收、運輸、蒸散與氣孔一次驗</div></div>
+
+  <div id="qsetup">
+    <h3>範圍</h3>
+    <div class="card"><div class="optrow" id="setKind">
+      <button class="chip on" data-k="uptake">吸收</button>
+      <button class="chip on" data-k="radial">橫向運輸</button>
+      <button class="chip on" data-k="xylem">縱向運輸</button>
+      <button class="chip on" data-k="stomata">蒸散與氣孔</button>
+    </div></div>
+    <h3>題數</h3>
+    <div class="card">
+      <div class="optrow" id="setLen"><button class="chip" data-n="15">15</button><button class="chip on" data-n="25">25</button><button class="chip" data-n="0">全部 40</button></div>
+      <div class="hint">四選一。答完不會自動跳題，看完解析再按「下一題」。</div>
+    </div>
+    <button class="bigbtn" id="startBtn">開始測驗</button>
+  </div>
+
+  <div id="qplay" hidden>
+    <div class="qbar"><span id="qcount">1 / 25</span><span class="track"><i id="qprog" style="width:0%"></i></span><span id="qscore">0 對</span></div>
+    <div class="card"><div class="qprompt"><div class="qtype" id="qtype">—</div><div class="qtext" id="qtext">—</div></div></div>
+    <div class="choices" id="qchoices"></div><div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button><button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+
+  <div id="qdone" hidden>
+    <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3><div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button><button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+</section>
+
+<footer>生物 3-1 · 水和礦物質的吸收與運輸</footer>
+</main>
+
+<script>
+/* [分類, 題目, 正解, [三個干擾], 解析] */
+var RAW = [
+['uptake','植物的必需元素是指？','植物生長發育不可缺少的元素',['植物體內含量最多的元素','只能從土壤吸收的元素','只參與光合作用的元素'],'必需元素以「缺少時無法正常完成生長發育」判定，不是依含量多寡或來源判定。'],
+['uptake','下列哪一組全部屬於大量元素？','N、P、K',['Fe、B、Zn','Cu、Ni、Mo','Cl、Mn、Zn'],'大量元素有 C、H、O、N、P、S、K、Ca、Mg；大量與微量是依植物需求量分類。'],
+['uptake','鎂在植物體內的重要功能是？','構成葉綠素',['構成卡氏帶','直接形成根毛','控制水孔開閉'],'鎂是葉綠素的成分，因此缺鎂常會影響葉片的光合作用。'],
+['uptake','鉀在植物體內的重要功能是？','調控氣孔開閉並作為酵素輔因子',['構成核酸骨架','形成細胞膜磷脂','固定空氣中的氮氣'],'鉀離子進出保衛細胞會改變滲透壓，也參與許多酵素作用。'],
+['uptake','想促進植物枝葉生長，人工肥料通常提高哪一類？','氮肥',['磷肥','鉀肥','石灰肥'],'氮肥又稱葉肥，促進枝葉生長；磷肥促進開花結果，鉀肥使根莖強壯。'],
+['uptake','根部吸收水與礦物質效率最好的位置是？','成熟區',['根帽','生長點','延長區'],'成熟區具有大量根毛增加吸收面積，內部維管束也已分化完成。'],
+['uptake','根表皮細胞吸收礦物離子時，可能採用哪些方式？','主動運輸或促進性擴散',['只有自由擴散','只有滲透作用','胞吞作用或胞吐作用'],'離子可順濃度梯度經運輸蛋白促進性擴散，也可逆梯度以主動運輸吸收。'],
+['uptake','根部主動累積礦物離子後，水主要如何進入根部？','因根內滲透壓升高而由土壤滲透進入',['由根毛主動運輸進入','沿韌皮部由葉流回根','因土壤滲透壓必定較高而外流'],'離子累積使根細胞溶質濃度與滲透壓提高，水便由土壤經滲透進入。'],
+['uptake','菌根對植物最直接的幫助是？','菌絲增加吸收表面積並提高礦物質取得量',['把木質部轉成韌皮部','直接替植物進行光合作用','使所有氣孔永久關閉'],'真菌菌絲擴大吸收範圍，也可分泌酸性物質增加礦物溶解度；植物則供應有機養分。'],
+['uptake','根瘤菌對豆科植物的重要貢獻是？','以固氮作用把氮氣轉成可利用的含氮物質',['把水分解成氧氣','把葡萄糖轉成葉綠素','把木質部改造成根毛'],'根瘤菌具有固氮酶，可將 N₂ 轉為 NH₄⁺；土壤中的硝化菌還能把 NH₄⁺ 轉成 NO₃⁻。'],
+
+['radial','水與礦物質從根外進入木質部的順序何者正確？','表皮 → 皮層 → 內皮 → 周鞘 → 木質部',['表皮 → 周鞘 → 皮層 → 內皮 → 木質部','根帽 → 皮層 → 韌皮部 → 木質部','表皮 → 木質部 → 內皮 → 周鞘'],'根的成熟區由外往內依序為表皮、皮層、內皮、周鞘，再進入中柱的木質部。'],
+['radial','根部由外往內的滲透壓通常如何變化？','由小逐漸變大',['由大逐漸變小','各層完全相同','只在表皮突然變成零'],'根細胞主動累積離子，使靠近中柱的細胞溶質濃度較高，形成向內增加的滲透壓梯度。'],
+['radial','共質體運輸主要經過哪一條路徑？','細胞質與原生質絲',['角質層與氣孔','導管與篩管','細胞壁與細胞間隙'],'物質進入細胞後，可經相鄰細胞間的原生質絲在細胞質中向內移動。'],
+['radial','質外體運輸主要經過哪一條路徑？','細胞壁與細胞間隙',['細胞核與液泡','細胞質與原生質絲','木質部與韌皮部'],'質外體路徑不進入細胞內，而是沿細胞壁和細胞間隙快速移動。'],
+['radial','根部兩種橫向運輸路徑中，通常較快的是？','質外體運輸',['共質體運輸','韌皮部運輸','胞吞作用'],'質外體不需逐一跨過細胞膜或在細胞質中移動，因此通常較快。'],
+['radial','下列關於共質體運輸的敘述何者正確？','進入表皮細胞時可能涉及主動運輸',['全程只沿細胞壁前進','一定不經過任何細胞膜','會被卡氏帶永久阻斷'],'礦物離子進入根表皮細胞可由主動運輸或促進性擴散，之後再沿共質體向內。'],
+['radial','卡氏帶位於根的哪一層？','內皮',['表皮','周鞘','根帽'],'卡氏帶位於內皮細胞壁，含木栓質，阻斷質外體路徑。'],
+['radial','卡氏帶直接阻斷哪一種運輸路徑？','質外體運輸',['共質體運輸','木質部縱向運輸','韌皮部有機物運輸'],'卡氏帶封住細胞壁路徑，使水與離子不能只沿質外體直接進入中柱。'],
+['radial','走質外體路徑的水到達內皮時，接下來必須怎麼做？','跨過細胞膜改走共質體',['直接穿過卡氏帶進木質部','改走角質層','由氣孔排出'],'卡氏帶迫使物質先通過內皮細胞膜，接受選擇後再進入中柱。'],
+['radial','卡氏帶迫使物質跨膜的主要意義是？','讓植物選擇性控制進入中柱的離子',['使水永遠無法進入木質部','加速葉片光合作用','製造根毛與側根'],'細胞膜上的運輸蛋白具有選擇性，可控制離子種類與數量，避免全部直接通過。'],
+
+['xylem','根吸收的水和礦物質主要經哪個組織向上運輸？','木質部',['韌皮部','形成層','表皮'],'木質部的導管與管胞負責把水和礦物質由根運往莖葉。'],
+['xylem','木質部中水分的主要運輸方向是？','由根往葉單方向向上',['由葉往根單方向向下','在根與葉之間等量雙向','只在莖內橫向流動'],'本課討論的木質部水流主要由根向莖葉單方向向上。'],
+['xylem','高大植物水分上升最主要的動力是？','蒸散拉力',['根壓','毛細現象','重力'],'根壓與毛細現象都有貢獻，但蒸散在葉端產生的負壓才是最主要拉力。'],
+['xylem','根壓形成的直接原因是？','根部累積離子使水滲透進入並產生向上推力',['葉片失水形成負壓','水分子彼此產生氫鍵','空氣濕度降低'],'根主動吸收離子提高滲透壓，水進入後形成正壓；卡氏帶也有助減少水回流。'],
+['xylem','根壓對哪一類植物的水分運輸影響通常較明顯？','幼苗或草本植物',['高大木本植物頂端','完全乾燥的種子','沒有根的葉片'],'根壓能推升的高度有限，因此在幼苗與草本植物較明顯。'],
+['xylem','夜晚葉緣由水孔滲出液滴的現象稱為？','泌溢',['蒸散','露水','滲透'],'氣孔關閉、蒸散弱時，根壓可把水推至葉緣水孔排出，形成泌溢。'],
+['xylem','毛細現象使水上升，主要涉及哪些作用力？','水的內聚力與對管壁的附著力',['根毛的膨壓與重力','氣孔的主動運輸','韌皮部的壓力流'],'水分子彼此內聚，並附著在狹窄木質部管壁上，可造成有限的毛細上升。'],
+['xylem','木質部中的連續水柱若中斷，最直接的影響是？','蒸散拉力難以向下傳遞，運輸受阻',['根壓會立刻無限增加','氣孔會永遠開啟','韌皮部停止運糖'],'內聚力維持連續水柱，蒸散造成的張力才能一路傳回根部。'],
+['xylem','依內聚力—張力理論，葉肉水分蒸發後首先造成什麼？','水膜彎曲加深並形成負壓',['根細胞立即失去所有離子','木質部水柱向下沉降','韌皮部壓力變成零'],'蒸發使葉肉細胞表面的水膜彎曲，表面張力產生負壓，再拉動木質部水柱。'],
+['xylem','如何區分泌溢形成的液滴與露水？','泌溢來自植物內部並由水孔排出；露水來自空氣凝結',['泌溢只在白天；露水只在正午','泌溢由氣孔主動噴出；露水由根毛排出','兩者來源與形成方式完全相同'],'泌溢是根壓推動植物內部水分由水孔排出；露水是空氣水氣在冷葉面凝結。'],
+
+['stomata','根吸收的水通常有多少會經蒸散散失？','90% 以上',['不到 1%','約 10%','完全不會散失'],'大部分根吸收的水會蒸散，蒸散同時提供運輸拉力並帶走熱量。'],
+['stomata','下列哪一種環境通常會提高蒸散速率？','溫度較高',['空氣濕度較高','完全無風且葉面水氣堆積','土壤嚴重缺水'],'溫度較高使蒸發加快；低濕度、適度風與強光通常也會促進蒸散。'],
+['stomata','空氣濕度降低時，蒸散通常如何改變？','加快',['減慢','完全停止','先停止再反向'],'空氣較乾時，葉內外水氣梯度較大，水分更容易向外擴散。'],
+['stomata','下列哪一種植物構造通常會使蒸散較快？','葉面積大且角質層薄',['葉面積小且角質層厚','氣孔密度極低','所有氣孔都深陷'],'葉面積大、氣孔密度高或分布廣、角質層薄，都有利水分散失。'],
+['stomata','關於雙子葉植物保衛細胞的敘述，何者正確？','常呈腎形且具有葉綠體',['沒有細胞壁','完全沒有葉綠體','由四個細胞圍成一個氣孔'],'兩個保衛細胞圍成一個氣孔，常呈腎形並具有葉綠體。'],
+['stomata','保衛細胞靠近氣孔一側的細胞壁有何特徵？','較厚',['較薄','完全消失','只有角質沒有纖維素'],'內側壁較厚、外側壁較薄，吸水時兩側伸展程度不同，使細胞彎曲。'],
+['stomata','保衛細胞壁中的纖維素微纖絲通常如何排列？','輻射狀',['與氣孔完全平行成一束','沒有固定方向且全部消失','只集中在細胞核旁'],'輻射狀微纖絲限制橫向膨脹，使保衛細胞吸水時主要縱向伸長並向外彎曲。'],
+['stomata','氣孔開啟時，保衛細胞內的正確變化順序是？','離子與醣類增加 → 滲透壓上升 → 水進入 → 膨壓上升',['水先離開 → 滲透壓上升 → 膨壓上升','滲透壓下降 → 水進入 → 膨壓下降','離子離開 → 水進入 → 細胞萎縮'],'溶質增加使滲透壓上升，水因滲透進入，保衛細胞膨壓增大而彎曲張開。'],
+['stomata','下列哪一組條件通常促進氣孔開啟？','照光、土壤水分充足、葉內 CO₂ 低',['黑暗、缺水、葉內 CO₂ 高','高溫缺水、ABA 增加、弱光','離子離開保衛細胞、膨壓下降'],'光與充足水分通常使氣孔開啟；葉內 CO₂ 降低也會促進開啟以取得 CO₂。'],
+['stomata','植物缺水時，ABA 促進氣孔關閉的直接過程是？','使離子離開保衛細胞，水跟著流出，膨壓下降',['使葉綠素大量增加','使水主動運輸進保衛細胞','使保衛細胞滲透壓持續上升'],'ABA 是缺水訊號，促進離子外流，使保衛細胞滲透壓下降、水流出，膨壓降低而關閉。']
+];
+
+var LABEL = {uptake:'吸收', radial:'橫向運輸', xylem:'縱向運輸', stomata:'蒸散與氣孔'};
+
+var BANK = RAW.map(function(r,i){
+  return {i:i, k:r[0], q:r[1], a:r[2], d:r[3], why:r[4]};
+});
+
+var tabs = document.querySelectorAll('nav button');
+var panels = document.querySelectorAll('section[data-p]');
+tabs.forEach(function(t){
+  t.addEventListener('click', function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t); });
+    panels.forEach(function(p){ p.hidden = p.dataset.p !== t.dataset.t; });
+    window.scrollTo({top:0});
+  });
+});
+
+var S = {kinds:['uptake','radial','xylem','stomata'], n:25};
+var queue=[], idx=0, right=0, wrongList=[], answered=false;
+function $(id){ return document.getElementById(id); }
+
+$('setKind').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  b.classList.toggle('on');
+  var box = $('setKind');
+  if(!box.querySelectorAll('.chip.on').length){ b.classList.add('on'); return; }
+  S.kinds = [].map.call(box.querySelectorAll('.chip.on'), function(c){ return c.dataset.k; });
+});
+$('setLen').addEventListener('click', function(e){
+  var b = e.target.closest('.chip'); if(!b) return;
+  $('setLen').querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+  S.n = Number(b.dataset.n);
+});
+
+function shuffle(a){
+  return a.map(function(v){ return [Math.random(), v]; })
+          .sort(function(x,y){ return x[0]-y[0]; })
+          .map(function(v){ return v[1]; });
+}
+
+function start(pool){
+  var items = pool || BANK.filter(function(x){ return S.kinds.indexOf(x.k) > -1; });
+  if(!items.length){ alert('這個範圍沒有題目'); return; }
+  items = shuffle(items);
+  if(S.n > 0) items = items.slice(0, S.n);
+  queue = items; idx = 0; right = 0; wrongList = [];
+  $('qsetup').hidden = true; $('qdone').hidden = true; $('qplay').hidden = false;
+  render(); window.scrollTo({top:0});
+}
+
+function render(){
+  answered = false;
+  var q = queue[idx];
+  $('qcount').textContent = (idx+1) + ' / ' + queue.length;
+  $('qscore').textContent = right + ' 對';
+  $('qprog').style.width = (idx / queue.length * 100) + '%';
+  $('qtype').textContent = LABEL[q.k];
+  $('qtext').textContent = q.q;
+  $('qverdict').innerHTML = '';
+  $('nextBtn').hidden = true;
+  var cw = $('qchoices');
+  cw.innerHTML = '';
+  shuffle([q.a].concat(q.d)).forEach(function(op){
+    var b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = op;
+    b.addEventListener('click', function(){ pick(b, op === q.a, q, op); });
+    cw.appendChild(b);
+  });
+}
+
+function pick(btn, ok, q, chosen){
+  if(answered) return;
+  answered = true;
+  [].forEach.call($('qchoices').children, function(c){
+    c.disabled = true;
+    if(c.textContent === q.a) c.classList.add('right');
+  });
+  if(ok) right++;
+  else { btn.classList.add('wrong'); wrongList.push({q:q, mine:chosen}); }
+  var box = document.createElement('div');
+  box.className = 'verdict ' + (ok ? 'vok' : 'vno');
+  box.innerHTML = '<span class="vt ' + (ok ? 'vok' : 'vno') + '">' + (ok ? '答對' : '答錯') + '</span>' +
+    '<span class="big">' + q.a + '</span>' +
+    '<small>' + q.why + '</small>' +
+    (ok ? '' : '<small>你選的：' + chosen + '</small>');
+  $('qverdict').innerHTML = '';
+  $('qverdict').appendChild(box);
+  $('qscore').textContent = right + ' 對';
+  $('nextBtn').hidden = false;
+}
+
+function next(){
+  if(!answered) return;
+  answered = false;
+  idx++;
+  if(idx >= queue.length) finish();
+  else { render(); window.scrollTo({top:0}); }
+}
+
+function finish(){
+  answered = false;
+  $('qplay').hidden = true; $('qdone').hidden = false;
+  var total = Math.max(right + wrongList.length, 1);
+  var pct = Math.round(right / total * 100);
+  $('rScore').textContent = pct + '%';
+  $('rLine').textContent = right + ' / ' + total + ' 題答對' +
+    (pct === 100 ? '　全對' : pct >= 80 ? '　把錯的補一補' : '　錯的回去看一次筆記');
+  var wrap = $('rWrong'); wrap.innerHTML = '';
+  if(wrongList.length){
+    $('rWrongTitle').hidden = false; wrap.hidden = false; $('againWrong').hidden = false;
+    wrongList.forEach(function(w){
+      var d = document.createElement('div');
+      d.className = 'wrongrow';
+      d.innerHTML = '<b>' + w.q.q + '</b><span>正解：' + w.q.a + '　·　' + w.q.why + '（你選了 ' + w.mine + '）</span>';
+      wrap.appendChild(d);
+    });
+  }else{
+    $('rWrongTitle').hidden = true; wrap.hidden = true; $('againWrong').hidden = true;
+  }
+  window.scrollTo({top:0});
+}
+
+$('nextBtn').addEventListener('click', next);
+$('startBtn').addEventListener('click', function(){ start(); });
+$('quitBtn').addEventListener('click', finish);
+$('againWrong').addEventListener('click', function(){ start(wrongList.map(function(w){ return w.q; })); });
+$('againAll').addEventListener('click', function(){
+  $('qdone').hidden = true; $('qsetup').hidden = false; window.scrollTo({top:0});
+});
+</script>
+
+<script>
+(function(){
+  var t=null; try{ t=localStorage.getItem('nx:theme'); }catch(e){}
+  if(t==='light'||t==='dark') document.documentElement.setAttribute('data-theme',t);
+  var el=document.getElementById('rScore'); if(!el) return;
+  var save=function(){
+    var m=(el.textContent||'').match(/(\d+)%/); if(!m) return;
+    try{ localStorage.setItem('nx:score:bio-3-1', m[1]);
+         localStorage.setItem('nx:time:bio-3-1', String(Date.now())); }catch(e){}
+  };
+  new MutationObserver(save).observe(el,{childList:true,characterData:true,subtree:true});
+})();
+</script>
+</body>
+</html>
