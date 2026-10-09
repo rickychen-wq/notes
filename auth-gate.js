@@ -1,8 +1,8 @@
 import {
-  auth,authStateReady,clearAuthTransition,consumeAuthTransition,currentDay,db,doc,increment,isLocalPreview,
+  auth,authStateReady,clearAuthTransition,collection,consumeAuthTransition,currentDay,db,doc,getDocs,increment,isLocalPreview,
   loadProfile,onAuthStateChanged,pageIdFromPath,serverTimestamp,setDoc,signOut,subjectFromPage,writeBatch
 } from './firebase-core.js';
-import {attemptIdFromScoreId,discardLegacyScores} from './stats-utils.js';
+import {attemptIdFromScoreId,bestScore,discardLegacyScores,highestScores} from './stats-utils.js';
 import {clean,correctAnswerFrom,userAnswerFrom} from './attempt-utils.js';
 
 const SPECIAL_PAGES=new Set(['index','me','manage','history','login']);
@@ -14,6 +14,7 @@ let scoreQueue=Promise.resolve();
 let quizStartedAt=null;
 const recordedScores=new Set();
 const SCORE_ERA='firebase-v1';
+const nativeStorageSet=Storage.prototype.setItem;
 
 function reveal(){
   if(window.NX_AUTH_TIMEOUT) clearTimeout(window.NX_AUTH_TIMEOUT);
@@ -166,17 +167,36 @@ function patchScoreStorage(){
   const writtenAnswer=document.getElementById('answer');
   if(writtenAnswer)writtenAnswer.addEventListener('input',function(){if(!quizStartedAt)quizStartedAt=Date.now();});
   function patched(key,value){
-    original.call(this,key,value);
     if(this===localStorage&&String(key).startsWith('nx:score:')){
+      const current=Number(localStorage.getItem(String(key))),incoming=Number(value);
+      const highest=bestScore(current,incoming);
+      original.call(this,key,highest===null?value:String(highest));
       const rawId=String(key).slice('nx:score:'.length);
       const id=attemptIdFromScoreId(rawId);if(!id)return;
       setTimeout(function(){
         const at=Number(localStorage.getItem('nx:time:'+rawId))||Date.now();
-        scoreQueue=scoreQueue.then(function(){return recordAttempt(id,Number(value),at);});
+        scoreQueue=scoreQueue.then(function(){return recordAttempt(id,incoming,at);});
       },0);
+      return;
     }
+    original.call(this,key,value);
   }
   patched.__nxPatched=true;Storage.prototype.setItem=patched;
+}
+
+async function syncEnglishHighScores(session){
+  if(pageId!=='s-english'||session.preview)return;
+  const cards=Array.from(document.querySelectorAll('.it[data-id]'));if(!cards.length)return;
+  const snapshot=await getDocs(collection(db,'users',session.user.uid,'attempts'));
+  const cloud=highestScores(snapshot.docs.map(function(item){return item.data();}));
+  cards.forEach(function(card){
+    const id=card.dataset.id,badge=card.querySelector('[data-badge]');if(!id||!badge)return;
+    const stored=localStorage.getItem('nx:score:'+id),local=stored===null?null:Number(stored);
+    const highest=bestScore(local,cloud.get(id));
+    if(highest===null)return;
+    try{nativeStorageSet.call(localStorage,'nx:score:'+id,String(highest));}catch(error){}
+    badge.className='badge sc';badge.textContent=Math.round(highest)+'%';
+  });
 }
 
 function clearOldLocalScores(){
@@ -201,6 +221,7 @@ async function start(){
       if(!profile){await signOut(auth);location.replace('login.html?error=profile');return;}
       if(clearOldLocalScores()){location.reload();return;}
       const session={user,profile};setSession(session);reveal();injectAccount(session);patchScoreStorage();
+      syncEnglishHighScores(session).catch(function(error){console.warn('Highest English scores could not be loaded',error);});
       updateProfileLogin(session).catch(function(error){console.warn('Login timestamp was not updated',error);});
       beginActivity(session);
     }catch(error){console.error(error);showConnectionError(false);}

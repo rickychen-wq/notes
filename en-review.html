@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>英文段考總複習</title>
+<script>
+(function(){var t=null;try{t=localStorage.getItem('nx:theme');}catch(e){}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--label:#000;--label2:#3c3c4399;--label3:#3c3c434d;--sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;--accent:#3f5f9e;--shadow:0 6px 22px rgba(0,0,0,.09)}
+html[data-theme="dark"]{--bg:#000;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;--sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;--accent:#8fb3e8;--shadow:0 7px 26px rgba(0,0,0,.45)}
+@media(prefers-color-scheme:dark){html:not([data-theme="light"]){--bg:#000;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;--sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;--accent:#8fb3e8;--shadow:0 7px 26px rgba(0,0,0,.45)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--label);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;font-size:17px;line-height:1.55;padding-bottom:calc(48px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+button,input{font:inherit}button{color:inherit}a{color:inherit;text-decoration:none}
+.nxbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 18px 10px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);border-bottom:.5px solid var(--sep)}
+.nxbar a{font-size:15px;font-weight:650;color:var(--blue)}.nxbar span{font-size:13px;color:var(--label2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+main{max-width:720px;margin:0 auto;padding:18px}
+.hero{padding:10px 2px 12px}.kicker{font-size:12px;font-weight:750;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}h1{margin:4px 0 6px;font-size:34px;line-height:1.16;letter-spacing:-1px}h2{margin:0;font-size:21px;letter-spacing:-.35px}h3{font-size:13px;color:var(--label3);letter-spacing:.07em;margin:24px 3px 8px}.lead{margin:0;color:var(--label2);font-size:15px}
+.card{background:var(--card);border:.5px solid var(--sep);border-radius:18px;box-shadow:var(--shadow);padding:16px;margin:10px 0}.card.flat{box-shadow:none}
+.setting{padding:2px 0 12px}.setting+.setting{border-top:.5px solid var(--sep);padding-top:14px}.setting-label{font-size:13px;font-weight:700;color:var(--label2);margin:0 0 9px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:0;background:var(--fill);padding:8px 13px;border-radius:999px;font-size:14px;font-weight:650;cursor:pointer}.chip.on{background:var(--accent);color:#fff}
+.notice{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:12px 13px;border-radius:14px;background:color-mix(in srgb,var(--gold) 13%,transparent);color:var(--label2);font-size:14px}.notice b{color:var(--label)}
+.pool{font-size:13px;color:var(--label2);margin:12px 3px 2px}.pool b{color:var(--label)}
+.bigbtn{display:block;width:100%;border:0;border-radius:15px;background:var(--accent);color:#fff;font-weight:750;padding:13px 16px;margin-top:12px;cursor:pointer}.bigbtn.sec{background:var(--fill);color:var(--label)}.bigbtn:disabled{opacity:.45}
+.qbar{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;color:var(--label2);font-size:13px;margin:2px 2px 12px}.track{height:5px;background:var(--fill);border-radius:999px;overflow:hidden}.track i{display:block;height:100%;width:0;background:var(--accent);border-radius:inherit;transition:width .25s ease}
+.qprompt{padding:5px 1px}.qtype{font-size:12px;font-weight:750;color:var(--accent);letter-spacing:.08em}.qtext{font-size:25px;font-weight:760;line-height:1.35;margin-top:7px;letter-spacing:-.35px}.qhint{font-size:13px;color:var(--label2);margin-top:8px}.qorigin{font-size:12px;color:var(--label3);margin-top:4px}
+.choices{display:grid;gap:9px;margin-top:12px}.choice{width:100%;text-align:left;border:.5px solid var(--sep);background:var(--card);border-radius:14px;padding:13px 15px;cursor:pointer}.choice.correct{border-color:var(--green);background:color-mix(in srgb,var(--green) 12%,var(--card))}.choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 10%,var(--card))}.choice:disabled{color:var(--label);opacity:1}
+.typebox{display:flex;gap:8px;margin-top:12px}.typebox input{min-width:0;flex:1;border:.5px solid var(--sep);border-radius:14px;background:var(--card);color:var(--label);padding:12px 13px;outline:none}.typebox input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}.typebox button{border:0;border-radius:14px;background:var(--accent);color:#fff;font-weight:750;padding:0 16px}
+.verdict{border-radius:16px;padding:14px 15px;margin-top:12px;background:var(--card);border:.5px solid var(--sep)}.verdict.vok{border-color:color-mix(in srgb,var(--green) 60%,var(--sep))}.verdict.vno{border-color:color-mix(in srgb,var(--red) 60%,var(--sep))}.vt{display:inline-block;font-size:12px;font-weight:800;margin-bottom:7px}.vt.vok{color:var(--green)}.vt.vno{color:var(--red)}.verdict .answer{display:block;font-size:23px;font-weight:780}.verdict small{display:block;color:var(--label2);margin-top:4px}.verdict .gold{color:var(--gold)}
+.score{text-align:center;padding:22px 8px 12px}.score .big{font-size:58px;font-weight:780;line-height:1;letter-spacing:-2px}.score .lbl{font-size:14px;color:var(--label2);margin-top:8px}.wrongrow{padding:12px 1px;border-bottom:.5px solid var(--sep)}.wrongrow:last-child{border-bottom:0}.wrongrow b{display:block;font-size:18px}.wrongrow em{color:var(--red);font-style:normal}.wrongrow span{display:block;color:var(--label2);font-size:13px;margin-top:4px}
+footer{text-align:center;color:var(--label3);font-size:12px;padding:28px 0 0}
+@media(max-width:390px){main{padding:15px}.qtext{font-size:23px}.chip{padding:8px 11px}.typebox button{padding:0 13px}}
+</style>
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
+</head>
+<body>
+<div class="nxbar"><a href="s-english.html">◀ 回英文</a><span>英文 · 段考總複習</span></div>
+<main>
+  <div class="hero"><div class="kicker">Exam Review</div><h1>英文總複習</h1><p class="lead">把所有已整理題庫混在一起練。</p></div>
+
+  <div id="qsetup">
+    <div class="card flat">
+      <div class="setting"><div class="setting-label">複習範圍</div><div class="chips" id="setSource">
+        <button class="chip" data-source="book">課本</button><button class="chip" data-source="mag">雜誌</button><button class="chip" data-source="vocab">4500 單</button><button class="chip on" data-source="all">全部</button>
+      </div></div>
+      <div class="setting"><div class="setting-label">內容</div><div class="chips" id="setKind">
+        <button class="chip on" data-kind="word">單字</button><button class="chip on" data-kind="phrase">片語</button>
+      </div></div>
+      <div class="setting"><div class="setting-label">作答方式</div><div class="chips" id="setMode">
+        <button class="chip on" data-mode="type">手打</button><button class="chip" data-mode="mc">選擇</button>
+      </div></div>
+      <div class="setting"><div class="setting-label">題數</div><div class="chips" id="setLength">
+        <button class="chip" data-length="25">25</button><button class="chip on" data-length="50">50</button><button class="chip" data-length="100">100</button><button class="chip" data-length="0">全部</button>
+      </div></div>
+      <div class="notice"><span>！</span><span><b>段考判定：</b>單字必須完整拼對；片語才會忽略大小寫、標點與常見代名詞，並保留少量拼字容錯。</span></div>
+      <div class="pool">目前範圍共 <b id="poolCount">—</b> 題</div>
+      <button class="bigbtn" id="startBtn">開始總複習</button>
+    </div>
+  </div>
+
+  <div id="qplay" hidden>
+    <div class="qbar"><span id="qcount">1 / 50</span><span class="track"><i id="qprog"></i></span><span id="qscore">0 對</span></div>
+    <div class="card"><div class="qprompt"><div class="qtype" id="qtype">中文 → 英文</div><div class="qtext" id="qtext">—</div><div class="qhint" id="qhint"></div><div class="qorigin" id="qorigin"></div></div></div>
+    <div class="choices" id="qchoices"></div>
+    <div class="typebox" id="qtypebox"><input id="qinput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" placeholder="輸入英文"><button id="qsubmit">送出</button></div>
+    <div id="qverdict"></div>
+    <button class="bigbtn" id="nextBtn" hidden>下一題</button>
+    <button class="bigbtn sec" id="quitBtn">結束測驗</button>
+  </div>
+
+  <div id="qdone" hidden>
+    <div class="card"><div class="score"><div class="big" id="rScore">0%</div><div class="lbl" id="rLine">—</div></div></div>
+    <h3 id="rWrongTitle" hidden>答錯的題目</h3><div class="card" id="rWrong" hidden></div>
+    <button class="bigbtn" id="againWrong" hidden>只測錯的這些</button><button class="bigbtn sec" id="againAll">回設定重測</button>
+  </div>
+  <footer>課本 · 雜誌 · 4500 單整合題庫</footer>
+</main>
+
+<script type="module">
+import {ENGLISH_REVIEW_ITEMS} from './english-review-data.js';
+
+const $=function(id){return document.getElementById(id);};
+const LABEL={book:'課本',mag:'雜誌',vocab:'4500 單'};
+const S={source:'all',kinds:['word','phrase'],mode:'type',length:50};
+let queue=[],idx=0,right=0,wrongList=[],answered=false;
+
+function unique(items){
+  const seen=new Set();return items.filter(function(item){const key=[item.k,item.en.toLowerCase(),item.pos,item.zh].join('|');if(seen.has(key))return false;seen.add(key);return true;});
+}
+function currentPool(){return unique(ENGLISH_REVIEW_ITEMS.filter(function(item){return(S.source==='all'||item.source===S.source)&&S.kinds.includes(item.k);}));}
+function updatePool(){const pool=currentPool();$('poolCount').textContent=pool.length;$('startBtn').disabled=!pool.length;}
+function oneChoice(box,button,dataKey,apply){box.querySelectorAll('.chip').forEach(function(chip){chip.classList.toggle('on',chip===button);});apply(button.dataset[dataKey]);}
+
+$('setSource').addEventListener('click',function(e){const b=e.target.closest('.chip');if(!b)return;oneChoice(this,b,'source',function(value){S.source=value;});updatePool();});
+$('setKind').addEventListener('click',function(e){const b=e.target.closest('.chip');if(!b)return;b.classList.toggle('on');if(!this.querySelector('.chip.on'))b.classList.add('on');S.kinds=Array.from(this.querySelectorAll('.chip.on')).map(function(chip){return chip.dataset.kind;});updatePool();});
+$('setMode').addEventListener('click',function(e){const b=e.target.closest('.chip');if(!b)return;oneChoice(this,b,'mode',function(value){S.mode=value;});});
+$('setLength').addEventListener('click',function(e){const b=e.target.closest('.chip');if(!b)return;oneChoice(this,b,'length',function(value){S.length=Number(value);});});
+
+function shuffle(values){for(let i=values.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[values[i],values[j]]=[values[j],values[i]];}return values;}
+function strictWord(value){return String(value||'').normalize('NFKC').trim().toLocaleLowerCase('en');}
+function loosePhrase(value){return String(value||'').normalize('NFKC').toLocaleLowerCase('en').replace(/[’‘`´]/g,"'").replace(/[.,;:!?"()[\]{}+]/g,' ').replace(/[-–—_／/]/g,' ').replace(/…/g,' ').replace(/'s\b/g,' ').replace(/\b(sb|sth|somebody|someone|something|one|ones|oneself|yourself|your|my|his|her|their|it|them|this|that|n|v|adj|adv|ving|vr|a|an|the)\b/g,' ').replace(/\s+/g,' ').trim();}
+function distance(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let prev=Array.from({length:n+1},function(_,i){return i;}),cur=new Array(n+1);for(let i=1;i<=m;i++){cur[0]=i;for(let j=1;j<=n;j++)cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));const tmp=prev;prev=cur;cur=tmp;}return prev[n];}
+function judge(value,item){
+  if(item.k==='word')return strictWord(value)===strictWord(item.en)?'exact':'no';
+  if(item.k!=='phrase')return'no';
+  const got=loosePhrase(value);if(!got)return'no';const accepted=[item.en].concat(item.alt||[]).map(loosePhrase).filter(Boolean);
+  if(accepted.includes(got))return'exact';
+  for(const other of ENGLISH_REVIEW_ITEMS){if(other===item)continue;if(other.k==='phrase'&&[other.en].concat(other.alt||[]).map(loosePhrase).includes(got))return'no';}
+  for(const target of accepted){const tolerance=target.length>=16?2:(target.length>=7?1:0);if(distance(got,target)<=tolerance)return'close';}
+  return'no';
+}
+function start(items){let pool=items?items.slice():currentPool();if(!pool.length)return;shuffle(pool);if(!items&&S.length>0)pool=pool.slice(0,S.length);queue=pool;idx=0;right=0;wrongList=[];answered=false;$('qsetup').hidden=true;$('qdone').hidden=true;$('qplay').hidden=false;render();window.scrollTo({top:0});}
+function choicesFor(item){const values=(item.d||[]).filter(function(value){return strictWord(value)!==strictWord(item.en);});const seen=new Set(values.map(strictWord));const fallback=shuffle(currentPool().filter(function(other){return other.k===item.k&&strictWord(other.en)!==strictWord(item.en)&&!seen.has(strictWord(other.en));}));for(const other of fallback){values.push(other.en);seen.add(strictWord(other.en));if(values.length>=3)break;}return shuffle([item.en].concat(values.slice(0,3)));}
+function render(){
+  answered=false;const q=queue[idx];$('qcount').textContent=(idx+1)+' / '+queue.length;$('qscore').textContent=right+' 對';$('qprog').style.width=(idx/queue.length*100)+'%';$('qtext').textContent=q.zh;$('qhint').textContent=(q.k==='word'?(q.pos||'單字'):'片語')+' · '+LABEL[q.source];$('qorigin').textContent=q.lesson;$('qverdict').innerHTML='';$('nextBtn').hidden=true;
+  const box=$('qchoices'),typebox=$('qtypebox');box.innerHTML='';if(S.mode==='type'){box.hidden=true;typebox.hidden=false;$('qinput').value='';$('qinput').disabled=false;$('qsubmit').disabled=false;$('qinput').placeholder=q.k==='phrase'?'輸入英文片語':'輸入完整英文單字';setTimeout(function(){$('qinput').focus();},60);}else{typebox.hidden=true;box.hidden=false;choicesFor(q).forEach(function(option){const button=document.createElement('button');button.className='choice';button.textContent=option;button.addEventListener('click',function(){pick(button,strictWord(option)===strictWord(q.en),q,option);});box.appendChild(button);});}
+}
+function pick(button,ok,q,mine){if(answered)return;answered=true;if(ok)right++;else wrongList.push({q,mine});$('qchoices').querySelectorAll('.choice').forEach(function(choice){choice.disabled=true;if(strictWord(choice.textContent)===strictWord(q.en))choice.classList.add('correct');});if(!ok)button.classList.add('wrong');showVerdict(ok,q,mine,false);}
+function submitType(){if(answered)return;const q=queue[idx],value=$('qinput').value;if(!value.trim())return;const result=judge(value,q),ok=result!=='no';answered=true;$('qinput').disabled=true;$('qsubmit').disabled=true;if(ok)right++;else wrongList.push({q,mine:value.trim()});showVerdict(ok,q,value.trim(),result==='close');}
+function showVerdict(ok,q,mine,close){const box=document.createElement('div');box.className='verdict '+(ok?'vok':'vno');box.innerHTML='<span class="vt '+(ok?'vok':'vno')+'">'+(ok?(close?'算你對，片語拼字差一點':'答對'):'答錯')+'</span><span class="answer">'+escapeHtml(q.en)+'</span><small>'+escapeHtml((q.pos||'')+'　'+q.zh)+'</small>'+(close?'<small class="gold">標準寫法：'+escapeHtml(q.en)+'</small>':'')+(!ok?'<small>你寫的／選的：'+escapeHtml(mine)+'</small>':'')+(q.note?'<small>'+escapeHtml(q.note)+'</small>':'');$('qverdict').innerHTML='';$('qverdict').appendChild(box);$('qscore').textContent=right+' 對';$('nextBtn').hidden=false;}
+function escapeHtml(value){return String(value||'').replace(/[&<>"']/g,function(char){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];});}
+function next(){if(!answered)return;if(idx+1>=queue.length){finish();return;}idx++;render();window.scrollTo({top:0,behavior:'smooth'});}
+function finish(){if(!$('qplay').hidden&&queue.length&&idx===0&&!answered&&right===0&&!wrongList.length){$('qplay').hidden=true;$('qsetup').hidden=false;return;}$('qplay').hidden=true;$('qdone').hidden=false;const total=Math.max(right+wrongList.length,1),score=Math.round(right/total*100);$('rScore').textContent=score+'%';$('rLine').textContent=right+' / '+total+' 題答對'+(score===100?'　全部正確':score>=80?'　把錯題補起來':'　先重測錯題');const wrap=$('rWrong');wrap.innerHTML='';if(wrongList.length){$('rWrongTitle').hidden=false;wrap.hidden=false;$('againWrong').hidden=false;wrongList.forEach(function(item){const row=document.createElement('div');row.className='wrongrow';row.innerHTML='<b>'+escapeHtml(item.q.en)+'</b>'+escapeHtml((item.q.pos||'')+'　'+item.q.zh)+'<span>你寫的／選的：<em>'+escapeHtml(item.mine)+'</em> · '+escapeHtml(item.q.lesson)+'</span>';wrap.appendChild(row);});}else{$('rWrongTitle').hidden=true;wrap.hidden=true;$('againWrong').hidden=true;}try{localStorage.setItem('nx:score:en-review',String(score));localStorage.setItem('nx:time:en-review',String(Date.now()));}catch(e){}window.scrollTo({top:0});}
+
+$('startBtn').addEventListener('click',function(){start();});$('qsubmit').addEventListener('click',submitType);$('qinput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();answered?next():submitType();}});$('nextBtn').addEventListener('click',next);$('quitBtn').addEventListener('click',finish);$('againWrong').addEventListener('click',function(){start(wrongList.map(function(item){return item.q;}));});$('againAll').addEventListener('click',function(){$('qdone').hidden=true;$('qsetup').hidden=false;updatePool();window.scrollTo({top:0});});updatePool();
+</script>
+</body>
+</html>
