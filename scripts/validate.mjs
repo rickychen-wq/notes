@@ -2,9 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import {execFileSync} from 'node:child_process';
-import {attemptIdFromScoreId,discardLegacyScores} from '../stats-utils.js';
+import {attemptIdFromScoreId,bestScore,discardLegacyScores,highestScores} from '../stats-utils.js';
 import {summarizeWrongItems} from '../wrong-items.js';
 import {correctAnswerFrom,userAnswerFrom} from '../attempt-utils.js';
+import {ENGLISH_REVIEW_ITEMS,ENGLISH_REVIEW_SOURCES} from '../english-review-data.js';
 
 const root=path.resolve(import.meta.dirname,'..');
 const files=fs.readdirSync(root).filter((name)=>fs.statSync(path.join(root,name)).isFile());
@@ -14,6 +15,8 @@ const errors=[];
 
 try{execFileSync(process.execPath,[path.join(root,'scripts','build-answer-catalog.mjs'),'--check'],{stdio:'pipe'});}
 catch(error){fail('answer-catalog.js',String(error.stderr||error.message).trim());}
+try{execFileSync(process.execPath,[path.join(root,'scripts','build-english-review.mjs'),'--check'],{stdio:'pipe'});}
+catch(error){fail('english-review-data.js',String(error.stderr||error.message).trim());}
 
 function fail(file,message){errors.push(`${file}: ${message}`);}
 function localTarget(value){
@@ -166,9 +169,31 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio31Source.includes(marker))fail('bio-3-1.html',`missing quiz marker: ${marker}`);
 }
 
-if(htmlFiles.length!==35)fail('project',`expected 35 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==36)fail('project',`expected 36 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==34)fail('project',`expected 34 protected pages, found ${protectedCount}`);
+if(protectedCount!==35)fail('project',`expected 35 protected pages, found ${protectedCount}`);
+
+const englishReviewSource=fs.readFileSync(path.join(root,'en-review.html'),'utf8');
+const englishSubjectSource=fs.readFileSync(path.join(root,'s-english.html'),'utf8');
+if(!englishSubjectSource.includes('href="en-review.html"')||!englishSubjectSource.includes('data-id="en-review"'))fail('s-english.html','English review card is missing');
+for(const marker of ['data-source="book"','data-source="mag"','data-source="vocab"','data-source="all"','id="startBtn"','id="qinput"','id="againWrong"',"item.k==='word'",'strictWord(value)===strictWord(item.en)',"item.k!=='phrase'"]){
+  if(!englishReviewSource.includes(marker))fail('en-review.html',`missing review marker: ${marker}`);
+}
+const reviewModule=englishReviewSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
+if(!reviewModule)fail('en-review.html','missing inline review module');
+else{
+  try{new vm.Script(reviewModule[1].replace(/^import .*;$/m,''),{filename:'en-review.html'});}
+  catch(error){fail('en-review.html',`review module syntax error: ${error.message}`);}
+}
+if(ENGLISH_REVIEW_SOURCES.length!==12||new Set(ENGLISH_REVIEW_SOURCES).size!==12)fail('english-review-data.js','expected 12 unique source pages');
+if(ENGLISH_REVIEW_ITEMS.length<650)fail('english-review-data.js',`review bank is unexpectedly small: ${ENGLISH_REVIEW_ITEMS.length}`);
+for(const group of ['book','mag','vocab']){
+  const groupItems=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.source===group;});
+  if(!groupItems.some(function(item){return item.k==='word';})||!groupItems.some(function(item){return item.k==='phrase';}))fail('english-review-data.js',`${group} is missing words or phrases`);
+}
+for(const item of ENGLISH_REVIEW_ITEMS){
+  if(!['word','phrase'].includes(item.k)||!item.en||!item.zh||!item.lesson||!item.pageId)fail('english-review-data.js','review item has an empty or invalid required field');
+}
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},
@@ -190,6 +215,9 @@ if(legacySummary.wrongQuestions.some(function(item){return!item.correctAnswer;})
 if(userAnswerFrom('解析（你選了：低溫、高壓）')!=='低溫、高壓'||userAnswerFrom('你寫的／選的：hypotesis')!=='hypotesis')fail('attempt-utils.js','selected wrong answers are not parsed');
 if(correctAnswerFrom('正解：高溫、低壓　·　解析')!=='高溫、低壓')fail('attempt-utils.js','correct answer is not parsed');
 if(attemptIdFromScoreId('chem-2-1')!=='chem-2'||attemptIdFromScoreId('chem-2-2')!==null||attemptIdFromScoreId('chem-2-3')!==null)fail('stats-utils.js','Chemistry chapter 2 attempts are not canonicalized');
+if(bestScore(100,64)!==100||bestScore(76,92)!==92||bestScore(null,88)!==88)fail('stats-utils.js','best score selection can lose a higher result');
+const scoreSummary=highestScores([{pageId:'en-book-l2',score:72},{pageId:'en-book-l1',score:80},{pageId:'en-book-l2',score:100},{pageId:'en-book-l1',score:63}]);
+if(scoreSummary.get('en-book-l2')!==100||scoreSummary.get('en-book-l1')!==80)fail('stats-utils.js','attempt history does not preserve per-page highest scores');
 const oldStore=new Map([['nx:score:en-book-l1','88'],['nx:time:en-book-l1','123'],['nx:synced:old','1'],['nx:theme','dark']]);
 const storageMock={get length(){return oldStore.size;},key(index){return[...oldStore.keys()][index]??null;},getItem(key){return oldStore.get(key)??null;},setItem(key,value){oldStore.set(key,String(value));},removeItem(key){oldStore.delete(key);}};
 if(!discardLegacyScores(storageMock,'firebase-v1')||oldStore.has('nx:score:en-book-l1')||oldStore.has('nx:time:en-book-l1')||oldStore.has('nx:synced:old')||oldStore.get('nx:theme')!=='dark'||oldStore.get('nx:score-era')!=='firebase-v1')fail('stats-utils.js','legacy scores were not discarded safely');
@@ -216,6 +244,7 @@ const loginJsSource=fs.readFileSync(path.join(root,'login.js'),'utf8');
 const authGateSource=fs.readFileSync(path.join(root,'auth-gate.js'),'utf8');
 if(!loginJsSource.includes('await authStateReady')||!loginJsSource.includes('markAuthTransition()'))fail('login.js','login can redirect before authentication storage is ready');
 if(!authGateSource.includes('await authStateReady')||!authGateSource.includes("error=session-lost"))fail('auth-gate.js','protected pages can check authentication before storage is ready');
+if(!authGateSource.includes('syncEnglishHighScores')||!authGateSource.includes("pageId!=='s-english'")||!authGateSource.includes('bestScore(current,incoming)'))fail('auth-gate.js','highest-score synchronization is incomplete');
 const readingSource=fs.readFileSync(path.join(root,'ch-reading.html'),'utf8');
 if(!/你選了：['"]?\s*\+\s*w\.mine/.test(readingSource))fail('ch-reading.html','selected wrong answer is not rendered for persistence');
 const mathSource=fs.readFileSync(path.join(root,'math-1.html'),'utf8');
