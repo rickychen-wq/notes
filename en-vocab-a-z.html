@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-admin-only="true" data-admin-fallback="s-english.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>4500 單字 A–Z · 英文</title>
+<script>
+(function(){
+  var k='nx:theme',t=null;try{t=localStorage.getItem(k);}catch(e){}
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+})();
+</script>
+<style>
+:root{
+  --bg:#f2f2f7;--card:#fff;--label:#000;--label2:#3c3c4399;--label3:#3c3c434d;
+  --sep:#3c3c4326;--fill:#78788014;--accent:#3f5f9e;--accent2:#e9eff8;
+  --shadow:0 6px 22px rgba(0,0,0,.09);--ring:rgba(0,0,0,.06)
+}
+html[data-theme="dark"]{
+  --bg:#0b0b0d;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;
+  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;
+  --shadow:0 6px 24px rgba(0,0,0,.48);--ring:rgba(255,255,255,.08)
+}
+@media(prefers-color-scheme:dark){html:not([data-theme="light"]){
+  --bg:#0b0b0d;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;
+  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;
+  --shadow:0 6px 24px rgba(0,0,0,.48);--ring:rgba(255,255,255,.08)
+}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--label);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;font-size:17px;line-height:1.5;padding-bottom:calc(48px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+.glow{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.glow i{position:absolute;border-radius:50%;filter:blur(72px);opacity:.25}
+.bar{max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 12px) 18px 7px}
+.bar a{color:#0a84ff;text-decoration:none;font-size:15px;font-weight:650}
+main{max-width:760px;margin:0 auto;padding:0 16px}
+.hero{padding:12px 2px 16px}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-size:32px;line-height:1.14;letter-spacing:-.8px;margin:5px 0 7px}
+.lead{margin:0;color:var(--label2);font-size:14px}
+.admin-pill{display:inline-flex;margin-top:10px;border-radius:999px;background:var(--accent2);color:var(--accent);padding:4px 9px;font-size:11px;font-weight:800}
+.tools{position:sticky;top:0;z-index:8;margin:0 -16px;padding:9px 16px 10px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:.5px solid var(--sep)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.action{border:0;border-radius:12px;padding:9px 10px;font-size:14px;font-weight:750;background:var(--fill)}
+.action.primary{background:var(--accent);color:#fff}
+.shown{margin:7px 2px 0;color:var(--label2);font-size:12px;text-align:center}
+.letters{display:flex;gap:6px;overflow-x:auto;padding:9px 0 1px;scrollbar-width:none}
+.letters::-webkit-scrollbar{display:none}
+.letters a{flex:0 0 29px;height:29px;display:grid;place-items:center;border-radius:9px;background:var(--card);border:.5px solid var(--ring);color:var(--accent);font-size:12px;font-weight:800;text-decoration:none}
+.letter-section{scroll-margin-top:126px;margin-top:18px}
+.letter-head{display:flex;align-items:center;justify-content:space-between;margin:0 2px 7px}
+.letter-head h2{margin:0;font-size:22px;color:var(--accent)}
+.letter-head span{font-size:12px;color:var(--label3)}
+.word-list{overflow:hidden;background:var(--card);border-radius:16px;box-shadow:var(--shadow);border:.5px solid var(--ring)}
+.word-row{display:block;width:100%;border:0;border-bottom:.5px solid var(--sep);background:transparent;padding:0;text-align:left}
+.word-row:last-child{border-bottom:0}
+.word-main{display:flex;align-items:center;min-height:56px;padding:10px 13px;gap:10px}
+.number{width:28px;flex:0 0 28px;color:var(--label3);font-size:11px;text-align:right;font-variant-numeric:tabular-nums}
+.word-copy{min-width:0;flex:1}
+.word{font-size:18px;font-weight:780;letter-spacing:-.15px}
+.pos{margin-left:6px;color:var(--label2);font-size:12px;font-weight:500}
+.chevron{color:var(--label3);font-size:17px;transition:transform .18s ease}
+.word-row.is-open .chevron{transform:rotate(90deg);color:var(--accent)}
+.answer{display:block;padding:0 13px 13px 51px}
+.meaning{font-size:16px;font-weight:720;color:var(--accent)}
+.note{display:block;margin-top:5px;padding:8px 10px;border-radius:10px;background:var(--fill);font-size:13px;color:var(--label2);line-height:1.55}
+.empty{padding:18px;text-align:center;color:var(--label3);font-size:14px;background:var(--card);border-radius:16px;border:.5px solid var(--ring)}
+.loading{padding:70px 0;text-align:center;color:var(--label2)}
+footer{text-align:center;color:var(--label3);font-size:12px;padding:32px 12px 0}
+@media(max-width:380px){.word{font-size:17px}.answer{padding-left:48px}}
+</style>
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
+</head>
+<body>
+<div class="glow"><i style="background:#3f5f9e;width:290px;height:290px;left:-12%;top:-5%"></i><i style="background:#8fb3e8;width:220px;height:220px;right:-14%;top:38%"></i></div>
+<div class="bar"><a href="s-english.html">◀ 英文</a></div>
+<main>
+  <header class="hero">
+    <div class="eyebrow">English vocabulary</div>
+    <h1>4500 單字 A–Z</h1>
+    <p class="lead">五回共 228 字。點一下單字顯示中文與記憶提醒。</p>
+    <span class="admin-pill">僅限管理員</span>
+  </header>
+  <div class="tools">
+    <div class="actions"><button class="action primary" id="showAll" type="button">顯示全部中文</button><button class="action" id="hideAll" type="button">全部隱藏</button></div>
+    <div class="shown" id="shownCount">已顯示 0 / 228</div>
+    <nav class="letters" id="letterNav" aria-label="字母索引"></nav>
+  </div>
+  <div class="loading" id="loading">正在整理單字…</div>
+  <div id="wordRoot" hidden></div>
+  <footer>4500 單 9-1、9-2、10、11-1、11-2</footer>
+</main>
+<script type="module">
+import {waitForSession} from './firebase-core.js';
+import {ENGLISH_REVIEW_ITEMS} from './english-review-data.js';
+
+const PAGE_IDS=new Set(['en-4500-9-1','en-4500-9-2','en-4500-10','en-4500-11-1','en-4500-11-2']);
+const LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const words=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.k==='word'&&PAGE_IDS.has(item.pageId);})
+  .sort(function(a,b){return a.en.localeCompare(b.en,'en');});
+const unique=new Map(words.map(function(item){return[item.en.toLowerCase(),item];}));
+const items=Array.from(unique.values());
+const root=document.getElementById('wordRoot');
+const nav=document.getElementById('letterNav');
+const shownCount=document.getElementById('shownCount');
+
+function setOpen(button,open){
+  const answer=button.querySelector('.answer');
+  button.classList.toggle('is-open',open);button.setAttribute('aria-expanded',String(open));answer.hidden=!open;
+}
+function updateCount(){
+  shownCount.textContent='已顯示 '+root.querySelectorAll('.word-row.is-open').length+' / '+items.length;
+}
+function createRow(item,index){
+  const button=document.createElement('button');button.type='button';button.className='word-row';button.setAttribute('aria-expanded','false');
+  const main=document.createElement('span');main.className='word-main';
+  const number=document.createElement('span');number.className='number';number.textContent=String(index+1);
+  const copy=document.createElement('span');copy.className='word-copy';
+  const word=document.createElement('span');word.className='word';word.textContent=item.en;
+  const pos=document.createElement('span');pos.className='pos';pos.textContent=item.pos||'';copy.append(word,pos);
+  const chevron=document.createElement('span');chevron.className='chevron';chevron.textContent='›';chevron.setAttribute('aria-hidden','true');
+  main.append(number,copy,chevron);
+  const answer=document.createElement('span');answer.className='answer';answer.hidden=true;
+  const meaning=document.createElement('span');meaning.className='meaning';meaning.textContent=item.zh;answer.append(meaning);
+  if(item.note){const note=document.createElement('span');note.className='note';note.innerHTML=item.note;answer.append(note);}
+  button.append(main,answer);button.addEventListener('click',function(){setOpen(button,!button.classList.contains('is-open'));updateCount();});
+  return button;
+}
+function render(){
+  const indexByItem=new Map(items.map(function(item,index){return[item,index];}));
+  LETTERS.forEach(function(letter){
+    const link=document.createElement('a');link.href='#letter-'+letter;link.textContent=letter;nav.append(link);
+    const group=items.filter(function(item){return item.en[0].toUpperCase()===letter;});
+    const section=document.createElement('section');section.className='letter-section';section.id='letter-'+letter;
+    const head=document.createElement('div');head.className='letter-head';
+    const title=document.createElement('h2');title.textContent=letter;
+    const count=document.createElement('span');count.textContent=group.length?group.length+' 字':'無';head.append(title,count);section.append(head);
+    if(group.length){const list=document.createElement('div');list.className='word-list';group.forEach(function(item){list.append(createRow(item,indexByItem.get(item)));});section.append(list);}
+    else{const empty=document.createElement('div');empty.className='empty';empty.textContent='本範圍沒有 '+letter+' 開頭的單字';section.append(empty);}
+    root.append(section);
+  });
+  document.getElementById('loading').hidden=true;root.hidden=false;updateCount();
+}
+document.getElementById('showAll').addEventListener('click',function(){root.querySelectorAll('.word-row').forEach(function(row){setOpen(row,true);});updateCount();});
+document.getElementById('hideAll').addEventListener('click',function(){root.querySelectorAll('.word-row').forEach(function(row){setOpen(row,false);});updateCount();});
+
+const session=await waitForSession();
+if(session.profile.role==='admin')render();
+</script>
+</body>
+</html>
