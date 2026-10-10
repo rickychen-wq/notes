@@ -169,9 +169,9 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio31Source.includes(marker))fail('bio-3-1.html',`missing quiz marker: ${marker}`);
 }
 
-if(htmlFiles.length!==36)fail('project',`expected 36 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==37)fail('project',`expected 37 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==35)fail('project',`expected 35 protected pages, found ${protectedCount}`);
+if(protectedCount!==36)fail('project',`expected 36 protected pages, found ${protectedCount}`);
 
 const englishReviewSource=fs.readFileSync(path.join(root,'en-review.html'),'utf8');
 const englishSubjectSource=fs.readFileSync(path.join(root,'s-english.html'),'utf8');
@@ -194,6 +194,15 @@ for(const group of ['book','mag','vocab']){
 for(const item of ENGLISH_REVIEW_ITEMS){
   if(!['word','phrase'].includes(item.k)||!item.en||!item.zh||!item.lesson||!item.pageId)fail('english-review-data.js','review item has an empty or invalid required field');
 }
+
+const adminVocabSource=fs.readFileSync(path.join(root,'en-vocab-a-z.html'),'utf8');
+const vocabPageIds=new Set(['en-4500-9-1','en-4500-9-2','en-4500-10','en-4500-11-1','en-4500-11-2']);
+const adminVocabItems=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.k==='word'&&vocabPageIds.has(item.pageId);});
+if(adminVocabItems.length!==228||new Set(adminVocabItems.map(function(item){return item.en.toLowerCase();})).size!==228)fail('en-vocab-a-z.html','expected 228 unique vocabulary words');
+for(const marker of ['data-admin-only="true"','data-admin-fallback="s-english.html"','id="showAll"','id="hideAll"','id="letterNav"','id="wordRoot"','waitForSession()',"session.profile.role==='admin'"]){
+  if(!adminVocabSource.includes(marker))fail('en-vocab-a-z.html',`missing admin vocabulary marker: ${marker}`);
+}
+if(!englishSubjectSource.includes('href="en-vocab-a-z.html"')||!englishSubjectSource.includes('data-admin-visible hidden'))fail('s-english.html','admin vocabulary card is not hidden by role');
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},
@@ -245,6 +254,7 @@ const authGateSource=fs.readFileSync(path.join(root,'auth-gate.js'),'utf8');
 if(!loginJsSource.includes('await authStateReady')||!loginJsSource.includes('markAuthTransition()'))fail('login.js','login can redirect before authentication storage is ready');
 if(!authGateSource.includes('await authStateReady')||!authGateSource.includes("error=session-lost"))fail('auth-gate.js','protected pages can check authentication before storage is ready');
 if(!authGateSource.includes('syncEnglishHighScores')||!authGateSource.includes("pageId!=='s-english'")||!authGateSource.includes('bestScore(current,incoming)'))fail('auth-gate.js','highest-score synchronization is incomplete');
+if(!authGateSource.includes('function allowPage(session)')||!authGateSource.includes("dataset.adminOnly==='true'")||!authGateSource.includes("session.profile.role!=='admin'")||!authGateSource.includes("querySelectorAll('[data-admin-visible]')"))fail('auth-gate.js','admin-only page or role visibility enforcement is incomplete');
 const readingSource=fs.readFileSync(path.join(root,'ch-reading.html'),'utf8');
 if(!/你選了：['"]?\s*\+\s*w\.mine/.test(readingSource))fail('ch-reading.html','selected wrong answer is not rendered for persistence');
 const mathSource=fs.readFileSync(path.join(root,'math-1.html'),'utf8');
