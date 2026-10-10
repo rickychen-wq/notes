@@ -24,7 +24,18 @@ function reveal(){
 function setSession(session){
   clearAuthTransition();
   currentSession=session;window.NX_SESSION=session;
+  document.querySelectorAll('[data-admin-visible]').forEach(function(element){
+    element.hidden=session.profile.role!=='admin';
+  });
   window.dispatchEvent(new CustomEvent('nx:auth-ready',{detail:session}));
+}
+
+function allowPage(session){
+  if(document.documentElement.dataset.adminOnly==='true'&&session.profile.role!=='admin'){
+    location.replace(document.documentElement.dataset.adminFallback||'index.html');
+    return false;
+  }
+  return true;
 }
 
 function nextLoginUrl(){
@@ -210,6 +221,7 @@ async function start(){
   if(isLocalPreview()){
     const role=new URLSearchParams(location.search).get('role')==='admin'?'admin':'user';
     const session={user:{uid:'preview-user'},profile:{uid:'preview-user',name:role==='admin'?'Chen 管理員':'測試同學',role},preview:true};
+    if(!allowPage(session))return;
     setSession(session);reveal();injectAccount(session);return;
   }
   try{await authStateReady;}
@@ -220,7 +232,8 @@ async function start(){
       const profile=await loadProfile(user.uid);
       if(!profile){await signOut(auth);location.replace('login.html?error=profile');return;}
       if(clearOldLocalScores()){location.reload();return;}
-      const session={user,profile};setSession(session);reveal();injectAccount(session);patchScoreStorage();
+      const session={user,profile};if(!allowPage(session))return;
+      setSession(session);reveal();injectAccount(session);patchScoreStorage();
       syncEnglishHighScores(session).catch(function(error){console.warn('Highest English scores could not be loaded',error);});
       updateProfileLogin(session).catch(function(error){console.warn('Login timestamp was not updated',error);});
       beginActivity(session);
