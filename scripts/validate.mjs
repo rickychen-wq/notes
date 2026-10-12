@@ -6,6 +6,7 @@ import {attemptIdFromScoreId,bestScore,discardLegacyScores,highestScores} from '
 import {summarizeWrongItems} from '../wrong-items.js';
 import {correctAnswerFrom,userAnswerFrom} from '../attempt-utils.js';
 import {ENGLISH_REVIEW_ITEMS,ENGLISH_REVIEW_SOURCES} from '../english-review-data.js';
+import {MAG_CLOZE_SETS} from '../en-mag-cloze-60-data.js';
 
 const root=path.resolve(import.meta.dirname,'..');
 const files=fs.readdirSync(root).filter((name)=>fs.statSync(path.join(root,name)).isFile());
@@ -169,9 +170,9 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio31Source.includes(marker))fail('bio-3-1.html',`missing quiz marker: ${marker}`);
 }
 
-if(htmlFiles.length!==38)fail('project',`expected 38 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==39)fail('project',`expected 39 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==37)fail('project',`expected 37 protected pages, found ${protectedCount}`);
+if(protectedCount!==38)fail('project',`expected 38 protected pages, found ${protectedCount}`);
 
 const englishReviewSource=fs.readFileSync(path.join(root,'en-review.html'),'utf8');
 const englishSubjectSource=fs.readFileSync(path.join(root,'s-english.html'),'utf8');
@@ -238,6 +239,29 @@ else{
   catch(error){fail('en-book-vocab-a-z.html',`textbook vocabulary module syntax error: ${error.message}`);}
 }
 if(!englishSubjectSource.includes('href="en-book-vocab-a-z.html"'))fail('s-english.html','admin textbook vocabulary card is missing');
+
+const magClozeSource=fs.readFileSync(path.join(root,'en-mag-cloze-60.html'),'utf8');
+const magClozeQuestions=MAG_CLOZE_SETS.flatMap(function(set){return set.questions.map(function(question){return{set,question};});});
+if(MAG_CLOZE_SETS.length!==12||magClozeQuestions.length!==60)fail('en-mag-cloze-60-data.js',`expected 12 passages and 60 questions, found ${MAG_CLOZE_SETS.length} passages and ${magClozeQuestions.length} questions`);
+const expectedMagAnswers='BBACCCBCDBABCCBABABCCBCCBBCACBABCBCABCACBACBCBABCCBBCCBACACB';
+const actualMagAnswers=magClozeQuestions.map(function(item,index){
+  const q=item.question;if(q[0]!==index+1)fail('en-mag-cloze-60-data.js',`question number ${q[0]} is out of sequence at position ${index+1}`);
+  if(!Array.isArray(q[1])||q[1].length!==4||new Set(q[1]).size!==4)fail('en-mag-cloze-60-data.js',`question ${q[0]} must have four unique options`);
+  if(!Number.isInteger(q[2])||q[2]<0||q[2]>3||q[3]!==q[1][q[2]]||!q[4])fail('en-mag-cloze-60-data.js',`question ${q[0]} has an invalid answer or explanation`);
+  return'ABCD'[q[2]];
+}).join('');
+if(actualMagAnswers!==expectedMagAnswers)fail('en-mag-cloze-60-data.js','the 60-answer key does not match the PDF answer key');
+for(const unit of ['U2','U4','U8','U10'])if(magClozeQuestions.filter(function(item){return item.set.unit===unit;}).length!==15)fail('en-mag-cloze-60-data.js',`${unit} must contain exactly 15 questions`);
+for(const marker of ['data-admin-only="true"','data-admin-fallback="s-english.html"','id="submitGroup"','id="nextGroup"','id="questionRoot"','每 5 題送出一次','function submitGroup()','function nextGroup()','question[4]',"nx:score:en-mag-cloze-60","session.profile.role==='admin'"]){
+  if(!magClozeSource.includes(marker))fail('en-mag-cloze-60.html',`missing magazine cloze marker: ${marker}`);
+}
+const magClozeModule=magClozeSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
+if(!magClozeModule)fail('en-mag-cloze-60.html','missing inline magazine cloze module');
+else{
+  try{new vm.Script(magClozeModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'en-mag-cloze-60.html'});}
+  catch(error){fail('en-mag-cloze-60.html',`magazine cloze module syntax error: ${error.message}`);}
+}
+if(!englishSubjectSource.includes('href="en-mag-cloze-60.html"'))fail('s-english.html','admin magazine cloze card is missing');
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},
