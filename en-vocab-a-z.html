@@ -142,7 +142,7 @@ footer{text-align:center;color:var(--label3);font-size:12px;padding:32px 12px 0}
         <div class="setting"><div class="setting-label">題數</div><div class="chips" id="quizLength">
           <button class="chip" type="button" data-length="10">10 題</button><button class="chip on" type="button" data-length="20">20 題</button><button class="chip" type="button" data-length="0">全部</button>
         </div></div>
-        <div class="notice"><b>手寫規則：</b>中文翻英文要完整拼對；英文翻中文可答其中一個正確意思，標點和空格不影響。</div>
+        <div class="notice"><b>手寫規則：</b>中文翻英文要完整拼對；英文翻中文只要意思有到就算對，同義詞、其中一個意思、簡繁字與標點都不會抓太嚴。</div>
         <div class="pool">目前範圍共 <b id="quizPoolCount">—</b> 字</div>
         <button class="bigbtn" id="startQuiz" type="button">開始測驗</button>
       </div>
@@ -258,17 +258,39 @@ function shuffle(values){
 }
 function strictEnglish(value){return String(value||'').normalize('NFKC').trim().toLocaleLowerCase('en');}
 function chineseSegments(value){
+  const variants={'显':'顯','发':'發','复':'復','怀':'懷','优':'優','势':'勢','应':'應','确':'確','扩':'擴','长':'長','进':'進','级':'級','种':'種','术':'術','监':'監','视':'視','电':'電','屏':'屏','尘':'塵','状':'狀','产':'產','异':'異','终':'終','启':'啟','险':'險','增':'增','坚':'堅','体':'體','传':'傳','绝':'絕','恶':'惡','梦':'夢','够':'夠','边':'邊','听':'聽','脏':'臟','觉':'覺','药':'藥','灵':'靈','际':'際','压':'壓','缩':'縮','环':'環','节':'節','质':'質','组':'組','织':'織','伤':'傷','疗':'療','颜':'顏','击':'擊','拥':'擁','扬':'揚','证':'證','误':'誤','码':'碼','卫':'衛','动':'動','机':'機','马':'馬','达':'達','点':'點','处':'處','况':'況','见':'見','间':'間','会':'會','与':'與','为':'為','对':'對','过':'過','开':'開','关':'關','还':'還','气':'氣','实':'實','线':'線','类':'類','难':'難','离':'離','丽':'麗','买':'買','选':'選','择':'擇','帮':'幫','医':'醫','观':'觀','减':'減','损':'損','将':'將'};
   return String(value||'').normalize('NFKC').replace(/[（(][^）)]*[）)]/g,' ').split(/[；;、，,／/。！？!?：:]+/).map(function(part){
-    return part.replace(/[\s「」『』【】《》〈〉“”‘’"'·・—–…]/g,'').trim();
+    return part.replace(/[\s「」『』【】《》〈〉“”‘’"'·・—–…]/g,'').split('').map(function(char){return variants[char]||char;}).join('').replace(/[的地得]$/,'').trim();
   }).filter(Boolean);
+}
+const CHINESE_EQUIV=[
+  ['疼痛','痛','疼'],['足夠','充足','充分','夠用'],['準確','精確','正確','精準'],['高級','進階','先進','高階'],
+  ['優點','優勢','益處','好處','長處'],['明顯','顯然','顯而易見','看得出來'],['合適','合宜','適當','恰當'],
+  ['停止','終止','中止','停下'],['情況','情勢','情形','狀況'],['粗糙','粗劣','不細緻'],['產生','發生','造成'],
+  ['持續','不斷','一直','始終如一','恆定','固定'],['相反','反對','反面'],['脆弱','易碎','纖細'],['敏感','容易受影響'],
+  ['精緻','細緻','精美'],['傑出','卓越','優秀','出色'],['多元','多樣','各式各樣','不同'],['懷疑','不確定','不能確定'],
+  ['灰塵','塵土'],['緊急事件','緊急狀況','危機'],['能夠','可以','有能力'],['危害','使遭受危險','使陷入危險'],
+  ['增大','放大','擴大','變大'],['最終','最後','結果'],['擴張','膨脹','擴大'],['延長','延伸','擴大'],
+  ['相當','非常','很'],['凝視','注視','盯著看'],['傳染','感染'],['手術','開刀'],['運作','運行','操作'],
+  ['懷孕','有孕'],['康復','復原','恢復','痊癒'],['收復','尋回','找回'],['力量','力氣'],['電','電力','電能'],
+  ['顯示器','螢幕','屏幕'],['監控','監聽','監視'],['馬達','發動機','引擎'],['核子','原子核','核能'],
+  ['科學','科學性'],['漂亮','美麗','好看'],['迅速','快速','很快'],['困難','艱難','難'],['簡單','容易'],
+  ['選擇','挑選','選取'],['購買','買'],['開始','起初','起始'],['結束','完結','終了'],['幫助','協助','援助'],
+  ['損害','傷害','危害'],['治癒','治療好','醫好'],['觀看','觀察','查看'],['增加','增添','變多'],['減少','降低','變少']
+];
+function canonicalChinese(value){
+  let result=value.replace(/^(使|用來|用以|表示|指的是)/,'');
+  for(const group of CHINESE_EQUIV){for(const word of group){if(result.includes(word)){result=result.replace(word,group[0]);break;}}}
+  return result;
 }
 function lenientChinese(value,answer){
   const got=chineseSegments(value),targets=chineseSegments(answer);if(!got.length)return false;
-  for(const part of got)if(targets.includes(part))return true;
-  for(const part of got){
-    for(const target of targets){
-      if(part.length>=2&&target.length>=2&&part.includes(target))return true;
-      if(target.length>=3&&/^(使|用|表示|指)/.test(target)&&target.slice(1)===part)return true;
+  const gotMeanings=got.map(canonicalChinese),targetMeanings=targets.map(canonicalChinese);
+  for(const part of gotMeanings)if(targetMeanings.includes(part))return true;
+  for(const part of gotMeanings){
+    for(const target of targetMeanings){
+      const sameNegation=/[不無未非沒]/.test(part)==(/[不無未非沒]/.test(target));
+      if(sameNegation&&part.length>=2&&target.length>=2&&(part.includes(target)||target.includes(part)))return true;
     }
   }
   return false;
