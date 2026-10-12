@@ -18,24 +18,24 @@
 <style>
 :root{
   --bg:#f2f2f7;--card:#fff;--label:#000;--label2:#3c3c4399;--label3:#3c3c434d;
-  --sep:#3c3c4326;--fill:#78788014;--accent:#3f5f9e;--accent2:#e9eff8;--red:#d9363e;
+  --sep:#3c3c4326;--fill:#78788014;--accent:#3f5f9e;--accent2:#e9eff8;--red:#d9363e;--green:#34c759;--gold:#c8912b;
   --shadow:0 6px 22px rgba(0,0,0,.09);--ring:rgba(0,0,0,.06)
 }
 html[data-theme="dark"]{
   --bg:#0b0b0d;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;
-  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;--red:#ff6961;
+  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;--red:#ff6961;--green:#30d158;--gold:#e8b73d;
   --shadow:0 6px 24px rgba(0,0,0,.48);--ring:rgba(255,255,255,.08)
 }
 @media(prefers-color-scheme:dark){html:not([data-theme="light"]){
   --bg:#0b0b0d;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;
-  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;--red:#ff6961;
+  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;--red:#ff6961;--green:#30d158;--gold:#e8b73d;
   --shadow:0 6px 24px rgba(0,0,0,.48);--ring:rgba(255,255,255,.08)
 }}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--label);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;font-size:17px;line-height:1.5;padding-bottom:calc(48px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
-button{font:inherit;color:inherit}
+button,input{font:inherit;color:inherit}
 .glow{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
 .glow i{position:absolute;border-radius:50%;filter:blur(72px);opacity:.25}
 .bar{max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 12px) 18px 7px}
@@ -46,6 +46,9 @@ main{max-width:760px;margin:0 auto;padding:0 16px}
 h1{font-size:32px;line-height:1.14;letter-spacing:-.8px;margin:5px 0 7px}
 .lead{margin:0;color:var(--label2);font-size:14px}
 .admin-pill{display:inline-flex;margin-top:10px;border-radius:999px;background:var(--accent2);color:var(--accent);padding:4px 9px;font-size:11px;font-weight:800}
+.view-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:0 0 12px;padding:4px;border-radius:14px;background:var(--fill)}
+.view-tab{border:0;border-radius:11px;background:transparent;padding:9px 12px;font-size:14px;font-weight:750;cursor:pointer}
+.view-tab.on{background:var(--card);color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .tools{position:sticky;top:0;z-index:8;margin:0 -16px;padding:9px 16px 10px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:.5px solid var(--sep)}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .action{border:0;border-radius:12px;padding:9px 10px;font-size:14px;font-weight:750;background:var(--fill)}
@@ -74,8 +77,22 @@ h1{font-size:32px;line-height:1.14;letter-spacing:-.8px;margin:5px 0 7px}
 .note{display:block;margin-top:5px;padding:8px 10px;border-radius:10px;background:var(--fill);font-size:13px;color:var(--label2);line-height:1.55}
 .empty{padding:18px;text-align:center;color:var(--label3);font-size:14px;background:var(--card);border-radius:16px;border:.5px solid var(--ring)}
 .loading{padding:70px 0;text-align:center;color:var(--label2)}
+.card{background:var(--card);border:.5px solid var(--sep);border-radius:18px;box-shadow:var(--shadow);padding:16px;margin:10px 0}
+.setting{padding:2px 0 12px}.setting+.setting{border-top:.5px solid var(--sep);padding-top:14px}.setting-label{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 9px;color:var(--label2);font-size:13px;font-weight:700}.setting-label span{color:var(--label3);font-size:11px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:0;border-radius:999px;background:var(--fill);padding:8px 13px;font-size:14px;font-weight:680;cursor:pointer}.chip.on{background:var(--accent);color:#fff}.chip:disabled{opacity:.32;cursor:default}
+.letter-pick{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.letter-chip{border:.5px solid var(--sep);border-radius:10px;background:var(--card);height:36px;font-size:13px;font-weight:800;cursor:pointer}.letter-chip.on{border-color:var(--accent);background:var(--accent2);color:var(--accent)}.letter-chip:disabled{opacity:.28}
+.mini-actions{display:flex;gap:12px}.mini-actions button{border:0;background:transparent;color:var(--accent);padding:0;font-size:12px;font-weight:750;cursor:pointer}
+.notice{margin-top:12px;padding:11px 13px;border-radius:13px;background:color-mix(in srgb,var(--gold) 13%,transparent);color:var(--label2);font-size:13px}.notice b{color:var(--label)}
+.pool{margin:12px 2px 0;color:var(--label2);font-size:13px}.pool b{color:var(--label)}
+.bigbtn{display:block;width:100%;border:0;border-radius:15px;background:var(--accent);color:#fff;font-weight:760;padding:13px 16px;margin-top:12px;cursor:pointer}.bigbtn.sec{background:var(--fill);color:var(--label)}.bigbtn:disabled{opacity:.4}
+.qbar{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin:5px 2px 12px;color:var(--label2);font-size:13px}.track{height:5px;border-radius:999px;background:var(--fill);overflow:hidden}.track i{display:block;width:0;height:100%;border-radius:inherit;background:var(--accent);transition:width .2s ease}
+.qtype{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.06em}.qtext{margin-top:7px;font-size:26px;font-weight:780;line-height:1.32;letter-spacing:-.3px}.qhint{margin-top:7px;color:var(--label2);font-size:13px}
+.choices{display:grid;gap:9px;margin-top:12px}.choice{width:100%;border:.5px solid var(--sep);border-radius:14px;background:var(--card);padding:13px 15px;text-align:left;cursor:pointer}.choice.correct{border-color:var(--green);background:color-mix(in srgb,var(--green) 12%,var(--card))}.choice.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 10%,var(--card))}.choice:disabled{opacity:1;color:var(--label)}
+.typebox{display:flex;gap:8px;margin-top:12px}.typebox input{min-width:0;flex:1;border:.5px solid var(--sep);border-radius:14px;background:var(--card);padding:12px 13px;outline:none}.typebox input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}.typebox button{border:0;border-radius:14px;background:var(--accent);color:#fff;font-weight:750;padding:0 16px}
+.verdict{margin-top:12px;border:.5px solid var(--sep);border-radius:16px;background:var(--card);padding:14px 15px}.verdict.vok{border-color:color-mix(in srgb,var(--green) 65%,var(--sep))}.verdict.vno{border-color:color-mix(in srgb,var(--red) 65%,var(--sep))}.verdict-tag{display:block;margin-bottom:6px;font-size:12px;font-weight:800}.verdict.vok .verdict-tag{color:var(--green)}.verdict.vno .verdict-tag{color:var(--red)}.verdict strong{display:block;font-size:21px}.verdict small{display:block;margin-top:4px;color:var(--label2)}
+.score{text-align:center;padding:20px 8px 10px}.score-big{font-size:58px;font-weight:790;line-height:1;letter-spacing:-2px}.score-line{margin-top:8px;color:var(--label2);font-size:14px}.result-title{margin:23px 3px 8px;color:var(--label3);font-size:13px;letter-spacing:.06em}.wrong-row{padding:11px 1px;border-bottom:.5px solid var(--sep)}.wrong-row:last-child{border-bottom:0}.wrong-row b{display:block;font-size:18px}.wrong-row span{display:block;margin-top:3px;color:var(--label2);font-size:13px}.wrong-row em{color:var(--red);font-style:normal}
 footer{text-align:center;color:var(--label3);font-size:12px;padding:32px 12px 0}
-@media(max-width:380px){.word{font-size:17px}.answer{padding-left:48px}}
+@media(max-width:380px){.word{font-size:17px}.answer{padding-left:48px}.letter-pick{grid-template-columns:repeat(6,1fr)}.qtext{font-size:23px}.chip{padding:8px 11px}}
 </style>
 <link rel="stylesheet" href="app-shell.css">
 <script src="auth-prelude.js"></script>
@@ -91,13 +108,63 @@ footer{text-align:center;color:var(--label3);font-size:12px;padding:32px 12px 0}
     <p class="lead">五回共 228 字。點一下單字顯示中文與記憶提醒。</p>
     <span class="admin-pill">僅限管理員</span>
   </header>
-  <div class="tools">
-    <div class="actions"><button class="action primary" id="showAll" type="button">顯示全部中文</button><button class="action" id="hideAll" type="button">全部隱藏</button></div>
-    <div class="shown" id="shownCount">已顯示 0 / 228</div>
-    <nav class="letters" id="letterNav" aria-label="字母索引"></nav>
+  <div class="view-tabs" role="tablist" aria-label="單字頁模式">
+    <button class="view-tab on" id="studyTab" type="button" role="tab" aria-selected="true">單字表</button>
+    <button class="view-tab" id="quizTab" type="button" role="tab" aria-selected="false">測驗</button>
   </div>
-  <div class="loading" id="loading">正在整理單字…</div>
-  <div id="wordRoot" hidden></div>
+
+  <section id="studyView">
+    <div class="tools">
+      <div class="actions"><button class="action primary" id="showAll" type="button">顯示全部中文</button><button class="action" id="hideAll" type="button">全部隱藏</button></div>
+      <div class="shown" id="shownCount">已顯示 0 / 228</div>
+      <nav class="letters" id="letterNav" aria-label="字母索引"></nav>
+    </div>
+    <div class="loading" id="loading">正在整理單字…</div>
+    <div id="wordRoot" hidden></div>
+  </section>
+
+  <section id="quizView" hidden>
+    <div id="quizSetup">
+      <div class="card">
+        <div class="setting"><div class="setting-label">作答方式</div><div class="chips" id="quizMode">
+          <button class="chip on" type="button" data-mode="mc">選擇</button><button class="chip" type="button" data-mode="type">手寫</button>
+        </div></div>
+        <div class="setting"><div class="setting-label">出題方向</div><div class="chips" id="quizDirection">
+          <button class="chip on" type="button" data-direction="zh-en">中文 → 英文</button><button class="chip" type="button" data-direction="en-zh">英文 → 中文</button>
+        </div></div>
+        <div class="setting"><div class="setting-label">單字顏色</div><div class="chips" id="quizScope">
+          <button class="chip on" type="button" data-scope="red">只考紅字</button><button class="chip" type="button" data-scope="all">紅字＋黑字</button>
+        </div></div>
+        <div class="setting">
+          <div class="setting-label"><b>字母範圍</b><span class="mini-actions"><button id="selectLetters" type="button">全選</button><button id="clearLetters" type="button">清除</button></span></div>
+          <div class="letter-pick" id="letterPicker" aria-label="選擇字首"></div>
+        </div>
+        <div class="setting"><div class="setting-label">題數</div><div class="chips" id="quizLength">
+          <button class="chip" type="button" data-length="10">10 題</button><button class="chip on" type="button" data-length="20">20 題</button><button class="chip" type="button" data-length="0">全部</button>
+        </div></div>
+        <div class="notice"><b>手寫規則：</b>中文翻英文要完整拼對；英文翻中文可答其中一個正確意思，標點和空格不影響。</div>
+        <div class="pool">目前範圍共 <b id="quizPoolCount">—</b> 字</div>
+        <button class="bigbtn" id="startQuiz" type="button">開始測驗</button>
+      </div>
+    </div>
+
+    <div id="quizPlay" hidden>
+      <div class="qbar"><span id="quizCount">1 / 20</span><span class="track"><i id="quizProgress"></i></span><span id="quizScore">0 對</span></div>
+      <div class="card"><div class="qtype" id="quizType">中文 → 英文</div><div class="qtext" id="quizQuestion">—</div><div class="qhint" id="quizHint"></div></div>
+      <div class="choices" id="quizChoices"></div>
+      <div class="typebox" id="quizTypebox"><input id="quizInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="done"><button id="quizSubmit" type="button">送出</button></div>
+      <div id="quizVerdict"></div>
+      <button class="bigbtn" id="quizNext" type="button" hidden>下一題</button>
+      <button class="bigbtn sec" id="quizQuit" type="button">結束測驗</button>
+    </div>
+
+    <div id="quizDone" hidden>
+      <div class="card"><div class="score"><div class="score-big" id="quizResultScore">0%</div><div class="score-line" id="quizResultLine">—</div></div></div>
+      <h2 class="result-title" id="quizWrongTitle" hidden>答錯的單字</h2><div class="card" id="quizWrong" hidden></div>
+      <button class="bigbtn" id="quizWrongAgain" type="button" hidden>只測錯的這些</button>
+      <button class="bigbtn sec" id="quizRestart" type="button">回設定重測</button>
+    </div>
+  </section>
   <footer>4500 單 9-1、9-2、10、11-1、11-2</footer>
 </main>
 <script type="module">
@@ -115,9 +182,13 @@ const words=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.k==='word'&&P
   .sort(function(a,b){return a.en.localeCompare(b.en,'en');});
 const unique=new Map(words.map(function(item){return[item.en.toLowerCase(),item];}));
 const items=Array.from(unique.values());
+const availableLetters=new Set(items.map(function(item){return item.en[0].toUpperCase();}));
 const root=document.getElementById('wordRoot');
 const nav=document.getElementById('letterNav');
 const shownCount=document.getElementById('shownCount');
+const $=function(id){return document.getElementById(id);};
+const Q={mode:'mc',direction:'zh-en',scope:'red',length:20,letters:new Set(availableLetters)};
+let quizQueue=[],quizIndex=0,quizRight=0,quizWrong=[],quizAnswered=false;
 
 function setOpen(button,open){
   const answer=button.querySelector('.answer');
@@ -157,11 +228,121 @@ function render(){
   });
   document.getElementById('loading').hidden=true;root.hidden=false;updateCount();
 }
-document.getElementById('showAll').addEventListener('click',function(){root.querySelectorAll('.word-row').forEach(function(row){setOpen(row,true);});updateCount();});
-document.getElementById('hideAll').addEventListener('click',function(){root.querySelectorAll('.word-row').forEach(function(row){setOpen(row,false);});updateCount();});
+
+function showView(name){
+  const study=name==='study';$('studyView').hidden=!study;$('quizView').hidden=study;
+  $('studyTab').classList.toggle('on',study);$('quizTab').classList.toggle('on',!study);
+  $('studyTab').setAttribute('aria-selected',String(study));$('quizTab').setAttribute('aria-selected',String(!study));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function selectOne(box,button,key,apply){
+  box.querySelectorAll('.chip').forEach(function(chip){chip.classList.toggle('on',chip===button);});apply(button.dataset[key]);
+}
+function buildLetterPicker(){
+  LETTERS.forEach(function(letter){
+    const button=document.createElement('button');button.type='button';button.className='letter-chip';button.textContent=letter;button.dataset.letter=letter;
+    button.disabled=!availableLetters.has(letter);button.classList.toggle('on',Q.letters.has(letter));$('letterPicker').appendChild(button);
+  });
+}
+function currentQuizPool(){
+  return items.filter(function(item){
+    const letter=item.en[0].toUpperCase();
+    return Q.letters.has(letter)&&(Q.scope==='all'||RED_WORDS.has(item.en.toLowerCase()));
+  });
+}
+function updateQuizPool(){
+  const count=currentQuizPool().length;$('quizPoolCount').textContent=String(count);$('startQuiz').disabled=count===0;
+}
+function shuffle(values){
+  for(let i=values.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[values[i],values[j]]=[values[j],values[i]];}return values;
+}
+function strictEnglish(value){return String(value||'').normalize('NFKC').trim().toLocaleLowerCase('en');}
+function chineseSegments(value){
+  return String(value||'').normalize('NFKC').replace(/[（(][^）)]*[）)]/g,' ').split(/[；;、，,／/。！？!?：:]+/).map(function(part){
+    return part.replace(/[\s「」『』【】《》〈〉“”‘’"'·・—–…]/g,'').trim();
+  }).filter(Boolean);
+}
+function lenientChinese(value,answer){
+  const got=chineseSegments(value),targets=chineseSegments(answer);if(!got.length)return false;
+  for(const part of got)if(targets.includes(part))return true;
+  for(const part of got){
+    for(const target of targets){
+      if(part.length>=2&&target.length>=2&&part.includes(target))return true;
+      if(target.length>=3&&/^(使|用|表示|指)/.test(target)&&target.slice(1)===part)return true;
+    }
+  }
+  return false;
+}
+function escapeHtml(value){return String(value||'').replace(/[&<>"']/g,function(char){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];});}
+function answerFor(item){return Q.direction==='zh-en'?item.en:item.zh;}
+function answerKey(value){return Q.direction==='zh-en'?strictEnglish(value):chineseSegments(value).join('|');}
+function choicesFor(item){
+  const answer=answerFor(item),seen=new Set([answerKey(answer)]),values=[];
+  const candidates=shuffle(currentQuizPool().concat(items).filter(function(other){return other!==item;}));
+  for(const other of candidates){const value=answerFor(other),key=answerKey(value);if(!key||seen.has(key))continue;seen.add(key);values.push(value);if(values.length===3)break;}
+  return shuffle([answer].concat(values));
+}
+function renderQuiz(){
+  quizAnswered=false;const item=quizQueue[quizIndex];
+  $('quizCount').textContent=(quizIndex+1)+' / '+quizQueue.length;$('quizScore').textContent=quizRight+' 對';$('quizProgress').style.width=(quizIndex/quizQueue.length*100)+'%';
+  $('quizType').textContent=Q.direction==='zh-en'?'中文 → 英文':'英文 → 中文';$('quizQuestion').textContent=Q.direction==='zh-en'?item.zh:item.en;
+  $('quizHint').textContent=Q.direction==='zh-en'?(item.pos||'請輸入完整英文單字'):'可寫其中一個正確中文意思';$('quizVerdict').innerHTML='';$('quizNext').hidden=true;
+  const choices=$('quizChoices'),typebox=$('quizTypebox');choices.innerHTML='';
+  if(Q.mode==='type'){
+    choices.hidden=true;typebox.hidden=false;$('quizInput').value='';$('quizInput').disabled=false;$('quizSubmit').disabled=false;
+    $('quizInput').placeholder=Q.direction==='zh-en'?'輸入完整英文單字':'輸入中文意思';setTimeout(function(){$('quizInput').focus();},60);
+  }else{
+    typebox.hidden=true;choices.hidden=false;choicesFor(item).forEach(function(option){
+      const button=document.createElement('button');button.type='button';button.className='choice';button.textContent=option;
+      button.addEventListener('click',function(){pickChoice(button,answerKey(option)===answerKey(answerFor(item)),item,option);});choices.appendChild(button);
+    });
+  }
+}
+function beginQuiz(selectedItems){
+  let pool=selectedItems?selectedItems.slice():currentQuizPool().slice();if(!pool.length)return;shuffle(pool);if(!selectedItems&&Q.length>0)pool=pool.slice(0,Q.length);
+  quizQueue=pool;quizIndex=0;quizRight=0;quizWrong=[];quizAnswered=false;$('quizSetup').hidden=true;$('quizDone').hidden=true;$('quizPlay').hidden=false;renderQuiz();window.scrollTo({top:0});
+}
+function showVerdict(ok,item,mine){
+  const box=document.createElement('div');box.className='verdict '+(ok?'vok':'vno');
+  box.innerHTML='<span class="verdict-tag">'+(ok?'答對':'答錯')+'</span><strong>'+escapeHtml(item.en)+'</strong><small>'+escapeHtml((item.pos||'')+'　'+item.zh)+'</small>'+(!ok?'<small>你寫的／選的：'+escapeHtml(mine)+'</small>':'');
+  $('quizVerdict').appendChild(box);$('quizScore').textContent=quizRight+' 對';$('quizNext').hidden=false;
+}
+function pickChoice(button,ok,item,mine){
+  if(quizAnswered)return;quizAnswered=true;if(ok)quizRight++;else quizWrong.push({item,mine});
+  $('quizChoices').querySelectorAll('.choice').forEach(function(choice){choice.disabled=true;if(answerKey(choice.textContent)===answerKey(answerFor(item)))choice.classList.add('correct');});
+  if(!ok)button.classList.add('wrong');showVerdict(ok,item,mine);
+}
+function submitTyping(){
+  if(quizAnswered)return;const item=quizQueue[quizIndex],value=$('quizInput').value.trim();if(!value)return;
+  const ok=Q.direction==='zh-en'?strictEnglish(value)===strictEnglish(item.en):lenientChinese(value,item.zh);quizAnswered=true;$('quizInput').disabled=true;$('quizSubmit').disabled=true;
+  if(ok)quizRight++;else quizWrong.push({item,mine:value});showVerdict(ok,item,value);
+}
+function nextQuiz(){if(!quizAnswered)return;if(quizIndex+1>=quizQueue.length){finishQuiz();return;}quizIndex++;renderQuiz();window.scrollTo({top:0,behavior:'smooth'});}
+function finishQuiz(){
+  const answered=quizRight+quizWrong.length;if(!answered){$('quizPlay').hidden=true;$('quizSetup').hidden=false;return;}
+  $('quizPlay').hidden=true;$('quizDone').hidden=false;const score=Math.round(quizRight/answered*100);$('quizResultScore').textContent=score+'%';$('quizResultLine').textContent=quizRight+' / '+answered+' 題答對';
+  const wrap=$('quizWrong');wrap.innerHTML='';if(quizWrong.length){$('quizWrongTitle').hidden=false;wrap.hidden=false;$('quizWrongAgain').hidden=false;quizWrong.forEach(function(entry){
+    const row=document.createElement('div');row.className='wrong-row';row.innerHTML='<b>'+escapeHtml(entry.item.en)+'</b><span>'+escapeHtml((entry.item.pos||'')+'　'+entry.item.zh)+'</span><span>你寫的／選的：<em>'+escapeHtml(entry.mine)+'</em></span>';wrap.appendChild(row);
+  });}else{$('quizWrongTitle').hidden=true;wrap.hidden=true;$('quizWrongAgain').hidden=true;}
+  try{const key='nx:score:en-vocab-a-z',old=Number(localStorage.getItem(key)||0);localStorage.setItem(key,String(Math.max(old,score)));localStorage.setItem('nx:time:en-vocab-a-z',String(Date.now()));}catch(error){}
+  window.scrollTo({top:0});
+}
+
+$('showAll').addEventListener('click',function(){root.querySelectorAll('.word-row').forEach(function(row){setOpen(row,true);});updateCount();});
+$('hideAll').addEventListener('click',function(){root.querySelectorAll('.word-row').forEach(function(row){setOpen(row,false);});updateCount();});
+$('studyTab').addEventListener('click',function(){showView('study');});$('quizTab').addEventListener('click',function(){showView('quiz');});
+$('quizMode').addEventListener('click',function(event){const button=event.target.closest('.chip');if(!button)return;selectOne(this,button,'mode',function(value){Q.mode=value;});});
+$('quizDirection').addEventListener('click',function(event){const button=event.target.closest('.chip');if(!button)return;selectOne(this,button,'direction',function(value){Q.direction=value;});});
+$('quizScope').addEventListener('click',function(event){const button=event.target.closest('.chip');if(!button)return;selectOne(this,button,'scope',function(value){Q.scope=value;});updateQuizPool();});
+$('quizLength').addEventListener('click',function(event){const button=event.target.closest('.chip');if(!button)return;selectOne(this,button,'length',function(value){Q.length=Number(value);});});
+$('letterPicker').addEventListener('click',function(event){const button=event.target.closest('.letter-chip');if(!button||button.disabled)return;const letter=button.dataset.letter;if(Q.letters.has(letter))Q.letters.delete(letter);else Q.letters.add(letter);button.classList.toggle('on',Q.letters.has(letter));updateQuizPool();});
+$('selectLetters').addEventListener('click',function(){Q.letters=new Set(availableLetters);$('letterPicker').querySelectorAll('.letter-chip:not(:disabled)').forEach(function(button){button.classList.add('on');});updateQuizPool();});
+$('clearLetters').addEventListener('click',function(){Q.letters.clear();$('letterPicker').querySelectorAll('.letter-chip').forEach(function(button){button.classList.remove('on');});updateQuizPool();});
+$('startQuiz').addEventListener('click',function(){beginQuiz();});$('quizSubmit').addEventListener('click',submitTyping);$('quizInput').addEventListener('keydown',function(event){if(event.key==='Enter'){event.preventDefault();quizAnswered?nextQuiz():submitTyping();}});$('quizNext').addEventListener('click',nextQuiz);$('quizQuit').addEventListener('click',finishQuiz);
+$('quizWrongAgain').addEventListener('click',function(){beginQuiz(quizWrong.map(function(entry){return entry.item;}));});$('quizRestart').addEventListener('click',function(){$('quizDone').hidden=true;$('quizSetup').hidden=false;updateQuizPool();window.scrollTo({top:0});});
 
 const session=await waitForSession();
-if(session.profile.role==='admin')render();
+if(session.profile.role==='admin'){render();buildLetterPicker();updateQuizPool();}
 </script>
 </body>
 </html>
