@@ -1,5 +1,5 @@
 import {
-  auth,authStateReady,clearAuthTransition,collection,consumeAuthTransition,currentDay,db,doc,getDocs,increment,isLocalPreview,
+  auth,authStateReady,clearAuthTransition,collection,consumeAuthTransition,currentDay,db,doc,getDoc,getDocs,increment,isLocalPreview,
   loadProfile,onAuthStateChanged,pageIdFromPath,serverTimestamp,setDoc,signOut,subjectFromPage,writeBatch
 } from './firebase-core.js';
 import {attemptIdFromScoreId,bestScore,discardLegacyScores,highestScores} from './stats-utils.js';
@@ -12,6 +12,7 @@ let currentSession=null;
 let activity=null;
 let scoreQueue=Promise.resolve();
 let quizStartedAt=null;
+let accessConfigPromise=null;
 const recordedScores=new Set();
 const SCORE_ERA='firebase-v1';
 const nativeStorageSet=Storage.prototype.setItem;
@@ -31,7 +32,20 @@ function namedAccess(session,value){
   return String(value||'').split(',').map(normalizedName).filter(Boolean).includes(current);
 }
 
-function setSession(session){
+function loadAccessConfig(session){
+  if(session.preview) return Promise.resolve({});
+  if(!accessConfigPromise) accessConfigPromise=getDoc(doc(db,'settings','system')).then(function(snapshot){return snapshot.exists()?snapshot.data():{};});
+  return accessConfigPromise;
+}
+
+async function grantedAccess(session,key){
+  if(session.profile.role==='admin') return true;
+  if(!key) return false;
+  const config=await loadAccessConfig(session),allowed=config[key];
+  return Array.isArray(allowed)&&allowed.includes(session.user.uid);
+}
+
+async function setSession(session){
   clearAuthTransition();
   currentSession=session;window.NX_SESSION=session;
   document.querySelectorAll('[data-admin-visible]').forEach(function(element){
@@ -40,12 +54,15 @@ function setSession(session){
   document.querySelectorAll('[data-user-visible]').forEach(function(element){
     element.hidden=!namedAccess(session,element.dataset.userVisible);
   });
+  const accessElements=Array.from(document.querySelectorAll('[data-access-visible]'));
+  for(const element of accessElements)element.hidden=!(await grantedAccess(session,element.dataset.accessVisible));
   window.dispatchEvent(new CustomEvent('nx:auth-ready',{detail:session}));
 }
 
-function allowPage(session){
+async function allowPage(session){
   const allowedByName=namedAccess(session,document.documentElement.dataset.userAllow);
-  if(document.documentElement.dataset.adminOnly==='true'&&session.profile.role!=='admin'&&!allowedByName){
+  const allowedByGrant=await grantedAccess(session,document.documentElement.dataset.accessKey);
+  if(document.documentElement.dataset.adminOnly==='true'&&session.profile.role!=='admin'&&!allowedByName&&!allowedByGrant){
     location.replace(document.documentElement.dataset.adminFallback||'index.html');
     return false;
   }
@@ -235,8 +252,8 @@ async function start(){
   if(isLocalPreview()){
     const role=new URLSearchParams(location.search).get('role')==='admin'?'admin':'user';
     const session={user:{uid:'preview-user'},profile:{uid:'preview-user',name:role==='admin'?'Chen 管理員':'測試同學',role},preview:true};
-    if(!allowPage(session))return;
-    setSession(session);reveal();injectAccount(session);return;
+    if(!await allowPage(session))return;
+    await setSession(session);reveal();injectAccount(session);return;
   }
   try{await authStateReady;}
   catch(error){console.error(error);showConnectionError(true);return;}
@@ -246,8 +263,8 @@ async function start(){
       const profile=await loadProfile(user.uid);
       if(!profile){await signOut(auth);location.replace('login.html?error=profile');return;}
       if(clearOldLocalScores()){location.reload();return;}
-      const session={user,profile};if(!allowPage(session))return;
-      setSession(session);reveal();injectAccount(session);patchScoreStorage();
+      const session={user,profile};if(!await allowPage(session))return;
+      await setSession(session);reveal();injectAccount(session);patchScoreStorage();
       syncEnglishHighScores(session).catch(function(error){console.warn('Highest English scores could not be loaded',error);});
       updateProfileLogin(session).catch(function(error){console.warn('Login timestamp was not updated',error);});
       beginActivity(session);
