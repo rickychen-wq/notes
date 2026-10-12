@@ -172,6 +172,23 @@ import {ENGLISH_REVIEW_ITEMS} from './english-review-data.js';
 
 const PAGE_IDS=new Set(['en-book-l1','en-book-l2','en-book-l3']);
 const LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+/* 同一字族共用編號；每個字母區段都會重新從 1 開始。 */
+const WORD_FAMILIES=[
+  ['employ','employer','employee','employment'],['corporation','corporate'],['terminal'],
+  ['illness','ill'],['tremendously','tremendous'],['frighten','fright'],['prompt'],
+  ['refuse','refusal'],['hesitate','hesitation'],['innovative','innovation'],
+  ['promise','promising'],['structure','structural'],['capable','capability'],
+  ['collaborate','collaboration'],['architect','architecture'],['graduate','graduation'],
+  ['construct','construction','constructive'],['slightly','slight'],['rank','ranking'],
+  ['adjust','adjustment'],['rely','reliable'],['element','elementary'],['stability','stable'],
+  ['explore','exploration','explorer'],['humankind','humanity'],['universe','universal'],
+  ['upright'],['generous','generosity'],['conflict'],['distribution','distribute'],['benefit'],
+  ['miserable','misery'],['furious','fury'],['theft','thief'],
+  ['punish','punishment','punitive'],['banish','banishment'],['civilization','civilized']
+];
+const FAMILY_BY_WORD=new Map();
+WORD_FAMILIES.forEach(function(family){const key=family[0];family.forEach(function(word){FAMILY_BY_WORD.set(word,key);});});
+function familyKey(item){const word=item.en.toLowerCase();return FAMILY_BY_WORD.get(word)||word;}
 const rawWords=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.k==='word'&&PAGE_IDS.has(item.pageId);});
 const merged=new Map();
 rawWords.forEach(function(item){
@@ -198,10 +215,10 @@ function setOpen(button,open){
 function updateCount(){
   shownCount.textContent='已顯示 '+root.querySelectorAll('.word-row.is-open').length+' / '+items.length;
 }
-function createRow(item,index){
+function createRow(item,numberLabel){
   const button=document.createElement('button');button.type='button';button.className='word-row';button.setAttribute('aria-expanded','false');
   const main=document.createElement('span');main.className='word-main';
-  const number=document.createElement('span');number.className='number';number.textContent=String(index+1);
+  const number=document.createElement('span');number.className='number';number.textContent=String(numberLabel);
   const copy=document.createElement('span');copy.className='word-copy';
   const word=document.createElement('span');word.className='word';word.textContent=item.en;
   const pos=document.createElement('span');pos.className='pos';pos.textContent=item.pos||'';copy.append(word,pos);
@@ -214,7 +231,6 @@ function createRow(item,index){
   return button;
 }
 function render(){
-  const indexByItem=new Map(items.map(function(item,index){return[item,index];}));
   LETTERS.forEach(function(letter){
     const link=document.createElement('a');link.href='#letter-'+letter;link.textContent=letter;nav.append(link);
     const group=items.filter(function(item){return item.en[0].toUpperCase()===letter;});
@@ -222,7 +238,11 @@ function render(){
     const head=document.createElement('div');head.className='letter-head';
     const title=document.createElement('h2');title.textContent=letter;
     const count=document.createElement('span');count.textContent=group.length?group.length+' 字':'無';head.append(title,count);section.append(head);
-    if(group.length){const list=document.createElement('div');list.className='word-list';group.forEach(function(item){list.append(createRow(item,indexByItem.get(item)));});section.append(list);}
+    if(group.length){
+      const list=document.createElement('div');list.className='word-list',numberByFamily=new Map();let nextNumber=1;
+      group.forEach(function(item){const key=familyKey(item);if(!numberByFamily.has(key))numberByFamily.set(key,nextNumber++);list.append(createRow(item,numberByFamily.get(key)));});
+      section.append(list);
+    }
     else{const empty=document.createElement('div');empty.className='empty';empty.textContent='本範圍沒有 '+letter+' 開頭的單字';section.append(empty);}
     root.append(section);
   });
