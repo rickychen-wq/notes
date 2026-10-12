@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" data-admin-only="true" data-admin-fallback="s-english.html">
+<html lang="zh-Hant" data-admin-only="true" data-user-allow="78歲" data-admin-fallback="s-english.html">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -27,7 +27,7 @@ html[data-theme="dark"]{--bg:#000;--card:#1c1c1e;--label:#fff;--label2:#ebebf599
 <body>
 <div class="bar"><a href="s-english.html">◀ 英文</a></div>
 <main>
-  <header class="hero"><div class="eyebrow">Magazine Cloze Review</div><h1>雜誌四回克漏字</h1><p class="lead">U2・U4・U8・U10｜12 篇、共 60 題｜每 5 題送出一次</p><span class="admin-pill">僅限管理員</span></header>
+  <header class="hero"><div class="eyebrow">Magazine Cloze Review</div><h1>雜誌四回克漏字</h1><p class="lead">U2・U4・U8・U10｜12 篇、共 60 題｜每 5 題送出一次</p><span class="admin-pill">限定開放</span></header>
   <div id="quizPlay" hidden>
     <div class="progress-box"><div class="progress-line"><span id="groupProgress">第 1 / 12 組</span><span id="scoreProgress">答對 0 / 0</span></div><div class="track"><i id="progressBar"></i></div></div>
     <section id="passageHead"></section>
@@ -84,7 +84,7 @@ function finish(){
 }
 function restart(){groupIndex=0;selections=new Map();right=0;answered=0;wrong=[];locked=false;unitScores={};$('quizDone').hidden=true;$('quizPlay').hidden=false;renderGroup();}
 $('submitGroup').addEventListener('click',submitGroup);$('nextGroup').addEventListener('click',nextGroup);$('restartQuiz').addEventListener('click',restart);document.addEventListener('keydown',function(event){if(event.key!=='Enter'||$('quizPlay').hidden)return;if(!locked&&selections.size===5){event.preventDefault();submitGroup();}else if(locked){event.preventDefault();nextGroup();}});
-const session=await waitForSession();if(session.profile.role==='admin'){$('loading').hidden=true;$('quizPlay').hidden=false;renderGroup();}
+const session=await waitForSession();const allowed=session.profile.role==='admin'||String(session.profile.nameKey||session.profile.name||'').normalize('NFKC').trim().toLocaleLowerCase('zh-Hant')==='78歲';if(allowed){$('loading').hidden=true;$('quizPlay').hidden=false;renderGroup();}
 </script>
 </body>
 </html>
