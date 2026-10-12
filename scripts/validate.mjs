@@ -171,9 +171,9 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio31Source.includes(marker))fail('bio-3-1.html',`missing quiz marker: ${marker}`);
 }
 
-if(htmlFiles.length!==40)fail('project',`expected 40 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==41)fail('project',`expected 41 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==39)fail('project',`expected 39 protected pages, found ${protectedCount}`);
+if(protectedCount!==40)fail('project',`expected 40 protected pages, found ${protectedCount}`);
 
 const finalReviewSource=fs.readFileSync(path.join(root,'admin-final-review.html'),'utf8');
 const expectedFinalCounts={chemistry:23,biology:27,english:15};
@@ -202,6 +202,17 @@ else{
   catch(error){fail('admin-final-review.html',`final review module syntax error: ${error.message}`);}
 }
 if(!homeSource.includes('href="admin-final-review.html"')||!homeSource.includes('data-admin-visible hidden')||!homeSource.includes('化學 23・生物 27・英文 15'))fail('index.html','admin final review card is missing or visible to regular users');
+const quickReviewSource=fs.readFileSync(path.join(root,'final-quick-review.html'),'utf8');
+for(const marker of ['data-admin-only="true"','data-access-key="quickReviewAllowedUids"','id="permissionBtn"','id="permissionSheet"','id="permissionUsers"','id="savePermission"','data-section="chem"','data-section="bio"','data-section="english"','quickReviewAllowedUids','getDocs(collection(db,\'users\'))','session.profile.role!==\'admin\'']){
+  if(!quickReviewSource.includes(marker))fail('final-quick-review.html',`missing quick review marker: ${marker}`);
+}
+const quickReviewModule=quickReviewSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
+if(!quickReviewModule)fail('final-quick-review.html','missing inline quick review module');
+else{
+  try{new vm.Script(quickReviewModule[1].replace(/^import .*;$/gm,'').replace('session=await waitForSession();',"session={profile:{role:'admin'},preview:true};"),{filename:'final-quick-review.html'});}
+  catch(error){fail('final-quick-review.html',`quick review module syntax error: ${error.message}`);}
+}
+if(!homeSource.includes('href="final-quick-review.html"')||!homeSource.includes('data-access-visible="quickReviewAllowedUids"')||!homeSource.includes('考前最終速讀'))fail('index.html','quick review access card is missing');
 
 const englishReviewSource=fs.readFileSync(path.join(root,'en-review.html'),'utf8');
 const englishSubjectSource=fs.readFileSync(path.join(root,'s-english.html'),'utf8');
@@ -342,7 +353,8 @@ const authGateSource=fs.readFileSync(path.join(root,'auth-gate.js'),'utf8');
 if(!loginJsSource.includes('await authStateReady')||!loginJsSource.includes('markAuthTransition()'))fail('login.js','login can redirect before authentication storage is ready');
 if(!authGateSource.includes('await authStateReady')||!authGateSource.includes("error=session-lost"))fail('auth-gate.js','protected pages can check authentication before storage is ready');
 if(!authGateSource.includes('syncEnglishHighScores')||!authGateSource.includes("pageId!=='s-english'")||!authGateSource.includes('bestScore(current,incoming)'))fail('auth-gate.js','highest-score synchronization is incomplete');
-if(!authGateSource.includes('function allowPage(session)')||!authGateSource.includes("dataset.adminOnly==='true'")||!authGateSource.includes("session.profile.role!=='admin'")||!authGateSource.includes("querySelectorAll('[data-admin-visible]')"))fail('auth-gate.js','admin-only page or role visibility enforcement is incomplete');
+if(!authGateSource.includes('async function allowPage(session)')||!authGateSource.includes("dataset.adminOnly==='true'")||!authGateSource.includes("session.profile.role!=='admin'")||!authGateSource.includes("querySelectorAll('[data-admin-visible]')"))fail('auth-gate.js','admin-only page or role visibility enforcement is incomplete');
+for(const marker of ['async function grantedAccess(session,key)','data-access-visible','document.documentElement.dataset.accessKey','allowed.includes(session.user.uid)'])if(!authGateSource.includes(marker))fail('auth-gate.js',`dynamic access marker is missing: ${marker}`);
 const readingSource=fs.readFileSync(path.join(root,'ch-reading.html'),'utf8');
 if(!/你選了：['"]?\s*\+\s*w\.mine/.test(readingSource))fail('ch-reading.html','selected wrong answer is not rendered for persistence');
 const mathSource=fs.readFileSync(path.join(root,'math-1.html'),'utf8');
