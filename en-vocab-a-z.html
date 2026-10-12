@@ -18,17 +18,17 @@
 <style>
 :root{
   --bg:#f2f2f7;--card:#fff;--label:#000;--label2:#3c3c4399;--label3:#3c3c434d;
-  --sep:#3c3c4326;--fill:#78788014;--accent:#3f5f9e;--accent2:#e9eff8;
+  --sep:#3c3c4326;--fill:#78788014;--accent:#3f5f9e;--accent2:#e9eff8;--red:#d9363e;
   --shadow:0 6px 22px rgba(0,0,0,.09);--ring:rgba(0,0,0,.06)
 }
 html[data-theme="dark"]{
   --bg:#0b0b0d;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;
-  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;
+  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;--red:#ff6961;
   --shadow:0 6px 24px rgba(0,0,0,.48);--ring:rgba(255,255,255,.08)
 }
 @media(prefers-color-scheme:dark){html:not([data-theme="light"]){
   --bg:#0b0b0d;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;
-  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;
+  --sep:#54545866;--fill:#7878802e;--accent:#8fb3e8;--accent2:#1c2a3c;--red:#ff6961;
   --shadow:0 6px 24px rgba(0,0,0,.48);--ring:rgba(255,255,255,.08)
 }}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -65,6 +65,7 @@ h1{font-size:32px;line-height:1.14;letter-spacing:-.8px;margin:5px 0 7px}
 .number{width:28px;flex:0 0 28px;color:var(--label3);font-size:11px;text-align:right;font-variant-numeric:tabular-nums}
 .word-copy{min-width:0;flex:1}
 .word{font-size:18px;font-weight:780;letter-spacing:-.15px}
+.word-row.needs-review .word{color:var(--red)}
 .pos{margin-left:6px;color:var(--label2);font-size:12px;font-weight:500}
 .chevron{color:var(--label3);font-size:17px;transition:transform .18s ease}
 .word-row.is-open .chevron{transform:rotate(90deg);color:var(--accent)}
@@ -104,6 +105,11 @@ import {waitForSession} from './firebase-core.js';
 import {ENGLISH_REVIEW_ITEMS} from './english-review-data.js';
 
 const PAGE_IDS=new Set(['en-4500-9-1','en-4500-9-2','en-4500-10','en-4500-11-1','en-4500-11-2']);
+const RED_WORDS=new Set([
+  'accuracy','badly','cease','adequate','advanced','advantage','apparent','appropriate','circumstance','coarse','consequent','constant','contrary',
+  'delicate','distinguished','doubtful','dusty','electricity','emergency','enable','endanger','enlarge','expansion','fairly','flesh','infection','recovery','scientific','strength',
+  'diverse','diversity','eventual','evident','extend','gaze','monitor','motor','nuclear','operation','pregnancy','pregnant','satellite'
+]);
 const LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const words=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.k==='word'&&PAGE_IDS.has(item.pageId);})
   .sort(function(a,b){return a.en.localeCompare(b.en,'en');});
@@ -122,6 +128,7 @@ function updateCount(){
 }
 function createRow(item,index){
   const button=document.createElement('button');button.type='button';button.className='word-row';button.setAttribute('aria-expanded','false');
+  if(RED_WORDS.has(item.en.toLowerCase()))button.classList.add('needs-review');
   const main=document.createElement('span');main.className='word-main';
   const number=document.createElement('span');number.className='number';number.textContent=String(index+1);
   const copy=document.createElement('span');copy.className='word-copy';
