@@ -380,8 +380,10 @@ $('startQuiz').addEventListener('click',function(){beginQuiz();});$('quizSubmit'
 document.addEventListener('keydown',function(event){if(event.key==='Enter'&&!$('quizPlay').hidden&&quizAnswered){event.preventDefault();nextQuiz();}});
 $('quizWrongAgain').addEventListener('click',function(){beginQuiz(quizWrong.map(function(entry){return entry.item;}));});$('quizRestart').addEventListener('click',function(){$('quizDone').hidden=true;$('quizSetup').hidden=false;updateQuizPool();window.scrollTo({top:0});});
 
-const session=await waitForSession();
-if(session.profile.role==='admin'){render();buildLetterPicker();updateQuizPool();}
+(async function(){
+  const session=await waitForSession();
+  if(session.profile.role==='admin'){render();buildLetterPicker();updateQuizPool();}
+})();
 </script>
 </body>
 </html>
