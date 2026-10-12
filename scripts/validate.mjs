@@ -203,8 +203,13 @@ else{
 }
 if(!homeSource.includes('href="admin-final-review.html"')||!homeSource.includes('data-admin-visible hidden')||!homeSource.includes('化學 23・生物 27・英文 15'))fail('index.html','admin final review card is missing or visible to regular users');
 const quickReviewSource=fs.readFileSync(path.join(root,'final-quick-review.html'),'utf8');
-for(const marker of ['data-admin-only="true"','data-access-key="quickReviewAllowedUids"','id="permissionBtn"','id="permissionSheet"','id="permissionUsers"','id="savePermission"','data-section="chem"','data-section="bio"','data-section="english"','quickReviewAllowedUids','getDocs(collection(db,\'users\'))','session.profile.role!==\'admin\'']){
+for(const marker of ['data-admin-only="true"','data-access-key="quickReviewAllowedUids"','id="permissionBtn"','id="permissionSheet"','id="permissionUsers"','id="permissionCount"','id="selectAllUsers"','id="clearUsers"','id="savePermission"','class="hero-stats"','class="user-avatar"','data-section="chem"','data-section="bio"','data-section="english"','quickReviewAllowedUids','getDocs(collection(db,\'users\'))','session.profile.role!==\'admin\'']){
   if(!quickReviewSource.includes(marker))fail('final-quick-review.html',`missing quick review marker: ${marker}`);
+}
+for(const section of ['chem','bio','english']){
+  const match=quickReviewSource.match(new RegExp(`<section class="section" data-section="${section}"[^>]*>([\\s\\S]*?)<\\/section>`));
+  const text=(match?.[1]||'').replace(/<[^>]+>/g,'').replace(/\s+/g,'');
+  if(text.length<1300)fail('final-quick-review.html',`${section} quick review is too short: ${text.length} characters`);
 }
 const quickReviewModule=quickReviewSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
 if(!quickReviewModule)fail('final-quick-review.html','missing inline quick review module');
@@ -213,6 +218,7 @@ else{
   catch(error){fail('final-quick-review.html',`quick review module syntax error: ${error.message}`);}
 }
 if(!homeSource.includes('href="final-quick-review.html"')||!homeSource.includes('data-access-visible="quickReviewAllowedUids"')||!homeSource.includes('考前最終速讀'))fail('index.html','quick review access card is missing');
+if(!/<div class="grid" style="margin-top:14px">[\s\S]*?data-admin-visible[\s\S]*?data-access-visible="quickReviewAllowedUids"[\s\S]*?<\/div>\s*<div class="grid">/.test(homeSource))fail('index.html','admin review cards are not paired in one grid');
 
 const englishReviewSource=fs.readFileSync(path.join(root,'en-review.html'),'utf8');
 const englishSubjectSource=fs.readFileSync(path.join(root,'s-english.html'),'utf8');
