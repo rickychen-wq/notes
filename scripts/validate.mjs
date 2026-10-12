@@ -8,6 +8,7 @@ import {correctAnswerFrom,userAnswerFrom} from '../attempt-utils.js';
 import {ENGLISH_REVIEW_ITEMS,ENGLISH_REVIEW_SOURCES} from '../english-review-data.js';
 import {MAG_CLOZE_SETS} from '../en-mag-cloze-60-data.js';
 import {FINAL_REVIEW_BANK} from '../admin-final-review-data.js';
+import {MORNING_QUIZ_BANK} from '../admin-morning-quiz-data.js';
 
 const root=path.resolve(import.meta.dirname,'..');
 const files=fs.readdirSync(root).filter((name)=>fs.statSync(path.join(root,name)).isFile());
@@ -171,9 +172,9 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio31Source.includes(marker))fail('bio-3-1.html',`missing quiz marker: ${marker}`);
 }
 
-if(htmlFiles.length!==41)fail('project',`expected 41 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==43)fail('project',`expected 43 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==40)fail('project',`expected 40 protected pages, found ${protectedCount}`);
+if(protectedCount!==42)fail('project',`expected 42 protected pages, found ${protectedCount}`);
 
 const finalReviewSource=fs.readFileSync(path.join(root,'admin-final-review.html'),'utf8');
 const expectedFinalCounts={chemistry:23,biology:27,english:15};
@@ -192,7 +193,7 @@ for(const unit of ['1-1','1-2','1-3','2-1','2-2','2-3'])if(FINAL_REVIEW_BANK.che
 for(const unit of ['2-1','2-2','3-1','3-2'])if(FINAL_REVIEW_BANK.biology.questions.filter(function(item){return item.u.startsWith(unit);}).length<6)fail('admin-final-review-data.js',`Biology ${unit} needs at least six questions`);
 if(FINAL_REVIEW_BANK.biology.questions.some(function(item){return item.u.startsWith('3-3');}))fail('admin-final-review-data.js','Biology final review must exclude 3-3');
 for(const category of ['課本','雜誌','4500'])if(!FINAL_REVIEW_BANK.english.questions.some(function(item){return item.u.includes(category);}))fail('admin-final-review-data.js',`English final review is missing ${category}`);
-for(const marker of ['data-admin-only="true"','data-admin-fallback="index.html"','id="startBtn"','id="nextBtn"','id="rScore"','id="rLine"','id="rWrong"','session.profile.role===\'admin\'','chem-final-review','bio-final-review','en-final-review','item.why','item.trap']){
+for(const marker of ['data-admin-only="true"','data-access-key="finalReviewAllowedUids"','data-admin-fallback="index.html"','id="startBtn"','id="nextBtn"','id="rScore"','id="rLine"','id="rWrong"','id="permissionLink"','access-admin.html?target=final','session.profile.role!==\'admin\'','chem-final-review','bio-final-review','en-final-review','item.why','item.trap']){
   if(!finalReviewSource.includes(marker))fail('admin-final-review.html',`missing final review marker: ${marker}`);
 }
 const finalReviewModule=finalReviewSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
@@ -201,7 +202,7 @@ else{
   try{new vm.Script(finalReviewModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'admin-final-review.html'});}
   catch(error){fail('admin-final-review.html',`final review module syntax error: ${error.message}`);}
 }
-if(!homeSource.includes('href="admin-final-review.html"')||!homeSource.includes('data-admin-visible hidden')||!homeSource.includes('化學 23・生物 27・英文 15'))fail('index.html','admin final review card is missing or visible to regular users');
+if(!homeSource.includes('href="admin-final-review.html"')||!homeSource.includes('data-access-visible="finalReviewAllowedUids"')||!homeSource.includes('化學 23・生物 27・英文 15'))fail('index.html','admin final review card is missing or visible to regular users');
 const quickReviewSource=fs.readFileSync(path.join(root,'final-quick-review.html'),'utf8');
 for(const marker of ['data-admin-only="true"','data-access-key="quickReviewAllowedUids"','id="permissionBtn"','id="permissionSheet"','id="permissionUsers"','id="permissionCount"','id="selectAllUsers"','id="clearUsers"','id="savePermission"','class="hero-stats"','class="user-avatar"','data-section="chem"','data-section="bio"','data-section="english"','quickReviewAllowedUids','getDocs(collection(db,\'users\'))','session.profile.role!==\'admin\'']){
   if(!quickReviewSource.includes(marker))fail('final-quick-review.html',`missing quick review marker: ${marker}`);
@@ -218,7 +219,41 @@ else{
   catch(error){fail('final-quick-review.html',`quick review module syntax error: ${error.message}`);}
 }
 if(!homeSource.includes('href="final-quick-review.html"')||!homeSource.includes('data-access-visible="quickReviewAllowedUids"')||!homeSource.includes('考前最終速讀'))fail('index.html','quick review access card is missing');
-if(!/<div class="grid" style="margin-top:14px">[\s\S]*?data-admin-visible[\s\S]*?data-access-visible="quickReviewAllowedUids"[\s\S]*?<\/div>\s*<div class="grid">/.test(homeSource))fail('index.html','admin review cards are not paired in one grid');
+if(!/<div class="grid" style="margin-top:14px">[\s\S]*?data-access-visible="finalReviewAllowedUids"[\s\S]*?data-access-visible="quickReviewAllowedUids"[\s\S]*?<\/div>\s*<div class="grid" style="margin-top:14px">/.test(homeSource))fail('index.html','admin review cards are not paired in one grid');
+
+const morningQuizSource=fs.readFileSync(path.join(root,'admin-morning-quiz.html'),'utf8');
+for(const [subject,expectedCount] of Object.entries({chemistry:5,biology:5,english:5})){
+  const bank=MORNING_QUIZ_BANK[subject];
+  if(!bank||bank.questions.length!==expectedCount)fail('admin-morning-quiz-data.js',`${subject} expected ${expectedCount} questions, found ${bank?.questions?.length||0}`);
+  const prompts=new Set();
+  for(const item of bank?.questions||[]){
+    if(!item.u||!item.q||!item.why||!item.trap)fail('admin-morning-quiz-data.js',`${subject} has an empty required field`);
+    if(prompts.has(item.q))fail('admin-morning-quiz-data.js',`${subject} has a duplicate question: ${item.q}`);prompts.add(item.q);
+    if(!Array.isArray(item.c)||item.c.length!==4||new Set(item.c).size!==4)fail('admin-morning-quiz-data.js',`${subject} question must have four unique choices: ${item.q}`);
+    if(!Number.isInteger(item.a)||item.a<0||item.a>3)fail('admin-morning-quiz-data.js',`${subject} question has an invalid answer index: ${item.q}`);
+  }
+}
+for(const marker of ['data-admin-only="true"','data-access-key="morningQuizAllowedUids"','data-admin-fallback="index.html"','id="startBtn"','id="nextBtn"','id="rScore"','id="rWrong"','id="permissionLink"','access-admin.html?target=morning','MORNING_QUIZ_BANK','document.addEventListener','session.profile.role!==\'admin\'']){
+  if(!morningQuizSource.includes(marker))fail('admin-morning-quiz.html',`missing morning quiz marker: ${marker}`);
+}
+const morningQuizModule=morningQuizSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
+if(!morningQuizModule)fail('admin-morning-quiz.html','missing inline morning quiz module');
+else{
+  try{new vm.Script(morningQuizModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'admin-morning-quiz.html'});}
+  catch(error){fail('admin-morning-quiz.html',`morning quiz module syntax error: ${error.message}`);}
+}
+if(!homeSource.includes('href="admin-morning-quiz.html"')||!homeSource.includes('data-access-visible="morningQuizAllowedUids"')||!homeSource.includes('化學 5・生物 5・英文 5'))fail('index.html','morning quiz access card is missing');
+
+const accessAdminSource=fs.readFileSync(path.join(root,'access-admin.html'),'utf8');
+for(const marker of ['data-admin-only="true"','id="targetTabs"','finalReviewAllowedUids','quickReviewAllowedUids','morningQuizAllowedUids','getDocs(collection(db,\'users\'))','id="permissionUsers"','id="permissionCount"','id="savePermission"','TARGETS']){
+  if(!accessAdminSource.includes(marker))fail('access-admin.html',`missing access manager marker: ${marker}`);
+}
+const accessAdminModule=accessAdminSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
+if(!accessAdminModule)fail('access-admin.html','missing inline access manager module');
+else{
+  try{new vm.Script(accessAdminModule[1].replace(/^import .*;$/gm,'').replace("session=await waitForSession();const requested", "session={profile:{role:'admin'},preview:true};const requested"),{filename:'access-admin.html'});}
+  catch(error){fail('access-admin.html',`access manager module syntax error: ${error.message}`);}
+}
 
 const englishReviewSource=fs.readFileSync(path.join(root,'en-review.html'),'utf8');
 const englishSubjectSource=fs.readFileSync(path.join(root,'s-english.html'),'utf8');
