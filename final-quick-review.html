@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-admin-only="true" data-access-key="quickReviewAllowedUids" data-admin-fallback="index.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>考前最終速讀</title>
+<script>(function(){var t=null;try{t=localStorage.getItem('nx:theme');}catch(e){}if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--label:#000;--label2:#3c3c4399;--label3:#3c3c434d;--sep:#3c3c4326;--fill:#78788014;--blue:#0a84ff;--green:#34c759;--red:#ff3b30;--gold:#c8912b;--accent:#7a5af8;--tint:#f0edff;--shadow:0 7px 24px rgba(0,0,0,.09)}
+html[data-theme="dark"]{--bg:#000;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;--sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;--accent:#b9a8ff;--tint:#2d2746;--shadow:0 8px 28px rgba(0,0,0,.46)}
+@media(prefers-color-scheme:dark){html:not([data-theme="light"]){--bg:#000;--card:#1c1c1e;--label:#fff;--label2:#ebebf599;--label3:#ebebf54d;--sep:#54545899;--fill:#7878805c;--green:#30d158;--red:#ff453a;--gold:#e8b73d;--accent:#b9a8ff;--tint:#2d2746;--shadow:0 8px 28px rgba(0,0,0,.46)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}[hidden]{display:none!important}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--label);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Helvetica Neue",sans-serif;font-size:16px;line-height:1.58;padding-bottom:calc(52px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}button{font:inherit;color:inherit}.bar{max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 12px) 18px 6px}.bar a{color:var(--blue);text-decoration:none;font-size:15px;font-weight:650}main{max-width:760px;margin:0 auto;padding:0 16px}.hero{padding:14px 2px 17px}.hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.eyebrow{font-size:11px;font-weight:850;letter-spacing:.14em;color:var(--accent);text-transform:uppercase}.hero h1{font-size:33px;line-height:1.12;letter-spacing:-1px;margin:5px 0 7px}.lead{margin:0;color:var(--label2);font-size:14px}.permission-btn{flex:0 0 auto;border:0;border-radius:12px;background:var(--tint);color:var(--accent);padding:9px 11px;font-size:12px;font-weight:800;cursor:pointer}.seg-wrap{position:sticky;top:0;z-index:7;margin:0 -16px 13px;padding:9px 16px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:.5px solid var(--sep)}.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px;background:var(--fill);border-radius:12px}.seg button{border:0;background:transparent;border-radius:9px;padding:8px 6px;font-size:13px;font-weight:750;cursor:pointer}.seg button[aria-pressed="true"]{background:var(--card);box-shadow:0 2px 7px rgba(0,0,0,.14);color:var(--accent)}.section{animation:fade .22s ease}@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:none}}.card{background:var(--card);border:.5px solid var(--sep);border-radius:18px;box-shadow:var(--shadow);padding:15px 16px;margin:10px 0}.card h2{font-size:19px;letter-spacing:-.3px;margin:0 0 9px}.card h3{font-size:14px;color:var(--accent);margin:15px 0 5px}.card p{margin:6px 0;color:var(--label2)}.card ul,.card ol{padding-left:21px;margin:6px 0}.card li{margin:7px 0}.card b{color:var(--label)}.first{border-left:4px solid var(--accent)}.first h2{color:var(--accent)}.formula{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:14px;background:var(--fill);border-radius:11px;padding:10px 11px;margin:8px 0;overflow-x:auto}.danger{border-left:4px solid var(--red)}.danger h2{color:var(--red)}.warn{background:color-mix(in srgb,var(--gold) 12%,var(--card));border-radius:12px;padding:10px 11px;margin:8px 0}.compare{width:100%;border-collapse:collapse;font-size:13px}.compare th,.compare td{text-align:left;vertical-align:top;padding:9px 8px;border-bottom:.5px solid var(--sep)}.compare th{color:var(--label2);font-size:11px}.wrap{overflow-x:auto}.check{display:grid;grid-template-columns:auto 1fr;gap:7px 9px;align-items:start}.check i{font-style:normal;color:var(--green);font-weight:900}.minute{display:inline-flex;border-radius:999px;background:var(--tint);color:var(--accent);font-size:11px;font-weight:800;padding:4px 8px;margin-bottom:7px}footer{text-align:center;color:var(--label3);font-size:12px;padding:28px 10px 0}
+.sheet-backdrop{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.38);display:flex;align-items:flex-end;justify-content:center;padding:18px}.sheet{width:min(560px,100%);max-height:min(78vh,720px);display:flex;flex-direction:column;background:var(--card);border:.5px solid var(--sep);border-radius:23px;box-shadow:0 24px 60px rgba(0,0,0,.35);overflow:hidden}.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px;border-bottom:.5px solid var(--sep)}.sheet-head h2{font-size:19px;margin:0}.close{border:0;border-radius:50%;width:30px;height:30px;background:var(--fill);font-weight:800;cursor:pointer}.sheet-copy{padding:12px 17px;color:var(--label2);font-size:13px}.user-list{overflow-y:auto;border-top:.5px solid var(--sep);border-bottom:.5px solid var(--sep)}.user-row{display:flex;align-items:center;gap:11px;padding:12px 17px;border-top:.5px solid var(--sep);cursor:pointer}.user-row:first-child{border-top:0}.user-row input{width:20px;height:20px;accent-color:var(--accent)}.user-row span{font-weight:700}.user-row small{display:block;color:var(--label2);font-size:11px;font-weight:500}.sheet-actions{padding:13px 17px calc(13px + env(safe-area-inset-bottom))}.save{width:100%;border:0;border-radius:14px;background:var(--accent);color:#fff;font-weight:800;padding:12px;cursor:pointer}.save:disabled{opacity:.45}.notice{font-size:13px;margin-bottom:9px;color:var(--label2)}.notice.ok{color:var(--green)}.notice.bad{color:var(--red)}.loading{text-align:center;padding:24px;color:var(--label2)}@media(min-width:680px){.sheet-backdrop{align-items:center}.sheet{border-radius:23px}.card{padding:17px 18px}}
+</style>
+<link rel="stylesheet" href="app-shell.css">
+<script src="auth-prelude.js"></script>
+<script type="module" src="auth-gate.js"></script>
+</head>
+<body>
+<div class="bar"><a href="index.html">◀ 首頁</a></div>
+<main>
+  <header class="hero"><div class="hero-row"><div><div class="eyebrow">5–10 Minute Final Check</div><h1>考前最終速讀</h1><p class="lead">只留明天最容易錯、最值得在進考場前再看一次的內容。</p></div><button class="permission-btn" id="permissionBtn" type="button" hidden>開放權限</button></div></header>
+  <div class="seg-wrap"><div class="seg" id="subjectTabs"><button type="button" data-page="chem" aria-pressed="true">化學</button><button type="button" data-page="bio" aria-pressed="false">生物</button><button type="button" data-page="english" aria-pressed="false">英文</button></div></div>
+
+  <section class="section" data-section="chem">
+    <div class="card first"><span class="minute">約 3 分鐘</span><h2>化學先守住這 5 件事</h2><div class="check"><i>1</i><div><b>先配平方程式，再用係數算莫耳。</b>係數比是粒子數／莫耳數比，不是質量比。</div><i>2</i><div><b>限量試劑比較 n÷係數。</b>數值最小者先用完，再由它算產物。</div><i>3</i><div><b>生成熱：生−反；燃燒熱：反−生。</b>每一項都要乘係數。</div><i>4</i><div><b>氣體比例一律用 K。</b>攝氏溫度先加 273。</div><i>5</i><div><b>PV=nRT 先統一單位。</b>用 0.082 時，P 用 atm、V 用 L、T 用 K。</div></div></div>
+    <div class="card"><h2>赫斯定律：最可能失分的地方</h2><div class="formula">ΔH反應 = ΣνΔHf°(生成物) − ΣνΔHf°(反應物)</div><div class="formula">用燃燒熱時：ΔH反應 = ΣνΔHc°(反應物) − ΣνΔHc°(生成物)</div><ul><li><b>反應倒過來：</b>ΔH 變號。</li><li><b>係數乘 k：</b>ΔH 也乘 k。</li><li><b>標準元素態的生成熱為 0：</b>如 O₂(g)、H₂(g)、C(石墨)。</li><li><b>莫耳生成熱：</b>必須由標準元素態生成 <b>1 mol</b> 化合物。</li><li><b>莫耳燃燒熱：</b>1 mol 物質完全燃燒；C 要到 CO₂，生成 CO 不算完全燃燒。</li></ul><div class="warn"><b>最後檢查：</b>題目給 C₂H₂ 燃燒時，產物係數是 2CO₂＋H₂O；O₂ 的生成熱為 0，但仍要先把反應配平。</div></div>
+    <div class="card"><h2>氣體題：先判斷固定條件</h2><div class="wrap"><table class="compare"><tr><th>條件</th><th>可用關係</th><th>注意</th></tr><tr><td>定溫、定量</td><td>P₁V₁=P₂V₂</td><td>P 與 V 反比</td></tr><tr><td>定壓、定量</td><td>V₁/T₁=V₂/T₂</td><td>T 必須用 K</td></tr><tr><td>定容、定量</td><td>P₁/T₁=P₂/T₂</td><td>T 必須用 K</td></tr><tr><td>n 固定但 P、V、T 都變</td><td>P₁V₁/T₁=P₂V₂/T₂</td><td>不能只套波以耳</td></tr></table></div><ul><li><b>開口壓力計：</b>液面較低的一側壓力較大，先比較大小，再決定加減高度差。</li><li><b>水下總壓：</b>水深每約 10 m 增加 1 atm，最後別忘了加水面大氣壓。</li><li><b>真實氣體最像理想氣體：</b>高溫、低壓。</li><li><b>同溫同壓等體積：</b>分子數相同，不代表質量或總原子數相同。</li></ul></div>
+    <div class="card danger"><h2>進場前不要再錯</h2><ul><li>配平只能改<b>係數</b>，不能改化學式下標。</li><li>問水分子數就乘 6.02×10²³；問總原子數才再乘每分子的原子數。</li><li>百分產率＝實際÷理論×100%，通常實際不會大於理論。</li><li>淨離子式要拆強電解質；沉澱、弱電解質與液態水不拆。</li><li>氣體體積是粒子活動所占的容器空間，不是分子本身體積相加。</li></ul></div>
+  </section>
+
+  <section class="section" data-section="bio" hidden>
+    <div class="card first"><span class="minute">約 3 分鐘</span><h2>生物先建立整張圖</h2><div class="check"><i>1</i><div><b>2-1：</b>植物細胞、組織與分生組織，先分清誰活、誰死。</div><i>2</i><div><b>2-2：</b>根、莖、葉的構造；形成層向內木質、向外韌皮。</div><i>3</i><div><b>3-1：</b>水由土壤→根毛→皮層→內皮→木質部→葉→氣孔。</div><i>4</i><div><b>3-2：</b>光反應供應 ATP、NADPH；卡爾文循環固定 CO₂。</div></div></div>
+    <div class="card"><h2>細胞與維管：活不活最常混</h2><div class="wrap"><table class="compare"><tr><th>構造</th><th>成熟狀態</th><th>功能／特徵</th></tr><tr><td>薄壁細胞</td><td>活</td><td>薄初生壁，代謝、儲存</td></tr><tr><td>厚角細胞</td><td>活</td><td>初生壁不均勻增厚，柔韌支持</td></tr><tr><td>厚壁細胞</td><td>通常死</td><td>厚且木質化的次生壁</td></tr><tr><td>導管／管胞</td><td>死</td><td>木質部運水，兼具支持</td></tr><tr><td>篩管</td><td>活但無核</td><td>運糖，靠伴細胞協助</td></tr><tr><td>伴細胞</td><td>活且有核</td><td>協助篩管代謝與裝卸載</td></tr></table></div><div class="warn"><b>別混：</b>篩管「沒有細胞核」不等於死亡；原生質絲連通活細胞的細胞質，壁孔則常見於具有次生壁的細胞。</div></div>
+    <div class="card"><h2>根、莖、葉與次級生長</h2><ul><li><b>根由外到內：</b>表皮／根毛→皮層→內皮→中柱。卡氏帶在內皮，阻斷質外體路徑，迫使水與離子穿膜接受選擇。</li><li><b>根毛在成熟區：</b>分生區忙分裂、伸長區仍拉長，太早長根毛會被破壞。</li><li><b>雙子葉草質莖：</b>維管束多環狀；單子葉多散生。</li><li><b>維管形成層：</b>向內形成次生木質部，向外形成次生韌皮部。木材主要是內側累積的次生木質部。</li><li><b>年輪：</b>同一年春材＋秋材，屬次生木質部。</li><li><b>單葉或複葉：</b>看腋芽；小葉基部沒有腋芽。</li></ul></div>
+    <div class="card"><h2>水分運輸與氣孔</h2><ol><li>離子可由主動運輸進根毛，使細胞內水勢降低。</li><li>水沿水勢梯度滲透進入；水分子本身不是被 ATP 泵入。</li><li>高大樹木上升主力是<b>蒸散拉力＋水的內聚力</b>，根壓只能輔助。</li><li>保衛細胞 K⁺進入→水勢下降→水進入→膨壓上升→氣孔開。</li><li>乾旱時 ABA 促進離子與水流出，氣孔關閉。</li></ol><div class="warn"><b>泌溢 vs 露水：</b>泌溢是植物體內木質部汁液由葉緣／葉尖排水器排出，含礦物質；露水來自空氣水氣凝結。</div></div>
+    <div class="card"><h2>光合作用：電子和 H⁺走不同路</h2><ul><li><b>電子傳遞鏈位置：</b>葉綠體在類囊體膜；粒線體在內膜。</li><li><b>通過 ATP 合成酶的是 H⁺，不是電子。</b>電子沿傳遞鏈放能，建立 H⁺梯度。</li><li><b>非循環電子流：</b>PSII→電子傳遞鏈→PSI，產 ATP、NADPH、O₂。</li><li><b>循環電子流：</b>只有 PSI，補充 ATP，不產 NADPH、不產 O₂。</li><li><b>放出的 O₂ 來自 H₂O。</b>PSII 光解水以補電子。</li><li><b>卡爾文循環：</b>在基質固定 CO₂，消耗 ATP、NADPH；不直接吸光，但不是只能在黑暗進行。</li></ul></div>
+    <div class="card danger"><h2>進場前不要再錯</h2><ul><li>ATP 水解淨放能是因產物更穩定；「斷鍵本身」仍需要能量。</li><li>PSII 比 PSI 先作用，I、II 是發現順序，不是作用順序。</li><li>過量施肥使土壤水勢降低，根可能失水而萎凋。</li><li>初級生長與次級生長可以同時進行，不是做完一個才開始另一個。</li><li>小單元 5／3-3 不在這次範圍，不用最後一刻硬塞。</li></ul></div>
+  </section>
+
+  <section class="section" data-section="english" hidden>
+    <div class="card first"><span class="minute">約 2–3 分鐘</span><h2>英文最後只看句型訊號</h2><ul><li><b>be capable of N/V-ing</b>：不要寫 capable to V。</li><li><b>mention sth. to sb.</b>：mention 後不加 about，也不是 mention sb. sth.</li><li><b>prompt／allow sb. to V</b>：中間有受詞，後面接 to V。</li><li><b>rather than</b>：左右維持平行結構。</li><li><b>The＋比較級…, the＋比較級…</b>：越……就越……，兩邊都要有 the。</li><li><b>When attacked…</b>：原句為 when plants are attacked，省略主詞與 be 後留 p.p. 表被動。</li><li><b>be said to have p.p.</b>：據說較早已經發生。</li><li><b>strip A of B</b>：剝奪 A 的 B；被動為 A be stripped of B。</li><li><b>only to V</b>：後來卻……，常表示意外或失望結果。</li></ul></div>
+    <div class="card"><h2>4500 最容易長得太像</h2><div class="wrap"><table class="compare"><tr><th>字</th><th>考場要想到的意思</th></tr><tr><td><b>adequate</b></td><td>足夠且符合需求；不一定非常優秀</td></tr><tr><td><b>appropriate</b></td><td>合適的、恰當的</td></tr><tr><td><b>apparent</b></td><td>明顯的；表面上的</td></tr><tr><td><b>coarse</b></td><td>粗糙的、粗俗的；別和 course 混</td></tr><tr><td><b>eventual</b></td><td>最終的；eventually＝終於</td></tr><tr><td><b>evident</b></td><td>明顯的；evidently＝顯然地</td></tr><tr><td><b>exposure</b></td><td>暴露；exposure to N</td></tr><tr><td><b>circumstance</b></td><td>情況；under no circumstances＝絕不</td></tr><tr><td><b>continual</b></td><td>反覆發生，中間可能中斷</td></tr><tr><td><b>continuous</b></td><td>連續不間斷</td></tr></table></div></div>
+    <div class="card"><h2>雜誌四回一行抓主旨</h2><ul><li><b>U2 植物的祕密生活：</b>植物產熱、化學警報、真菌網路、仙人掌夜間開氣孔、樹高限制、向日葵成熟後朝東。</li><li><b>U4：</b>注意 be said to have p.p.，分清「據說已經發生」和一般不定詞。</li><li><b>U8：</b>注意 strip A of B 等固定搭配，先判斷主被動再選形式。</li><li><b>U10：</b>注意 only to V 表示意外結果，以及句中時間先後。</li></ul><div class="warn"><b>克漏字順序：</b>先看空格需要的詞性→再看固定搭配→最後才用中文語意猜。不要只因選項意思接近就選。</div></div>
+    <div class="card danger"><h2>進場前不要再錯</h2><ul><li>單字拼字題除了片語容錯外，字母必須完整；先檢查詞性與單複數。</li><li>看到介系詞 <b>to</b> 不代表前面一定接原形動詞：exposure to、adapt to 後面接 N/V-ing。</li><li>題目有 by＋動作者，優先檢查是否需要被動 p.p.。</li><li>連接詞、介系詞、關係詞不要只翻中文，要看後面接完整子句還是名詞。</li><li>做完先回頭檢查：主詞單複數、時態、動詞形式、介系詞。</li></ul></div>
+  </section>
+  <footer>考前速讀只做最後校正；看到不熟的點，再回原筆記或最後複習題確認。</footer>
+</main>
+
+<div class="sheet-backdrop" id="permissionSheet" hidden>
+  <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="permissionTitle">
+    <div class="sheet-head"><h2 id="permissionTitle">開放速讀權限</h2><button class="close" id="closePermission" type="button" aria-label="關閉">×</button></div>
+    <div class="sheet-copy">勾選後，該帳號會在首頁看到「考前最終速讀」。你可以隨時取消。</div>
+    <div class="user-list" id="permissionUsers"><div class="loading">正在載入帳號…</div></div>
+    <div class="sheet-actions"><div class="notice" id="permissionNotice" hidden></div><button class="save" id="savePermission" type="button">儲存開放名單</button></div>
+  </section>
+</div>
+
+<script type="module">
+import {collection,db,doc,getDoc,getDocs,serverTimestamp,updateDoc,waitForSession} from './firebase-core.js';
+const $=function(id){return document.getElementById(id);};
+const ACCESS_FIELD='quickReviewAllowedUids';
+let session=null,usersLoaded=false;
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,function(char){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];});}
+function switchSection(name){document.querySelectorAll('[data-page]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.page===name));});document.querySelectorAll('[data-section]').forEach(function(section){section.hidden=section.dataset.section!==name;});window.scrollTo({top:0,behavior:'smooth'});}
+$('subjectTabs').addEventListener('click',function(event){const button=event.target.closest('[data-page]');if(button)switchSection(button.dataset.page);});
+function closeSheet(){$('permissionSheet').hidden=true;$('permissionNotice').hidden=true;}
+async function loadPermissionUsers(){
+  $('permissionUsers').innerHTML='<div class="loading">正在載入帳號…</div>';
+  if(session.preview){$('permissionUsers').innerHTML='<label class="user-row"><input type="checkbox" data-uid="preview-student"><span>測試同學<small>一般使用者</small></span></label>';usersLoaded=true;return;}
+  const [userSnap,systemSnap]=await Promise.all([getDocs(collection(db,'users')),getDoc(doc(db,'settings','system'))]);
+  const allowed=new Set(systemSnap.exists()&&Array.isArray(systemSnap.data()[ACCESS_FIELD])?systemSnap.data()[ACCESS_FIELD]:[]);
+  const users=userSnap.docs.map(function(snapshot){return{id:snapshot.id,...snapshot.data()};}).filter(function(user){return user.role!=='admin';}).sort(function(a,b){return String(a.name).localeCompare(String(b.name),'zh-Hant');});
+  $('permissionUsers').innerHTML=users.length?users.map(function(user){return '<label class="user-row"><input type="checkbox" data-uid="'+escapeHtml(user.id)+'" '+(allowed.has(user.id)?'checked':'')+'><span>'+escapeHtml(user.name)+'<small>一般使用者</small></span></label>';}).join(''):'<div class="loading">目前沒有其他使用者。</div>';
+  usersLoaded=true;
+}
+async function openSheet(){$('permissionSheet').hidden=false;usersLoaded=false;try{await loadPermissionUsers();}catch(error){console.error(error);$('permissionUsers').innerHTML='<div class="loading">帳號載入失敗，請稍後再試。</div>';}}
+async function savePermission(){
+  if(!usersLoaded)return;const button=$('savePermission'),notice=$('permissionNotice');button.disabled=true;notice.hidden=false;notice.className='notice';notice.textContent='正在儲存…';
+  const allowed=Array.from($('permissionUsers').querySelectorAll('input[data-uid]:checked')).map(function(input){return input.dataset.uid;});
+  try{if(!session.preview)await updateDoc(doc(db,'settings','system'),{[ACCESS_FIELD]:allowed,quickReviewAccessUpdatedAt:serverTimestamp()});notice.className='notice ok';notice.textContent='已儲存，共開放給 '+allowed.length+' 位使用者。';}
+  catch(error){console.error(error);notice.className='notice bad';notice.textContent='權限沒有儲存成功，請稍後再試。';}
+  finally{button.disabled=false;}
+}
+$('permissionBtn').addEventListener('click',openSheet);$('closePermission').addEventListener('click',closeSheet);$('savePermission').addEventListener('click',savePermission);
+$('permissionSheet').addEventListener('click',function(event){if(event.target===this)closeSheet();});document.addEventListener('keydown',function(event){if(event.key==='Escape'&&!$('permissionSheet').hidden)closeSheet();});
+session=await waitForSession();$('permissionBtn').hidden=session.profile.role!=='admin';
+</script>
+</body>
+</html>
