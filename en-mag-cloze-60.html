@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" data-admin-only="true" data-user-allow="78歲" data-admin-fallback="s-english.html">
+<html lang="zh-Hant" data-admin-only="true" data-user-allow="78歲純情老少女" data-admin-fallback="s-english.html">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -84,7 +84,7 @@ function finish(){
 }
 function restart(){groupIndex=0;selections=new Map();right=0;answered=0;wrong=[];locked=false;unitScores={};$('quizDone').hidden=true;$('quizPlay').hidden=false;renderGroup();}
 $('submitGroup').addEventListener('click',submitGroup);$('nextGroup').addEventListener('click',nextGroup);$('restartQuiz').addEventListener('click',restart);document.addEventListener('keydown',function(event){if(event.key!=='Enter'||$('quizPlay').hidden)return;if(!locked&&selections.size===5){event.preventDefault();submitGroup();}else if(locked){event.preventDefault();nextGroup();}});
-const session=await waitForSession();const allowed=session.profile.role==='admin'||String(session.profile.nameKey||session.profile.name||'').normalize('NFKC').trim().toLocaleLowerCase('zh-Hant')==='78歲';if(allowed){$('loading').hidden=true;$('quizPlay').hidden=false;renderGroup();}
+const session=await waitForSession();const accountName=String(session.profile.nameKey||session.profile.name||'').normalize('NFKC').trim().toLocaleLowerCase('zh-Hant');const allowed=session.profile.role==='admin'||accountName==='78歲純情老少女';if(allowed){$('loading').hidden=true;$('quizPlay').hidden=false;renderGroup();}
 </script>
 </body>
 </html>
