@@ -169,9 +169,9 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio31Source.includes(marker))fail('bio-3-1.html',`missing quiz marker: ${marker}`);
 }
 
-if(htmlFiles.length!==37)fail('project',`expected 37 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==38)fail('project',`expected 38 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==36)fail('project',`expected 36 protected pages, found ${protectedCount}`);
+if(protectedCount!==37)fail('project',`expected 37 protected pages, found ${protectedCount}`);
 
 const englishReviewSource=fs.readFileSync(path.join(root,'en-review.html'),'utf8');
 const englishSubjectSource=fs.readFileSync(path.join(root,'s-english.html'),'utf8');
@@ -223,6 +223,21 @@ else{
   catch(error){fail('en-vocab-a-z.html',`vocabulary module syntax error: ${error.message}`);}
 }
 if(!englishSubjectSource.includes('href="en-vocab-a-z.html"')||!englishSubjectSource.includes('data-admin-visible hidden'))fail('s-english.html','admin vocabulary card is not hidden by role');
+
+const adminBookVocabSource=fs.readFileSync(path.join(root,'en-book-vocab-a-z.html'),'utf8');
+const bookPageIds=new Set(['en-book-l1','en-book-l2','en-book-l3']);
+const adminBookVocabItems=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.k==='word'&&bookPageIds.has(item.pageId);});
+if(adminBookVocabItems.length!==105||new Set(adminBookVocabItems.map(function(item){return item.en.toLowerCase();})).size!==98)fail('en-book-vocab-a-z.html','expected 105 source rows and 98 merged textbook words');
+for(const marker of ['data-admin-only="true"','data-admin-fallback="s-english.html"','課本 L1–L3 單字 A–Z','data-book="all"','data-book="en-book-l1"','data-book="en-book-l2"','data-book="en-book-l3"','id="letterPicker"','id="startQuiz"','id="quizChoices"','id="quizInput"','function currentQuizPool()','function lenientChinese(value,answer)',"item.pageIds.includes(Q.book)","strictEnglish(value)===strictEnglish(item.en)","nx:score:en-book-vocab-a-z","session.profile.role==='admin'"]){
+  if(!adminBookVocabSource.includes(marker))fail('en-book-vocab-a-z.html',`missing textbook vocabulary marker: ${marker}`);
+}
+const adminBookVocabModule=adminBookVocabSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
+if(!adminBookVocabModule)fail('en-book-vocab-a-z.html','missing inline textbook vocabulary module');
+else{
+  try{new vm.Script(adminBookVocabModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'en-book-vocab-a-z.html'});}
+  catch(error){fail('en-book-vocab-a-z.html',`textbook vocabulary module syntax error: ${error.message}`);}
+}
+if(!englishSubjectSource.includes('href="en-book-vocab-a-z.html"'))fail('s-english.html','admin textbook vocabulary card is missing');
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},
