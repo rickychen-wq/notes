@@ -202,6 +202,17 @@ if(adminVocabItems.length!==228||new Set(adminVocabItems.map(function(item){retu
 for(const marker of ['data-admin-only="true"','data-admin-fallback="s-english.html"','id="showAll"','id="hideAll"','id="letterNav"','id="wordRoot"','waitForSession()',"session.profile.role==='admin'"]){
   if(!adminVocabSource.includes(marker))fail('en-vocab-a-z.html',`missing admin vocabulary marker: ${marker}`);
 }
+const redWordsMatch=adminVocabSource.match(/const RED_WORDS=new Set\(\[([\s\S]*?)\]\);/);
+if(!redWordsMatch)fail('en-vocab-a-z.html','missing red review word set');
+else{
+  const redWords=vm.runInNewContext(`[${redWordsMatch[1]}]`,Object.create(null),{timeout:1000});
+  if(redWords.length!==42||new Set(redWords).size!==42)fail('en-vocab-a-z.html',`expected 42 unique red review words, found ${redWords.length}`);
+  const vocabulary=new Set(adminVocabItems.map(function(item){return item.en.toLowerCase();}));
+  for(const word of redWords)if(!vocabulary.has(word))fail('en-vocab-a-z.html',`red review word is missing from vocabulary: ${word}`);
+}
+for(const marker of ['.word-row.needs-review .word','RED_WORDS.has(item.en.toLowerCase())',"button.classList.add('needs-review')"]){
+  if(!adminVocabSource.includes(marker))fail('en-vocab-a-z.html',`missing red review marker: ${marker}`);
+}
 if(!englishSubjectSource.includes('href="en-vocab-a-z.html"')||!englishSubjectSource.includes('data-admin-visible hidden'))fail('s-english.html','admin vocabulary card is not hidden by role');
 
 const wrongSummary=summarizeWrongItems([
