@@ -213,7 +213,7 @@ else{
 for(const marker of ['.word-row.needs-review .word','RED_WORDS.has(item.en.toLowerCase())',"button.classList.add('needs-review')"]){
   if(!adminVocabSource.includes(marker))fail('en-vocab-a-z.html',`missing red review marker: ${marker}`);
 }
-for(const marker of ['id="quizSetup"','id="letterPicker"','data-mode="mc"','data-mode="type"','data-direction="zh-en"','data-direction="en-zh"','data-scope="red"','data-scope="all"','id="startQuiz"','id="quizChoices"','id="quizInput"','id="quizNext"','id="quizDone"','function currentQuizPool()','function lenientChinese(value,answer)',"strictEnglish(value)===strictEnglish(item.en)","Math.max(old,score)"]){
+for(const marker of ['id="quizSetup"','id="letterPicker"','data-mode="mc"','data-mode="type"','data-direction="zh-en"','data-direction="en-zh"','data-scope="red"','data-scope="all"','id="startQuiz"','id="quizChoices"','id="quizInput"','id="quizNext"','id="quizDone"','function currentQuizPool()','function lenientChinese(value,answer)',"strictEnglish(value)===strictEnglish(item.en)","document.addEventListener('keydown'","Math.max(old,score)"]){
   if(!adminVocabSource.includes(marker))fail('en-vocab-a-z.html',`missing admin vocabulary quiz marker: ${marker}`);
 }
 const adminVocabModule=adminVocabSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
@@ -228,7 +228,7 @@ const adminBookVocabSource=fs.readFileSync(path.join(root,'en-book-vocab-a-z.htm
 const bookPageIds=new Set(['en-book-l1','en-book-l2','en-book-l3']);
 const adminBookVocabItems=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.k==='word'&&bookPageIds.has(item.pageId);});
 if(adminBookVocabItems.length!==105||new Set(adminBookVocabItems.map(function(item){return item.en.toLowerCase();})).size!==98)fail('en-book-vocab-a-z.html','expected 105 source rows and 98 merged textbook words');
-for(const marker of ['data-admin-only="true"','data-admin-fallback="s-english.html"','課本 L1–L3 單字 A–Z','data-book="all"','data-book="en-book-l1"','data-book="en-book-l2"','data-book="en-book-l3"','id="letterPicker"','id="startQuiz"','id="quizChoices"','id="quizInput"','function currentQuizPool()','function lenientChinese(value,answer)',"item.pageIds.includes(Q.book)","strictEnglish(value)===strictEnglish(item.en)","nx:score:en-book-vocab-a-z","session.profile.role==='admin'"]){
+for(const marker of ['data-admin-only="true"','data-admin-fallback="s-english.html"','課本 L1–L3 單字 A–Z','data-book="all"','data-book="en-book-l1"','data-book="en-book-l2"','data-book="en-book-l3"','id="letterPicker"','id="startQuiz"','id="quizChoices"','id="quizInput"','function currentQuizPool()','function lenientChinese(value,answer)',"item.pageIds.includes(Q.book)","strictEnglish(value)===strictEnglish(item.en)","document.addEventListener('keydown'","nx:score:en-book-vocab-a-z","session.profile.role==='admin'"]){
   if(!adminBookVocabSource.includes(marker))fail('en-book-vocab-a-z.html',`missing textbook vocabulary marker: ${marker}`);
 }
 const adminBookVocabModule=adminBookVocabSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
