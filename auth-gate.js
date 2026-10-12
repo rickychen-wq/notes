@@ -21,17 +21,31 @@ function reveal(){
   document.documentElement.classList.remove('nx-auth-pending');
 }
 
+function normalizedName(value){
+  return String(value||'').normalize('NFKC').trim().replace(/\s+/g,' ').toLocaleLowerCase('zh-Hant');
+}
+
+function namedAccess(session,value){
+  if(session.profile.role==='admin') return true;
+  const current=normalizedName(session.profile.nameKey||session.profile.name);
+  return String(value||'').split(',').map(normalizedName).filter(Boolean).includes(current);
+}
+
 function setSession(session){
   clearAuthTransition();
   currentSession=session;window.NX_SESSION=session;
   document.querySelectorAll('[data-admin-visible]').forEach(function(element){
     element.hidden=session.profile.role!=='admin';
   });
+  document.querySelectorAll('[data-user-visible]').forEach(function(element){
+    element.hidden=!namedAccess(session,element.dataset.userVisible);
+  });
   window.dispatchEvent(new CustomEvent('nx:auth-ready',{detail:session}));
 }
 
 function allowPage(session){
-  if(document.documentElement.dataset.adminOnly==='true'&&session.profile.role!=='admin'){
+  const allowedByName=namedAccess(session,document.documentElement.dataset.userAllow);
+  if(document.documentElement.dataset.adminOnly==='true'&&session.profile.role!=='admin'&&!allowedByName){
     location.replace(document.documentElement.dataset.adminFallback||'index.html');
     return false;
   }
