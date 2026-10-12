@@ -213,6 +213,15 @@ else{
 for(const marker of ['.word-row.needs-review .word','RED_WORDS.has(item.en.toLowerCase())',"button.classList.add('needs-review')"]){
   if(!adminVocabSource.includes(marker))fail('en-vocab-a-z.html',`missing red review marker: ${marker}`);
 }
+for(const marker of ['id="quizSetup"','id="letterPicker"','data-mode="mc"','data-mode="type"','data-direction="zh-en"','data-direction="en-zh"','data-scope="red"','data-scope="all"','id="startQuiz"','id="quizChoices"','id="quizInput"','id="quizNext"','id="quizDone"','function currentQuizPool()','function lenientChinese(value,answer)',"strictEnglish(value)===strictEnglish(item.en)","Math.max(old,score)"]){
+  if(!adminVocabSource.includes(marker))fail('en-vocab-a-z.html',`missing admin vocabulary quiz marker: ${marker}`);
+}
+const adminVocabModule=adminVocabSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
+if(!adminVocabModule)fail('en-vocab-a-z.html','missing inline vocabulary module');
+else{
+  try{new vm.Script(adminVocabModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'en-vocab-a-z.html'});}
+  catch(error){fail('en-vocab-a-z.html',`vocabulary module syntax error: ${error.message}`);}
+}
 if(!englishSubjectSource.includes('href="en-vocab-a-z.html"')||!englishSubjectSource.includes('data-admin-visible hidden'))fail('s-english.html','admin vocabulary card is not hidden by role');
 
 const wrongSummary=summarizeWrongItems([
