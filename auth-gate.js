@@ -39,10 +39,14 @@ function loadAccessConfig(session){
 }
 
 async function grantedAccess(session,key){
-  if(session.profile.role==='admin') return true;
-  if(!key) return false;
-  const config=await loadAccessConfig(session),allowed=config[key];
-  return Array.isArray(allowed)&&allowed.includes(session.user.uid);
+  return (await accessState(session,key)).allowed;
+}
+
+async function accessState(session,key){
+  if(session.profile.role==='admin') return{configured:true,allowed:true};
+  if(!key) return{configured:false,allowed:false};
+  const config=await loadAccessConfig(session),list=config[key],configured=Array.isArray(list);
+  return{configured,allowed:configured&&list.includes(session.user.uid)};
 }
 
 async function setSession(session){
@@ -57,22 +61,26 @@ async function setSession(session){
   });
   const accessElements=Array.from(document.querySelectorAll('[data-access-visible]'));
   for(const element of accessElements){
-    const allowedByName=namedAccess(session,element.dataset.userVisible);
-    element.hidden=!allowedByName&&!(await grantedAccess(session,element.dataset.accessVisible));
+    const state=await accessState(session,element.dataset.accessVisible);
+    const allowedByName=!state.configured&&namedAccess(session,element.dataset.userVisible);
+    element.hidden=!allowedByName&&!state.allowed;
   }
   const accessGroups=Array.from(document.querySelectorAll('[data-access-group]'));
   for(const element of accessGroups){
     const keys=String(element.dataset.accessGroup||'').split(',').map(function(key){return key.trim();}).filter(Boolean);
-    let allowed=namedAccess(session,element.dataset.userVisible);
-    for(const key of keys){if(await grantedAccess(session,key)){allowed=true;break;}}
+    let allowed=false;
+    for(const key of keys){if((await accessState(session,key)).allowed){allowed=true;break;}}
+    const legacyState=await accessState(session,element.dataset.userAccessKey);
+    if(!legacyState.configured&&namedAccess(session,element.dataset.userVisible))allowed=true;
     element.hidden=!allowed;
   }
   window.dispatchEvent(new CustomEvent('nx:auth-ready',{detail:session}));
 }
 
 async function allowPage(session){
-  const allowedByName=namedAccess(session,document.documentElement.dataset.userAllow);
-  const allowedByGrant=await grantedAccess(session,document.documentElement.dataset.accessKey);
+  const state=await accessState(session,document.documentElement.dataset.accessKey);
+  const allowedByName=!state.configured&&namedAccess(session,document.documentElement.dataset.userAllow);
+  const allowedByGrant=state.allowed;
   if(document.documentElement.dataset.adminOnly==='true'&&session.profile.role!=='admin'&&!allowedByName&&!allowedByGrant){
     location.replace(document.documentElement.dataset.adminFallback||'index.html');
     return false;
