@@ -52,10 +52,21 @@ async function setSession(session){
     element.hidden=session.profile.role!=='admin';
   });
   document.querySelectorAll('[data-user-visible]').forEach(function(element){
+    if(element.dataset.accessVisible||element.dataset.accessGroup)return;
     element.hidden=!namedAccess(session,element.dataset.userVisible);
   });
   const accessElements=Array.from(document.querySelectorAll('[data-access-visible]'));
-  for(const element of accessElements)element.hidden=!(await grantedAccess(session,element.dataset.accessVisible));
+  for(const element of accessElements){
+    const allowedByName=namedAccess(session,element.dataset.userVisible);
+    element.hidden=!allowedByName&&!(await grantedAccess(session,element.dataset.accessVisible));
+  }
+  const accessGroups=Array.from(document.querySelectorAll('[data-access-group]'));
+  for(const element of accessGroups){
+    const keys=String(element.dataset.accessGroup||'').split(',').map(function(key){return key.trim();}).filter(Boolean);
+    let allowed=namedAccess(session,element.dataset.userVisible);
+    for(const key of keys){if(await grantedAccess(session,key)){allowed=true;break;}}
+    element.hidden=!allowed;
+  }
   window.dispatchEvent(new CustomEvent('nx:auth-ready',{detail:session}));
 }
 
