@@ -54,6 +54,7 @@ for(const file of htmlFiles){
   if(/\.replace\(\/s\+\/g|\(\)\[\]\]/.test(source))fail(file,'contains a broken English normalization expression');
   if(source.includes('分數只存在你自己的瀏覽器'))fail(file,'contains obsolete local-only score copy');
   if(/隱藏測驗分數|清除測驗紀錄|function\s+nxHide\s*\(/.test(source))fail(file,'contains removed score-hiding/history controls');
+  if(source.includes("list.className='word-list',numberByFamily="))fail(file,'contains an undeclared numberByFamily assignment that breaks module rendering');
 
   for(const match of source.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/gi)){
     if(/\btype=["']module["']/i.test(match[1]))continue;
@@ -245,7 +246,7 @@ else{
 if(!homeSource.includes('href="admin-morning-quiz.html"')||!homeSource.includes('data-access-visible="morningQuizAllowedUids"')||!homeSource.includes('化學 5・生物 5・英文 5'))fail('index.html','morning quiz access card is missing');
 
 const accessAdminSource=fs.readFileSync(path.join(root,'access-admin.html'),'utf8');
-for(const marker of ['data-admin-only="true"','id="targetTabs"','finalReviewAllowedUids','quickReviewAllowedUids','morningQuizAllowedUids','getDocs(collection(db,\'users\'))','id="permissionUsers"','id="permissionCount"','id="savePermission"','TARGETS']){
+for(const marker of ['data-admin-only="true"','id="targetTabs"','finalReviewAllowedUids','quickReviewAllowedUids','morningQuizAllowedUids','vocabAzAllowedUids','bookVocabAllowedUids','magClozeAllowedUids','getDocs(collection(db,\'users\'))','id="permissionUsers"','id="permissionCount"','id="savePermission"','TARGETS']){
   if(!accessAdminSource.includes(marker))fail('access-admin.html',`missing access manager marker: ${marker}`);
 }
 const accessAdminModule=accessAdminSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
@@ -281,7 +282,7 @@ const adminVocabSource=fs.readFileSync(path.join(root,'en-vocab-a-z.html'),'utf8
 const vocabPageIds=new Set(['en-4500-9-1','en-4500-9-2','en-4500-10','en-4500-11-1','en-4500-11-2']);
 const adminVocabItems=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.k==='word'&&vocabPageIds.has(item.pageId);});
 if(adminVocabItems.length!==228||new Set(adminVocabItems.map(function(item){return item.en.toLowerCase();})).size!==228)fail('en-vocab-a-z.html','expected 228 unique vocabulary words');
-for(const marker of ['data-admin-only="true"','data-admin-fallback="s-english.html"','id="showAll"','id="hideAll"','id="letterNav"','id="wordRoot"','waitForSession()',"session.profile.role==='admin'"]){
+for(const marker of ['data-admin-only="true"','data-access-key="vocabAzAllowedUids"','data-admin-fallback="s-english.html"','id="permissionLink"','access-admin.html?target=vocab','id="showAll"','id="hideAll"','id="letterNav"','id="wordRoot"','waitForSession()',"session.profile.role!=='admin'"]){
   if(!adminVocabSource.includes(marker))fail('en-vocab-a-z.html',`missing admin vocabulary marker: ${marker}`);
 }
 const redWordsMatch=adminVocabSource.match(/const RED_WORDS=new Set\(\[([\s\S]*?)\]\);/);
@@ -304,13 +305,13 @@ else{
   try{new vm.Script(adminVocabModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'en-vocab-a-z.html'});}
   catch(error){fail('en-vocab-a-z.html',`vocabulary module syntax error: ${error.message}`);}
 }
-if(!englishSubjectSource.includes('href="en-vocab-a-z.html"')||!englishSubjectSource.includes('data-admin-visible hidden'))fail('s-english.html','admin vocabulary card is not hidden by role');
+if(!englishSubjectSource.includes('href="en-vocab-a-z.html"')||!englishSubjectSource.includes('data-access-visible="vocabAzAllowedUids"'))fail('s-english.html','4500 A–Z access card is missing');
 
 const adminBookVocabSource=fs.readFileSync(path.join(root,'en-book-vocab-a-z.html'),'utf8');
 const bookPageIds=new Set(['en-book-l1','en-book-l2','en-book-l3']);
 const adminBookVocabItems=ENGLISH_REVIEW_ITEMS.filter(function(item){return item.k==='word'&&bookPageIds.has(item.pageId);});
 if(adminBookVocabItems.length!==105||new Set(adminBookVocabItems.map(function(item){return item.en.toLowerCase();})).size!==98)fail('en-book-vocab-a-z.html','expected 105 source rows and 98 merged textbook words');
-for(const marker of ['data-admin-only="true"','data-admin-fallback="s-english.html"','課本 L1–L3 單字 A–Z','data-book="all"','data-book="en-book-l1"','data-book="en-book-l2"','data-book="en-book-l3"','id="letterPicker"','id="startQuiz"','id="quizChoices"','id="quizInput"','function currentQuizPool()','function lenientChinese(value,answer)',"item.pageIds.includes(Q.book)","strictEnglish(value)===strictEnglish(item.en)","document.addEventListener('keydown'","nx:score:en-book-vocab-a-z","session.profile.role==='admin'"]){
+for(const marker of ['data-admin-only="true"','data-access-key="bookVocabAllowedUids"','data-admin-fallback="s-english.html"','id="permissionLink"','access-admin.html?target=book','課本 L1–L3 單字 A–Z','data-book="all"','data-book="en-book-l1"','data-book="en-book-l2"','data-book="en-book-l3"','id="letterPicker"','id="startQuiz"','id="quizChoices"','id="quizInput"','function currentQuizPool()','function lenientChinese(value,answer)',"item.pageIds.includes(Q.book)","strictEnglish(value)===strictEnglish(item.en)","document.addEventListener('keydown'","nx:score:en-book-vocab-a-z","session.profile.role!=='admin'"]){
   if(!adminBookVocabSource.includes(marker))fail('en-book-vocab-a-z.html',`missing textbook vocabulary marker: ${marker}`);
 }
 const adminBookVocabModule=adminBookVocabSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
@@ -319,7 +320,7 @@ else{
   try{new vm.Script(adminBookVocabModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'en-book-vocab-a-z.html'});}
   catch(error){fail('en-book-vocab-a-z.html',`textbook vocabulary module syntax error: ${error.message}`);}
 }
-if(!englishSubjectSource.includes('href="en-book-vocab-a-z.html"'))fail('s-english.html','admin textbook vocabulary card is missing');
+if(!englishSubjectSource.includes('href="en-book-vocab-a-z.html"')||!englishSubjectSource.includes('data-access-visible="bookVocabAllowedUids"'))fail('s-english.html','textbook A–Z access card is missing');
 
 const magClozeSource=fs.readFileSync(path.join(root,'en-mag-cloze-60.html'),'utf8');
 const magClozeQuestions=MAG_CLOZE_SETS.flatMap(function(set){return set.questions.map(function(question){return{set,question};});});
@@ -333,7 +334,7 @@ const actualMagAnswers=magClozeQuestions.map(function(item,index){
 }).join('');
 if(actualMagAnswers!==expectedMagAnswers)fail('en-mag-cloze-60-data.js','the 60-answer key does not match the PDF answer key');
 for(const unit of ['U2','U4','U8','U10'])if(magClozeQuestions.filter(function(item){return item.set.unit===unit;}).length!==15)fail('en-mag-cloze-60-data.js',`${unit} must contain exactly 15 questions`);
-for(const marker of ['data-admin-only="true"','data-admin-fallback="s-english.html"','id="submitGroup"','id="nextGroup"','id="questionRoot"','每 5 題送出一次','function submitGroup()','function nextGroup()','question[4]',"nx:score:en-mag-cloze-60","session.profile.role==='admin'"]){
+for(const marker of ['data-admin-only="true"','data-user-allow="78歲純情老少女"','data-access-key="magClozeAllowedUids"','data-admin-fallback="s-english.html"','id="permissionLink"','access-admin.html?target=cloze','id="submitGroup"','id="nextGroup"','id="questionRoot"','每 5 題送出一次','function submitGroup()','function nextGroup()','question[4]',"nx:score:en-mag-cloze-60","session.profile.role!=='admin'"]){
   if(!magClozeSource.includes(marker))fail('en-mag-cloze-60.html',`missing magazine cloze marker: ${marker}`);
 }
 const magClozeModule=magClozeSource.match(/<script type="module">([\s\S]*?)<\/script>/i);
@@ -342,7 +343,7 @@ else{
   try{new vm.Script(magClozeModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'en-mag-cloze-60.html'});}
   catch(error){fail('en-mag-cloze-60.html',`magazine cloze module syntax error: ${error.message}`);}
 }
-if(!englishSubjectSource.includes('href="en-mag-cloze-60.html"'))fail('s-english.html','admin magazine cloze card is missing');
+if(!englishSubjectSource.includes('href="en-mag-cloze-60.html"')||!englishSubjectSource.includes('data-access-visible="magClozeAllowedUids"')||!englishSubjectSource.includes('data-access-group="vocabAzAllowedUids,bookVocabAllowedUids,magClozeAllowedUids"'))fail('s-english.html','magazine cloze access card or limited-tools group is missing');
 
 const wrongSummary=summarizeWrongItems([
   {subject:'english',wrongItems:['Hypothesis','hypothesis','give in','理想氣體']},
@@ -395,7 +396,7 @@ if(!loginJsSource.includes('await authStateReady')||!loginJsSource.includes('mar
 if(!authGateSource.includes('await authStateReady')||!authGateSource.includes("error=session-lost"))fail('auth-gate.js','protected pages can check authentication before storage is ready');
 if(!authGateSource.includes('syncEnglishHighScores')||!authGateSource.includes("pageId!=='s-english'")||!authGateSource.includes('bestScore(current,incoming)'))fail('auth-gate.js','highest-score synchronization is incomplete');
 if(!authGateSource.includes('async function allowPage(session)')||!authGateSource.includes("dataset.adminOnly==='true'")||!authGateSource.includes("session.profile.role!=='admin'")||!authGateSource.includes("querySelectorAll('[data-admin-visible]')"))fail('auth-gate.js','admin-only page or role visibility enforcement is incomplete');
-for(const marker of ['async function grantedAccess(session,key)','data-access-visible','document.documentElement.dataset.accessKey','allowed.includes(session.user.uid)'])if(!authGateSource.includes(marker))fail('auth-gate.js',`dynamic access marker is missing: ${marker}`);
+for(const marker of ['async function grantedAccess(session,key)','data-access-visible','data-access-group','document.documentElement.dataset.accessKey','allowed.includes(session.user.uid)'])if(!authGateSource.includes(marker))fail('auth-gate.js',`dynamic access marker is missing: ${marker}`);
 const readingSource=fs.readFileSync(path.join(root,'ch-reading.html'),'utf8');
 if(!/你選了：['"]?\s*\+\s*w\.mine/.test(readingSource))fail('ch-reading.html','selected wrong answer is not rendered for persistence');
 const mathSource=fs.readFileSync(path.join(root,'math-1.html'),'utf8');
