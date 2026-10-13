@@ -19,15 +19,15 @@
 <body>
 <div class="bar"><a href="index.html">◀ 首頁</a></div>
 <main>
-  <header class="hero"><div class="hero-row"><div class="hero-copy"><div class="eyebrow">Admin · Access Control</div><h1>開放權限</h1><p class="lead">選一份內容，再勾選要開放的帳號；每份內容可以獨立設定。</p></div><a class="back" href="index.html">返回首頁</a></div></header>
-  <div class="tabs" id="targetTabs"><button type="button" data-target="final" aria-pressed="true">段考前複習</button><button type="button" data-target="quick" aria-pressed="false">最終速讀</button><button type="button" data-target="morning" aria-pressed="false">明早練習</button></div>
+  <header class="hero"><div class="hero-row"><div class="hero-copy"><div class="eyebrow">Admin · Access Control</div><h1>開放權限</h1><p class="lead">選一份內容，再勾選要開放的帳號；六份內容可以各自設定。</p></div><a class="back" href="index.html">返回首頁</a></div></header>
+  <div class="tabs" id="targetTabs"><button type="button" data-target="final" aria-pressed="true">段考前複習</button><button type="button" data-target="quick" aria-pressed="false">最終速讀</button><button type="button" data-target="morning" aria-pressed="false">明早練習</button><button type="button" data-target="vocab" aria-pressed="false">4500 A–Z</button><button type="button" data-target="book" aria-pressed="false">課本 A–Z</button><button type="button" data-target="cloze" aria-pressed="false">雜誌 60 題</button></div>
   <section class="panel"><div class="panel-head"><div><h2 id="targetTitle">段考前最後複習</h2><p class="panel-copy" id="targetCopy">化學 23・生物 27・英文 15</p></div><span class="count" id="permissionCount">0 位已選</span></div><div class="tools"><strong id="accountSummary">選擇開放對象</strong><div class="tool-buttons"><button id="selectAllUsers" type="button">全部選取</button><button id="clearUsers" type="button">全部清除</button></div></div><div class="user-list" id="permissionUsers"><div class="loading">正在載入帳號…</div></div><div class="notice" id="permissionNotice">儲存後，勾選的使用者就能從首頁看到這份內容。</div><button class="button" id="savePermission" type="button" disabled>儲存這份權限</button></section>
-  <footer>只有管理員可以修改；三份內容的開放名單彼此獨立。</footer>
+  <footer>只有管理員可以修改；六份內容的開放名單彼此獨立。</footer>
 </main>
 <script type="module">
 import {collection,db,doc,getDoc,getDocs,serverTimestamp,updateDoc,waitForSession} from './firebase-core.js';
 const $=id=>document.getElementById(id);
-const TARGETS={final:{field:'finalReviewAllowedUids',title:'段考前最後複習',copy:'化學 23・生物 27・英文 15'},quick:{field:'quickReviewAllowedUids',title:'考前最終速讀',copy:'化學・生物・英文易錯重點'},morning:{field:'morningQuizAllowedUids',title:'明早考前練習',copy:'化學 5・生物 5・英文 5'}};
+const TARGETS={final:{field:'finalReviewAllowedUids',title:'段考前最後複習',copy:'化學 23・生物 27・英文 15'},quick:{field:'quickReviewAllowedUids',title:'考前最終速讀',copy:'化學・生物・英文易錯重點'},morning:{field:'morningQuizAllowedUids',title:'明早考前練習',copy:'化學 5・生物 5・英文 5'},vocab:{field:'vocabAzAllowedUids',title:'4500 單字 A–Z',copy:'五回共 228 字與雙向測驗'},book:{field:'bookVocabAllowedUids',title:'課本 L1–L3 單字 A–Z',copy:'三課共 98 字與雙向測驗'},cloze:{field:'magClozeAllowedUids',title:'雜誌四回克漏字 60 題',copy:'U2・U4・U8・U10，共 12 組'}};
 let target='final',session=null,usersLoaded=false;
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const initial=value=>Array.from(String(value||'？').trim())[0]||'？';
