@@ -101,6 +101,12 @@ for(const row of lesson3Phrases){
   if(distractors.some((item)=>item.toLowerCase()===String(row[1]).toLowerCase()))fail('en-book-l3.html',`correct phrase repeated among distractors for ${row[1]}`);
 }
 
+const magazineClozeSource=fs.readFileSync(path.join(root,'en-mag-cloze-60.html'),'utf8');
+for(const marker of ['id="quizSetup"','id="unitPicks"','data-unit="U2"','data-unit="U4"','data-unit="U8"','data-unit="U10"','let activeSets=[]','const total=activeSets.length*5','id="chooseAgain"']){
+  if(!magazineClozeSource.includes(marker))fail('en-mag-cloze-60.html',`missing selectable-range marker: ${marker}`);
+}
+if(magazineClozeSource.includes('right/60*100'))fail('en-mag-cloze-60.html','score still uses a fixed 60-question denominator');
+
 const bio21Source=fs.readFileSync(path.join(root,'bio-2-1.html'),'utf8');
 const bio21Match=bio21Source.match(/var RAW = (\[[\s\S]*?\n\]);/);
 if(!bio21Match)fail('bio-2-1.html','missing RAW quiz bank');
