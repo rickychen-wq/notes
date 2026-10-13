@@ -396,7 +396,7 @@ if(!loginJsSource.includes('await authStateReady')||!loginJsSource.includes('mar
 if(!authGateSource.includes('await authStateReady')||!authGateSource.includes("error=session-lost"))fail('auth-gate.js','protected pages can check authentication before storage is ready');
 if(!authGateSource.includes('syncEnglishHighScores')||!authGateSource.includes("pageId!=='s-english'")||!authGateSource.includes('bestScore(current,incoming)'))fail('auth-gate.js','highest-score synchronization is incomplete');
 if(!authGateSource.includes('async function allowPage(session)')||!authGateSource.includes("dataset.adminOnly==='true'")||!authGateSource.includes("session.profile.role!=='admin'")||!authGateSource.includes("querySelectorAll('[data-admin-visible]')"))fail('auth-gate.js','admin-only page or role visibility enforcement is incomplete');
-for(const marker of ['async function grantedAccess(session,key)','data-access-visible','data-access-group','document.documentElement.dataset.accessKey','allowed.includes(session.user.uid)'])if(!authGateSource.includes(marker))fail('auth-gate.js',`dynamic access marker is missing: ${marker}`);
+for(const marker of ['async function grantedAccess(session,key)','async function accessState(session,key)','data-access-visible','data-access-group','dataset.userAccessKey','document.documentElement.dataset.accessKey','list.includes(session.user.uid)'])if(!authGateSource.includes(marker))fail('auth-gate.js',`dynamic access marker is missing: ${marker}`);
 const readingSource=fs.readFileSync(path.join(root,'ch-reading.html'),'utf8');
 if(!/你選了：['"]?\s*\+\s*w\.mine/.test(readingSource))fail('ch-reading.html','selected wrong answer is not rendered for persistence');
 const mathSource=fs.readFileSync(path.join(root,'math-1.html'),'utf8');
