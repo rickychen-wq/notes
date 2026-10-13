@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" data-admin-only="true" data-admin-fallback="s-english.html">
+<html lang="zh-Hant" data-admin-only="true" data-access-key="bookVocabAllowedUids" data-admin-fallback="s-english.html">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -45,7 +45,7 @@ main{max-width:760px;margin:0 auto;padding:0 16px}
 .eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
 h1{font-size:32px;line-height:1.14;letter-spacing:-.8px;margin:5px 0 7px}
 .lead{margin:0;color:var(--label2);font-size:14px}
-.admin-pill{display:inline-flex;margin-top:10px;border-radius:999px;background:var(--accent2);color:var(--accent);padding:4px 9px;font-size:11px;font-weight:800}
+.admin-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.admin-pill{display:inline-flex;border-radius:999px;background:var(--accent2);color:var(--accent);padding:4px 9px;font-size:11px;font-weight:800;text-decoration:none}
 .view-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:0 0 12px;padding:4px;border-radius:14px;background:var(--fill)}
 .view-tab{border:0;border-radius:11px;background:transparent;padding:9px 12px;font-size:14px;font-weight:750;cursor:pointer}
 .view-tab.on{background:var(--card);color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.08)}
@@ -105,7 +105,7 @@ footer{text-align:center;color:var(--label3);font-size:12px;padding:32px 12px 0}
     <div class="eyebrow">English vocabulary</div>
     <h1>課本 L1–L3 單字 A–Z</h1>
     <p class="lead">三課共 98 字。點一下單字顯示中文與記憶提醒。</p>
-    <span class="admin-pill">僅限管理員</span>
+    <div class="admin-actions"><span class="admin-pill">限定開放</span><a id="permissionLink" class="admin-pill" href="access-admin.html?target=book" hidden>＋ 開放權限</a></div>
   </header>
   <div class="view-tabs" role="tablist" aria-label="單字頁模式">
     <button class="view-tab on" id="studyTab" type="button" role="tab" aria-selected="true">單字表</button>
@@ -239,7 +239,7 @@ function render(){
     const title=document.createElement('h2');title.textContent=letter;
     const count=document.createElement('span');count.textContent=group.length?group.length+' 字':'無';head.append(title,count);section.append(head);
     if(group.length){
-      const list=document.createElement('div');list.className='word-list',numberByFamily=new Map();let nextNumber=1;
+      const list=document.createElement('div'),numberByFamily=new Map();list.className='word-list';let nextNumber=1;
       group.forEach(function(item){const key=familyKey(item);if(!numberByFamily.has(key))numberByFamily.set(key,nextNumber++);list.append(createRow(item,numberByFamily.get(key)));});
       section.append(list);
     }
@@ -386,7 +386,7 @@ $('quizWrongAgain').addEventListener('click',function(){beginQuiz(quizWrong.map(
 
 (async function(){
   const session=await waitForSession();
-  if(session.profile.role==='admin'){render();buildLetterPicker();updateQuizPool();}
+  render();buildLetterPicker();updateQuizPool();$('permissionLink').hidden=session.profile.role!=='admin';
 })();
 </script>
 </body>
