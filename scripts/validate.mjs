@@ -131,7 +131,11 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
 const bioSubjectSource=fs.readFileSync(path.join(root,'s-bio.html'),'utf8');
 if(!bioSubjectSource.includes('href="bio-2-1.html"')||!bioSubjectSource.includes('href="bio-2-2.html"')||!bioSubjectSource.includes('href="bio-3-1.html"')||!bioSubjectSource.includes('4 / 4 已整理')||!bioSubjectSource.includes("style.width='100%'"))fail('s-bio.html','Biology cards or progress are incomplete');
 const homeSource=fs.readFileSync(path.join(root,'index.html'),'utf8');
-if(!homeSource.includes('25 / 29')||!homeSource.includes('data-done="4" data-total="4"')||!homeSource.includes('var d=25, t=29')||!homeSource.includes('六個科目的筆記與測驗'))fail('index.html','overall or Biology progress was not updated');
+const homePreparing=homeSource.includes('data-content-state="preparing"');
+if(homePreparing){
+  if(!homeSource.includes('第二次段考準備中')||!homeSource.includes('第一次段考內容已封存'))fail('index.html','preparing state copy is incomplete');
+  if(/href="(?:s-|admin-final-review|final-quick-review|admin-morning-quiz|en-vocab-a-z|en-book-vocab-a-z|en-mag-cloze-60)/.test(homeSource)||/data-access-visible=/.test(homeSource)||/class="sub\b/.test(homeSource))fail('index.html','archived first-midterm content is still linked from the home page');
+}else if(!homeSource.includes('25 / 29')||!homeSource.includes('data-done="4" data-total="4"')||!homeSource.includes('var d=25, t=29')||!homeSource.includes('六個科目的筆記與測驗'))fail('index.html','overall or Biology progress was not updated');
 if(/s-(?:physics|geo)\.html/.test(homeSource)||/[>](?:物理|地理)[<]/.test(homeSource))fail('index.html','removed Physics or Geography card is still visible');
 if(fs.existsSync(path.join(root,'s-physics.html'))||fs.existsSync(path.join(root,'s-geo.html')))fail('project','removed Physics or Geography subject page still exists');
 
@@ -209,7 +213,7 @@ else{
   try{new vm.Script(finalReviewModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'admin-final-review.html'});}
   catch(error){fail('admin-final-review.html',`final review module syntax error: ${error.message}`);}
 }
-if(!homeSource.includes('href="admin-final-review.html"')||!homeSource.includes('data-access-visible="finalReviewAllowedUids"')||!homeSource.includes('化學 23・生物 27・英文 15'))fail('index.html','admin final review card is missing or visible to regular users');
+if(!homePreparing&&(!homeSource.includes('href="admin-final-review.html"')||!homeSource.includes('data-access-visible="finalReviewAllowedUids"')||!homeSource.includes('化學 23・生物 27・英文 15')))fail('index.html','admin final review card is missing or visible to regular users');
 const quickReviewSource=fs.readFileSync(path.join(root,'final-quick-review.html'),'utf8');
 for(const marker of ['data-admin-only="true"','data-access-key="quickReviewAllowedUids"','id="permissionBtn"','id="permissionSheet"','id="permissionUsers"','id="permissionCount"','id="selectAllUsers"','id="clearUsers"','id="savePermission"','class="hero-stats"','class="user-avatar"','data-section="chem"','data-section="bio"','data-section="english"','quickReviewAllowedUids','getDocs(collection(db,\'users\'))','session.profile.role!==\'admin\'']){
   if(!quickReviewSource.includes(marker))fail('final-quick-review.html',`missing quick review marker: ${marker}`);
@@ -225,8 +229,8 @@ else{
   try{new vm.Script(quickReviewModule[1].replace(/^import .*;$/gm,'').replace('session=await waitForSession();',"session={profile:{role:'admin'},preview:true};"),{filename:'final-quick-review.html'});}
   catch(error){fail('final-quick-review.html',`quick review module syntax error: ${error.message}`);}
 }
-if(!homeSource.includes('href="final-quick-review.html"')||!homeSource.includes('data-access-visible="quickReviewAllowedUids"')||!homeSource.includes('考前最終速讀'))fail('index.html','quick review access card is missing');
-if(!/<div class="grid" style="margin-top:14px">[\s\S]*?data-access-visible="finalReviewAllowedUids"[\s\S]*?data-access-visible="quickReviewAllowedUids"[\s\S]*?<\/div>\s*<div class="grid" style="margin-top:14px">/.test(homeSource))fail('index.html','admin review cards are not paired in one grid');
+if(!homePreparing&&(!homeSource.includes('href="final-quick-review.html"')||!homeSource.includes('data-access-visible="quickReviewAllowedUids"')||!homeSource.includes('考前最終速讀')))fail('index.html','quick review access card is missing');
+if(!homePreparing&&!/<div class="grid" style="margin-top:14px">[\s\S]*?data-access-visible="finalReviewAllowedUids"[\s\S]*?data-access-visible="quickReviewAllowedUids"[\s\S]*?<\/div>\s*<div class="grid" style="margin-top:14px">/.test(homeSource))fail('index.html','admin review cards are not paired in one grid');
 
 const morningQuizSource=fs.readFileSync(path.join(root,'admin-morning-quiz.html'),'utf8');
 for(const [subject,expectedCount] of Object.entries({chemistry:5,biology:5,english:5})){
@@ -249,7 +253,7 @@ else{
   try{new vm.Script(morningQuizModule[1].replace(/^import .*;$/gm,'').replace('const session=await waitForSession();',"const session={profile:{role:'admin'}};"),{filename:'admin-morning-quiz.html'});}
   catch(error){fail('admin-morning-quiz.html',`morning quiz module syntax error: ${error.message}`);}
 }
-if(!homeSource.includes('href="admin-morning-quiz.html"')||!homeSource.includes('data-access-visible="morningQuizAllowedUids"')||!homeSource.includes('化學 5・生物 5・英文 5'))fail('index.html','morning quiz access card is missing');
+if(!homePreparing&&(!homeSource.includes('href="admin-morning-quiz.html"')||!homeSource.includes('data-access-visible="morningQuizAllowedUids"')||!homeSource.includes('化學 5・生物 5・英文 5')))fail('index.html','morning quiz access card is missing');
 
 const accessAdminSource=fs.readFileSync(path.join(root,'access-admin.html'),'utf8');
 for(const marker of ['data-admin-only="true"','id="targetTabs"','finalReviewAllowedUids','quickReviewAllowedUids','morningQuizAllowedUids','vocabAzAllowedUids','bookVocabAllowedUids','magClozeAllowedUids','getDocs(collection(db,\'users\'))','id="permissionUsers"','id="permissionCount"','id="savePermission"','TARGETS']){

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-content-state="preparing">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -114,6 +114,16 @@
   .account-links{display:flex;gap:8px;margin-top:14px}.account-links a{flex:1;padding:9px 10px;border-radius:11px;background:var(--fill);
     color:var(--blue);font-size:13px;font-weight:750;text-align:center}.account-metric{display:flex;flex-direction:column;justify-content:center;padding:17px}
   .account-metric b{font-size:25px;letter-spacing:-.7px}.account-metric span{margin-top:3px;color:var(--label2);font-size:12px}
+  .empty-state{position:relative;overflow:hidden;margin:18px 0 0;padding:25px 22px 24px;border:.5px solid var(--ring);
+    border-radius:22px;background:var(--card);box-shadow:var(--shadow);text-align:center}
+  .empty-state::before{content:"";position:absolute;inset:0 0 auto;height:4px;
+    background:linear-gradient(90deg,#7a4a9e,#3f5f9e,#2f7a5f)}
+  .empty-state__icon{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 13px;border-radius:17px;
+    background:var(--fill);font-size:25px}
+  .empty-state h2{margin:0;font-size:23px;letter-spacing:-.45px}
+  .empty-state p{max-width:430px;margin:7px auto 0;color:var(--label2);font-size:14px;line-height:1.65}
+  .empty-state__tag{display:inline-block;margin-top:15px;padding:6px 10px;border-radius:999px;background:var(--fill);
+    color:var(--label2);font-size:11px;font-weight:800;letter-spacing:.08em}
   @media(max-width:520px){.account-card{grid-template-columns:1fr}.account-metric{flex-direction:row;align-items:center;justify-content:space-between;padding:14px 17px}.account-metric b{font-size:20px}.account-metric span{margin-top:0}}
   footer{text-align:center;font-size:12px;color:var(--label3);padding:34px 18px 0;line-height:1.7}
 </style>
@@ -127,14 +137,9 @@
 <div class="glow"><i style="background:#2f7a5f;width:200px;height:200px;left:0%;top:0%;animation-delay:0s"></i><i style="background:#3f5f9e;width:270px;height:270px;left:23%;top:31%;animation-delay:1s"></i><i style="background:#7a4a9e;width:340px;height:340px;left:46%;top:62%;animation-delay:2s"></i><i style="background:#3f7a4a;width:200px;height:200px;left:69%;top:23%;animation-delay:3s"></i><i style="background:#2f6f6b;width:270px;height:270px;left:12%;top:54%;animation-delay:4s"></i></div>
 <main>
   <div class="top">
-    <div class="eyebrow rise" style="animation-delay:40ms">115-1 第一次段考</div>
+    <div class="eyebrow rise" style="animation-delay:40ms">115-1 第二次段考</div>
     <h1 class="rise" style="animation-delay:80ms">段考複習</h1>
-    <p class="lead rise" style="animation-delay:110ms">六個科目的筆記與測驗，點科目進去看細項。</p>
-    <div class="stat rise" style="animation-delay:130ms">
-      <span>整體進度</span>
-      <span class="statbar"><i id="allbar"></i></span>
-      <span id="alln" style="font-variant-numeric:tabular-nums">25 / 29</span>
-    </div>
+    <p class="lead rise" style="animation-delay:110ms">新的範圍與複習內容正在整理。</p>
   </div>
 
   <section class="account-card rise" style="animation-delay:135ms" aria-label="帳戶摘要">
@@ -145,15 +150,12 @@
     <div class="account-metric"><b id="homeMetric">—</b><span id="homeMetricLabel">最近 7 天閱讀</span></div>
   </section>
 
-  <div class="grid" style="margin-top:14px">
-    <a class="sub pressable rise" data-access-visible="finalReviewAllowedUids" hidden href="admin-final-review.html" style="--c:#c8912b;animation-delay:140ms" data-done="65" data-total="65"><div class="nm">段考前最後複習</div><div class="en">ADMIN · EXAM NIGHT</div><div class="ds">化學 23・生物 27・英文 15</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">限定開放</span></div></a>
-    <a class="sub pressable rise" data-access-visible="quickReviewAllowedUids" hidden href="final-quick-review.html" style="--c:#7a5af8;animation-delay:160ms" data-done="3" data-total="3"><div class="nm">考前最終速讀</div><div class="en">10 MIN · FINAL CHECK</div><div class="ds">化學・生物・英文易錯重點</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">限定開放</span></div></a>
-  </div>
-  <div class="grid" style="margin-top:14px">
-    <a class="sub pressable rise" data-access-visible="morningQuizAllowedUids" hidden href="admin-morning-quiz.html" style="--c:#7257e8;animation-delay:180ms" data-done="15" data-total="15"><div class="nm">明早考前練習</div><div class="en">ADMIN · 15 QUESTIONS</div><div class="ds">化學 5・生物 5・英文 5</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">限定開放</span></div></a>
-  </div>
-
-  <div class="grid"><a class="sub pressable rise" href="s-chinese.html" style="--c:#2f7a5f;animation-delay:140ms" data-done="3" data-total="6"><div class="nm">國文</div><div class="en">Chinese</div><div class="ds">課本、講義、默寫</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">3/6</span></div></a><a class="sub pressable rise" href="s-english.html" style="--c:#3f5f9e;animation-delay:195ms" data-done="12" data-total="12"><div class="nm">英文</div><div class="en">English</div><div class="ds">課本、雜誌、4500 單</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">12/12</span></div></a><a class="sub pressable rise" href="s-math.html" style="--c:#7a4a9e;animation-delay:250ms" data-done="1" data-total="1"><div class="nm">數學</div><div class="en">Math</div><div class="ds">第 1 章 三角函數</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">1/1</span></div></a><a class="sub pressable rise" href="s-bio.html" style="--c:#3f7a4a;animation-delay:305ms" data-done="4" data-total="4"><div class="nm">生物</div><div class="en">Biology</div><div class="ds">2-1、2-2、3-1、3-2</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">4/4</span></div></a><a class="sub pressable rise" href="s-chem.html" style="--c:#2f6f6b;animation-delay:360ms" data-done="4" data-total="4"><div class="nm">化學</div><div class="en">Chemistry</div><div class="ds">第 1 章、第 2 章</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">4/4</span></div></a><a class="sub pressable rise" href="s-civics.html" style="--c:#a05a3f;animation-delay:415ms" data-done="1" data-total="2"><div class="nm">公民</div><div class="en">Civics</div><div class="ds">課本</div><div class="pg"><span class="pgbar"><i></i></span><span class="pgn">1/2</span></div></a></div>
+  <section class="empty-state rise" style="animation-delay:180ms" aria-label="第二次段考準備狀態">
+    <div class="empty-state__icon" aria-hidden="true">✦</div>
+    <h2>第二次段考準備中</h2>
+    <p>目前還沒有開放的科目與複習內容。範圍確認後，新的筆記與測驗會從這裡陸續上線。</p>
+    <span class="empty-state__tag">CONTENT IN PROGRESS</span>
+  </section>
 
   <h2 class="sec rise" style="animation-delay:560ms">設定</h2>
   <div class="panel rise" style="animation-delay:600ms">
@@ -166,19 +168,12 @@
   </div>
 
   <footer>
-    學習與測驗紀錄會安全同步到你的帳戶。<br>
-    內容為自行整理，僅供複習參考。
+    第一次段考內容已封存，帳號與學習紀錄完整保留。<br>
+    第二次段考內容正在準備中。
   </footer>
 </main>
 
 <script>
-document.querySelectorAll('.sub').forEach(function(el){
-  var d=+el.dataset.done, t=+el.dataset.total;
-  setTimeout(function(){ el.querySelector('.pgbar i').style.width=(t?d/t*100:0)+'%'; }, 700);
-});
-(function(){ var d=25, t=29;
-  setTimeout(function(){ document.getElementById('allbar').style.width=(d/t*100)+'%'; }, 500); })();
-
 function syncSeg(){ var v=nxTheme();
   document.querySelectorAll('#segTheme button').forEach(function(b){
     b.setAttribute('aria-pressed', String(b.dataset.v===v)); }); }
