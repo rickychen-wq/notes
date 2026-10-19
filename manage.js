@@ -1,62 +1,149 @@
-import {auth,collection,db,doc,formatDuration,getDocs,getDoc,serverTimestamp,updateDoc,updatePassword,waitForSession} from './firebase-core.js';
+import {auth,collection,db,doc,formatDuration,getDocs,getDoc,serverTimestamp,updateDoc,updatePassword,waitForSession,timestampToDate,SUBJECT_LABELS} from './firebase-core.js';
 import {getUserStats} from './analytics.js';
 
-const toggle=document.getElementById('registrationToggle');let systemData=null;
-function esc(value){const span=document.createElement('span');span.textContent=String(value??'');return span.innerHTML;}
-function setRegistrationState(open){
-  toggle.setAttribute('aria-pressed',String(open));
-  const state=document.getElementById('registrationState');state.textContent=open?'已開放':'已關閉';state.classList.toggle('switch__state--open',open);
+const $=id=>document.getElementById(id);
+const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ARCHIVED=[
+  ['finalReviewAllowedUids','段考前複習'],['quickReviewAllowedUids','考前最終速讀'],
+  ['morningQuizAllowedUids','明早練習'],['vocabAzAllowedUids','4500 A–Z'],
+  ['bookVocabAllowedUids','課本 A–Z'],['magClozeAllowedUids','雜誌 60 題']
+];
+let session,systemData=null,rows=[],days=7,loadVersion=0,activeTab='overview';
+function notice(id,message,state='ok'){const el=$(id);el.hidden=false;el.textContent=message;el.dataset.state=state;}
+function registrationDraft(){return $('registrationToggle').getAttribute('aria-checked')==='true';}
+function updateRegistrationUI(open){
+  $('registrationToggle').setAttribute('aria-checked',String(open));
+  $('registrationState').textContent=open?'已開放':'已關閉';
+  const dirty=systemData&&open!==(systemData.registrationOpen===true);
+  $('settingsDirty').textContent=dirty?'尚未儲存':'';
+  $('saveSettings').disabled=!dirty;
 }
-
+function showTab(tab){
+  if(!['overview','content','settings'].includes(tab))tab='overview';activeTab=tab;
+  for(const key of ['overview','content','settings']){$(key+'Panel').hidden=key!==tab;$(key+'Tab').setAttribute('aria-selected',String(key===tab));$(key+'Tab').tabIndex=key===tab?0:-1;}
+  history.replaceState(null,'','#'+tab);
+  if(window.scrollY>160)window.scrollTo({top:0});
+}
+function renderPermissions(){
+  $('archivedPermissions').innerHTML=ARCHIVED.map(([key,title])=>{
+    const list=systemData?.[key],configured=Array.isArray(list);
+    return '<div><div><strong>'+esc(title)+'</strong><small>'+ (configured?'原有指定名單 '+new Set(list).size+' 人':'保留原設定')+'</small></div><span>已封存 · 無入口</span></div>';
+  }).join('');
+}
 async function loadSystem(){
-  const snap=await getDoc(doc(db,'settings','system'));if(!snap.exists())throw new Error('system-missing');systemData=snap.data();
-  setRegistrationState(systemData.registrationOpen===true);
+  try{
+    if(session.preview)systemData={registrationOpen:false,finalReviewAllowedUids:['demo-1']};
+    else {const snap=await getDoc(doc(db,'settings','system'));if(!snap.exists())throw new Error('Missing system settings');systemData=snap.data();}
+    updateRegistrationUI(systemData.registrationOpen===true);$('registrationToggle').disabled=false;renderPermissions();
+  }catch(error){
+    console.warn('Settings read failed',error);$('registrationToggle').disabled=true;$('saveSettings').disabled=true;
+    $('registrationState').textContent='讀取失敗';notice('settingsNotice','無法讀取設定，未做任何變更。重新整理頁面後再試。','error');
+    $('archivedPermissions').textContent='權限摘要暫時無法載入，既有權限未變更。';
+  }
 }
-
+function renderStats(){
+  const valid=rows.filter(r=>r.stats),active=valid.filter(r=>r.stats.totalSeconds>0||r.stats.attemptCount>0).length;
+  const total=valid.reduce((sum,r)=>sum+r.stats.totalSeconds,0);
+  const scores=valid.flatMap(r=>r.stats.attempts||[]).filter(a=>typeof a.score==='number'&&Number.isFinite(a.score));
+  const avg=scores.length?Math.round(scores.reduce((sum,a)=>sum+a.score,0)/scores.length)+'%':'—';
+  $('adminStats').innerHTML=[[''+rows.length,'使用者'],[''+active,'近 '+days+' 天活躍'],[formatDuration(total),'近 '+days+' 天閱讀'],[avg,'近 '+days+' 天測驗平均']].map(([value,label])=>'<div><b>'+esc(value)+'</b><span>'+esc(label)+'</span></div>').join('');
+}
+function renderUsers(){
+  const search=$('userSearch').value.trim().toLocaleLowerCase('zh-Hant'),sort=$('userSort').value;
+  const filtered=rows.filter(r=>String(r.profile.name||'').toLocaleLowerCase('zh-Hant').includes(search));
+  filtered.sort((a,b)=>sort==='name'?String(a.profile.name).localeCompare(String(b.profile.name),'zh-Hant'):sort==='attempts'?(b.stats?.attemptCount||0)-(a.stats?.attemptCount||0):(b.stats?.totalSeconds||0)-(a.stats?.totalSeconds||0));
+  $('userRows').innerHTML=filtered.length?filtered.map(({profile:p,stats:s,failed})=>{
+    const summary=s?'閱讀 '+formatDuration(s.totalSeconds)+' · 測驗 '+s.attemptCount+(s.attemptCount>=120?'+':'')+' 次':failed?'統計暫時讀取失敗，可重新整理':'正在整理統計…';
+    return '<button type="button" class="admin-user" data-uid="'+esc(p.uid)+'"><span class="admin-user-main"><span class="admin-avatar" aria-hidden="true">'+esc(Array.from(p.name||'?')[0])+'</span><span><span class="admin-name">'+esc(p.name||'未命名')+(p.role==='admin'?' <span class="v2-badge">管理員</span>':'')+'</span><small>'+esc(summary)+'</small></span></span><span class="admin-user-score">'+(s&&s.avgScore!==null?s.avgScore+'%':'—')+'<small>查看詳情 →</small></span></button>';
+  }).join(''):'<div class="v2-empty">沒有符合的帳號。</div>';
+}
+function previewRows(){
+  return ['Chen 管理員','測試同學 A','測試同學 B'].map((name,index)=>{
+    const uid=index?'demo-'+index:session.user.uid,score=[90,80,null][index],seconds=[4680,2880,0][index],attempts=index===2?[]:[{score,pageTitle:'二段 4500 單字',completedAtMs:Date.now(),correctCount:index?16:18,totalQuestions:20,wrongItems:[]}];
+    return {profile:{uid,name,role:index?'user':'admin'},stats:{totalSeconds:seconds,attemptCount:attempts.length,avgScore:score,attempts,subjectSeconds:{english:seconds},topWrongWords:index===2?[]:[{term:'thorough',count:2}],topSubject:seconds?{label:'英文'}:null}};
+  });
+}
 async function loadUsers(){
-  const userSnap=await getDocs(collection(db,'users'));
-  const rows=await Promise.all(userSnap.docs.map(async function(s){
-    const profile=s.data();let stats=null;try{stats=await getUserStats(profile.uid,7);}catch(error){console.warn(error);}
-    return{profile,stats};
-  }));
-  rows.sort(function(a,b){return(a.profile.role==='admin'?-1:1)-(b.profile.role==='admin'?-1:1);});
-  const active=rows.filter(function(r){return r.stats&&r.stats.totalSeconds>0;}).length;
-  const totalSeconds=rows.reduce(function(sum,r){return sum+(r.stats?r.stats.totalSeconds:0);},0);
-  const scores=rows.flatMap(function(r){return r.stats&&r.stats.avgScore!==null?[r.stats.avgScore]:[];});
-  const avg=scores.length?Math.round(scores.reduce(function(a,b){return a+b;},0)/scores.length):null;
-  document.getElementById('adminStats').innerHTML='<div class="stat-card"><b>'+rows.length+'</b><span>使用者</span></div><div class="stat-card"><b>'+active+'</b><span>7 天活躍</span></div><div class="stat-card"><b>'+formatDuration(totalSeconds)+'</b><span>閱讀時間</span></div><div class="stat-card"><b>'+(avg===null?'—':avg+'%')+'</b><span>測驗平均</span></div>';
-  const root=document.getElementById('userRows');if(!rows.length){root.innerHTML='<div class="empty">目前沒有使用者。</div>';return;}
-  root.innerHTML=rows.map(function(row){const p=row.profile,s=row.stats,wrong=s&&s.topWrong?' · 常錯英文 '+esc(s.topWrong.term):'';return '<div class="row"><div class="row__main"><div class="row__title">'+esc(p.name)+(p.role==='admin'?' <span class="pill pill--admin" style="padding:2px 7px">管理員</span>':'')+'</div><div class="row__sub">7 天閱讀 '+formatDuration(s?s.totalSeconds:0)+' · 測驗 '+(s?s.attemptCount:0)+' 次'+wrong+'</div></div><div class="row__value">'+(s&&s.avgScore!==null?s.avgScore+'%':'—')+'</div></div>';}).join('');
+  const version=++loadVersion;$('reloadUsers').disabled=true;$('userLoadStatus').textContent='正在載入帳號…';
+  try{
+    if(session.preview){rows=previewRows();renderStats();renderUsers();$('userLoadStatus').textContent='本機預覽資料，不會寫入 Firebase。';return;}
+    const snap=await getDocs(collection(db,'users'));if(version!==loadVersion)return;
+    rows=snap.docs.map(s=>({profile:{...s.data(),uid:s.id},stats:null,failed:false}));
+    renderUsers();renderStats();let index=0,finished=0;
+    // Limit concurrent queries rather than launching two reads for every account at once.
+    async function worker(){
+      while(index<rows.length&&version===loadVersion){
+        const row=rows[index++];
+        try{const stats=await getUserStats(row.profile.uid,days);if(version!==loadVersion)return;row.stats=stats;}
+        catch(error){if(version!==loadVersion)return;row.failed=true;console.warn('User stats unavailable',error.code||error.message);}
+        finished++;$('userLoadStatus').textContent='已整理 '+finished+' / '+rows.length+' 個帳號';renderUsers();renderStats();
+      }
+    }
+    await Promise.all(Array.from({length:Math.min(4,rows.length)},()=>worker()));
+    if(version!==loadVersion)return;
+    const failed=rows.filter(r=>r.failed).length,limited=rows.some(r=>r.stats?.attemptCount>=120);
+    $('userLoadStatus').textContent='共 '+rows.length+' 個帳號 · 點帳號查看詳情'+(failed?' · '+failed+' 個統計未同步，請重試':'')+(limited?' · 測驗統計每人最多取最近 120 次':'');
+  }catch(error){if(version!==loadVersion)return;console.error(error);$('userLoadStatus').textContent='載入失敗，請按重新整理。';}
+  finally{if(version===loadVersion)$('reloadUsers').disabled=false;}
 }
-
-function preview(){
-  systemData={registrationOpen:false};setRegistrationState(false);document.getElementById('adminStats').innerHTML='<div class="stat-card"><b>6</b><span>使用者</span></div><div class="stat-card"><b>4</b><span>7 天活躍</span></div><div class="stat-card"><b>8 小時 24 分</b><span>閱讀時間</span></div><div class="stat-card"><b>84%</b><span>測驗平均</span></div>';
-  document.getElementById('userRows').innerHTML='<div class="row"><div class="row__main"><div class="row__title">Chen <span class="pill pill--admin" style="padding:2px 7px">管理員</span></div><div class="row__sub">7 天閱讀 2 小時 18 分 · 測驗 12 次</div></div><div class="row__value">91%</div></div><div class="row"><div class="row__main"><div class="row__title">測試同學</div><div class="row__sub">7 天閱讀 48 分鐘 · 測驗 4 次</div></div><div class="row__value">78%</div></div>';
+function showDetail(uid){
+  const row=rows.find(r=>r.profile.uid===uid);if(!row)return;const {profile:p,stats:s}=row;
+  $('detailName').textContent=p.name;
+  const permissions='<div class="detail-section"><h3>目前可見內容</h3><p class="v2-caption">'+(p.role==='admin'?'二段單字與測驗、管理中心。':'準備中首頁與自己的學習紀錄；二段尚未開放。')+'</p></div>';
+  if(!s){$('detailContent').innerHTML='<p class="v2-caption">此帳號的統計尚未載入，可重新整理後再看。</p>'+permissions;$('userDetail').showModal();return;}
+  const total=s.totalSeconds||1,subjects=Object.entries(s.subjectSeconds||{}).sort((a,b)=>b[1]-a[1]).filter(([,seconds])=>seconds>0);
+  const subjectsHTML=subjects.length?subjects.map(([id,seconds])=>'<div class="detail-line"><div style="flex:1">'+esc(SUBJECT_LABELS[id]||id)+'<div class="detail-subject-meter"><i style="width:'+Math.min(100,seconds/total*100)+'%"></i></div></div><b>'+esc(formatDuration(seconds))+'</b></div>').join(''):'<p class="v2-caption">這段期間尚無閱讀紀錄。</p>';
+  const attempts=(s.attempts||[]).slice(0,12).map(a=>{
+    const date=timestampToDate(a.at)||timestampToDate(a.completedAtMs);
+    const time=date?new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(date):'時間待同步';
+    return '<div class="detail-line"><div>'+esc(a.pageTitle||a.pageId)+'<small>'+esc(time)+' · '+(Number.isInteger(a.totalQuestions)?a.correctCount+' / '+a.totalQuestions+' 題':'題數未記錄')+(a.manualCorrections?' · 自行改判 '+a.manualCorrections+' 題':'')+'</small></div><b>'+Number(a.score)+'%</b></div>';
+  }).join('')||'<p class="v2-caption">這段期間尚無測驗紀錄。</p>';
+  const wrong=(s.topWrongWords||[]).slice(0,8).map(item=>'<span class="v2-badge">'+esc(item.term)+'</span>').join(' ');
+  $('detailContent').innerHTML='<p class="v2-caption">最近 '+days+' 天 · 台灣時間</p><div class="admin-metrics"><div><b>'+esc(formatDuration(s.totalSeconds))+'</b><span>閱讀</span></div><div><b>'+s.attemptCount+'</b><span>測驗次數</span></div></div>'+permissions+'<div class="detail-section"><h3>各科閱讀時間</h3>'+subjectsHTML+'</div><div class="detail-section"><h3>常錯英文</h3>'+(wrong||'<p class="v2-caption">尚無錯字紀錄。</p>')+'</div><div class="detail-section"><h3>最近測驗（最多 12 次）</h3>'+attempts+'</div>';
+  $('userDetail').showModal();
 }
-
-toggle.addEventListener('click',function(){setRegistrationState(toggle.getAttribute('aria-pressed')!=='true');});
-document.getElementById('saveSettings').addEventListener('click',async function(){
-  const button=this,notice=document.getElementById('settingsNotice');notice.hidden=false;
-  button.disabled=true;
-  try{await updateDoc(doc(db,'settings','system'),{registrationOpen:toggle.getAttribute('aria-pressed')==='true',openAt:null,closeAt:null,updatedAt:serverTimestamp()});notice.className='notice notice--success';notice.textContent='註冊設定已儲存。';}
-  catch(error){console.error(error);notice.className='notice notice--error';notice.textContent='設定沒有儲存成功，請稍後再試。';}
-  finally{button.disabled=false;}
-});
-
-document.getElementById('adminPasswordForm').addEventListener('submit',async function(event){
-  event.preventDefault();const first=document.getElementById('adminNewPassword').value,second=document.getElementById('adminConfirmPassword').value;
-  const notice=document.getElementById('adminPasswordNotice');notice.hidden=false;
-  if(first.length<6){notice.className='notice notice--error';notice.textContent='密碼至少需要 6 個字元。';return;}
-  if(first!==second){notice.className='notice notice--error';notice.textContent='兩次輸入的密碼不一致。';return;}
-  const button=event.currentTarget.querySelector('button[type="submit"]');button.disabled=true;
-  try{await updatePassword(auth.currentUser,first);notice.className='notice notice--success';notice.textContent='管理員密碼已更新。';event.currentTarget.reset();}
-  catch(error){notice.className='notice notice--error';notice.textContent=error.code&&error.code.includes('requires-recent-login')?'請重新登入管理員帳號後再更新密碼。':'密碼更新失敗，請稍後再試。';}
-  finally{button.disabled=false;}
-});
-
+async function saveRegistration(){
+  $('registrationConfirm').close();const button=$('saveSettings');button.disabled=true;$('registrationToggle').disabled=true;
+  const open=registrationDraft();
+  try{
+    if(!session.preview)await updateDoc(doc(db,'settings','system'),{registrationOpen:open,updatedAt:serverTimestamp()});
+    systemData={...systemData,registrationOpen:open};updateRegistrationUI(open);
+    notice('settingsNotice',session.preview?'本機預覽，不會更改實際設定。':'註冊設定已儲存。');
+  }catch(error){console.error(error);notice('settingsNotice','設定未儲存成功，原有設定保持不變。','error');button.disabled=false;}
+  finally{$('registrationToggle').disabled=false;}
+}
+function bind(){
+  for(const key of ['overview','content','settings'])$(key+'Tab').onclick=()=>showTab(key);
+  document.querySelector('[role="tablist"]').onkeydown=event=>{
+    const names=['overview','content','settings'];if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+    event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?2:(names.indexOf(activeTab)+(event.key==='ArrowRight'?1:2))%3;showTab(names[next]);$(names[next]+'Tab').focus();
+  };
+  $('statsPeriod').onclick=event=>{const button=event.target.closest('[data-days]');if(!button||Number(button.dataset.days)===days)return;days=Number(button.dataset.days);$('statsPeriod').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));loadUsers();};
+  $('reloadUsers').onclick=loadUsers;$('userSearch').oninput=renderUsers;$('userSort').onchange=renderUsers;
+  $('userRows').onclick=event=>{const button=event.target.closest('[data-uid]');if(button)showDetail(button.dataset.uid);};
+  $('closeDetail').onclick=()=>$('userDetail').close();
+  $('registrationToggle').onclick=()=>updateRegistrationUI(!registrationDraft());
+  $('saveSettings').onclick=()=>{
+    if(!systemData)return;const open=registrationDraft();
+    $('registrationConfirmTitle').textContent=open?'開放新帳號註冊？':'關閉新帳號註冊？';
+    $('registrationConfirmCopy').textContent=open?'持有網站連結的人將能建立帳號；新帳號仍看不到管理員限定的二段內容。':'新使用者將無法註冊；現有帳號依然可以正常登入。';
+    $('registrationConfirm').showModal();
+  };
+  $('cancelRegistration').onclick=()=>$('registrationConfirm').close();$('confirmRegistration').onclick=saveRegistration;
+  $('showAdminPassword').onchange=()=>{for(const id of ['adminNewPassword','adminConfirmPassword'])$(id).type=$('showAdminPassword').checked?'text':'password';};
+  $('adminPasswordForm').onsubmit=async event=>{
+    event.preventDefault();const form=event.currentTarget,button=form.querySelector('button[type="submit"]'),first=$('adminNewPassword').value,second=$('adminConfirmPassword').value;
+    if(first.length<6){notice('adminPasswordNotice','密碼至少需要 6 個字元。','error');return;}
+    if(first!==second){notice('adminPasswordNotice','兩次密碼不一致，請再確認。','error');return;}
+    button.disabled=true;
+    try{if(!session.preview)await updatePassword(auth.currentUser,first);form.reset();$('adminNewPassword').type='password';$('adminConfirmPassword').type='password';notice('adminPasswordNotice',session.preview?'本機預覽，不會變更密碼。':'密碼已更新。');}
+    catch(error){notice('adminPasswordNotice',error.code?.includes('requires-recent-login')?'為了保護帳號，請重新登入後再修改密碼。':'密碼更新失敗，原密碼未變更。','error');}
+    finally{button.disabled=false;}
+  };
+  window.addEventListener('beforeunload',event=>{if(systemData&&registrationDraft()!==(systemData.registrationOpen===true)){event.preventDefault();event.returnValue='';}});
+}
 async function start(){
-  const session=await waitForSession();if(session.profile.role!=='admin'){location.replace('me.html');return;}
-  if(session.preview){preview();return;}
-  try{await Promise.all([loadSystem(),loadUsers()]);}catch(error){console.error(error);document.getElementById('userRows').innerHTML='<div class="empty">管理資料載入失敗。</div>';}
+  session=await waitForSession();if(session.profile.role!=='admin'){location.replace('index.html');return;}
+  bind();showTab(location.hash.slice(1));await Promise.all([loadSystem(),loadUsers()]);
 }
 start();

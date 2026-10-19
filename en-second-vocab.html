@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-admin-only="true" data-admin-strict="true" data-admin-fallback="index.html">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3f5f9"><link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>二段 4500 單字 11-3～12-1｜段考複習</title>
+<script>(function(){try{var t=localStorage.getItem('nx:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<link rel="stylesheet" href="app-shell.css"><link rel="stylesheet" href="study-v2.css">
+<script src="auth-prelude.js"></script><script type="module" src="auth-gate.js"></script>
+</head>
+<body class="v2">
+<nav class="v2-bar" aria-label="頁面導覽"><a href="index.html">← 回首頁</a><span>SECOND MIDTERM / 115-1</span><span data-account-slot></span></nav>
+<main class="v2-main">
+  <header class="v2-hero v2-entrance"><div><p class="v2-overline">ENGLISH VOCABULARY</p><h1>4500 單字</h1><p>11-3～11-6・12-1　<span class="v2-badge">管理員限定</span></p></div><div class="v2-seal" aria-hidden="true">Aa<small>236 WORDS</small></div></header>
+  <div class="v2-tabs" role="tablist" aria-label="學習方式"><button type="button" id="wordsTab" role="tab" aria-selected="true" aria-controls="wordsPanel">單字複習</button><button type="button" id="quizTab" role="tab" aria-selected="false" aria-controls="quizPanel" tabindex="-1">測驗練習</button></div>
+  <div id="pageLoading" class="v2-empty" role="status">正在核對帳戶並載入單字…</div>
+  <div id="pageLoadError" class="v2-card" hidden><h2>單字暫時沒有載入</h2><p>請確認連線後重試，原有紀錄不會被清除。</p><button class="v2-btn" id="retryPage" type="button">重新載入</button></div>
+  <div id="studyContent" hidden>
+    <section id="wordsPanel" role="tabpanel" aria-labelledby="wordsTab">
+      <div class="v2-toolbar"><span class="v2-section-title" style="margin:0">選擇回次</span><button type="button" class="v2-link" id="allWordUnits">全選／清空</button></div>
+      <div class="v2-chips" id="wordUnits" aria-label="複習回次"></div>
+      <div class="v2-toolbar"><label class="v2-field v2-search"><span>找單字</span><input id="wordSearch" type="search" placeholder="英文或中文意思" autocomplete="off"></label><div class="v2-controls"><label class="v2-field"><span>範圍</span><select id="wordScope"><option value="all">全部單字</option><option value="starred">★ 收藏難字</option><option value="wrong">待複習錯字</option></select></label><label class="v2-field"><span>排序</span><select id="wordOrder"><option value="book">課本順序</option><option value="az">A–Z</option></select></label></div></div>
+      <div class="v2-alpha" id="alphabet" aria-label="依字首篩選"></div>
+      <div class="v2-toolbar"><span class="v2-caption" id="wordCount" role="status"></span><div class="v2-segment" id="meaningMode" aria-label="中文顯示方式"><button type="button" data-mode="show" aria-pressed="true">顯示中文</button><button type="button" data-mode="tap" aria-pressed="false">點一下揭曉</button></div></div>
+      <div class="v2-words" id="wordList"></div>
+      <p class="v2-caption">保留課本的 236 個編號主單字；衍生字與搭配放在每張卡的「用法與易錯處」。</p>
+    </section>
+    <section id="quizPanel" role="tabpanel" aria-labelledby="quizTab" hidden>
+      <div class="resume-banner" id="resumeBanner" hidden><span id="resumeCopy">有一份未完成的測驗</span><div class="v2-actions"><button type="button" class="v2-btn v2-btn--soft" id="resumeQuiz">繼續作答</button><button type="button" class="v2-btn" id="discardDraft">另開新一份</button></div></div>
+      <div id="quizSetup">
+        <div class="quiz-methods" id="quizMethods" aria-label="測驗模式"><button type="button" class="quiz-method" data-mode="choice" aria-pressed="true"><strong>選擇題</strong><small>看中文・選英文</small></button><button type="button" class="quiz-method" data-mode="type-en" aria-pressed="false"><strong>中文 → 英文</strong><small>手打・核對拼字</small></button><button type="button" class="quiz-method" data-mode="type-cn" aria-pressed="false"><strong>英文 → 中文</strong><small>手打・同義可接受</small></button></div>
+        <div class="v2-card" style="margin-top:16px"><div class="v2-toolbar" style="margin-top:0"><h2>這次練哪些？</h2><button type="button" class="v2-link" id="allQuizUnits">全選／清空</button></div><div class="v2-chips" id="quizUnits" aria-label="測驗回次"></div>
+        <div class="quiz-settings"><label class="v2-field"><span>單字範圍</span><select id="quizScope"><option value="all">全部</option><option value="starred">收藏難字</option><option value="wrong">錯字</option></select></label><label class="v2-field"><span>字首</span><select id="quizLetter"><option value="">A–Z 全部</option></select></label><label class="v2-field"><span>題數</span><select id="quizCount"><option value="10">10 題</option><option value="20" selected>20 題</option><option value="30">30 題</option><option value="all">全部</option></select></label></div>
+        <p class="v2-caption" id="quizRule">四個形近或易混淆選項；選完不自動跳題。</p><div class="quiz-start"><div><b id="poolCount">0</b><span class="v2-caption"> 個可測單字</span><div class="v2-caption" id="actualCount"></div></div><button type="button" class="v2-btn v2-btn--primary" id="startQuiz">開始練習 →</button></div></div>
+      </div>
+      <div id="quizRun" hidden>
+        <div class="quiz-head"><span id="questionProgress"></span><button type="button" class="v2-btn" id="pauseQuiz">暫存離開</button></div><div class="quiz-progress" role="progressbar" aria-label="作答進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar"><div id="progressFill"></div></div>
+        <article class="question-card"><div class="question-label" id="questionLabel"></div><div id="questionPos"></div><h2 class="question-prompt" id="questionPrompt" tabindex="-1"></h2><p class="question-hint" id="questionHint"></p></article>
+        <div class="q-options" id="questionOptions"></div>
+        <form class="q-typebox" id="answerForm" hidden><input id="typedAnswer" aria-label="輸入答案" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="send"><button class="v2-btn v2-btn--primary" type="submit" id="submitAnswer">送出</button></form>
+        <section id="answerFeedback" class="feedback" aria-live="polite" hidden></section>
+        <div class="quiz-bottom"><button type="button" class="v2-btn" id="skipQuestion">還不會</button><button type="button" class="v2-btn v2-btn--primary" id="nextQuestion" hidden>下一題 →</button></div><p class="keyboard-hint"><kbd>Enter</kbd> 送出答案；看完解析後再按一次，才到下一題。選擇題也可按 <kbd>1</kbd>–<kbd>4</kbd>。</p>
+      </div>
+      <div id="quizResult" hidden><div class="v2-card result-hero"><p class="v2-overline">SESSION COMPLETE</p><div class="result-score" id="resultScore"></div><h2 id="resultTitle"></h2><p class="v2-caption" id="resultScope"></p><div class="result-stats" id="resultStats"></div><div class="v2-actions"><button type="button" class="v2-btn v2-btn--primary" id="retryWrong">只測這次錯的</button><button type="button" class="v2-btn" id="newQuiz">再選一份</button></div></div><h3 class="v2-section-title">逐題回顧・對錯都有解析</h3><div class="result-answers" id="resultAnswers"></div></div>
+    </section>
+    <div class="sync-line" id="syncLine" data-state="pending"><span id="syncStatus" role="status">準備同步學習紀錄</span><button type="button" id="retrySync" hidden>重試同步</button></div>
+  </div>
+</main>
+<div class="v2-toast" id="toast" role="status" hidden></div>
+<dialog id="discardDialog" class="v2-dialog"><h2>另開一份測驗？</h2><p>只會放棄目前尚未交卷的進度。已完成的測驗紀錄、收藏與錯字都會保留。</p><div class="v2-actions"><button type="button" class="v2-btn" id="cancelDiscard">繼續保留</button><button type="button" class="v2-btn v2-btn--primary" id="confirmDiscard">另開新一份</button></div></dialog>
+<script type="module" src="en-second-vocab.js"></script>
+</body>
+</html>

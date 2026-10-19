@@ -5,7 +5,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
 import {
   Timestamp,collection,doc,getDoc,getDocs,getFirestore,increment,limit,orderBy,query,
-  serverTimestamp,setDoc,updateDoc,where,writeBatch
+  runTransaction,serverTimestamp,setDoc,updateDoc,where,writeBatch
 } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js';
 
 export const firebaseConfig={
@@ -28,7 +28,7 @@ export const db=getFirestore(app);
 export {
   Timestamp,collection,createUserWithEmailAndPassword,deleteUser,doc,getDoc,getDocs,increment,limit,
   onAuthStateChanged,orderBy,query,serverTimestamp,setDoc,signInWithEmailAndPassword,signOut,
-  updateDoc,updatePassword,where,writeBatch
+  runTransaction,updateDoc,updatePassword,where,writeBatch
 };
 
 export function normalizeName(value){

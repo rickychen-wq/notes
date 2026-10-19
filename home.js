@@ -6,6 +6,20 @@ async function start(){
   document.getElementById('homeGreeting').textContent='你好，'+session.profile.name;
   const isAdmin=session.profile.role==='admin';document.getElementById('homeRole').textContent=isAdmin?'管理員':'學習者';
   document.getElementById('manageLink').hidden=!isAdmin;
+  const workspace=document.getElementById('adminWorkspace'),preparing=document.getElementById('preparingPanel');
+  if(workspace&&preparing){
+    workspace.hidden=!isAdmin;preparing.hidden=isAdmin;
+    if(isAdmin){
+      document.getElementById('previewStudent').onclick=function(){
+        workspace.hidden=true;preparing.hidden=false;document.getElementById('studentPreviewNotice').hidden=false;
+        document.getElementById('manageLink').hidden=true;
+      };
+      document.getElementById('exitStudentPreview').onclick=function(){
+        workspace.hidden=false;preparing.hidden=true;document.getElementById('studentPreviewNotice').hidden=true;
+        document.getElementById('manageLink').hidden=false;
+      };
+    }
+  }
   if(session.preview){document.getElementById('homeSummary').textContent='最常讀英文 · 測驗平均 86%';document.getElementById('homeMetric').textContent='1 小時 18 分';return;}
   try{
     const stats=await getUserStats(session.user.uid,7);

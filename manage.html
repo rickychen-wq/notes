@@ -1,24 +1,37 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-admin-only="true" data-admin-strict="true" data-admin-fallback="index.html">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#f3f5f9"><link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>管理中心｜段考複習</title>
-<link rel="stylesheet" href="account-pages.css"><link rel="stylesheet" href="app-shell.css">
 <script>(function(){try{var t=localStorage.getItem('nx:theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}})()</script>
+<link rel="stylesheet" href="app-shell.css"><link rel="stylesheet" href="study-v2.css"><link rel="stylesheet" href="manage-v2.css">
 <script src="auth-prelude.js"></script><script type="module" src="auth-gate.js"></script>
 </head>
-<body>
-<div class="ambient"><i style="width:360px;height:360px;left:-100px;top:-130px;background:#c8912b"></i><i style="width:320px;height:320px;right:-110px;top:38%;background:#7a5af8;animation-delay:2s"></i></div>
-<div class="sitebar"><a href="index.html">◀ 回首頁</a><span class="sitebar__mark">ADMIN</span></div>
-<main class="page">
-  <section class="hero"><div class="hero__row"><div><p class="eyebrow">管理中心</p><h1>全體學習狀況</h1><p class="lead">查看使用者活動、測驗表現與註冊設定。</p></div><span class="pill pill--admin">管理員</span></div></section>
-  <div class="stats" id="adminStats"><div class="stat-card"><b>—</b><span>使用者</span></div><div class="stat-card"><b>—</b><span>7 天活躍</span></div><div class="stat-card"><b>—</b><span>閱讀時間</span></div><div class="stat-card"><b>—</b><span>測驗平均</span></div></div>
-  <h2 class="section-title">註冊設定</h2><section class="card"><div class="card__body"><div class="switch"><div class="switch__copy"><div class="switch__heading"><h2>開放註冊</h2><span class="switch__state" id="registrationState">已關閉</span></div><p class="lead">手動控制新使用者能否註冊，設定會立即套用。</p></div><button class="toggle" id="registrationToggle" type="button" aria-pressed="false" aria-label="切換註冊狀態"></button></div><div id="settingsNotice" class="notice" hidden></div><button class="primary settings-save" id="saveSettings" type="button">儲存註冊設定</button></div></section>
-  <h2 class="section-title">使用者</h2><section class="card rows" id="userRows"><div class="loading"><span class="spinner"></span></div></section>
-  <h2 class="section-title">管理員帳戶</h2><section class="card"><div class="card__body"><h2>修改管理員密碼</h2><p class="lead">一般使用者無法在網站中修改密碼；需要協助時，可由管理員前往 Firebase 帳號管理重設。</p><form id="adminPasswordForm" class="account-form"><div class="grid-2"><label class="field"><span>新密碼</span><input id="adminNewPassword" type="password" minlength="6" autocomplete="new-password" required></label><label class="field"><span>再次輸入</span><input id="adminConfirmPassword" type="password" minlength="6" autocomplete="new-password" required></label></div><div id="adminPasswordNotice" class="notice" hidden></div><div class="actions"><button class="primary" type="submit">更新我的密碼</button><a class="secondary" href="https://console.firebase.google.com/project/class-f62e3/authentication/users" target="_blank" rel="noopener">管理使用者帳號</a></div></form></div></section>
+<body class="v2">
+<nav class="v2-bar" aria-label="頁面導覽"><a href="index.html">← 回首頁</a><span>ADMIN CONSOLE</span><span data-account-slot></span></nav>
+<main class="v2-main">
+  <header class="v2-hero v2-entrance"><div><p class="v2-overline">YOUR STUDY SPACE</p><h1>管理中心</h1><p>學習狀況、內容權限與帳戶設定，分開看更清楚。</p></div><div class="v2-seal" aria-hidden="true">N<small>CONTROL</small></div></header>
+  <div class="v2-tabs" role="tablist" aria-label="管理項目"><button type="button" id="overviewTab" role="tab" aria-controls="overviewPanel" aria-selected="true">學習總覽</button><button type="button" id="contentTab" role="tab" aria-controls="contentPanel" aria-selected="false" tabindex="-1">內容權限</button><button type="button" id="settingsTab" role="tab" aria-controls="settingsPanel" aria-selected="false" tabindex="-1">帳戶設定</button></div>
+  <section id="overviewPanel" role="tabpanel" aria-labelledby="overviewTab">
+    <div class="v2-toolbar"><div class="v2-segment" id="statsPeriod" aria-label="統計期間"><button type="button" data-days="7" aria-pressed="true">近 7 天</button><button type="button" data-days="30" aria-pressed="false">近 30 天</button></div><button type="button" class="v2-btn" id="reloadUsers">重新整理</button></div>
+    <div class="admin-metrics" id="adminStats"><div><b>—</b><span>使用者</span></div><div><b>—</b><span>活躍帳號</span></div><div><b>—</b><span>閱讀時間</span></div><div><b>—</b><span>測驗平均</span></div></div>
+    <div class="v2-toolbar"><label class="v2-field v2-search"><span>搜尋帳號</span><input type="search" id="userSearch" placeholder="輸入姓名或帳號名稱" autocomplete="off"></label><label class="v2-field"><span>排序</span><select id="userSort"><option value="active">閱讀時間</option><option value="name">姓名</option><option value="attempts">測驗次數</option></select></label></div>
+    <p class="v2-caption" id="userLoadStatus" role="status">正在載入帳號…</p><div class="admin-users" id="userRows"></div>
+  </section>
+  <section id="contentPanel" role="tabpanel" aria-labelledby="contentTab" hidden>
+    <div class="access-summary"><span class="access-dot" aria-hidden="true"></span><div><strong>二段目前只開給管理員</strong><p>普通帳號維持準備中，不繼承一段的個別開放名單。</p></div></div>
+    <section class="v2-card"><div class="access-heading"><div><p class="v2-overline">SECOND MIDTERM</p><h2>4500 單字 11-3～12-1</h2><p class="v2-caption">5 回 · 236 字 · 複習與測驗</p></div><span class="v2-badge">管理員限定</span></div><div class="permission-pair"><div><small>管理員</small><strong>複習、測驗、收藏與紀錄</strong></div><div><small>一般使用者</small><strong>不顯示入口，直接開頁也會返回首頁</strong></div></div><div class="v2-actions"><a class="v2-btn v2-btn--primary" href="en-second-vocab.html">開啟二段單字</a><a class="v2-btn" href="index.html">回首頁預覽同學畫面</a></div></section>
+    <h2 class="v2-section-title">一段資料・保留但不上架</h2><div class="v2-card"><p class="v2-caption" style="margin-top:0">舊筆記、測驗和既有名單都還在。以下只顯示封存狀態，不提供舊內容入口，也不會變更原本的權限。</p><div id="archivedPermissions" class="archive-list"><p class="v2-caption">正在載入權限摘要…</p></div></div>
+  </section>
+  <section id="settingsPanel" role="tabpanel" aria-labelledby="settingsTab" hidden>
+    <section class="v2-card"><div class="access-heading"><div><p class="v2-overline">REGISTRATION</p><h2>開放註冊</h2><p class="v2-caption">只控制新帳號註冊，不影響現有帳號登入。</p></div><button class="admin-toggle" id="registrationToggle" type="button" role="switch" aria-checked="false" aria-label="開放註冊" disabled></button></div><div class="v2-toolbar"><span class="v2-badge" id="registrationState">載入中</span><span class="v2-caption" id="settingsDirty"></span></div><div id="settingsNotice" class="admin-notice" role="status" hidden></div><button class="v2-btn v2-btn--primary" id="saveSettings" type="button" disabled>儲存註冊設定</button></section>
+    <h2 class="v2-section-title">你的管理員帳戶</h2><section class="v2-card"><h2>修改自己的密碼</h2><p class="v2-caption">至少 6 個字元。這裡不會修改其他人的密碼或身分。</p><form id="adminPasswordForm"><div class="v2-split"><label class="v2-field"><span>新密碼</span><input id="adminNewPassword" type="password" minlength="6" autocomplete="new-password" required></label><label class="v2-field"><span>再次輸入</span><input id="adminConfirmPassword" type="password" minlength="6" autocomplete="new-password" required></label></div><label class="password-toggle"><input type="checkbox" id="showAdminPassword"> 顯示密碼</label><div id="adminPasswordNotice" class="admin-notice" role="status" hidden></div><button class="v2-btn v2-btn--primary" type="submit">更新我的密碼</button></form></section>
+    <h2 class="v2-section-title">進階管理</h2><section class="v2-card"><h2>Firebase 帳號管理</h2><p class="v2-caption">需要處理使用者登入問題時，再前往 Firebase。網站不提供刪除帳號或變更管理員身分的快捷操作。</p><a class="v2-btn" href="https://console.firebase.google.com/project/class-f62e3/authentication/users" target="_blank" rel="noopener">在新視窗開啟 Firebase ↗</a></section>
+  </section>
 </main>
+<dialog class="v2-dialog" id="userDetail"><div class="access-heading"><div><p class="v2-overline">LEARNING DETAIL</p><h2 id="detailName"></h2></div><button class="v2-btn" id="closeDetail" type="button" aria-label="關閉詳細資料">✕</button></div><div id="detailContent"></div></dialog>
+<dialog class="v2-dialog" id="registrationConfirm"><h2 id="registrationConfirmTitle">開放新帳號註冊？</h2><p id="registrationConfirmCopy"></p><div class="v2-actions"><button type="button" class="v2-btn" id="cancelRegistration">取消</button><button type="button" class="v2-btn v2-btn--primary" id="confirmRegistration">確認儲存</button></div></dialog>
 <script type="module" src="manage.js"></script>
 </body>
 </html>

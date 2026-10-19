@@ -5,6 +5,8 @@
   "scripts": {
     "build:catalog": "node scripts/build-answer-catalog.mjs",
     "build:review": "node scripts/build-english-review.mjs",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "test:study": "node --experimental-vm-modules scripts/test-study-v2.mjs",
+    "test:study:browser": "node scripts/test-study-v2-browser.mjs"
   }
 }

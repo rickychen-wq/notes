@@ -20,6 +20,8 @@ try{execFileSync(process.execPath,[path.join(root,'scripts','build-answer-catalo
 catch(error){fail('answer-catalog.js',String(error.stderr||error.message).trim());}
 try{execFileSync(process.execPath,[path.join(root,'scripts','build-english-review.mjs'),'--check'],{stdio:'pipe'});}
 catch(error){fail('english-review-data.js',String(error.stderr||error.message).trim());}
+try{execFileSync(process.execPath,['--experimental-vm-modules',path.join(root,'scripts','test-study-v2.mjs')],{stdio:'pipe'});}
+catch(error){fail('second-midterm',String(error.stderr||error.message).trim());}
 
 function fail(file,message){errors.push(`${file}: ${message}`);}
 function localTarget(value){
@@ -183,9 +185,9 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio31Source.includes(marker))fail('bio-3-1.html',`missing quiz marker: ${marker}`);
 }
 
-if(htmlFiles.length!==43)fail('project',`expected 43 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==44)fail('project',`expected 44 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==42)fail('project',`expected 42 protected pages, found ${protectedCount}`);
+if(protectedCount!==43)fail('project',`expected 43 protected pages, found ${protectedCount}`);
 
 const finalReviewSource=fs.readFileSync(path.join(root,'admin-final-review.html'),'utf8');
 const expectedFinalCounts={chemistry:23,biology:27,english:15};

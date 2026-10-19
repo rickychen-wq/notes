@@ -5,7 +5,7 @@ import {
 import {attemptIdFromScoreId,bestScore,discardLegacyScores,highestScores} from './stats-utils.js';
 import {clean,correctAnswerFrom,userAnswerFrom} from './attempt-utils.js';
 
-const SPECIAL_PAGES=new Set(['index','me','manage','history','login']);
+const SPECIAL_PAGES=new Set(['index','me','manage','history','login','access-admin']);
 const pageId=pageIdFromPath();
 const subject=subjectFromPage(pageId);
 let currentSession=null;
@@ -78,6 +78,11 @@ async function setSession(session){
 }
 
 async function allowPage(session){
+  // The new preview and management pages never inherit legacy named-user grants.
+  if(document.documentElement.dataset.adminStrict==='true'){
+    if(session.profile.role==='admin')return true;
+    location.replace('index.html');return false;
+  }
   const state=await accessState(session,document.documentElement.dataset.accessKey);
   const allowedByName=!state.configured&&namedAccess(session,document.documentElement.dataset.userAllow);
   const allowedByGrant=state.allowed;
@@ -115,8 +120,9 @@ function injectAccount(session){
     event.stopPropagation();menu.hidden=!menu.hidden;button.setAttribute('aria-expanded',String(!menu.hidden));
   });
   document.addEventListener('click',function(event){if(!root.contains(event.target)){menu.hidden=true;button.setAttribute('aria-expanded','false');}});
+  document.addEventListener('keydown',function(event){if(event.key==='Escape'&&!menu.hidden){menu.hidden=true;button.setAttribute('aria-expanded','false');button.focus();}});
   logout.addEventListener('click',async function(){logout.disabled=true;await flushActivity();await signOut(auth);location.replace('login.html');});
-  root.append(button,menu);document.body.append(root);
+  root.append(button,menu);(document.querySelector('[data-account-slot]')||document.body).append(root);
 }
 
 function isStudyPage(){return !SPECIAL_PAGES.has(pageId)&&!pageId.startsWith('s-');}
@@ -292,6 +298,7 @@ async function start(){
 }
 
 async function updateProfileLogin(session){
+  // Keep the existing identity fields and role untouched.
   await setDoc(doc(db,'users',session.user.uid),{uid:session.user.uid,lastLoginAt:serverTimestamp()},{merge:true});
 }
 
