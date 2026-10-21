@@ -33,6 +33,9 @@ assert.ok(judgeAnswer(words.find(w=>w.word==='humidity'),'湿气','en-cn'));
 assert.ok(!canUseSecondMidterm({profile:{role:'user',name:'Chen'}}));
 assert.ok(!canUseSecondMidterm(null));
 assert.ok(canUseSecondMidterm({profile:{role:'admin'}}));
+assert.ok(canUseSecondMidterm({profile:{role:'user'},contentAccess:{secondVocab:true}}));
+assert.ok(!canUseSecondMidterm({profile:{role:'user'},contentAccess:{secondVocab:false}}));
+assert.ok(!canUseSecondMidterm({profile:{role:'user',secondVocabAllowedUids:['user']}}));
 assert.equal(filterWords(words,{units:[]}).length,0);
 assert.equal(filterWords(words,{units:['11-3']}).length,46);
 assert.equal(filterWords(words,{units:units.map(u=>u.id),scope:'starred'}).length,0);
@@ -82,11 +85,12 @@ const preview=new StudyStore({...session,preview:true},()=>{});const before=tran
 storage.set('nx:midterm2:broken:outbox','{}');storage.set('nx:midterm2:broken:state','null');storage.set('nx:midterm2:broken:pending','{"role":"admin"}');
 const broken=new StudyStore({user:{uid:'broken'},profile:{},preview:true},()=>{});assert.equal(broken.attempts.length,0);assert.equal(Object.keys(broken.pending).length,0);
 
-for(const page of ['en-second-vocab.html','manage.html']){
-  const html=fs.readFileSync(new URL('../'+page,import.meta.url),'utf8');assert.match(html,/data-admin-strict="true"/);assert.match(html,/src="auth-gate.js"/);
-}
+const vocabHTML=fs.readFileSync(new URL('../en-second-vocab.html',import.meta.url),'utf8');
+assert.match(vocabHTML,/data-access-key="secondVocabAllowedUids"/);assert.doesNotMatch(vocabHTML,/data-admin-strict/);assert.match(vocabHTML,/src="auth-gate.js"/);
+const manageHTML=fs.readFileSync(new URL('../manage.html',import.meta.url),'utf8');assert.match(manageHTML,/data-admin-strict="true"/);assert.match(manageHTML,/src="auth-gate.js"/);
 const home=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-assert.match(home,/id="adminWorkspace"[^>]*data-admin-visible[^>]*hidden/);
+assert.match(home,/id="adminWorkspace"[^>]*hidden/);
+assert.doesNotMatch(home,/PRIVATE PREVIEW|僅管理員|新一輪開始/);
 assert.ok(home.includes('第二次段考準備中'));
 for(const css of ['study-v2.css','manage-v2.css']){
   const text=fs.readFileSync(new URL('../'+css,import.meta.url),'utf8');assert.equal((text.match(/{/g)||[]).length,(text.match(/}/g)||[]).length);

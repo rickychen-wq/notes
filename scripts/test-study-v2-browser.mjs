@@ -26,12 +26,12 @@ const core=fs.readFileSync(path.join(root,'firebase-core.js'),'utf8');
 const mockedCore=firebaseFixture+'\n'+core.slice(core.indexOf('export function normalizeName'));
 // Optional CJK font fixture for test hosts without Chinese system fonts. It is not shipped to the site.
 const fontRoot=process.env.TEST_CJK_FONT_ROOT;
-const fontCSS=fontRoot?[400,700].map(weight=>fs.readFileSync(path.join(fontRoot,weight+'.css'),'utf8').replaceAll('./files/','/__qa-font/')).join('\n')+'\nbody,body.v2{font-family:"Noto Sans TC",sans-serif!important}':'';
+const fontCSS=fontRoot?[400,700].map(weight=>fs.readFileSync(path.join(fontRoot,weight+'.css'),'utf8').replaceAll('./files/','/__qa-font/')).join('\n')+'\nbody,body.v2,dialog.vocab-access-dialog{font-family:"Noto Sans TC",sans-serif!important}':'';
 let assertions=0;const contexts=[];
 const check=(condition,message)=>{assert.ok(condition,message);assertions++;};
-async function create(role='admin',viewport={width:390,height:844},colorScheme='light'){
+async function create(role='admin',viewport={width:390,height:844},colorScheme='light',system={},uid){
   const context=await browser.newContext({viewport,colorScheme,reducedMotion:'reduce'});contexts.push(context);
-  await context.addInitScript(({role})=>{window.__TEST_ROLE=role;localStorage.setItem('nx:score-era','firebase-v1');},{role});
+  await context.addInitScript(({role,system,uid})=>{window.__TEST_ROLE=role;window.__TEST_SYSTEM=system;window.__TEST_UID=uid;localStorage.setItem('nx:score-era','firebase-v1');},{role,system,uid});
   await context.route('**/*',async route=>{
     const url=new URL(route.request().url());
     if(url.origin!==new URL(base).origin){await route.abort();return;}
@@ -144,5 +144,59 @@ try{
   await dark.page.locator('#quizTab').click();await dark.page.screenshot({path:path.join(shots,'quiz-dark-mobile.png'),fullPage:true});await noOverflow(dark.page);
   const desktop=await create('admin',{width:1280,height:900});await loaded(desktop.page);await desktop.page.screenshot({path:path.join(shots,'vocab-desktop.png')});await noOverflow(desktop.page);
   check(await desktop.page.locator('.v2-hero').evaluate(el=>getComputedStyle(el).animationName)==='none','reduced motion honored');
+
+  // Explicit grants are independent from archived grants; exercise save, cancel, failure and revoke.
+  const sharing=await create();await loaded(sharing.page);
+  await sharing.page.locator('[data-open-vocab-access]').click();
+  await sharing.page.locator('#vocabAccessUsers input').first().waitFor();
+  check(await sharing.page.locator('#vocabAccessUsers input').count()===2,'only ordinary accounts selectable');
+  await sharing.page.locator('#vocabAccessSearch').fill('同學 A');
+  check(await sharing.page.locator('#vocabAccessUsers input').count()===1,'permission search');
+  await sharing.page.locator('#vocabAccessUsers input').check();await sharing.page.locator('#cancelVocabAccess').click();
+  check(await sharing.page.evaluate(()=>window.__WRITES.filter(w=>w.ref==='settings/system').length)===0,'cancel grant does not write');
+  await sharing.page.locator('[data-open-vocab-access]').click();await sharing.page.locator('#vocabAccessUsers input').first().waitFor();
+  check(await sharing.page.locator('#vocabAccessUsers input:checked').count()===0,'cancel discards unsaved selection');
+  await sharing.page.locator('input[data-uid="classmate-1"]').check();
+  await sharing.page.evaluate(()=>window.__OFFLINE=true);await sharing.page.locator('#saveVocabAccess').click();
+  await sharing.page.waitForFunction(()=>document.getElementById('vocabAccessNotice').textContent.includes('儲存失敗'));
+  check(await sharing.page.locator('#saveVocabAccess').isEnabled(),'failed grant can retry');
+  await sharing.page.evaluate(()=>window.__OFFLINE=false);await sharing.page.locator('#saveVocabAccess').click();
+  await sharing.page.waitForFunction(()=>document.getElementById('vocabAccessNotice').textContent.startsWith('已儲存'));
+  const saved=await sharing.page.evaluate(()=>window.__SYSTEM);
+  check(saved.secondVocabAllowedUids.join(',')==='classmate-1','grant uses exact UID');
+  check(saved.bookVocabAllowedUids.join(',')==='test-user'&&saved.registrationOpen===false,'other settings preserved');
+  check(await sharing.page.evaluate(()=>Object.keys(window.__WRITES.find(w=>w.ref==='settings/system').patch).sort().join(','))==='secondVocabAllowedUids,updatedAt','grant updates only new list');
+  await sharing.page.evaluate(()=>document.fonts.ready);await sharing.page.screenshot({path:path.join(shots,'sharing-mobile.png')});await noOverflow(sharing.page);
+  await sharing.page.locator('#closeVocabAccess').click();await loaded(sharing.page,'manage.html#content');
+  await sharing.page.locator('[data-open-vocab-access]').click();await sharing.page.locator('input[data-uid="classmate-1"]').waitFor();
+  check(await sharing.page.locator('input[data-uid="classmate-1"]').isChecked(),'saved grant persists on management page');
+
+  const granted=await create('user',{width:390,height:844},'light',saved,'classmate-1');
+  await loaded(granted.page,'index.html');check(await granted.page.locator('#adminWorkspace').isVisible(),'granted learner sees vocabulary card');
+  check(!await granted.page.locator('#preparingPanel').isVisible(),'granted learner has no preparing panel');
+  check(!await granted.page.locator('#manageLink').isVisible()&&!await granted.page.locator('#previewStudent').isVisible(),'granted learner has no admin tools');
+  await granted.page.screenshot({path:path.join(shots,'home-granted-mobile.png'),fullPage:true});
+  await loaded(granted.page);check(await granted.page.locator('.word-card').count()===236,'granted learner opens full bank');
+  check(await granted.page.locator('#vocabAccessDialog').count()===0,'granted learner cannot manage grants');
+  check(!(await granted.page.locator('main').textContent()).includes('管理員限定'),'clean learner page copy');
+  await granted.page.goto(base+'/manage.html');await granted.page.waitForURL('**/index.html');
+
+  await sharing.page.locator('#clearVocabUsers').click();await sharing.page.locator('#saveVocabAccess').click();
+  await sharing.page.waitForFunction(()=>document.getElementById('vocabAccessNotice').textContent.startsWith('已儲存'));
+  const revoked=await sharing.page.evaluate(()=>window.__SYSTEM);
+  const revokedUser=await create('user',{width:320,height:750},'light',revoked,'classmate-1');
+  await loaded(revokedUser.page,'index.html');check(await revokedUser.page.locator('#preparingPanel').isVisible(),'revoked learner returns to preparing');
+  await revokedUser.page.goto(base+'/en-second-vocab.html');await revokedUser.page.waitForURL('**/index.html');
+
+  for(const width of [320,360,390,768]){
+    await page.setViewportSize({width,height:844});await loaded(page);
+    await noOverflow(page);
+    check(await page.locator('.v2-hero').evaluate(hero=>{
+      const copy=hero.firstElementChild.getBoundingClientRect(),seal=hero.lastElementChild.getBoundingClientRect();
+      return copy.right<=seal.left&&[...hero.querySelectorAll('h1,.v2-hero-meta,.v2-seal small')].every(el=>el.scrollWidth<=el.clientWidth+1);
+    }),'hero copy and seal fit at '+width);
+  }
+  await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(shots,'vocab-header-fixed.png')});
+  check(sharing.errors.length===0&&granted.errors.length===0&&revokedUser.errors.length===0,'sharing workflow has no page errors');
   console.log('PASS: '+assertions+' browser assertions; screenshots: '+shots);
 }finally{await Promise.all(contexts.map(c=>c.close()));await browser.close();if(server)await new Promise(resolve=>server.close(resolve));}

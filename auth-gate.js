@@ -4,6 +4,7 @@ import {
 } from './firebase-core.js';
 import {attemptIdFromScoreId,bestScore,discardLegacyScores,highestScores} from './stats-utils.js';
 import {clean,correctAnswerFrom,userAnswerFrom} from './attempt-utils.js';
+import {SECOND_VOCAB_ACCESS_KEY} from './study-quiz-core.js';
 
 const SPECIAL_PAGES=new Set(['index','me','manage','history','login','access-admin']);
 const pageId=pageIdFromPath();
@@ -51,6 +52,7 @@ async function accessState(session,key){
 
 async function setSession(session){
   clearAuthTransition();
+  session.contentAccess={secondVocab:(await accessState(session,SECOND_VOCAB_ACCESS_KEY)).allowed};
   currentSession=session;window.NX_SESSION=session;
   document.querySelectorAll('[data-admin-visible]').forEach(function(element){
     element.hidden=session.profile.role!=='admin';

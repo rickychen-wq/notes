@@ -151,19 +151,19 @@
     <div class="account-metric"><b id="homeMetric">—</b><span id="homeMetricLabel">最近 7 天閱讀</span></div>
   </section>
 
-  <section id="adminWorkspace" class="v2 admin-workspace v2-entrance" data-admin-visible hidden aria-label="管理員二段工作台">
-    <div class="workspace-heading"><h2>二段工作台 <span class="v2-badge">僅管理員</span></h2><button type="button" class="v2-btn" id="previewStudent">預覽同學畫面</button></div>
-    <div class="workspace-hero"><p class="v2-overline">ENGLISH / PRIVATE PREVIEW</p><h3>4500 單字，新一輪開始。</h3><p>11-3～11-6・12-1，共 236 字。依回次背，也能直接測驗。</p>
+  <section id="adminWorkspace" class="v2 admin-workspace v2-entrance" hidden aria-label="英文複習">
+    <div class="workspace-heading"><h2>英文複習 <span class="v2-badge">第二次段考</span></h2><button type="button" class="v2-btn" id="previewStudent" data-admin-visible hidden>預覽同學畫面</button></div>
+    <div class="workspace-hero"><p class="v2-overline">英文單字複習</p><h3>4500 單字</h3><p>11-3～11-6・12-1，共 236 字。可依回次複習或練習測驗。</p>
       <div class="v2-actions"><a class="v2-btn v2-btn--primary" href="en-second-vocab.html">開始複習 →</a><a class="v2-btn v2-btn--soft" href="en-second-vocab.html?tab=quiz">測驗練習</a></div>
       <nav class="workspace-units" aria-label="直接選回次"><a href="en-second-vocab.html?unit=11-3">11-3</a><a href="en-second-vocab.html?unit=11-4">11-4</a><a href="en-second-vocab.html?unit=11-5">11-5</a><a href="en-second-vocab.html?unit=11-6">11-6</a><a href="en-second-vocab.html?unit=12-1">12-1</a></nav>
-    </div><div class="workspace-foot"><span>普通帳號仍維持準備中畫面</span><a class="v2-link" href="manage.html#content">查看內容權限 →</a></div>
+    </div><div class="workspace-foot" data-admin-visible hidden><span data-vocab-access-status>尚未開放給同學</span><button type="button" class="v2-link" data-open-vocab-access>開放對象 →</button></div>
   </section>
   <div class="v2" id="studentPreviewNotice" hidden><div class="resume-banner"><span>正在預覽同學首頁，沒有更動你的帳號權限。</span><button type="button" class="v2-btn" id="exitStudentPreview">返回管理員畫面</button></div></div>
   <section id="preparingPanel" class="empty-state rise" style="animation-delay:180ms" aria-label="第二次段考準備狀態">
     <div class="empty-state__icon" aria-hidden="true">✦</div>
     <h2>第二次段考準備中</h2>
     <p>目前還沒有開放的科目與複習內容。範圍確認後，新的筆記與測驗會從這裡陸續上線。</p>
-    <span class="empty-state__tag">CONTENT IN PROGRESS</span>
+    <span class="empty-state__tag">持續整理中</span>
   </section>
 
   <h2 class="sec rise" style="animation-delay:560ms">設定</h2>
@@ -192,5 +192,6 @@ syncSeg();
 
 </script>
 <script type="module" src="home.js"></script>
+<script type="module" src="second-vocab-access.js"></script>
 </body>
 </html>

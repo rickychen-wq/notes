@@ -206,7 +206,7 @@ function bind(){
 async function init(){
   try{
     session=await waitForSession();if(!canUseSecondMidterm(session)){location.replace('index.html');return;}
-    // Do not fetch the vocabulary bundle until the authenticated admin check has passed.
+    // Only load the bank after the admin or explicit account grant is confirmed.
     const data=await import('./en-second-vocab-data.js');bank=data.SECOND_VOCAB;units=data.VOCAB_UNITS;byId=new Map(bank.map(item=>[item.id,item]));
     if(bank.length!==236||units.length!==5)throw new Error('Unexpected word-bank size');
     store=new StudyStore(session,(message,state)=>{$('syncStatus').textContent=message;$('syncLine').dataset.state=state;$('retrySync').hidden=state!=='error';});

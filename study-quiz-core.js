@@ -44,4 +44,5 @@ export function posLabel(pos){
   const count=pos.includes('[CU]')?'可數／不可數':pos.includes('[C]')?'可數':pos.includes('[U]')?'不可數':pos.includes('[S]')?'常用單數':pos.includes('[SU]')?'單數／不可數':pos.includes('[pl.]')?'複數':'';
   return base+(count?'・'+count:'');
 }
-export function canUseSecondMidterm(session){return session?.profile?.role==='admin';}
+export const SECOND_VOCAB_ACCESS_KEY='secondVocabAllowedUids';
+export function canUseSecondMidterm(session){return session?.profile?.role==='admin'||session?.contentAccess?.secondVocab===true;}

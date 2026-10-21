@@ -1,5 +1,6 @@
 import {auth,collection,db,doc,formatDuration,getDocs,getDoc,serverTimestamp,updateDoc,updatePassword,waitForSession,timestampToDate,SUBJECT_LABELS} from './firebase-core.js';
 import {getUserStats} from './analytics.js';
+import {SECOND_VOCAB_ACCESS_KEY} from './study-quiz-core.js';
 
 const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -89,7 +90,8 @@ async function loadUsers(){
 function showDetail(uid){
   const row=rows.find(r=>r.profile.uid===uid);if(!row)return;const {profile:p,stats:s}=row;
   $('detailName').textContent=p.name;
-  const permissions='<div class="detail-section"><h3>目前可見內容</h3><p class="v2-caption">'+(p.role==='admin'?'二段單字與測驗、管理中心。':'準備中首頁與自己的學習紀錄；二段尚未開放。')+'</p></div>';
+  const canStudy=p.role==='admin'||systemData?.[SECOND_VOCAB_ACCESS_KEY]?.includes(p.uid);
+  const permissions='<div class="detail-section"><h3>目前可見內容</h3><p class="v2-caption">'+(p.role==='admin'?'二段單字與測驗、管理中心。':canStudy?'二段 4500 單字、測驗與自己的學習紀錄。':'準備中首頁與自己的學習紀錄。')+'</p></div>';
   if(!s){$('detailContent').innerHTML='<p class="v2-caption">此帳號的統計尚未載入，可重新整理後再看。</p>'+permissions;$('userDetail').showModal();return;}
   const total=s.totalSeconds||1,subjects=Object.entries(s.subjectSeconds||{}).sort((a,b)=>b[1]-a[1]).filter(([,seconds])=>seconds>0);
   const subjectsHTML=subjects.length?subjects.map(([id,seconds])=>'<div class="detail-line"><div style="flex:1">'+esc(SUBJECT_LABELS[id]||id)+'<div class="detail-subject-meter"><i style="width:'+Math.min(100,seconds/total*100)+'%"></i></div></div><b>'+esc(formatDuration(seconds))+'</b></div>').join(''):'<p class="v2-caption">這段期間尚無閱讀紀錄。</p>';
@@ -144,6 +146,7 @@ function bind(){
 }
 async function start(){
   session=await waitForSession();if(session.profile.role!=='admin'){location.replace('index.html');return;}
+  window.addEventListener('nx:vocab-access-changed',event=>{if(systemData)systemData[SECOND_VOCAB_ACCESS_KEY]=event.detail.ids;});
   bind();showTab(location.hash.slice(1));await Promise.all([loadSystem(),loadUsers()]);
 }
 start();

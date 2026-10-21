@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" data-admin-only="true" data-admin-strict="true" data-admin-fallback="index.html">
+<html lang="zh-Hant" data-admin-only="true" data-access-key="secondVocabAllowedUids" data-admin-fallback="index.html">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f3f5f9"><link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -9,9 +9,10 @@
 <script src="auth-prelude.js"></script><script type="module" src="auth-gate.js"></script>
 </head>
 <body class="v2">
-<nav class="v2-bar" aria-label="頁面導覽"><a href="index.html">← 回首頁</a><span>SECOND MIDTERM / 115-1</span><span data-account-slot></span></nav>
+<nav class="v2-bar" aria-label="頁面導覽"><a href="index.html">← 回首頁</a><span>第二次段考</span><span data-account-slot></span></nav>
 <main class="v2-main">
-  <header class="v2-hero v2-entrance"><div><p class="v2-overline">ENGLISH VOCABULARY</p><h1>4500 單字</h1><p>11-3～11-6・12-1　<span class="v2-badge">管理員限定</span></p></div><div class="v2-seal" aria-hidden="true">Aa<small>236 WORDS</small></div></header>
+  <header class="v2-hero v2-entrance"><div><p class="v2-overline">英文單字複習</p><h1>4500 單字</h1><div class="v2-hero-meta"><span>11-3～11-6・12-1</span><span class="v2-badge">共 236 字</span></div></div><div class="v2-seal" aria-hidden="true">Aa<small>VOCABULARY</small></div></header>
+  <div class="v2-toolbar" data-admin-visible hidden><span class="v2-caption" data-vocab-access-status>尚未開放給同學</span><button type="button" class="v2-btn v2-btn--soft" data-open-vocab-access>開放對象</button></div>
   <div class="v2-tabs" role="tablist" aria-label="學習方式"><button type="button" id="wordsTab" role="tab" aria-selected="true" aria-controls="wordsPanel">單字複習</button><button type="button" id="quizTab" role="tab" aria-selected="false" aria-controls="quizPanel" tabindex="-1">測驗練習</button></div>
   <div id="pageLoading" class="v2-empty" role="status">正在核對帳戶並載入單字…</div>
   <div id="pageLoadError" class="v2-card" hidden><h2>單字暫時沒有載入</h2><p>請確認連線後重試，原有紀錄不會被清除。</p><button class="v2-btn" id="retryPage" type="button">重新載入</button></div>
@@ -23,7 +24,7 @@
       <div class="v2-alpha" id="alphabet" aria-label="依字首篩選"></div>
       <div class="v2-toolbar"><span class="v2-caption" id="wordCount" role="status"></span><div class="v2-segment" id="meaningMode" aria-label="中文顯示方式"><button type="button" data-mode="show" aria-pressed="true">顯示中文</button><button type="button" data-mode="tap" aria-pressed="false">點一下揭曉</button></div></div>
       <div class="v2-words" id="wordList"></div>
-      <p class="v2-caption">保留課本的 236 個編號主單字；衍生字與搭配放在每張卡的「用法與易錯處」。</p>
+      <p class="v2-caption">共 236 個單字。展開「用法與易錯處」，可查看搭配與衍生字。</p>
     </section>
     <section id="quizPanel" role="tabpanel" aria-labelledby="quizTab" hidden>
       <div class="resume-banner" id="resumeBanner" hidden><span id="resumeCopy">有一份未完成的測驗</span><div class="v2-actions"><button type="button" class="v2-btn v2-btn--soft" id="resumeQuiz">繼續作答</button><button type="button" class="v2-btn" id="discardDraft">另開新一份</button></div></div>
@@ -49,5 +50,6 @@
 <div class="v2-toast" id="toast" role="status" hidden></div>
 <dialog id="discardDialog" class="v2-dialog"><h2>另開一份測驗？</h2><p>只會放棄目前尚未交卷的進度。已完成的測驗紀錄、收藏與錯字都會保留。</p><div class="v2-actions"><button type="button" class="v2-btn" id="cancelDiscard">繼續保留</button><button type="button" class="v2-btn v2-btn--primary" id="confirmDiscard">另開新一份</button></div></dialog>
 <script type="module" src="en-second-vocab.js"></script>
+<script type="module" src="second-vocab-access.js"></script>
 </body>
 </html>

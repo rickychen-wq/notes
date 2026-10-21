@@ -1,5 +1,6 @@
 import {formatDuration,waitForSession} from './firebase-core.js';
 import {getUserStats} from './analytics.js';
+import {canUseSecondMidterm} from './study-quiz-core.js';
 
 async function start(){
   const session=await waitForSession();
@@ -8,7 +9,8 @@ async function start(){
   document.getElementById('manageLink').hidden=!isAdmin;
   const workspace=document.getElementById('adminWorkspace'),preparing=document.getElementById('preparingPanel');
   if(workspace&&preparing){
-    workspace.hidden=!isAdmin;preparing.hidden=isAdmin;
+    const canStudy=canUseSecondMidterm(session);
+    workspace.hidden=!canStudy;preparing.hidden=canStudy;
     if(isAdmin){
       document.getElementById('previewStudent').onclick=function(){
         workspace.hidden=true;preparing.hidden=false;document.getElementById('studentPreviewNotice').hidden=false;
