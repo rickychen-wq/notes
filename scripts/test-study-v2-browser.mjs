@@ -49,6 +49,14 @@ async function loaded(page,file='en-second-vocab.html'){
   await page.evaluate(()=>document.fonts.ready);
 }
 async function noOverflow(page){check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'horizontal overflow at '+page.url());}
+async function selectorsFit(page){
+  return page.locator('.v2-controls select').evaluateAll(selects=>selects.every(select=>{
+    const style=getComputedStyle(select),canvas=document.createElement('canvas'),context=canvas.getContext('2d');
+    context.font=style.font;
+    const available=select.clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight);
+    return context.measureText(select.selectedOptions[0].textContent).width<=available&&style.appearance==='none';
+  }));
+}
 async function draft(page){return page.evaluate(()=>JSON.parse(localStorage.getItem('nx:midterm2:test-admin:draft')));}
 async function currentWord(page){const d=await draft(page);return words.find(w=>w.id===d.ids[d.index]);}
 
@@ -71,6 +79,12 @@ try{
   await page.locator('.word-hide').click();check(await page.locator('#wordList .sense').count()===0,'Chinese concealed again');
   await page.locator('.word-card').first().locator('[data-action="star"]').click();
   await page.locator('#wordScope').selectOption('starred');check(await page.locator('.word-card').count()===1,'star filter');
+  check(await selectorsFit(page),'starred selector label and arrow fit');
+  check(await page.locator('.v2-tabs').evaluate(el=>getComputedStyle(el).position)==='static','vocabulary tabs are not sticky');
+  await page.evaluate(()=>window.scrollTo(0,650));
+  check(await page.locator('.v2-tabs').evaluate(el=>el.getBoundingClientRect().bottom)<0,'tabs scroll off screen');
+  await page.screenshot({path:path.join(shots,'starred-scrolled-mobile.png')});
+  await page.evaluate(()=>window.scrollTo(0,0));
   await page.locator('#wordScope').selectOption('all');await page.locator('#wordSearch').fill('familiar');
   check(await page.locator('.word-card').count()===1,'search');await page.locator('#wordSearch').fill('');
   await page.locator('#allWordUnits').click();check(await page.locator('.word-card').count()===0,'empty units');
@@ -141,6 +155,8 @@ try{
 
   const dark=await create('admin',{width:360,height:800},'dark');await loaded(dark.page);await noOverflow(dark.page);
   check(await dark.page.locator('#wordSearch').evaluate(el=>getComputedStyle(el).color)==='rgb(238, 243, 251)','dark input legible');
+  await dark.page.locator('#wordScope').selectOption('starred');check(await selectorsFit(dark.page),'dark small-screen starred selector fits');
+  await dark.page.screenshot({path:path.join(shots,'starred-dark-mobile.png')});
   await dark.page.locator('#quizTab').click();await dark.page.screenshot({path:path.join(shots,'quiz-dark-mobile.png'),fullPage:true});await noOverflow(dark.page);
   const desktop=await create('admin',{width:1280,height:900});await loaded(desktop.page);await desktop.page.screenshot({path:path.join(shots,'vocab-desktop.png')});await noOverflow(desktop.page);
   check(await desktop.page.locator('.v2-hero').evaluate(el=>getComputedStyle(el).animationName)==='none','reduced motion honored');
@@ -190,6 +206,9 @@ try{
 
   for(const width of [320,360,390,768]){
     await page.setViewportSize({width,height:844});await loaded(page);
+    await page.locator('#wordScope').selectOption('starred');check(await selectorsFit(page),'selector label fits at '+width);
+    await page.locator('#wordScope').selectOption('wrong');check(await selectorsFit(page),'long wrong-word label fits at '+width);
+    check(await page.locator('meta[name="apple-mobile-web-app-status-bar-style"]').getAttribute('content')==='default','non-overlay iOS status bar');
     await noOverflow(page);
     check(await page.locator('.v2-hero').evaluate(hero=>{
       const copy=hero.firstElementChild.getBoundingClientRect(),seal=hero.lastElementChild.getBoundingClientRect();
