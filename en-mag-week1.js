@@ -95,7 +95,7 @@ function renderQuestion(typed='',savedOptions){
   $('questionLabel').textContent=`雜誌 Week 1 · ${item.unit} · ${{main:"主單字",reference:"參考字詞",phrase:"片語"}[item.kind]} ${item.number}`;
   $('questionPos').innerHTML=posHTML(item);
   $('questionPrompt').textContent=englishPrompt?item.word:item.meaning;$('questionPrompt').classList.toggle('is-chinese',!englishPrompt);
-  $('questionHint').textContent=englishPrompt?'寫出一個正確中文意思即可。':`字首 ${item.word[0]} · ${item.word.length} 個字母`;
+  $('questionHint').textContent=englishPrompt?'寫出一個正確中文意思即可。':`字首 ${item.word[0]} · ${item.word.replace(/\s/g,'').length} 個字母`;
   $('questionOptions').hidden=!isChoice;$('answerForm').hidden=isChoice;
   run.options=isChoice&&Array.isArray(savedOptions)&&savedOptions.length===4&&savedOptions.includes(item.word)?savedOptions:choicesFor(item);
   $('questionOptions').innerHTML=run.options.map((word,index)=>`<button type="button" class="q-option" data-choice="${esc(word)}"><span>${index+1}</span>${esc(word)}</button>`).join('');
