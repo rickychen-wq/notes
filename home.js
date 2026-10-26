@@ -8,16 +8,20 @@ async function start(){
   const isAdmin=session.profile.role==='admin';document.getElementById('homeRole').textContent=isAdmin?'管理員':'學習者';
   document.getElementById('manageLink').hidden=!isAdmin;
   const workspace=document.getElementById('adminWorkspace'),preparing=document.getElementById('preparingPanel');
+  const week=document.getElementById('week1Workspace'),canWeek=isAdmin||session.contentAccess?.magWeek1===true;
+  if(week)week.hidden=!canWeek;
   if(workspace&&preparing){
     const canStudy=canUseSecondMidterm(session);
-    workspace.hidden=!canStudy;preparing.hidden=canStudy;
+    workspace.hidden=!canStudy;preparing.hidden=canStudy||canWeek;
     if(isAdmin){
       document.getElementById('previewStudent').onclick=function(){
         workspace.hidden=true;preparing.hidden=false;document.getElementById('studentPreviewNotice').hidden=false;
+        if(week)week.hidden=true;
         document.getElementById('manageLink').hidden=true;
       };
       document.getElementById('exitStudentPreview').onclick=function(){
         workspace.hidden=false;preparing.hidden=true;document.getElementById('studentPreviewNotice').hidden=true;
+        if(week)week.hidden=!canWeek;
         document.getElementById('manageLink').hidden=false;
       };
     }

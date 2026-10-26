@@ -185,9 +185,9 @@ for(const marker of ['id="startBtn"','id="qchoices"','id="nextBtn"',"nx:score:bi
   if(!bio31Source.includes(marker))fail('bio-3-1.html',`missing quiz marker: ${marker}`);
 }
 
-if(htmlFiles.length!==44)fail('project',`expected 44 HTML pages, found ${htmlFiles.length}`);
+if(htmlFiles.length!==45)fail('project',`expected 45 HTML pages, found ${htmlFiles.length}`);
 const protectedCount=htmlFiles.filter((file)=>file!=='login.html').length;
-if(protectedCount!==43)fail('project',`expected 43 protected pages, found ${protectedCount}`);
+if(protectedCount!==44)fail('project',`expected 44 protected pages, found ${protectedCount}`);
 
 const finalReviewSource=fs.readFileSync(path.join(root,'admin-final-review.html'),'utf8');
 const expectedFinalCounts={chemistry:23,biology:27,english:15};

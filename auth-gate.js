@@ -52,7 +52,7 @@ async function accessState(session,key){
 
 async function setSession(session){
   clearAuthTransition();
-  session.contentAccess={secondVocab:(await accessState(session,SECOND_VOCAB_ACCESS_KEY)).allowed};
+  session.contentAccess={secondVocab:(await accessState(session,SECOND_VOCAB_ACCESS_KEY)).allowed,magWeek1:(await accessState(session,'magWeek1AllowedUids')).allowed};
   currentSession=session;window.NX_SESSION=session;
   document.querySelectorAll('[data-admin-visible]').forEach(function(element){
     element.hidden=session.profile.role!=='admin';
