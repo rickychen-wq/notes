@@ -10,20 +10,23 @@ async function start(){
   const workspace=document.getElementById('adminWorkspace'),preparing=document.getElementById('preparingPanel');
   const week=document.getElementById('week1Workspace'),canWeek=isAdmin||session.contentAccess?.magWeek1===true;
   const week3=document.getElementById('week3Workspace'),canWeek3=isAdmin||session.contentAccess?.magWeek3===true;
+  const week4=document.getElementById('week4Workspace'),canWeek4=isAdmin||session.contentAccess?.magWeek4===true;
   const book=document.getElementById('bookL4Workspace'),canBook=isAdmin||session.contentAccess?.bookL4===true;
   const book5=document.getElementById('bookL5Workspace'),canBook5=isAdmin||session.contentAccess?.bookL5===true;
   if(book)book.hidden=!canBook;
   if(book5)book5.hidden=!canBook5;
   if(week)week.hidden=!canWeek;
   if(week3)week3.hidden=!canWeek3;
+  if(week4)week4.hidden=!canWeek4;
   if(workspace&&preparing){
     const canStudy=canUseSecondMidterm(session);
-    workspace.hidden=!canStudy;preparing.hidden=canStudy||canWeek||canWeek3||canBook||canBook5;
+    workspace.hidden=!canStudy;preparing.hidden=canStudy||canWeek||canWeek3||canWeek4||canBook||canBook5;
     if(isAdmin){
       document.getElementById('previewStudent').onclick=function(){
         workspace.hidden=true;preparing.hidden=false;document.getElementById('studentPreviewNotice').hidden=false;
         if(week)week.hidden=true;
         if(week3)week3.hidden=true;
+        if(week4)week4.hidden=true;
         if(book)book.hidden=true;
         if(book5)book5.hidden=true;
         document.getElementById('manageLink').hidden=true;
@@ -32,6 +35,7 @@ async function start(){
         workspace.hidden=false;preparing.hidden=true;document.getElementById('studentPreviewNotice').hidden=true;
         if(week)week.hidden=!canWeek;
         if(week3)week3.hidden=!canWeek3;
+        if(week4)week4.hidden=!canWeek4;
         if(book)book.hidden=!canBook;
         if(book5)book5.hidden=!canBook5;
         document.getElementById('manageLink').hidden=false;
